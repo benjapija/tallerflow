@@ -1,0 +1,35 @@
+name: TallerFlow · probar Windows y reinicio
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-windows:
+    timeout-minutes: 20
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Trabajo sin conexión y guardado nativo
+        shell: pwsh
+        run: |
+          flutter test integration_test/native_workflow_test.dart -d windows --dart-define=TF_STAGE=record --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }} "--dart-define=TF_EVIDENCE_DIR=${{ github.workspace }}/build/native-test-evidence" 2>&1 | Tee-Object native-record.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Otro proceso recupera y sincroniza sin duplicar
+        shell: pwsh
+        run: |
+          flutter test integration_test/native_workflow_test.dart -d windows --dart-define=TF_STAGE=restore --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }} "--dart-define=TF_EVIDENCE_DIR=${{ github.workspace }}/build/native-test-evidence" 2>&1 | Tee-Object native-restore.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: TallerFlow-Windows-prueba-nativa-${{ github.run_id }}
+          path: |
+            native-*.log
+            build/native-test-evidence/*.json
+          retention-days: 1
