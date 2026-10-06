@@ -42,6 +42,89 @@ Operation op(
 );
 void main() {
   test(
+    'Reception clears forged authorization, documents and prior charges before work can start',
+    () {
+      final s = demoState();
+      final source = cloneMap(s.orders['o-1048']!.data);
+      source['document'] = {'totalCents': 1};
+      source['quality'] = {'result': 'Forged'};
+      source['reviewedParts'] = true;
+      source['tasks'] = [
+        {
+          ...source['tasks'][0],
+          'authorized': true,
+          'billableMinutes': 90,
+          'rateCents': 1,
+          'done': true,
+        },
+      ];
+      s.apply(
+        Operation(
+          id: 'receive-clean',
+          orderId: 'new-clean',
+          kind: 'receive',
+          actorId: 'office',
+          baseRevision: 0,
+          at: DateTime.now(),
+          payload: source,
+        ),
+        demoActors[2],
+      );
+      final order = s.orders['new-clean']!;
+      expect(order.data['document'], isNull);
+      expect(order.data['quality'], isNull);
+      expect(order.data.containsKey('reviewedParts'), false);
+      expect(order.tasks.single['authorized'], false);
+      expect(order.tasks.single['billableMinutes'], 0);
+      expect(order.tasks.single['rateCents'], 4800);
+      expect(
+        () => s.apply(
+          Operation(
+            id: 'cannot-start',
+            orderId: order.id,
+            kind: 'start',
+            actorId: 'tech-alex',
+            baseRevision: 0,
+            at: DateTime.now(),
+            payload: {'taskId': order.tasks.single['id']},
+          ),
+          demoActors[0],
+        ),
+        throwsA(isA<RuleException>()),
+      );
+    },
+  );
+  test(
+    'Reception rejects duplicate task IDs and foreign assignments without creating an order',
+    () {
+      final s = demoState();
+      final source = cloneMap(s.orders['o-1048']!.data);
+      source['tasks'] = [source['tasks'][0], source['tasks'][0]];
+      void receive(Map<String, dynamic> p) => s.apply(
+        Operation(
+          id: 'bad-receive',
+          orderId: 'bad-order',
+          kind: 'receive',
+          actorId: 'office',
+          baseRevision: 0,
+          at: DateTime.now(),
+          payload: p,
+        ),
+        demoActors[2],
+      );
+      expect(() => receive(source), throwsA(isA<RuleException>()));
+      expect(s.orders.containsKey('bad-order'), false);
+      source['tasks'] = [
+        {
+          ...source['tasks'][0],
+          'assignees': ['foreign'],
+        },
+      ];
+      expect(() => receive(source), throwsA(isA<RuleException>()));
+      expect(s.orders.containsKey('bad-order'), false);
+    },
+  );
+  test(
     'Administration requires admin and preserves latest revision with valid tax',
     () {
       final s = demoState();

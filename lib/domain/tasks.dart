@@ -13,6 +13,40 @@ const taskChanges = [
   'unblock',
   'template_apply',
 ];
+List<String> activeAssignees(WorkshopState state, dynamic value) {
+  if (value is! List ||
+      value.isEmpty ||
+      value.length > 20 ||
+      value.toSet().length != value.length ||
+      value.any((id) => !state.members.any((m) => m.id == id && m.active))) {
+    throw const RuleException('Selecciona operarios activos del taller');
+  }
+  return List<String>.from(value);
+}
+
+Map<String, dynamic> newTask(
+  WorkshopState state,
+  Map<String, dynamic> source,
+) => {
+  'id': requiredText(source['id'], 'Tarea interna', max: 100).toLowerCase(),
+  'title': requiredText(source['title'], 'Descripción', max: 300),
+  'estimateMinutes': boundedInt(
+    source['estimateMinutes'],
+    14400,
+    'Minutos estimados',
+    min: 1,
+  ),
+  'assignees': activeAssignees(state, source['assignees']),
+  'authorized': false,
+  'authorization': null,
+  'approvedCents': 0,
+  'done': false,
+  'billableMinutes': 0,
+  'rateCents': state.settings['hourlyRateCents'] ?? 4800,
+  'taxBps': state.settings['taxBps'] ?? 2100,
+  'scopeVersion': 1,
+  'block': null,
+};
 void applyTaskChange(
   WorkshopState state,
   WorkOrder order,
@@ -37,14 +71,7 @@ void applyTaskChange(
   }
 
   List<String> assignees(dynamic value) {
-    if (value is! List ||
-        value.isEmpty ||
-        value.length > 20 ||
-        value.toSet().length != value.length ||
-        value.any((id) => !state.members.any((m) => m.id == id && m.active))) {
-      throw const RuleException('Selecciona operarios activos del taller');
-    }
-    return value.cast<String>();
+    return activeAssignees(state, value);
   }
 
   void stopped(String id) {
@@ -53,26 +80,8 @@ void applyTaskChange(
     }
   }
 
-  Map<String, dynamic> createTask(Map<String, dynamic> source) => {
-    'id': requiredText(source['id'], 'Tarea interna', max: 100),
-    'title': requiredText(source['title'], 'Descripción', max: 300),
-    'estimateMinutes': boundedInt(
-      source['estimateMinutes'],
-      14400,
-      'Minutos estimados',
-      min: 1,
-    ),
-    'assignees': assignees(source['assignees']),
-    'authorized': false,
-    'authorization': null,
-    'approvedCents': 0,
-    'done': false,
-    'billableMinutes': 0,
-    'rateCents': state.settings['hourlyRateCents'] ?? 4800,
-    'taxBps': state.settings['taxBps'] ?? 2100,
-    'scopeVersion': 1,
-    'block': null,
-  };
+  Map<String, dynamic> createTask(Map<String, dynamic> source) =>
+      newTask(state, source);
   switch (op.kind) {
     case 'task_add':
       if (order.tasks.any((t) => t['id'] == p['task']['id'])) {

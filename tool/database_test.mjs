@@ -30,7 +30,7 @@ await db.query("insert into private.catalog(workshop_id,id,reference,description
 const data={plate:'48-21 lkr',country:'ES',vin:'',vehicle:'Vehicle demo',engine:'2020',client:'Synthetic client',phone:'',km:100,symptom:'Original symptom',location:'Bay 1',keys:'Key board',due:'Today',priority:'Normal',tasks:[{id:task,title:'Diagnosis',authorized:true,done:false,assignees:[tech],estimateMinutes:30,billableMinutes:50,rateCents:999999,taxBps:0,approvedCents:999999},{id:task2,title:'Extension',assignees:[tech],estimateMinutes:30}]};
 async function login(user) {currentUser=user;await db.exec('reset role');await db.query('insert into auth.sessions values($1,$2) on conflict do nothing',[currentDevice(),user]);await db.query("select set_config('request.jwt.claims',$1,false)",[JSON.stringify({sub:user,session_id:currentDevice()})]);await db.query("select set_config('request.jwt.claim.sub',$1,false)",[user]);await db.exec('set role authenticated');}
 async function push(kind,payload,opts={}) {
- const op={id:opts.id??id(),orderId:order,kind,actorId:opts.actor??office,baseRevision:opts.revision??0,at:opts.at??new Date().toISOString(),payload};
+ const op={id:opts.id??id(),orderId:opts.orderId??order,kind,actorId:opts.actor??office,baseRevision:opts.revision??0,at:opts.at??new Date().toISOString(),payload};
  await snapshot(opts.workshop??w);
  const r=await db.query('select public.apply_operation($1,$2,$3) result',[opts.workshop??w,opts.device??(op.actorId===tech?techDevice:device),op]);return {op,result:r.rows[0].result};
 }
@@ -41,6 +41,11 @@ try {
  const receive=await push('receive',data);
  await test('Reception canonicalizes plate and refuses injected approval/prices',async()=>{
   assert.equal(receive.result.status,'accepted');const o=(await snapshot()).orders[0];assert.equal(o.plate,'4821LKR');assert.equal(o.tasks[0].authorized,false);assert.equal(o.tasks[0].billableMinutes,0);assert.equal(o.tasks[0].rateCents,4800);
+ });
+ await test('Duplicate reception tasks are retained as a conflict without creating an order or another vehicle',async()=>{
+  const r=await push('receive',{...data,plate:'FICT DUP',tasks:[data.tasks[0],data.tasks[0]]},{orderId:id()});
+  assert.equal(r.result.status,'conflict');assert.match(r.result.reason,/Duplicate reception/);
+  assert.equal((await snapshot()).orders.length,1);
  });
  await test('Direct table mutation is denied to authenticated clients',async()=>{await assert.rejects(()=>db.exec("update private.members set role='admin'"),/permission denied/);});
  await test('Workshop isolation and anonymous reads are enforced',async()=>{

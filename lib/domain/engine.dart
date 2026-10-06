@@ -141,7 +141,43 @@ class WorkshopState {
       if (orders.containsKey(op.orderId)) {
         throw const RuleException('La orden ya existe');
       }
-      final d = cloneMap(op.payload);
+      final d = {
+        for (final k in [
+          'plate',
+          'country',
+          'vin',
+          'vehicle',
+          'engine',
+          'client',
+          'phone',
+          'km',
+          'symptom',
+          'location',
+          'keys',
+          'due',
+          'priority',
+          'number',
+          'vehicleId',
+        ])
+          if (op.payload.containsKey(k)) k: op.payload[k],
+      };
+      d['client'] = requiredText(d['client'], 'Cliente', max: 300);
+      d['country'] = requiredText(d['country'], 'País', max: 2).toUpperCase();
+      d['vin'] = (d['vin'] as String? ?? '').trim().toUpperCase();
+      d['km'] = boundedInt(d['km'], 2147483647, 'Kilometraje');
+      final sourceTasks = op.payload['tasks'];
+      if (sourceTasks is! List ||
+          sourceTasks.isEmpty ||
+          sourceTasks.length > 40) {
+        throw const RuleException('La recepción necesita entre 1 y 40 tareas');
+      }
+      final tasks = sourceTasks
+          .map((t) => newTask(this, Map<String, dynamic>.from(t)))
+          .toList();
+      if (tasks.map((t) => t['id']).toSet().length != tasks.length) {
+        throw const RuleException('Tareas duplicadas en la recepción');
+      }
+      d['tasks'] = tasks;
       if ((d['symptom'] as String).trim().isEmpty ||
           normalizePlate(d['plate']).isEmpty) {
         throw const RuleException('Matrícula y síntoma son obligatorios');
@@ -371,6 +407,9 @@ class WorkshopState {
       case 'authorize':
         office();
         final t = task();
+        if (t['cancelled'] == true) {
+          throw const RuleException('Tarea cancelada');
+        }
         if ((p['evidence'] as String? ?? '').trim().isEmpty ||
             (p['customer'] as String? ?? '').trim().isEmpty) {
           throw const RuleException(
