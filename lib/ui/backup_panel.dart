@@ -2,15 +2,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../data/backup.dart';
+import '../data/backup_set.dart';
 import '../data/controller.dart';
 import '../domain/models.dart';
 
-Future<Uint8List> _seal(Map<String, dynamic> request) => BackupCodec().seal(
-  Map<String, dynamic>.from(request['archive']),
-  request['password'],
-);
 Future<Map<String, dynamic>> _open(Map<String, dynamic> request) =>
     BackupCodec().open(request['bytes'] as Uint8List, request['password']);
+Future<List<int>> _deriveSetKey(Map<String, dynamic> request) =>
+    deriveBackupSetKey(request['password'], List<int>.from(request['salt']));
 
 class BackupPanel extends StatefulWidget {
   final WorkshopController controller;
@@ -23,6 +22,10 @@ class _BackupPanelState extends State<BackupPanel> {
   bool busy = false;
   String? status;
   WorkshopController get c => widget.controller;
+  BackupSetCodec get codec => BackupSetCodec(
+    deriveKey: (password, salt) =>
+        compute(_deriveSetKey, {'password': password, 'salt': salt}),
+  );
   Future<void> run(Future<void> Function() action) async {
     setState(() {
       busy = true;
@@ -45,44 +48,78 @@ class _BackupPanelState extends State<BackupPanel> {
   Future<void> export({bool complete = false}) => run(() async {
     final secret = await password(creating: true);
     if (secret == null) return;
-    final archive = await c.exportBackup(complete: complete);
-    final bytes = await compute(_seal, {
-      'archive': archive,
-      'password': secret,
-    });
-    final uri = await FilePicker.saveFile(
-      dialogTitle: 'Guardar copia cifrada',
-      fileName: 'TallerFlow-${archive['archiveId']}.tfbackup',
-      type: FileType.custom,
-      allowedExtensions: ['tfbackup'],
-      bytes: bytes,
-    );
-    if (mounted && uri != null) {
+    final archive = await c.exportBackup(complete: complete, splitFiles: true);
+    var saved = 0;
+    await for (final part in codec.sealParts(
+      archive,
+      secret,
+      readPhoto: c.vault.photos.read,
+    )) {
+      if (!mounted) return;
       setState(
         () => status =
-            'Copia cifrada guardada. Conserva la contraseña fuera de este dispositivo. '
+            'Guardando parte ${part.index}${part.last ? ' (última)' : ''}. Conserva todas las partes juntas.',
+      );
+      final uri = await FilePicker.saveFile(
+        dialogTitle: 'Guardar parte ${part.index} de la copia cifrada',
+        fileName: part.fileName,
+        type: FileType.custom,
+        allowedExtensions: ['tfpart'],
+        bytes: part.bytes,
+      );
+      if (uri == null) {
+        if (mounted) {
+          setState(
+            () => status = saved == 0
+                ? 'Copia cancelada.'
+                : 'Copia incompleta: se guardaron $saved partes. Repite la exportación y conserva todas las partes de la nueva copia.',
+          );
+        }
+        return;
+      }
+      saved++;
+    }
+    if (mounted) {
+      setState(
+        () => status =
+            'Copia cifrada guardada en $saved partes. Conserva todas juntas y la contraseña fuera de este dispositivo. '
             '${complete ? 'Incluye servidor y este equipo. Los otros equipos necesitan su propia copia.' : 'Incluye solo este equipo, sus documentos descargados y sus pendientes.'}',
       );
     }
   });
   Future<void> restore({bool server = false}) => run(() async {
-    final file = await FilePicker.pickFile(
+    final files = await FilePicker.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['tfbackup'],
+      allowedExtensions: ['tfbackup', 'tfpart'],
     );
-    if (file == null) return;
-    final length = await file.length();
-    if (length == null || length > BackupCodec.maxBytes) {
-      throw const FormatException(
-        'No se puede leer esta copia o supera el tamaño admitido',
-      );
-    }
+    if (files.isEmpty) return;
     final secret = await password(creating: false);
     if (secret == null) return;
-    final archive = await compute(_open, {
-      'bytes': await file.readAsBytes(),
-      'password': secret,
-    });
+    final split =
+        !(files.length == 1 &&
+            files.single.name.toLowerCase().endsWith('.tfbackup'));
+    Map<String, dynamic> archive;
+    if (split) {
+      archive = await codec.openParts(
+        [
+          for (final file in files)
+            BackupPartInput(length: file.length, read: file.readAsBytes),
+        ],
+        secret,
+        writePhoto: c.vault.photos.write,
+      );
+    } else {
+      final length = await files.single.length();
+      if (length == null || length > BackupCodec.maxBytes) {
+        throw const FormatException(
+          'La copia antigua supera el tamaño admitido',
+        );
+      }
+      archive = await compute(_open, {
+        'bytes': await files.single.readAsBytes(),
+        'password': secret,
+      });
+    }
     if (!mounted) return;
     final local = archive['local'] as Map;
     final confirmed = await showDialog<bool>(
@@ -116,7 +153,10 @@ class _BackupPanelState extends State<BackupPanel> {
     );
     if (confirmed != true) return;
     if (server) {
-      final result = await c.restoreServerBackup(archive);
+      final result = await c.restoreServerBackup(
+        archive,
+        readPhoto: split ? c.vault.photos.read : null,
+      );
       if (mounted) {
         setState(
           () => status =
@@ -124,7 +164,10 @@ class _BackupPanelState extends State<BackupPanel> {
         );
       }
     } else {
-      await c.restoreLocalBackup(archive);
+      await c.restoreLocalBackup(
+        archive,
+        readPhoto: split ? c.vault.photos.read : null,
+      );
       if (mounted) {
         setState(
           () => status =
@@ -146,7 +189,7 @@ class _BackupPanelState extends State<BackupPanel> {
           ),
           const SizedBox(height: 12),
           const Text(
-            'Los pendientes de un móvil desconectado solo existen en ese equipo. Guarda una copia de cada dispositivo y una del servidor. La contraseña de la copia es distinta de la cuenta y no se guarda en TallerFlow.',
+            'Los pendientes de un móvil desconectado solo existen en ese equipo. Guarda una copia de cada dispositivo y una del servidor. Conserva juntas todas las partes cifradas y selecciónalas a la vez para recuperar. La contraseña de la copia es distinta de la cuenta y no se guarda en TallerFlow.',
           ),
           const SizedBox(height: 16),
           Wrap(

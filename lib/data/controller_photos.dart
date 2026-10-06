@@ -192,9 +192,6 @@ extension WorkshopPhotos on WorkshopController {
 
   Future<Uint8List> photoBytes(Map<String, dynamic> photo) => _locked(() async {
     _checkAccess();
-    if (!visibleOrders.any((o) => o.id == photo['orderId'])) {
-      throw const RuleException('Orden no disponible para esta cuenta');
-    }
     final evidence = [...photoManifest, ...photoQueue]
         .where(
           (p) =>
@@ -204,6 +201,19 @@ extension WorkshopPhotos on WorkshopController {
         )
         .firstOrNull;
     if (evidence == null) throw const RuleException('Fotografía no disponible');
+    final historical = WorkshopController._maps(
+      state.configuration['vehicleHistory'],
+    ).where((h) => h['id'] == evidence['orderId']).firstOrNull;
+    final historicalAccess =
+        evidence['status'] == 'attached' &&
+        historical != null &&
+        visibleOrders.any(
+          (o) => (o.data['vehicleId'] ?? o.id) == historical['vehicleId'],
+        );
+    if (!visibleOrders.any((o) => o.id == evidence['orderId']) &&
+        !historicalAccess) {
+      throw const RuleException('Historial no disponible para esta cuenta');
+    }
     final existing = await vault.photos.read(evidence['sha256']);
     if (existing != null) return existing;
     _checkOnline();

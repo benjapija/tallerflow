@@ -9,10 +9,11 @@ extension PhotoBackup on WorkshopController {
     return local;
   }
 
-  Future<Map<String, String>> _exportPhotoFiles(
-    Map<String, dynamic>? server,
-  ) async {
-    final files = <String, String>{};
+  Future<Map<String, dynamic>> _exportPhotoFiles(
+    Map<String, dynamic>? server, {
+    bool splitFiles = false,
+  }) async {
+    final files = <String, dynamic>{};
     final metadata = [
       ...photoManifest,
       ...photoQueue,
@@ -45,42 +46,49 @@ extension PhotoBackup on WorkshopController {
         }
         await vault.photos.write(hash, bytes);
       }
-      files[hash] = base64Encode(bytes);
+      files[hash] = splitFiles ? bytes.length : base64Encode(bytes);
     }
     return files;
   }
 
-  Future<Map<String, Uint8List>> _validatePhotoFiles(
-    Map<String, dynamic> archive,
-  ) async {
+  Future<Map<String, int>> _validatePhotoFiles(
+    Map<String, dynamic> archive, {
+    Future<Uint8List?> Function(String)? readPhoto,
+  }) async {
     final raw = archive['photoFiles'];
     if (raw != null && raw is! Map) {
       throw const RuleException('Archivos de copia incompatibles');
     }
-    final files = <String, Uint8List>{};
+    final files = <String, int>{};
     for (final entry in (raw as Map? ?? {}).entries) {
-      if (entry.key is! String || entry.value is! String) {
+      if (entry.key is! String ||
+          (entry.value is! String &&
+              !(entry.value is int && readPhoto != null))) {
         throw const RuleException('Archivo de copia incompatible');
       }
       PhotoBlobs.validateHash(entry.key);
-      if ((entry.value as String).length > 5592408) {
+      if (entry.value is String && (entry.value as String).length > 5592408) {
         throw const RuleException('Fotografía demasiado grande');
       }
-      final bytes = base64Decode(entry.value);
-      if (bytes.isEmpty ||
+      final bytes = entry.value is String
+          ? base64Decode(entry.value)
+          : await readPhoto!(entry.key);
+      if (bytes == null ||
+          bytes.isEmpty ||
           bytes.length > 4194304 ||
+          (entry.value is int && bytes.length != entry.value) ||
           await PhotoBlobs.digest(bytes) != entry.key) {
         throw const RuleException('Fotografía de copia dañada');
       }
-      files[entry.key] = bytes;
+      // Immutable encrypted files may be staged before validation finishes.
+      // No live metadata is changed until every file and record is valid.
+      await vault.photos.write(entry.key, bytes);
+      files[entry.key] = bytes.length;
     }
     return files;
   }
 
-  void _validatePhotoLocal(
-    Map<String, dynamic> local,
-    Map<String, Uint8List> files,
-  ) {
+  void _validatePhotoLocal(Map<String, dynamic> local, Map<String, int> files) {
     final ids = <String>{};
     for (final p in WorkshopController._maps(local['photoQueue'])) {
       if (p['actorId'] != actor.id ||
@@ -94,7 +102,7 @@ extension PhotoBackup on WorkshopController {
           p['capturedAt'] is! String ||
           p['mime'] != 'image/jpeg' ||
           p['size'] is! int ||
-          files[p['sha256']]?.length != p['size']) {
+          files[p['sha256']] != p['size']) {
         throw const RuleException(
           'Captura pendiente incompatible o sin archivo original',
         );

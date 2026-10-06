@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-06T23:33:14.364Z",
+  "runId": "e2792469-2b98-48e1-b549-256d8c35ab7b",
+  "workshop": "9d831501-3cfb-4f83-90ac-150a6d4ac385",
+  "applicationCheckpoint": "6d8fbaee01adca4bdd8b1068fdb79568186dd9f9",
+  "validationScriptPublished": false,
+  "environment": "hosted Auth, PostgREST, Edge Functions and Storage HTTP",
+  "fictionalAccounts": true,
+  "nativeDeviceValidated": false,
+  "realAdminPasswordRead": false,
+  "checks": [
+    "Five fictional accounts sign in through GoTrue and user IDs remain original",
+    "Real JWT snapshots bind admin, office and both operators to individual devices",
+    "Anonymous and another workshop cannot read the fixture",
+    "Admin rates are audited and operator administration is denied over HTTP",
+    "Office receives a fictional vehicle with two assigned operators and authorizes its task",
+    "Operators see technical work but tariff and internal cost remain hidden",
+    "An authenticated operator prepares a private photo and stable retry preserves its identity",
+    "Storage upload uses the reserved immutable path and verification retries once",
+    "Office and the assigned second operator download the exact private bytes"
+  ],
+  "passed": false,
+  "error": "Direct object GET must remain disabled\n\ntrue !== false\n",
+  "totalChecks": 9
+}

@@ -429,33 +429,36 @@ class WorkshopController extends ChangeNotifier {
     'captureTicket': captureTicket,
   };
 
-  Future<Map<String, dynamic>> exportBackup({bool complete = false}) =>
-      _locked(() async {
-        _checkAccess();
-        if (complete && (actor.role != Role.admin || demo || offline)) {
-          throw const RuleException(
-            'Conecta como administrador para copiar el servidor',
-          );
-        }
-        final server = complete ? await remote!.exportWorkshop() : null;
-        final files = await _exportPhotoFiles(server);
-        return {
-          'kind': 'TallerFlow',
-          'version': 1,
-          'archiveId': const Uuid().v4(),
-          'createdAt': clock().toUtc().toIso8601String(),
-          'workshopId': state.workshopId,
-          'actorId': actor.id,
-          'scope': complete ? 'workshop-and-device' : 'device',
-          'local': _portableLocal(),
-          'photoFiles': files,
-          'server': ?server,
-        };
-      });
+  Future<Map<String, dynamic>> exportBackup({
+    bool complete = false,
+    bool splitFiles = false,
+  }) => _locked(() async {
+    _checkAccess();
+    if (complete && (actor.role != Role.admin || demo || offline)) {
+      throw const RuleException(
+        'Conecta como administrador para copiar el servidor',
+      );
+    }
+    final server = complete ? await remote!.exportWorkshop() : null;
+    final files = await _exportPhotoFiles(server, splitFiles: splitFiles);
+    return {
+      'kind': 'TallerFlow',
+      'version': 1,
+      'archiveId': const Uuid().v4(),
+      'createdAt': clock().toUtc().toIso8601String(),
+      'workshopId': state.workshopId,
+      'actorId': actor.id,
+      'scope': complete ? 'workshop-and-device' : 'device',
+      'local': _portableLocal(),
+      'photoFiles': files,
+      'server': ?server,
+    };
+  });
 
   Future<void> restoreLocalBackup(
-    Map<String, dynamic> archive,
-  ) => _locked(() async {
+    Map<String, dynamic> archive, {
+    Future<Uint8List?> Function(String)? readPhoto,
+  }) => _locked(() async {
     if (archive['kind'] != 'TallerFlow' ||
         archive['version'] != 1 ||
         archive['workshopId'] != state.workshopId ||
@@ -478,7 +481,7 @@ class WorkshopController extends ChangeNotifier {
         local['state']['workshopId'] != state.workshopId) {
       throw const RuleException('Contenido de copia incompatible');
     }
-    final files = await _validatePhotoFiles(archive);
+    final files = await _validatePhotoFiles(archive, readPhoto: readPhoto);
     _validatePhotoLocal(local, files);
     if (local['captureTicket'] is Map) {
       local['captureTicket'].remove('sourcePath');
@@ -555,9 +558,6 @@ class WorkshopController extends ChangeNotifier {
     };
     // Immutable encrypted blobs complete first. An interrupted metadata write
     // leaves only harmless unreferenced files, never a dangling queue.
-    for (final file in files.entries) {
-      await vault.photos.write(file.key, file.value);
-    }
     local['cachedPhotoHashes'] = files.keys.toList();
     // Atomic encrypted write completes before replacing in-memory state.
     await vault.write(local);
@@ -566,8 +566,9 @@ class WorkshopController extends ChangeNotifier {
   });
 
   Future<Map<String, dynamic>> restoreServerBackup(
-    Map<String, dynamic> archive,
-  ) => _locked(() async {
+    Map<String, dynamic> archive, {
+    Future<Uint8List?> Function(String)? readPhoto,
+  }) => _locked(() async {
     _checkAccess();
     _checkOnline();
     if (actor.role != Role.admin ||
@@ -580,12 +581,12 @@ class WorkshopController extends ChangeNotifier {
         'Restauración completa: administrador, taller correcto y equipo sin pendientes',
       );
     }
-    final files = await _validatePhotoFiles(archive);
+    final files = await _validatePhotoFiles(archive, readPhoto: readPhoto);
     final server = Map<String, dynamic>.from(archive['server']);
     final expected = WorkshopController._maps(server['photoFiles']);
     for (final photo in expected.where((p) => p['filePresent'] == true)) {
-      final bytes = files[photo['sha256']];
-      if (bytes == null || bytes.length != photo['size']) {
+      final size = files[photo['sha256']];
+      if (size == null || size != photo['size']) {
         throw const RuleException(
           'La copia no contiene todos los archivos originales',
         );
@@ -602,7 +603,11 @@ class WorkshopController extends ChangeNotifier {
           'El servidor no coincide con el manifiesto de recuperación',
         );
       }
-      await remote!.uploadPhoto(info, files[photo['sha256']]!);
+      final bytes = await vault.photos.read(photo['sha256']);
+      if (bytes == null || bytes.length != photo['size']) {
+        throw const RuleException('Falta un archivo de recuperación');
+      }
+      await remote!.uploadPhoto(info, bytes);
       await remote!.finalizePhoto(photo['id']);
     }
     await _refresh();

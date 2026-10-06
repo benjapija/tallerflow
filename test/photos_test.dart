@@ -9,6 +9,7 @@ import 'package:tallerflow/data/photo_blobs.dart';
 import 'package:tallerflow/data/simulation.dart';
 import 'package:tallerflow/data/vault.dart';
 import 'package:tallerflow/domain/photos.dart';
+import 'package:tallerflow/domain/engine.dart';
 
 Uint8List photo() => prepareTechnicalPhoto(
   Uint8List.fromList(img.encodePng(img.Image(width: 20, height: 12))),
@@ -65,6 +66,70 @@ class PhotoRemote extends SimulatedRemote {
 }
 
 void main() {
+  test(
+    'Technical historical photos require a current assigned vehicle even when the file is cached',
+    () async {
+      final c = WorkshopController(
+        Vault(MemoryStore(), await AesGcm.with256bits().newSecretKey()),
+        actor: demoActors[0],
+      );
+      await c.load();
+      final bytes = photo(), hash = await PhotoBlobs.digest(bytes);
+      final historical = {
+        'id': 'historical-photo',
+        'orderId': 'historical-order',
+        'sha256': hash,
+        'status': 'attached',
+      };
+      c.state.orders['o-1048']!.data['vehicleId'] = 'same-vehicle';
+      c.state.configuration['vehicleHistory'] = [
+        {'id': 'historical-order', 'vehicleId': 'same-vehicle'},
+      ];
+      c.state.configuration['photoManifest'] = [historical];
+      await c.vault.photos.write(hash, bytes);
+      expect(await c.photoBytes(historical), bytes);
+      c.state.orders['o-1048']!.data['vehicleId'] = 'different-vehicle';
+      await expectLater(
+        c.photoBytes(historical),
+        throwsA(isA<RuleException>()),
+      );
+      c.dispose();
+    },
+  );
+  test(
+    'Recovered historical files remain hidden to an operator until office review attaches them',
+    () async {
+      final c = WorkshopController(
+        Vault(MemoryStore(), await AesGcm.with256bits().newSecretKey()),
+        actor: demoActors[0],
+      );
+      await c.load();
+      final bytes = photo(), hash = await PhotoBlobs.digest(bytes);
+      final historical = {
+        'id': 'historical-photo',
+        'orderId': 'historical-order',
+        'sha256': hash,
+        'status': 'review',
+      };
+      c.state.orders['o-1048']!.data['vehicleId'] = 'same-vehicle';
+      c.state.configuration['vehicleHistory'] = [
+        {'id': 'historical-order', 'vehicleId': 'same-vehicle'},
+      ];
+      c.state.configuration['photoManifest'] = [historical];
+      await c.vault.photos.write(hash, bytes);
+      await expectLater(
+        c.photoBytes(historical),
+        throwsA(isA<RuleException>()),
+      );
+      historical['status'] = 'attached';
+      await expectLater(
+        c.photoBytes({...historical, 'sha256': '0' * 64}),
+        throwsA(isA<RuleException>()),
+      );
+      expect(await c.photoBytes(historical), bytes);
+      c.dispose();
+    },
+  );
   test('Fresh JPEG strips metadata and rejects invalid or excessive input', () {
     final image = img.Image(width: 2000, height: 30);
     image.exif.imageIfd.make = 'Fictional identifiable camera';

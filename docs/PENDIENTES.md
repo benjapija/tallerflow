@@ -4,15 +4,15 @@ Base: requisitos originales y entrega 0.2. La palabra «probado» identifica el 
 
 | Prioridad | Estado | Dependencia o siguiente comprobación |
 |---|---|---|
-| Fiabilidad 0.2 | Implementada y probada localmente | Regresiones locales y SQL alojado aprobadas; Auth real y equipos físicos pendientes |
-| Exportación y restauración completas | Copia cifrada y recuperación local implementadas | Fotos y pendientes incluidos y recuperación local comprobada; quedan copias grandes, recuperación Auth entre proyectos y uso nativo |
-| Administración, catálogo y plantillas | Edición implementada y probada localmente | Creación desde aplicación y recuperación probadas localmente; servicio desplegado; Auth real pendiente |
-| Tareas, asignaciones, prioridades y bloqueos | Implementadas y probadas localmente | Circuito básico alojado aprobado; dispositivos pendientes |
+| Fiabilidad 0.2 | Implementada y probada localmente | Regresiones locales, SQL alojado y 15 comprobaciones HTTP con Auth real aprobadas; clientes físicos pendientes |
+| Exportación y restauración completas | Copia cifrada y recuperación local implementadas | Copias divididas cifradas y 36 MiB de fotos comprobadas localmente; quedan recuperación Auth entre proyectos y uso nativo |
+| Administración, catálogo y plantillas | Edición implementada y probada localmente | Creación desde aplicación y recuperación probadas localmente; servicio desplegado; acceso real por roles comprobado por HTTP; alta desde cliente nativo pendiente |
+| Tareas, asignaciones, prioridades y bloqueos | Implementadas y probadas localmente | Circuito de dos operarios y oficina aprobado con JWT reales por HTTP; dispositivos pendientes |
 | Historial y cambios de propietario/matrícula | Implementados; pruebas locales y 11 alojadas aprobadas | Identidad estable, alias históricos y destinatarios originales protegidos; falta piloto nativo y acceso de portal por destinatario |
 | Precios, descuentos, excepciones y margen | Implementados; pruebas locales y 10 alojadas aprobadas | Revisión con motivo, reautorización ante aumentos, descuentos antes del IVA y costes de consumos sin cobro; falta piloto nativo |
 | CSV de clientes, vehículos y catálogo | Implementado; 8 pruebas Flutter, 12 locales SQL y 10 alojadas aprobadas | Vista previa por fila, códigos de cliente, duplicados conservados, auditoría y reintentos; selector nativo y Auth HTTP pendientes |
-| Fotos privadas, QR y enlaces nativos | Implementados; pruebas locales y 10 SQL alojadas aprobadas | Storage HTTP con Auth real, cámara física y apertura por enlace del sistema pendientes |
-| Supabase alojado | Conectado, diez migraciones y funciones de altas/fotos aplicadas | Proyecto gpseuqmzbazifmkhjyby, plan Free; cuenta ramirezbroja013@gmail.com vinculada como administradora; falta iniciar sesión y comprobar Auth real |
+| Fotos privadas, QR y enlaces nativos | Implementados; pruebas locales y 10 SQL alojadas aprobadas | Descarga privada sin caché, revocación y Storage HTTP comprobados; cámara física y apertura por enlace del sistema pendientes |
+| Supabase alojado | Conectado, doce migraciones y funciones de altas/fotos aplicadas | Proyecto gpseuqmzbazifmkhjyby, plan Free; cuenta ramirezbroja013@gmail.com vinculada como administradora; cinco cuentas ficticias probaron Auth real y quedaron retiradas; falta iniciar sesión personalmente desde cliente nativo |
 | iOS/Android | Compilación en GitHub aprobada | Xcode 27 instalado y cuenta Apple conectada; Android Studio instalado y herramientas verificadas; licencias del SDK pendientes, uso en simuladores y equipos físicos pendientes |
 | Aplicación macOS | Fuera del alcance | Retirada por petición del usuario el 6 de octubre; el Mac sigue como equipo de desarrollo |
 | Windows | Compilación, instalador y circuito nativo remoto aprobados parcialmente | Dos procesos reales con cifrado/credenciales y servidor ficticio en Actions; falta instalación manual y cuentas Supabase reales |

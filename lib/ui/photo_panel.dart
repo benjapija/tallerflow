@@ -184,6 +184,55 @@ class _PhotoPanelState extends State<PhotoPanel> {
   });
 }
 
+class HistoricalPhotoGallery extends StatefulWidget {
+  final WorkshopController controller;
+  final String orderId;
+  const HistoricalPhotoGallery({
+    super.key,
+    required this.controller,
+    required this.orderId,
+  });
+  @override
+  State<HistoricalPhotoGallery> createState() => _HistoricalPhotoGalleryState();
+}
+
+class _HistoricalPhotoGalleryState extends State<HistoricalPhotoGallery> {
+  bool opened = false;
+  @override
+  Widget build(BuildContext context) {
+    final c = widget.controller;
+    final photos = c.photoManifest
+        .where(
+          (p) =>
+              p['orderId'] == widget.orderId &&
+              (c.actor.isOffice || p['status'] == 'attached'),
+        )
+        .toList();
+    if (photos.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        TextButton.icon(
+          onPressed: () => setState(() => opened = !opened),
+          icon: const Icon(Icons.photo_library_outlined),
+          label: Text(
+            opened
+                ? 'Ocultar fotografías técnicas'
+                : 'Ver ${photos.length} fotografías técnicas',
+          ),
+        ),
+        if (opened)
+          for (final photo in photos)
+            _PhotoCard(
+              key: ValueKey('${c.actor.id}-${photo['id']}'),
+              controller: c,
+              photo: photo,
+            ),
+      ],
+    );
+  }
+}
+
 class _PhotoCard extends StatefulWidget {
   final WorkshopController controller;
   final Map<String, dynamic> photo;

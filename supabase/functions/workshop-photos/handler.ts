@@ -3,6 +3,7 @@ export type PhotoDependencies={
  authenticate(jwt:string):Promise<boolean>;
  prepare(jwt:string,w:string,d:string,id:string,p:Info):Promise<Info>;
  info(jwt:string,w:string,d:string,id:string):Promise<Info>;
+ readInfo(jwt:string,w:string,d:string,id:string):Promise<Info>;
  bucket():Promise<void>;
  download(path:string):Promise<Uint8Array>;
  finish(w:string,d:string,id:string,info:Info,hash:string,size:number):Promise<Info>;
@@ -21,15 +22,20 @@ export function photoHandler(dep:PhotoDependencies){return async(req:Request):Pr
   if(b.action==='prepare'){
    if(!uuid(b.commandId)||!uuid(b.payload?.id))return response(400,{error:'Invalid photo identity'});
    await dep.prepare(match[1],b.workshopId,b.deviceId,b.commandId,b.payload);id=b.payload.id;
-  }else if(!['verify','restore'].includes(b.action)||!uuid(id))return response(400,{error:'Invalid photo action'});
-  const info=await dep.info(match[1],b.workshopId,b.deviceId,id);
+  }else if(!['verify','restore','read'].includes(b.action)||!uuid(id))return response(400,{error:'Invalid photo action'});
+  const info=b.action==='read'?await dep.readInfo(match[1],b.workshopId,b.deviceId,id):await dep.info(match[1],b.workshopId,b.deviceId,id);
   // All privileged Storage work follows the user-scoped SQL authorization.
   await dep.bucket();
-  if(b.action!=='verify')return response(200,info);
+  if(!['verify','read'].includes(b.action))return response(200,info);
   const bytes=await dep.download(info.path);
   if(bytes.length<4||bytes.length>4194304||bytes[0]!==255||bytes[1]!==216||bytes[2]!==255||bytes[bytes.length-2]!==255||bytes[bytes.length-1]!==217)throw new Error('JPEG required');
   const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))).map(n=>n.toString(16).padStart(2,'0')).join('');
   if(hash!==info.sha256||bytes.length!==info.size)throw new Error('Photo integrity mismatch');
+  if(b.action==='read'){
+   const current=await dep.readInfo(match[1],b.workshopId,b.deviceId,id);
+   if(current.path!==info.path||current.sha256!==hash||current.size!==bytes.length||current.userId!==info.userId||current.sessionId!==info.sessionId)throw {code:'42501'};
+   return new Response(bytes,{status:200,headers:{'Content-Type':'application/octet-stream','Cache-Control':'private, no-store, max-age=0','Pragma':'no-cache','X-Content-Type-Options':'nosniff'}});
+  }
   // SQL checks current Auth session and assignment again after reading bytes.
   return response(200,await dep.finish(b.workshopId,b.deviceId,id,info,hash,bytes.length));
  }catch(error){

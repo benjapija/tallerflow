@@ -1,0 +1,3 @@
+{"stage":"before","ok":true,"status":200,"cache":"HIT","cacheControl":"no-cache"}
+{"stage":"after-same","ok":true,"status":200,"cache":"HIT","cacheControl":"no-cache"}
+{"stage":"after-uncached","ok":false,"status":400,"cache":"BYPASS","cacheControl":null}

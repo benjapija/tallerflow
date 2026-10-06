@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-06T23:34:38.690Z",
+  "runId": "e2792469-2b98-48e1-b549-256d8c35ab7b",
+  "workshop": "9d831501-3cfb-4f83-90ac-150a6d4ac385",
+  "applicationCheckpoint": "6d8fbaee01adca4bdd8b1068fdb79568186dd9f9",
+  "validationScriptPublished": false,
+  "environment": "hosted Auth, PostgREST, Edge Functions and Storage HTTP",
+  "fictionalAccounts": true,
+  "nativeDeviceValidated": false,
+  "realAdminPasswordRead": false,
+  "checks": [
+    "Five fictional accounts sign in through GoTrue and user IDs remain original",
+    "Real JWT snapshots bind admin, office and both operators to individual devices",
+    "Anonymous and another workshop cannot read the fixture",
+    "Admin rates are audited and operator administration is denied over HTTP",
+    "Office receives a fictional vehicle with two assigned operators and authorizes its task",
+    "Operators see technical work but tariff and internal cost remain hidden",
+    "An authenticated operator prepares a private photo and stable retry preserves its identity",
+    "Storage upload uses the reserved immutable path and verification retries once",
+    "Office and the assigned second operator download the exact private bytes",
+    "Another workshop, anonymous read, signed URLs, replacement and deletion are denied",
+    "Concurrent operators and a lost operation response preserve one original timer each",
+    "Office archives the rejected fictional VIN with a reason before coordinated closure",
+    "Office quality and billable review calculate an immutable document after every device acknowledges",
+    "Complete HTTP export preserves photos, audit and document while excluding Auth secrets",
+    "Sign-out invalidates real session access even when the old JWT has not expired"
+  ],
+  "passed": true,
+  "closureRequestId": "a1558d7d-1777-445b-a378-e823bf854620",
+  "photoHash": "1110e84bbbe81b69783a362888219094d2946ab95d1e701722b4399c5a12e7bf",
+  "photoPath": "9d831501-3cfb-4f83-90ac-150a6d4ac385/90e55dc1-cc05-464a-8ebd-eef8e8bf7349/c2b2cd37-4c3f-4217-aa8d-d75e0ab598ad.jpg",
+  "totalChecks": 15
+}

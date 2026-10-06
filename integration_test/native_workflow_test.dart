@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:image/image.dart' as img;
+import 'package:tallerflow/data/backup_set.dart';
+import 'package:tallerflow/data/photo_blobs.dart';
 import 'package:tallerflow/data/controller.dart';
 import 'package:tallerflow/data/demo.dart';
 import 'package:tallerflow/data/local_native.dart';
@@ -45,7 +49,7 @@ void main() {
     }
     final c = WorkshopController(
       vault,
-      remote: SimulatedRemote(server, demoActors[0]),
+      remote: NativePhotoRemote(server),
       actor: demoActors[0],
       clock: () => now,
     );
@@ -82,15 +86,78 @@ void main() {
       await waitForSavedRecords(2);
       expect(c.outbox, hasLength(2));
       expect(c.state.orders['o-1048']!.times.single['end'], isNotNull);
+      await tester.runAsync(() async {
+        await c.beginPhotoCapture(
+          'o-1048',
+          'Fotografía ficticia para reinicio nativo',
+        );
+        await c.finishPhotoCapture(
+          Uint8List.fromList(img.encodeJpg(img.Image(width: 16, height: 12))),
+        );
+        final archive = await c.exportBackup(splitFiles: true);
+        final dir = Directory(
+          '${(await getApplicationSupportDirectory()).path}/$scope.backup',
+        );
+        await dir.create(recursive: true);
+        await for (final part in BackupSetCodec().sealParts(
+          archive,
+          'Contraseña ficticia de copia nativa',
+          readPhoto: vault.photos.read,
+        )) {
+          await File(
+            '${dir.path}/${part.fileName}',
+          ).writeAsBytes(part.bytes, flush: true);
+        }
+      });
+      expect(c.photoQueue, hasLength(1));
     } else {
       expect(c.deviceId, original!['deviceId']);
       expect(c.outbox, hasLength(2));
       expect(c.state.orders['o-1048']!.times.single['end'], isNotNull);
+      expect(c.photoQueue, hasLength(1));
+      await tester.runAsync(() async {
+        final copy = await openVault('$scope-copy');
+        final dir = Directory(
+          '${(await getApplicationSupportDirectory()).path}/$scope.backup',
+        );
+        final parts = await dir
+            .list()
+            .where((e) => e.path.endsWith('.tfpart'))
+            .cast<File>()
+            .toList();
+        expect(parts, isNotEmpty);
+        final archive = await BackupSetCodec().openParts(
+          [
+            for (final f in parts)
+              BackupPartInput(length: f.length, read: f.readAsBytes),
+          ],
+          'Contraseña ficticia de copia nativa',
+          writePhoto: copy.photos.write,
+        );
+        final restored = WorkshopController(
+          copy,
+          remote: NativePhotoRemote(SimulatedWorkshop()),
+          actor: demoActors[0],
+        );
+        await restored.load();
+        await restored.restoreLocalBackup(archive, readPhoto: copy.photos.read);
+        expect(restored.deviceId, isNot(c.deviceId));
+        expect(restored.outbox.map((o) => o.id), c.outbox.map((o) => o.id));
+        expect(restored.photoQueue.single['id'], c.photoQueue.single['id']);
+        expect(
+          await copy.photos.read(c.photoQueue.single['sha256']),
+          await vault.photos.read(c.photoQueue.single['sha256']),
+        );
+        expect(restored.validatedAt, isNull);
+        restored.dispose();
+      });
       c.offline = false;
       await c.synchronize();
       await tester.pumpAndSettle();
       expect(c.syncError, isNull);
       expect(c.outbox, isEmpty);
+      expect(c.photoQueue, isEmpty);
+      expect((await vault.read())!['photoQueue'], isEmpty);
       expect(server.state.orders['o-1048']!.times, hasLength(1));
       final time = server.state.orders['o-1048']!.times.single;
       expect(
@@ -124,6 +191,9 @@ void main() {
         'server': 'fictional-in-memory',
         'authHttpValidated': false,
         'pendingRecords': c.outbox.length,
+        'pendingPhotos': c.photoQueue.length,
+        'photoEncryptedFile': true,
+        'splitBackupRestoredUnderNewDeviceKey': stage == 'restore',
         'billableMinutes': c.state.orders['o-1048']!.billableMinutes,
         'passed': true,
       }),
@@ -131,4 +201,28 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
     c.dispose();
   });
+}
+
+class NativePhotoRemote extends SimulatedRemote {
+  final prepared = <String, Map<String, dynamic>>{};
+  final files = <String, Uint8List>{};
+  NativePhotoRemote(SimulatedWorkshop server) : super(server, demoActors[0]);
+  @override
+  Future<Map<String, dynamic>> preparePhoto(
+    String id,
+    Map<String, dynamic> p,
+  ) async => prepared.putIfAbsent(p['id'], () => {...p, 'status': 'pending'});
+  @override
+  Future<void> uploadPhoto(Map<String, dynamic> p, Uint8List bytes) async {
+    expect(await PhotoBlobs.digest(bytes), p['sha256']);
+    files.putIfAbsent(p['sha256'], () => bytes);
+  }
+
+  @override
+  Future<Map<String, dynamic>> finalizePhoto(String id) async {
+    final p = prepared[id]!;
+    p['status'] = 'attached';
+    workshop.state.configuration['photoManifest'] = prepared.values.toList();
+    return p;
+  }
 }

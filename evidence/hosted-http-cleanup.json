@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-06T23:35:51.110Z",
+  "runId": "e2792469-2b98-48e1-b549-256d8c35ab7b",
+  "temporaryFunctionDisabled": true,
+  "functionResponse": 410,
+  "administrativeClientRemoved": true,
+  "fiveAccountsRetired": true,
+  "loginChecks": [
+    {
+      "role": "admin",
+      "loginDenied": true,
+      "status": 400
+    },
+    {
+      "role": "office",
+      "loginDenied": true,
+      "status": 400
+    },
+    {
+      "role": "tech1",
+      "loginDenied": true,
+      "status": 400
+    },
+    {
+      "role": "tech2",
+      "loginDenied": true,
+      "status": 400
+    },
+    {
+      "role": "outsider",
+      "loginDenied": true,
+      "status": 400
+    }
+  ],
+  "realUserCredentialsRead": false,
+  "privilegedCredentialsInApp": false,
+  "remainingFictionalDocuments": "preserved immutably in inactive isolated workshops",
+  "planChanged": false
+}

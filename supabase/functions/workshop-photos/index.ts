@@ -9,6 +9,7 @@ Deno.serve(photoHandler({
  async authenticate(jwt){const {data,error}=await user(jwt).auth.getUser(jwt);return !error&&!!data.user;},
  async prepare(jwt,w,d,id,p){return rpc(user(jwt),'photo_command',{workshop_id:w,device_id:d,command_id:id,action:'photo_prepare',payload:p});},
  async info(jwt,w,d,id){return rpc(user(jwt),'photo_upload_info',{workshop_id:w,device_id:d,photo_id:id});},
+ async readInfo(jwt,w,d,id){return rpc(user(jwt),'photo_download_info',{workshop_id:w,device_id:d,photo_id:id});},
  async bucket(){
   const {data,error}=await service.storage.getBucket('tallerflow-photos');
   if(data){if(data.public)throw new Error('Photo bucket must remain private');return;}

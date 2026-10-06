@@ -103,11 +103,29 @@ class SupabaseRemote extends Remote {
   Future<Map<String, dynamic>> finalizePhoto(String id) =>
       _photoService({'action': 'verify', 'photoId': id});
   @override
-  Future<Uint8List> downloadPhoto(Map<String, dynamic> metadata) => client
-      .storage
-      .from('tallerflow-photos')
-      .download(metadata['path'])
-      .timeout(const Duration(seconds: 30));
+  Future<Uint8List> downloadPhoto(Map<String, dynamic> metadata) async {
+    final response = await client.functions
+        .invoke(
+          'workshop-photos',
+          body: {
+            'action': 'read',
+            'workshopId': workshopId,
+            'deviceId': deviceId,
+            'photoId': metadata['id'],
+          },
+        )
+        .timeout(const Duration(seconds: 45));
+    final bytes = response.data;
+    if (bytes is! Uint8List ||
+        bytes.length != metadata['size'] ||
+        await PhotoBlobs.digest(bytes) != metadata['sha256']) {
+      throw const FormatException(
+        'La fotografía descargada no coincide con su manifiesto',
+      );
+    }
+    return bytes;
+  }
+
   @override
   Future<void> uploadPhoto(
     Map<String, dynamic> metadata,
@@ -131,12 +149,17 @@ class SupabaseRemote extends Remote {
           )
           .timeout(const Duration(seconds: 45));
     } on StorageException catch (e) {
-      if (!['409', '400'].contains(e.statusCode) ||
-          !(e.message.toLowerCase().contains('already exists') ||
-              e.error == 'Duplicate')) {
+      // Immutable INSERT may be denied once verification has completed, even
+      // for a legitimate retry. A fresh authenticated read must prove that
+      // the original exists and matches before treating the upload as done.
+      Uint8List existing;
+      try {
+        existing = await downloadPhoto(metadata);
+      } on FormatException {
         rethrow;
+      } catch (_) {
+        throw e;
       }
-      final existing = await downloadPhoto(metadata);
       if (existing.length != metadata['size'] ||
           await PhotoBlobs.digest(existing) != metadata['sha256']) {
         throw const FormatException(

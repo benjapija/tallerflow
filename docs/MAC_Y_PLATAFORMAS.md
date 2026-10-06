@@ -41,3 +41,10 @@ Las versiones se fijan en `pubspec.lock`. Android mínimo 24 y copias automátic
 Referencias: [Flutter iOS](https://docs.flutter.dev/platform-integration/ios/setup), [Flutter Android](https://docs.flutter.dev/platform-integration/android/setup), [Flutter Windows](https://docs.flutter.dev/platform-integration/windows/building), [instalación Flutter](https://docs.flutter.dev/install/manual), [almacenamiento seguro](https://pub.dev/packages/flutter_secure_storage).
 
 Las próximas compilaciones del workflow utilizan la configuración pública del piloto y adjuntan source-commit.json con el commit y la ejecución. La demo web sigue utilizando datos ficticios. Cámara QR: iOS/Android; Windows admite código manual o lector de teclado. Las plataformas no soportadas no muestran una cámara inexistente.
+
+
+## Estado actual · copias y HTTP
+
+Las pruebas de Auth/Storage HTTP están aprobadas en Supabase, con cuentas ficticias ya retiradas y servicio temporal desactivado. No acreditan funcionamiento del selector, cámara ni inicio de sesión en clientes nativos. Las copias nuevas usan `.tfpart`; consulta COPIAS_Y_RECUPERACION.md. La prueba local de 36 MiB supera el antiguo límite de 32 MiB.
+
+Run 37543505529, commit 6d8fbae: Windows con instalador, Android debug e iOS simulador compilados y descargados/verificados. Incluyen CSV. Son anteriores a la descarga privada por POST y a las copias divididas, y deben actualizarse antes del piloto conectado. Las nuevas compilaciones adjuntarán su commit exacto. No se entrega una app para macOS.

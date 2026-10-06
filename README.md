@@ -2,9 +2,9 @@
 
 Aplicación en español para conectar operarios y oficina y sustituir el papel en un taller de España. Conserva Flutter/Dart, Supabase y las aplicaciones previstas para iOS, Android y Windows. El Mac se utiliza para desarrollo y demostración en navegador; por petición del usuario del 6 de octubre no se entrega aplicación macOS.
 
-**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** La base 0.2 se conserva. Incluye copias portátiles cifradas, administración, organización de tareas, historial de vehículos, cambios de matrícula y propietario, revisión justificada de precios, descuentos y consumos sin cobro. Las ocho primeras migraciones y el servicio de alta de cuentas están instalados en Supabase Free. Windows ha superado un circuito nativo de cierre/reapertura y almacenamiento seguro con servidor ficticio; el acceso con Auth real y el piloto completo siguen pendientes.
+**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** Conserva la base 0.2, administración, tareas, historial, precios, CSV y fotos privadas. Añade copias cifradas divididas que incluyen fotos y pendientes. Doce migraciones y las funciones de altas/fotos están instaladas en Supabase Free. Se han aprobado 15 comprobaciones reales de Auth/PostgREST/Edge/Storage por HTTP con cinco cuentas ficticias, ya retiradas. La descarga usa un POST privado sin caché y vuelve a comprobar permisos; se deshabilitó la lectura directa de objetos para evitar respuestas antiguas de la CDN. Falta validar este código en clientes nativos, cámaras y recuperación alojada entre proyectos.
 
-Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md).
+Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md). Uso de copias: [COPIAS_Y_RECUPERACION.md](docs/COPIAS_Y_RECUPERACION.md).
 
 ## Probar desde tu Mac
 
@@ -33,14 +33,14 @@ La guía [FIABILIDAD_Y_PRUEBA_MAC.md](docs/FIABILIDAD_Y_PRUEBA_MAC.md) explica c
 - Documentos inmutables, incidencias tardías y excepciones de cierre exclusivamente administrativas, explícitas y conservadas en la nota.
 - Simulación de dos móviles y oficina utilizando las pantallas y el controlador reales de Flutter.
 
-La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. IA, portal y pagos siguen fuera de esta entrega.
+La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. IA, portal y pagos permanecen pendientes del alcance acordado.
 
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 59 pruebas Flutter aprobadas: fiabilidad, copias, administración, tareas, historial, privacidad y precios; analizador sin incidencias.
-- 97 comprobaciones PostgreSQL/PGlite aprobadas con las ocho migraciones; 6 pruebas adicionales del servicio de altas con Auth simulado.
-- 38 comprobaciones SQL alojadas: 10 de circuito, 7 de altas, 11 de historial y 10 de precios. Identidades ficticias y transacciones revertidas; no son inicios de sesión reales.
+- 90 pruebas Flutter aprobadas; las cuatro de reintento HTTP volvieron a pasar tras cambiar la descarga. Analizador sin incidencias.
+- 122 comprobaciones PostgreSQL/PGlite y 18 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
+- 58 comprobaciones SQL alojadas históricas con transacciones revertidas y 15 del recorrido HTTP real, con talleres y cuentas ficticios aislados. Las pruebas nativas siguen separadas.
 - GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
 - Windows remoto en GitHub Actions: dos procesos nativos verifican almacén cifrado, Credential Manager, conservación de dos registros sin conexión, recuperación y un único efecto al reintentar. El servidor es ficticio; instalación manual y Auth real siguen pendientes.
 - Compilación web y capturas de las pantallas correctas.

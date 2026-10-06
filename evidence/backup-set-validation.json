@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-07",
+  "flutterTests": 90,
+  "splitBackupCases": 7,
+  "photoHistoricalCases": 2,
+  "sdkRetryCases": 4,
+  "largePhotoBytes": 37748736,
+  "nativeSplitBackupValidated": false,
+  "hostedAuthRestoreBetweenProjects": false,
+  "productionPBKDF2Iterations": 600000,
+  "fastDeriverOnlyInProtocolUnitTests": true
+}

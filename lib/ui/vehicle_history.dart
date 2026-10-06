@@ -5,6 +5,7 @@ import '../domain/models.dart';
 import '../domain/vehicles.dart';
 import 'dialogs.dart';
 import 'csv_panel.dart';
+import 'photo_panel.dart';
 
 class VehicleHistory extends StatelessWidget {
   final WorkshopController controller;
@@ -200,6 +201,10 @@ class VehicleHistory extends StatelessWidget {
                             Text(
                               '${n['author'] ?? 'Observación'} · ${n['text']}',
                             ),
+                          HistoricalPhotoGallery(
+                            controller: c,
+                            orderId: entry['id'],
+                          ),
                           if (c.actor.isOffice && entry['document'] != null)
                             const Padding(
                               padding: EdgeInsets.only(top: 12),
