@@ -34,6 +34,125 @@ class _ManagementPanelState extends State<ManagementPanel> {
 
   String amount(int cents) =>
       (cents / 100).toStringAsFixed(2).replaceAll('.', ',');
+  Future<void> newAccount() async {
+    final prior = c.pendingAccountCreation?['payload'] as Map?;
+    final retry = prior != null;
+    final p = await formDialog(
+      context,
+      retry ? 'Reintentar cuenta pendiente' : 'Crear cuenta del taller',
+      [
+        FieldSpec(
+          'name',
+          'Nombre',
+          initial: prior?['name'] ?? '',
+          readOnly: retry,
+        ),
+        FieldSpec(
+          'email',
+          'Correo electrónico',
+          initial: prior?['email'] ?? '',
+          readOnly: retry,
+        ),
+        FieldSpec(
+          'role',
+          'Perfil',
+          initial: prior?['role'] ?? 'technician',
+          readOnly: retry,
+          choices: {for (final r in Role.values) r.name: roleLabels[r.index]},
+        ),
+        FieldSpec(
+          'prices',
+          'Acceso adicional a precios',
+          initial: prior?['seePrices'] == true ? 'yes' : 'no',
+          readOnly: retry,
+          choices: const {
+            'no': 'Sin acceso adicional',
+            'yes': 'Puede consultar precios',
+          },
+        ),
+        FieldSpec(
+          'costs',
+          'Acceso adicional a costes',
+          initial: prior?['seeCosts'] == true ? 'yes' : 'no',
+          readOnly: retry,
+          choices: const {
+            'no': 'Sin acceso adicional',
+            'yes': 'Puede consultar costes',
+          },
+        ),
+        FieldSpec(
+          'reason',
+          'Motivo del alta',
+          initial: prior?['reason'] ?? '',
+          multiline: true,
+          readOnly: retry,
+        ),
+        const FieldSpec(
+          'password',
+          'Contraseña nueva · mínimo 12 caracteres',
+          obscure: true,
+        ),
+        const FieldSpec('confirm', 'Repite la contraseña', obscure: true),
+      ],
+      (v) {
+        if (v['password'] != v['confirm'] ||
+            v['password']!.length < 12 ||
+            v['password']!.length > 1024) {
+          throw const FormatException(
+            'Repite la misma contraseña de entre 12 y 1024 caracteres',
+          );
+        }
+        return {
+          'name': v['name'],
+          'email': v['email'],
+          'role': v['role'],
+          'seePrices': v['prices'] == 'yes',
+          'seeCosts': v['costs'] == 'yes',
+          'reason': v['reason'],
+          'password': v['password'],
+        };
+      },
+      help: retry
+          ? 'Se recupera la misma solicitud. Si la cuenta ya se creó, conserva su contraseña original; este reintento no la cambia.'
+          : 'Entrega las credenciales a la persona por un canal acordado. El alta no envía correos. La contraseña se transmite al servicio de acceso y no se guarda en TallerFlow.',
+    );
+    if (p == null) return;
+    final password = p.remove('password') as String;
+    setState(() => busy = true);
+    try {
+      await c.createMember(p, password);
+      if (mounted) {
+        setState(() => message = 'Cuenta creada y vinculada al taller.');
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(
+          () => message =
+              'La solicitud se conserva. Comprueba la conexión, los permisos y que el correo no pertenezca a otra cuenta antes de reintentar.',
+        );
+      }
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
+  Future<void> archiveAccount() async {
+    final reason = await textDialog(
+      context,
+      'Archivar solicitud pendiente',
+      'Motivo de la revisión',
+      help:
+          'Se conserva la solicitud para revisión. Archivar no borra ninguna cuenta que ya se haya creado ni cambia sus credenciales.',
+    );
+    if (reason == null) return;
+    await c.archiveAccountCreation(reason);
+    if (mounted) {
+      setState(
+        () => message = 'Solicitud conservada en el historial de recuperación.',
+      );
+    }
+  }
+
   Future<void> settings() async {
     final s = c.state.settings;
     final p = await formDialog(
@@ -257,7 +376,7 @@ class _ManagementPanelState extends State<ManagementPanel> {
             ),
             const SizedBox(height: 12),
             const Text(
-              'Los cambios requieren un motivo y quedan registrados. Las cuentas se habilitan en el servicio de acceso antes de incorporarlas al taller.',
+              'Los cambios requieren un motivo y quedan registrados. Cada persona utiliza su propia cuenta y sus permisos.',
             ),
             if (busy) const LinearProgressIndicator(),
             if (message != null)
@@ -269,6 +388,19 @@ class _ManagementPanelState extends State<ManagementPanel> {
               spacing: 8,
               runSpacing: 8,
               children: [
+                OutlinedButton(
+                  onPressed: busy || c.demo || c.offline ? null : newAccount,
+                  child: Text(
+                    c.pendingAccountCreation == null
+                        ? 'Crear cuenta'
+                        : 'Reintentar cuenta pendiente',
+                  ),
+                ),
+                if (c.pendingAccountCreation != null)
+                  TextButton(
+                    onPressed: busy ? null : archiveAccount,
+                    child: const Text('Archivar solicitud'),
+                  ),
                 OutlinedButton(
                   onPressed: busy ? null : settings,
                   child: const Text('Tarifas e impuestos'),

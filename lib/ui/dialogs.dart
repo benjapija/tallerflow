@@ -5,7 +5,7 @@ import '../domain/models.dart';
 
 class FieldSpec {
   final String key, label, initial;
-  final bool required, multiline, numeric;
+  final bool required, multiline, numeric, obscure, readOnly;
   final Map<String, String>? choices;
   const FieldSpec(
     this.key,
@@ -14,6 +14,8 @@ class FieldSpec {
     this.required = true,
     this.multiline = false,
     this.numeric = false,
+    this.obscure = false,
+    this.readOnly = false,
     this.choices,
   });
 }
@@ -53,6 +55,12 @@ class _FieldsDialogState extends State<FieldsDialog> {
     for (final f in widget.fields) f.key: f.initial,
   };
   String? error;
+  @override
+  void dispose() {
+    values.clear();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) => AlertDialog(
     title: Text(widget.title),
@@ -96,10 +104,16 @@ class _FieldsDialogState extends State<FieldsDialog> {
                                 ),
                               )
                               .toList(),
-                          onChanged: (v) => values[f.key] = v ?? '',
+                          onChanged: f.readOnly
+                              ? null
+                              : (v) => values[f.key] = v ?? '',
                         )
                       : TextFormField(
                           initialValue: f.initial,
+                          obscureText: f.obscure,
+                          enableSuggestions: !f.obscure,
+                          autocorrect: !f.obscure,
+                          readOnly: f.readOnly,
                           decoration: InputDecoration(labelText: f.label),
                           maxLines: f.multiline ? 3 : 1,
                           keyboardType: f.numeric

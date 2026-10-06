@@ -2,7 +2,7 @@
 
 Aplicación en español para conectar operarios y oficina y sustituir el papel en un taller de España. Conserva Flutter/Dart, Supabase y las aplicaciones previstas para iOS, Android y Windows, con macOS para desarrollo y revisión de oficina.
 
-**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** La base 0.2 se conserva. Se han añadido copias portátiles cifradas, administración y organización de tareas. Las cuatro primeras migraciones están instaladas en Supabase Free; el acceso con Auth y las aplicaciones nativas siguen pendientes de pruebas completas.
+**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** La base 0.2 se conserva. Se han añadido copias portátiles cifradas, administración y organización de tareas. Las cinco primeras migraciones y el servicio de alta de cuentas están instalados en Supabase Free; el acceso con Auth y el funcionamiento nativo siguen pendientes de pruebas completas.
 
 Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md).
 
@@ -38,8 +38,10 @@ La recepción, tareas, tiempos estimados/trabajados/facturables separados, catá
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 27 pruebas Flutter aprobadas, incluidas caché, reloj, conflictos, fallos de guardado, confirmación perdida, sustitución y vistas móviles.
-- 15 comprobaciones de regresión y 29 de fiabilidad PostgreSQL aprobadas, **aplicando ambas migraciones** y con Auth simulado.
+- 42 pruebas Flutter aprobadas: fiabilidad, copias cifradas, administración, tareas y recuperación del alta sin guardar contraseñas.
+- 77 comprobaciones PostgreSQL/PGlite aprobadas aplicando las cinco migraciones; 6 pruebas de la función de alta con Auth simulado.
+- 17 comprobaciones de SQL alojado en Supabase aprobadas con identidades ficticias y recuperación completa de sus transacciones. No son inicios de sesión reales.
+- GitHub Actions ha validado el código del primer punto de control y compilado macOS e iOS en simulador. Las restantes compilaciones están en curso; ver evidencias y VALIDACION.md.
 - Compilación web y capturas de las pantallas correctas.
 
 Los registros están en `evidence/`. [VALIDACION.md](docs/VALIDACION.md) distingue lo ejecutado de Supabase alojado, los reinicios físicos y las plataformas nativas pendientes. Compilar no demuestra funcionamiento nativo.
@@ -64,6 +66,6 @@ npm install
 npm test
 ```
 
-Para conectar un entorno de pruebas nativo, sigue [SUPABASE.md](docs/SUPABASE.md). Aplica **001 y 002 en orden**. Nunca incluyas `service_role`, contraseñas de base de datos o claves privadas en Flutter. La web de esta entrega sigue rechazando acceso a un taller real.
+Para conectar un entorno de pruebas nativo, sigue [SUPABASE.md](docs/SUPABASE.md). Aplica **todas las migraciones en orden** y despliega las funciones indicadas en la guía. Nunca incluyas `service_role`, contraseñas de base de datos o claves privadas en Flutter. La web de esta entrega sigue rechazando acceso a un taller real.
 
 Consulta [ARQUITECTURA_Y_FASES.md](docs/ARQUITECTURA_Y_FASES.md), [MAC_Y_PLATAFORMAS.md](docs/MAC_Y_PLATAFORMAS.md) y [ENTREGA_0_2.md](docs/ENTREGA_0_2.md). Los documentos de 0.1 se conservan en `docs/ARCHIVO_0_1/`; los requisitos originales permanecen en `docs/REQUISITOS_ORIGINALES.txt`.

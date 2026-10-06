@@ -21,6 +21,13 @@ class SecureSessionStorage extends LocalStorage {
 }
 
 abstract class Remote {
+  Future<Map<String, dynamic>> createMember(
+    String id,
+    Map<String, dynamic> preferences,
+    String password,
+  ) => throw UnsupportedError(
+    'La creación de cuentas requiere el servicio conectado',
+  );
   Future<Map<String, dynamic>> snapshot();
   Future<Map<String, dynamic>> push(Operation operation, String deviceId);
   bool get requiresLease => false;
@@ -56,6 +63,27 @@ class SupabaseRemote extends Remote {
   bool get requiresLease => true;
   @override
   void bindDevice(String id) => deviceId = id;
+  @override
+  Future<Map<String, dynamic>> createMember(
+    String id,
+    Map<String, dynamic> preferences,
+    String password,
+  ) async {
+    final response = await client.functions
+        .invoke(
+          'workshop-members',
+          body: {
+            'workshopId': workshopId,
+            'deviceId': deviceId,
+            'requestId': id,
+            'payload': preferences,
+            'password': password,
+          },
+        )
+        .timeout(const Duration(seconds: 30));
+    return Map<String, dynamic>.from(response.data);
+  }
+
   @override
   Future<Map<String, dynamic>> exportWorkshop() async =>
       Map<String, dynamic>.from(

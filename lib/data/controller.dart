@@ -8,6 +8,7 @@ import 'cloud.dart';
 import 'demo.dart';
 import 'vault.dart';
 import 'session_policy.dart';
+import 'account_creation.dart';
 
 class WorkshopController extends ChangeNotifier {
   final Vault vault;
@@ -28,6 +29,8 @@ class WorkshopController extends ChangeNotifier {
   List<Map<String, dynamic>> retiredTimers = [];
   Map<String, dynamic>? replacement;
   Map<String, dynamic>? restoredArchive;
+  Map<String, dynamic>? pendingAccountCreation;
+  List<Map<String, dynamic>> accountCreationHistory = [];
   bool accessRevoked = false;
   bool _disposed = false;
   @override
@@ -71,6 +74,114 @@ class WorkshopController extends ChangeNotifier {
       );
   bool get prices => actor.isOffice || actor.seePrices;
   bool get costs => actor.role == Role.admin || actor.seeCosts;
+  Future<void> createMember(
+    Map<String, dynamic> input,
+    String password,
+  ) => _locked(() async {
+    _checkAccess();
+    _checkOnline();
+    if (actor.role != Role.admin ||
+        outbox.isNotEmpty ||
+        pendingCommands.isNotEmpty) {
+      throw const RuleException(
+        'Conecta como administrador y sincroniza los registros',
+      );
+    }
+    if (password.length < 12 || password.length > 1024) {
+      throw const RuleException(
+        'La contraseña debe tener entre 12 y 1024 caracteres',
+      );
+    }
+    final preferences = accountPreferences(input);
+    if (pendingAccountCreation != null &&
+        !mapEquals(pendingAccountCreation!['payload'], preferences)) {
+      throw const RuleException(
+        'Reintenta la solicitud pendiente o archívala antes de cambiar los datos',
+      );
+    }
+    if (pendingAccountCreation == null) {
+      // Reuse an uncertain archived attempt instead of duplicating its identity.
+      final prior = accountCreationHistory
+          .where(
+            (r) =>
+                r['status'] == 'archived' &&
+                mapEquals(r['payload'], preferences),
+          )
+          .lastOrNull;
+      pendingAccountCreation =
+          prior == null
+                ? {
+                    'id': const Uuid().v4(),
+                    'deviceId': deviceId,
+                    'payload': preferences,
+                    'createdAt': clock().toUtc().toIso8601String(),
+                  }
+                : cloneMap(prior)
+            ..remove('status');
+      try {
+        await _persist();
+      } catch (_) {
+        pendingAccountCreation = null;
+        rethrow;
+      }
+    }
+    if (pendingAccountCreation!['deviceId'] != deviceId) {
+      throw const RuleException(
+        'Esta solicitud pertenece al dispositivo original; requiere revisión de administración',
+      );
+    }
+    final request = cloneMap(pendingAccountCreation!);
+    final result = await remote!.createMember(
+      request['id'],
+      preferences,
+      password,
+    );
+    if (result['created'] != true || result['userId'] is! String) {
+      throw const RuleException(
+        'Respuesta de creación incompleta; conserva la solicitud y reintenta',
+      );
+    }
+    await _refresh();
+    final previousHistory = accountCreationHistory.toList();
+    accountCreationHistory.add({
+      ...request,
+      'status': 'created',
+      'userId': result['userId'],
+    });
+    pendingAccountCreation = null;
+    try {
+      await _persist();
+    } catch (_) {
+      pendingAccountCreation = request;
+      accountCreationHistory = previousHistory;
+      rethrow;
+    }
+    notifyListeners();
+  });
+
+  Future<void> archiveAccountCreation(String reason) => _locked(() async {
+    _checkAccess();
+    if (actor.role != Role.admin || pendingAccountCreation == null) return;
+    final request = pendingAccountCreation!,
+        old = accountCreationHistory.toList();
+    if (reason.trim().isEmpty || reason.length > 2000) {
+      throw const RuleException('Indica el motivo de la revisión');
+    }
+    accountCreationHistory.add({
+      ...request,
+      'status': 'archived',
+      'archiveReason': reason.trim(),
+    });
+    pendingAccountCreation = null;
+    try {
+      await _persist();
+    } catch (_) {
+      pendingAccountCreation = request;
+      accountCreationHistory = old;
+      rethrow;
+    }
+    notifyListeners();
+  });
   Future<void> manage(String action, Map<String, dynamic> payload) =>
       _locked(() async {
         _checkAccess();
@@ -135,6 +246,10 @@ class WorkshopController extends ChangeNotifier {
       retiredTimers = _maps(saved['retiredTimers']);
       pendingCommands = _maps(saved['pendingCommands']);
       commandHistory = _maps(saved['commandHistory']);
+      pendingAccountCreation = saved['pendingAccountCreation'] == null
+          ? null
+          : Map<String, dynamic>.from(saved['pendingAccountCreation']);
+      accountCreationHistory = _maps(saved['accountCreationHistory']);
       validatedAt = DateTime.tryParse(saved['validatedAt'] ?? '');
       lastObservedAt = DateTime.tryParse(saved['lastObservedAt'] ?? '');
       accessRevoked = saved['accessRevoked'] == true;
@@ -185,6 +300,8 @@ class WorkshopController extends ChangeNotifier {
     'commandHistory': commandHistory,
     'replacement': replacement,
     'restoredArchive': restoredArchive,
+    'pendingAccountCreation': pendingAccountCreation,
+    'accountCreationHistory': accountCreationHistory,
   };
 
   Future<Map<String, dynamic>> exportBackup({bool complete = false}) =>
@@ -220,7 +337,9 @@ class WorkshopController extends ChangeNotifier {
         'La copia no corresponde a este taller y cuenta',
       );
     }
-    if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+    if (outbox.isNotEmpty ||
+        pendingCommands.isNotEmpty ||
+        pendingAccountCreation != null) {
       throw const RuleException(
         'Conserva y reconcilia los pendientes de este equipo antes de restaurar otra copia',
       );
@@ -248,6 +367,24 @@ class WorkshopController extends ChangeNotifier {
       _maps(local[key]);
     }
     final commands = _maps(local['pendingCommands']);
+    final accounts = _maps(local['accountCreationHistory']);
+    if (local['pendingAccountCreation'] != null) {
+      accounts.add(Map<String, dynamic>.from(local['pendingAccountCreation']));
+    }
+    for (final request in accounts) {
+      if (request['id'] is! String ||
+          request['deviceId'] is! String ||
+          request['payload'] is! Map ||
+          !mapEquals(
+            request['payload'],
+            accountPreferences(Map<String, dynamic>.from(request['payload'])),
+          ) ||
+          request.containsKey('password')) {
+        throw const RuleException(
+          'Solicitud de cuenta incompatible en la copia',
+        );
+      }
+    }
     final commandIds = <String>{};
     for (final cmd in commands) {
       if (cmd['id'] is! String ||

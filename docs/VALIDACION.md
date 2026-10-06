@@ -1,22 +1,21 @@
-# Validación de la entrega 0.2
+# Validación actual · fase 1 en desarrollo
 
-6 de octubre de 2026. Mac Apple Silicon y datos ficticios. Flutter 3.47.6 / Dart 3.13.5. Las evidencias de 0.1 se conservan; esta tabla corresponde a los registros `*-v02.txt` y `postgres-reliability-tests.txt`.
+6 de octubre de 2026. Datos ficticios. Flutter 3.47.6 / Dart 3.13.5. Los registros de 0.2 permanecen en evidence y en su entrega original.
 
-| Comprobación | Resultado ejecutado | Límite |
+| Entorno | Resultado ejecutado | Límite |
 |---|---|---|
-| Analizador Flutter | Sin errores ni avisos | Análisis del código |
-| Pruebas Flutter | 27 aprobadas | Plugins nativos y dispositivos físicos no ejecutados |
-| Regresión PostgreSQL | 15 aprobadas con migraciones 001 y 002 | PGlite y Auth simulado |
-| Fiabilidad PostgreSQL | 29 aprobadas con migraciones 001 y 002 | PGlite y sesiones/JWT simulados |
-| Render de pantallas | 2 pruebas aprobadas, 5 capturas | Motor de pruebas Flutter |
-| Compilación web | Correcta | No es compilación nativa |
-| Navegador local | Configuración, tres clientes, desconexión de Lucía, bloqueo con 2/3 confirmaciones | Servidor ficticio en memoria |
-| iOS / Android / macOS / Windows | Pendientes de prueba funcional | Sin validación nativa |
-| Supabase/Auth alojado | Pendiente | No hay proyecto configurado |
+| Flutter local | 42 pruebas; analizador sin incidencias | No acredita plugins ni equipos físicos |
+| PostgreSQL/PGlite | 15 regresión + 29 fiabilidad + 10 copias + 16 gestión + 7 altas = 77 | Auth y sesiones simulados |
+| Función de alta | 6 pruebas con API Auth simulada | No crea usuarios reales durante estas pruebas |
+| Supabase alojado | Cinco migraciones y función workshop-members desplegadas; 10 pruebas de circuito + 7 de altas | Identidades SQL ficticias; se revierte cada transacción |
+| Protección de función alojada | Petición sin autorización devuelve 401 | Comprueba denegación, no un alta autenticada |
+| GitHub Actions #1 | Validación aprobada; compilaciones Apple correctas; otros trabajos en curso | Commit c6f9c09; contiene 38 pruebas Flutter y 69 SQL, anteriores al nuevo servicio de altas |
+| Uso nativo | Pendiente | Generar un ejecutable no demuestra su funcionamiento |
+| Auth real | Pendiente de confirmar correo administrador y probar inicio de sesión | No se conocen ni se guardan contraseñas del usuario |
 
-La captura `evidence/browser-cierre-v02.png` y el registro `evidence/browser-verification-v02.txt` documentan la revisión en el navegador.
+Evidencias actuales: `flutter-tests-current.txt`, `analyze-current.txt`, `postgres-all-current.txt`, `hosted-database-validation.json`, `account-provisioning-validation.json`, `edge-unauthorized-hosted.txt` y la captura de GitHub. Las migraciones 001–005 se aplican en los bancos de pruebas locales.
 
-Los 44 casos de PostgreSQL corresponden al esquema actual, no a una ejecución alojada. Las sesiones simuladas no verifican firma JWT, refresh ni comportamiento real de PostgREST/Auth.
+Las copias incluyen estado de servidor, documentos inmutables, auditoría, sesiones históricas, cierres, solicitudes de cuentas y el estado local pendiente. El archivo portable está cifrado. Las contraseñas y los tokens Auth se excluyen. La recuperación en otra base requiere las identidades Auth originales; fotografías y copias grandes se incorporarán junto con Storage. Estos límites impiden considerar terminada la recuperación completa.
 
 ## Cobertura del bloque solicitado
 
@@ -43,8 +42,6 @@ Se mantienen comprobaciones de matrícula/identidad, autorizaciones individuales
 
 ## Pendiente antes de piloto
 
-La reapertura y el reinicio comprobados reconstruyen clientes de pruebas y leen almacenes de prueba; **no son reinicios de móviles reales**. Se requiere una jornada con dos móviles físicos y oficina, Supabase alojado, red interrumpida, clave segura, suspensión, reinicio y recuperación.
+Prueba real entre cuentas de operario y oficina, dispositivos nativos, pérdida de conexión, suspensión/reinicio, permisos de cámara, almacenamiento seguro y recuperación de archivos. El Mac solo tiene herramientas de línea de comandos; Xcode completo y SDK Android no están confirmados. Las compilaciones Apple en GitHub permiten preparar ejecutables sin dar por instalada ninguna de estas herramientas en el Mac del usuario. Windows necesita un entorno remoto accesible y licenciado para instalación y uso.
 
-En el Mac siguen faltando Xcode completo y Android Studio/SDK en la comprobación de este trabajo. Windows requiere ejecutar la automatización preparada en GitHub y probar instalación y uso en un Windows remoto. No se ha ejecutado esa automatización ni conectado un Windows.
-
-Falta validar exportación y restauración completas. La guía de casos original se conserva en `ARCHIVO_0_1/VALIDACION.md`; sus casos de funciones futuras no se consideran aprobados por esta entrega.
+Historial/propietarios, precios y excepciones, fotos/QR, y fases siguientes siguen abiertos en PENDIENTES.md. Los datos fiscales y las fuentes técnicas requieren confirmación antes de completar sus módulos.

@@ -7,7 +7,7 @@ const w=id(),admin=id(),tech=id(),sourceDev=id(),targetDev=id(),foreign=id(),ord
 const migrations=(await readdir(new URL('../supabase/migrations/',import.meta.url))).filter(f=>f.endsWith('.sql')).sort();
 async function setup(){
  const db=new PGlite();
- await db.exec(`create role anon; create role authenticated; create schema auth; create table auth.users(id uuid primary key); create table auth.sessions(id uuid primary key,user_id uuid not null);
+ await db.exec(`create role anon; create role authenticated; create role service_role; create schema auth; create table auth.users(id uuid primary key); create table auth.sessions(id uuid primary key,user_id uuid not null);
  create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
  grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;`);
  for(const f of migrations) await db.exec(await readFile(new URL(`../supabase/migrations/${f}`,import.meta.url),'utf8'));
@@ -24,6 +24,7 @@ async function login(db,user,dev){
 async function snap(db,dev){return(await db.query('select public.device_snapshot($1,$2) r',[w,dev])).rows[0].r;}
 async function test(name,fn){await fn();passed++;console.log('PASS '+name);}
 const source=await setup();const target=await setup();let archive;
+const closeOrder=id(),closeRequest=id(),accountRequest=id();
 try{
  await source.query("insert into private.members values($1,$2,'Tech','technician',false,true)",[w,tech]);
  await source.query("insert into private.catalog(workshop_id,id,reference,description,unit,price_cents,cost_cents,stock_milli) values($1,$2,'OIL','Oil','L',1200,500,2000)",[w,item]);
@@ -38,6 +39,13 @@ try{
  await login(source,admin,sourceDev);
  op={id:id(),orderId:order,actorId:admin,kind:'note',baseRevision:0,at:new Date().toISOString(),payload:{text:'Original late evidence'}};
  assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,op])).rows[0].r.status,'late');
+ await source.exec('reset role');
+ await source.query('insert into private.orders(workshop_id,id,vehicle_id,data,revision) select workshop_id,$1,vehicle_id,$2,7 from private.orders where id=$3',[closeOrder,{...data,id:closeOrder,vehicleId:'historical',tasks:[],number:'Fictional closure'},order]);
+ await source.query("insert into private.close_requests(workshop_id,id,order_id,revision,status,requested_by) values($1,$2,$3,7,'active',$4)",[w,closeRequest,closeOrder,admin]);
+ await source.query('insert into private.order_devices(workshop_id,order_id,device_id) values($1,$2,$3)',[w,closeOrder,sourceDev]);
+ await source.query('insert into private.close_acknowledgements(workshop_id,request_id,device_id,revision,confirmed_by) values($1,$2,$3,7,$4)',[w,closeRequest,sourceDev,admin]);
+ await source.query('insert into private.account_requests(workshop_id,id,actor_id,device_id,session_id,payload) values($1,$2,$3,$4,$4,$5)',[w,accountRequest,admin,sourceDev,{name:'Fictional',email:'pending@example.invalid',role:'technician',seePrices:false,seeCosts:false,reason:'Training'}]);
+ await login(source,admin,sourceDev);
  archive=(await source.query('select public.export_workshop($1,$2) r',[w,sourceDev])).rows[0].r;
  await test('Export contains documents, late originals, audit and all protocol tables, without Auth secrets',async()=>{
   assert.equal(archive.tables.documents[0].snapshot.totalCents,12345);
@@ -67,8 +75,16 @@ try{
  await test('Independent database restores original documents, records and audit',async()=>{
   result=(await target.query('select public.restore_workshop($1,$2,$3,$4) r',[w,targetDev,rid,archive])).rows[0].r;
   assert.equal(result.restored,true);const s=await snap(target,targetDev);
-  assert.deepEqual(s.orders[0].document,document);assert.deepEqual(s.incidents.find(x=>x.operation.id===op.id).operation,op);
+  assert.deepEqual(s.orders.find(o=>o.id===order).document,document);assert.deepEqual(s.incidents.find(x=>x.operation.id===op.id).operation,op);
   await target.exec('reset role');assert.equal((await target.query('select count(*)::int n from private.audit where source_id is not null')).rows[0].n,archive.tables.audit.length);
+  await login(target,admin,targetDev);
+ });
+ await test('Restored acknowledgements remain historical, active closure is invalidated and account request cannot gain authority',async()=>{
+  await target.exec('reset role');
+  assert.equal((await target.query('select status from private.close_requests where id=$1',[closeRequest])).rows[0].status,'invalidated');
+  assert.equal((await target.query('select revision from private.close_acknowledgements where request_id=$1',[closeRequest])).rows[0].revision,7);
+  assert.equal((await target.query('select device_id from private.account_requests where id=$1',[accountRequest])).rows[0].device_id,sourceDev);
+  await target.exec('set role service_role');await assert.rejects(()=>target.query('select public.account_provision_state($1,$2)',[w,accountRequest]),/no longer authorized/);
   await login(target,admin,targetDev);
  });
  await test('Lost restoration reply can be retried without duplicate documents or original operations',async()=>{
@@ -90,7 +106,7 @@ try{
   await target.exec('reset role');await assert.rejects(()=>target.query("update private.documents set snapshot='{}' where workshop_id=$1",[w]),/immutable/);
   await login(target,admin,targetDev);const late={...op,id:id(),payload:{text:'After restoration'}};
   assert.equal((await target.query('select public.apply_operation($1,$2,$3) r',[w,targetDev,late])).rows[0].r.status,'late');
-  assert.deepEqual((await snap(target,targetDev)).orders[0].document,document);
+  assert.deepEqual((await snap(target,targetDev)).orders.find(o=>o.id===order).document,document);
  });
  console.log(`${passed} backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.`);
 }finally{await source.close();await target.close();}

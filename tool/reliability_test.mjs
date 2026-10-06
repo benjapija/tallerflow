@@ -5,7 +5,7 @@ const db = new PGlite();
 let passed=0, seq=10;
 const id=()=>`00000000-0000-4000-8000-${String(seq++).padStart(12,'0')}`;
 const w=id(), w2=id(), a=id(), b=id(), office=id(), foreign=id(), order=id(), task=id(), taskB=id(), item=id(), da=id(), dbb=id(), desk=id();
-await db.exec(`create role anon; create role authenticated; create schema auth; create table auth.users(id uuid primary key); create table auth.sessions(id uuid primary key,user_id uuid not null);
+await db.exec(`create role anon; create role authenticated; create role service_role; create schema auth; create table auth.users(id uuid primary key); create table auth.sessions(id uuid primary key,user_id uuid not null);
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
 grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;`);
 for(const f of (await readdir(new URL('../supabase/migrations/',import.meta.url))).filter(f=>f.endsWith('.sql')).sort()) await db.exec(await readFile(new URL(`../supabase/migrations/${f}`,import.meta.url),'utf8'));

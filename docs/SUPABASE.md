@@ -1,14 +1,14 @@
-# Supabase de pruebas · 0.2
+# Supabase de pruebas · desarrollo actual
 
-No se ha creado ni conectado un proyecto alojado. Las pruebas ejecutan ambas migraciones en PostgreSQL/PGlite con Auth y sesiones simulados. No hay claves privadas ni llamadas de IA en esta entrega.
+Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. Migraciones 001–005 y función workshop-members desplegadas. Taller ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La primera pertenencia administradora espera confirmación de la identidad del correo; no se concede acceso por aproximación del nombre. No hay llamadas de IA ni claves privadas en Flutter.
 
 ## Configuración desde el Mac
 
-1. Crea un proyecto de pruebas accesible desde el navegador, con datos ficticios.
-2. En SQL Editor aplica `supabase/migrations/202610060001_core.sql` y después `202610060002_reliability.sql`. En una base que ya tenga 001, aplica solo 002. Después añade `supabase/seed.sql` si aún no está cargado.
+1. Utiliza el proyecto conectado solo con datos ficticios. Para otro entorno, crea un proyecto independiente.
+2. En una base nueva aplica las migraciones de supabase/migrations en orden. En una base existente aplica solo las nuevas. Despliega supabase/functions/workshop-members/index.ts y handler.ts con verify_jwt=true. El entorno de pruebas conectado ya tiene estas cinco migraciones.
 3. Mantén expuesto solo `public` en la Data API; no expongas `private`. No concedas escritura directa a tablas.
-4. Crea cuentas individuales en Authentication → Users. No actives registro libre. Usa los ejemplos comentados de `tool/bootstrap_workshop.sql` para vincular sus UUID a administrador, oficina y operarios.
-5. Guarda localmente la URL, clave pública/publishable y taller en `client-config.json`, excluido del paquete y de Git:
+4. La primera cuenta administradora la crea el propietario del proyecto en Authentication → Users y se vincula por su UUID exacto mediante el bootstrap. Las posteriores se crean desde Configuración → Administración → Crear cuenta. El servicio exige administrador activo, dispositivo y sesión vigentes. Cada persona utiliza sus propias credenciales.
+5. config/pilot.public.json contiene solo URL, clave publicable y taller de pruebas. Es información pública de cliente y no otorga acceso sin Auth. Para otra instalación puedes usar client-config.json, excluido de Git:
 
 ```json
 {
@@ -51,10 +51,10 @@ Las retiradas requieren otro equipo de oficina o administrador. La sustitución 
 
 Para una instalación 0.1 anterior sin vínculos de sesión, utiliza un entorno de pruebas y una migración supervisada: revoca las sesiones antiguas en Auth y revalida los equipos antes de utilizar el protocolo. No hay una instalación alojada previa de este proyecto.
 
-## Administración y recuperación pendientes
+## Administración y recuperación
 
-Tarifas, impuestos, catálogo y pertenencias aún se preparan desde servidor: las pantallas administrativas completas siguen pendientes. Los cambios manuales por SQL no equivalen a auditoría de producto completa.
+Tarifas, impuestos, permisos, catálogo y plantillas versionadas se editan desde Configuración con motivo, revisión y auditoría. La función workshop-members usa exclusivamente una clave de servicio del entorno del servidor. El cliente conserva el ID y los datos no secretos de una solicitud incierta; al reintentar no crea otra identidad ni cambia su contraseña. Archivar una solicitud conserva evidencia y no borra cuentas.
 
-Los archivos/fotos y sus políticas de Storage no están implementados. Falta exportación y restauración completas de base, usuarios pertinentes, archivos, documentos, auditoría y pendientes locales en un entorno separado. La recuperación de un almacén cifrado probada en esta entrega no demuestra esa restauración completa.
+La copia portable cifrada incorpora servidor y dispositivo, pendientes, documentos, auditoría, gestión y solicitudes de alta sin credenciales. La restauración exige taller aislado, nueva identidad de dispositivo y UUID Auth originales; retira dispositivos históricos e invalida cierres activos. Fotos/Storage, recuperación Auth entre proyectos y uso de archivos nativos siguen pendientes. La función de altas mantiene autentificación JWT y comprueba también el usuario contra Auth antes de preparar solicitudes. Referencia: https://supabase.com/docs/guides/functions/auth-headers
 
 Referencia de las funciones y permisos: [funciones de base de datos de Supabase](https://supabase.com/docs/guides/database/functions).

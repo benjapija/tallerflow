@@ -5,7 +5,7 @@ const db = new PGlite();
 let passed=0, seq=10;
 const id=()=>`00000000-0000-4000-8000-${String(seq++).padStart(12,'0')}`;
 const w=id(), w2=id(), a=id(), b=id(), office=id(), foreign=id(), order=id(), task=id(), taskB=id(), item=id(), da=id(), dbb=id(), desk=id();
-await db.exec(`create role anon; create role authenticated; create schema auth; create table auth.users(id uuid primary key); create table auth.sessions(id uuid primary key,user_id uuid not null);
+await db.exec(`create role anon; create role authenticated; create role service_role; create schema auth; create table auth.users(id uuid primary key); create table auth.sessions(id uuid primary key,user_id uuid not null);
 create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
 grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;`);
 for(const f of (await readdir(new URL('../supabase/migrations/',import.meta.url))).filter(f=>f.endsWith('.sql')).sort()) await db.exec(await readFile(new URL(`../supabase/migrations/${f}`,import.meta.url),'utf8'));
@@ -137,7 +137,7 @@ try{
  await login(office,desk);
  await test('Backup includes management data, versions and permissions',async()=>{
   const s=(await db.query('select public.export_workshop($1,$2) r',[w,desk])).rows[0].r;
-  assert.equal(s.databaseVersion,3);assert.equal(s.tables.templates[0].version,2);assert.ok(s.tables.member_permissions.length);assert.ok(s.tables.management_state[0].revision>0);
+  assert.equal(s.databaseVersion,4);assert.equal(s.tables.templates[0].version,2);assert.ok(s.tables.member_permissions.length);assert.ok(s.tables.management_state[0].revision>0);
  });
  console.log(`${passed} administration and task checks passed. Hosted Auth and actual devices require separate validation.`);
 }finally{await db.close();}
