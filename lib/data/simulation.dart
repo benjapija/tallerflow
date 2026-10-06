@@ -5,6 +5,7 @@ import '../domain/models.dart';
 import 'cloud.dart';
 import 'demo.dart';
 import '../domain/vehicles.dart';
+import '../domain/csv_import.dart';
 
 /// An explicitly fictional, in-memory server for exercising the actual Flutter
 /// client screens. PostgreSQL remains the authority for real installations.
@@ -193,6 +194,27 @@ class SimulatedWorkshop {
     if (devices[device]?.id != actor.id ||
         (retired.contains(device) && action != 'replace_device')) {
       throw const PostgrestException(message: 'Device retired', code: '42501');
+    }
+    if (action == 'import_preview' || action == 'import_commit') {
+      final next = state.copy();
+      final result = applyDemoImport(
+        next,
+        id,
+        p,
+        actor,
+        DateTime.now(),
+        writing: action == 'import_commit',
+      );
+      if (action == 'import_commit') {
+        state = next;
+        commands[id] = {
+          'device': device,
+          'action': action,
+          'payload': cloneMap(p),
+          'result': result,
+        };
+      }
+      return result;
     }
     if (action == 'vehicle_change') {
       final next = state.copy();

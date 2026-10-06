@@ -1,4 +1,4 @@
-$ node database_test.mjs && node reliability_test.mjs && node backup_test.mjs && node management_test.mjs && node vehicle_test.mjs && node pricing_test.mjs && node account_test.mjs && node account_function_test.mjs && node photo_test.mjs && node photo_function_test.mjs
+$ node database_test.mjs && node reliability_test.mjs && node backup_test.mjs && node management_test.mjs && node vehicle_test.mjs && node pricing_test.mjs && node account_test.mjs && node account_function_test.mjs && node photo_test.mjs && node photo_function_test.mjs && node csv_test.mjs
 PASS Reception canonicalizes plate and refuses injected approval/prices
 PASS Duplicate reception tasks are retained as a conflict without creating an order or another vehicle
 PASS Direct table mutation is denied to authenticated clients
@@ -132,3 +132,16 @@ PASS Public or unavailable bucket aborts before download
 PASS Malformed actions and large metadata fail without privileged effects
 PASS Prepare uses stable caller command and returns only authorized info
 8 photo function checks passed with simulated Auth and Storage dependencies.
+PASS Preview distinguishes duplicate rows and validation errors without writing
+PASS Commit keeps per-row results and creates only valid unique rows with audit
+PASS Lost reply retry creates no extra client or audit and changed payload is rejected
+PASS Vehicle import binds the stable customer and current identifiers without creating repair orders
+PASS Repeated VIN or registration preserves existing owner and history; missing client is a row error
+PASS Office cannot import catalog and technician cannot preview clients or read private contacts
+PASS Admin catalog import retains exact decimal quantities and unknown costs
+PASS Catalog duplicate never overwrites price or stock and invalid quantities are row errors
+PASS Unexpected fields, repeated row IDs and wrong workshop leave no imported data
+PASS Account revocation blocks import retries and exported customers are included in schema version 7
+PASS Independent database recovers imported clients, vehicles, catalog and command originals
+PASS Version 6 recovery seeds historical owners without granting new document access
+12 CSV checks passed in local PostgreSQL/PGlite. Hosted Auth, HTTP and native CSV file pickers remain separate validations.

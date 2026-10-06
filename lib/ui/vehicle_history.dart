@@ -4,6 +4,7 @@ import '../data/controller.dart';
 import '../domain/models.dart';
 import '../domain/vehicles.dart';
 import 'dialogs.dart';
+import 'csv_panel.dart';
 
 class VehicleHistory extends StatelessWidget {
   final WorkshopController controller;
@@ -103,6 +104,10 @@ class VehicleHistory extends StatelessWidget {
           'Una ficha por vehículo. Las reparaciones y sus documentos conservan el destinatario original.',
         ),
         const SizedBox(height: 24),
+        if (c.actor.isOffice) ...[
+          CsvPanel(controller: c),
+          const SizedBox(height: 18),
+        ],
         for (final v in profiles)
           Padding(
             padding: const EdgeInsets.only(bottom: 20),

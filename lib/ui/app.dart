@@ -2288,6 +2288,8 @@ String auditLabel(String kind) =>
       'replace_device': 'Dispositivo sustituido',
       'end_retired_timer': 'Fin de cronómetro recuperado',
       'session_rebound': 'Acceso revalidado',
+      'csv_row_imported': 'Fila CSV importada',
+      'csv_import': 'Importación CSV registrada',
       'photo_prepare': 'Carga de fotografía preparada',
       'photo_verified': 'Fotografía verificada',
       'photo_approve': 'Fotografía recuperada incorporada',

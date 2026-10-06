@@ -1,0 +1,12 @@
+{
+  "commit": "fa876b0ac0bf11cbde6cd82b0ddcbaab121eb353",
+  "repository": "benjapija/tallerflow",
+  "date": "2026-10-07",
+  "includes": [
+    "vehicle history",
+    "pricing review",
+    "private recoverable photos",
+    "QR and native links"
+  ],
+  "nativeBuild": "pending"
+}

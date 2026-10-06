@@ -1,0 +1,15 @@
+{
+  "commit": "fa876b0ac0bf11cbde6cd82b0ddcbaab121eb353",
+  "run": 37540024104,
+  "windowsInstallerCompiled": true,
+  "androidDebugApkCompiled": true,
+  "iosSimulatorCompiled": true,
+  "windowsNativeTestRun": 37541988376,
+  "windowsNativeTwoProcessRecovery": true,
+  "server": "fictional-in-memory",
+  "realAuthHttpValidated": false,
+  "physicalCameraValidated": false,
+  "androidArtifactSha256": "f87239c1185da3880760225a27e93bf2ca63d16617433d8d3f5049fa7091c63d",
+  "windowsArtifactSha256": "9cd64dc9c051e68237c11d3268dcb8854b1237d9ea6ce78c0c12676ba337af98",
+  "iosArtifactSha256": "5d8ec294514acd9ce3fc4c2ed780bf701e9e2efe6f1bb41dc08922986f7af473"
+}

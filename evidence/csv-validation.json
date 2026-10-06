@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-07",
+  "flutter": 77,
+  "postgresLocal": 121,
+  "edgeMock": 14,
+  "hostedSQL": 58,
+  "csv": {
+    "flutter": 8,
+    "postgresLocal": 12,
+    "hostedSQL": 10,
+    "fixtureRolledBack": true,
+    "realAuthLogin": false,
+    "nativePickerValidated": false
+  },
+  "supabase": {
+    "project": "gpseuqmzbazifmkhjyby",
+    "migration": "customer_csv",
+    "applied": true,
+    "privateTablesRlsDenyDirect": 28,
+    "leakedPasswordProtectionDisabled": true
+  },
+  "sourcePublished": false
+}

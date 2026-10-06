@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p build/deliverables
-          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'platform':'${{ runner.os }}','realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
+          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'runner':'${{ runner.os }}','platform':os.environ['GITHUB_JOB'],'realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
       - uses: actions/upload-artifact@v4
         with:
           name: TallerFlow-Windows-piloto-${{ github.run_number }}
@@ -81,7 +81,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p build/deliverables
-          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'platform':'${{ runner.os }}','realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
+          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'runner':'${{ runner.os }}','platform':os.environ['GITHUB_JOB'],'realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
       - uses: actions/upload-artifact@v4
         with:
           name: TallerFlow-iOS-simulador
@@ -110,7 +110,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p build/deliverables
-          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'platform':'${{ runner.os }}','realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
+          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'runner':'${{ runner.os }}','platform':os.environ['GITHUB_JOB'],'realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
       - uses: actions/upload-artifact@v4
         with:
           name: TallerFlow-Android-piloto

@@ -12,6 +12,7 @@ import 'session_policy.dart';
 import 'account_creation.dart';
 import '../domain/vehicles.dart';
 import '../domain/photos.dart';
+import '../domain/csv_import.dart';
 import 'photo_blobs.dart';
 part 'controller_photos.dart';
 part 'controller_photo_backup.dart';
@@ -250,6 +251,79 @@ class WorkshopController extends ChangeNotifier {
           await _command(action, p);
         }
       });
+  Future<Map<String, dynamic>> previewImport(ImportPreview preview) =>
+      _locked(() async {
+        _checkAccess();
+        final payload = preview.payload('Vista previa de importación CSV');
+        if (payload['rows'].isEmpty) {
+          return {'rows': [], 'created': 0};
+        }
+        if (demo) {
+          return applyDemoImport(
+            state.copy(),
+            preview.id,
+            payload,
+            actor,
+            clock(),
+            writing: false,
+          );
+        }
+        _checkOnline();
+        return remote!.command(const Uuid().v4(), 'import_preview', payload);
+      });
+  Future<Map<String, dynamic>> commitImport(
+    ImportPreview preview,
+    String reason,
+  ) => _locked(() async {
+    _checkAccess();
+    if (reason.trim().isEmpty || reason.length > 2000) {
+      throw const RuleException('Indica el motivo de la importación');
+    }
+    if (outbox.isNotEmpty || pendingCommands.isNotEmpty || hasPendingPhotos) {
+      throw const RuleException(
+        'Sincroniza todos los pendientes antes de importar',
+      );
+    }
+    final payload = preview.payload(reason.trim());
+    final existing = commandHistory
+        .where((h) => h['id'] == preview.id)
+        .firstOrNull;
+    if (existing != null && existing['status'] == 'accepted') {
+      if (jsonEncode(existing['payload']) != jsonEncode(payload)) {
+        throw const RuleException(
+          'La importación ya registrada conserva sus datos y motivo originales',
+        );
+      }
+      return Map<String, dynamic>.from(existing['result']);
+    }
+    if (demo) {
+      final next = state.copy(), old = state;
+      final oldHistory = commandHistory.toList();
+      final result = applyDemoImport(next, preview.id, payload, actor, clock());
+      state = next;
+      commandHistory.add({
+        'id': preview.id,
+        'action': 'import_commit',
+        'payload': payload,
+        'status': 'accepted',
+        'result': result,
+      });
+      try {
+        await _persist();
+      } catch (_) {
+        state = old;
+        commandHistory = oldHistory;
+        rethrow;
+      }
+      notifyListeners();
+      return result;
+    }
+    _checkOnline();
+    await _command('import_commit', payload, commandId: preview.id);
+    return Map<String, dynamic>.from(
+      commandHistory.lastWhere((h) => h['id'] == preview.id)['result'],
+    );
+  });
   List<WorkOrder> get visibleOrders => !accessAllowed
       ? []
       : state.orders.values
@@ -838,14 +912,22 @@ class WorkshopController extends ChangeNotifier {
     }
   }
 
-  Future<void> _command(String action, Map<String, dynamic> payload) async {
+  Future<void> _command(
+    String action,
+    Map<String, dynamic> payload, {
+    String? commandId,
+  }) async {
     _checkAccess();
     if (demo || offline) {
       throw const RuleException(
         'Esta acción requiere el servidor de pruebas conectado.',
       );
     }
-    final cmd = {'id': const Uuid().v4(), 'action': action, 'payload': payload};
+    final cmd = {
+      'id': commandId ?? const Uuid().v4(),
+      'action': action,
+      'payload': payload,
+    };
     pendingCommands.add(cmd);
     try {
       await _persist();
