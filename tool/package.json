@@ -1,0 +1,11 @@
+{
+  "name": "tallerflow-db-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node database_test.mjs && node reliability_test.mjs && node backup_test.mjs && node management_test.mjs"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.8"
+  }
+}

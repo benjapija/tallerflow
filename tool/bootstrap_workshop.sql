@@ -1,0 +1,9 @@
+-- Run with a privileged account in Supabase SQL Editor AFTER creating users
+-- via Authentication > Users. Replace the placeholders with their UUIDs.
+-- Do not put these elevated credentials in Flutter.
+-- Each person has their own Auth user. Administrators are enrolled by the owner.
+-- INSERT INTO private.members(workshop_id,user_id,display_name,role,see_prices)
+-- VALUES
+-- ('a110fc00-0000-4000-8000-000000000001','ADMIN_USER_UUID','Administrador','admin',true),
+-- ('a110fc00-0000-4000-8000-000000000001','OFFICE_USER_UUID','Oficina','office',true),
+-- ('a110fc00-0000-4000-8000-000000000001','TECH_USER_UUID','Operario','technician',false);

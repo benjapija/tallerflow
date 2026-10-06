@@ -1,0 +1,99 @@
+name: TallerFlow · validar y compilar
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib test tool/render_preview_test.dart
+      - run: flutter analyze
+      - run: flutter test
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install
+        working-directory: tool
+      - run: npm test
+        working-directory: tool
+  windows:
+    needs: validate
+    timeout-minutes: 30
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: stable
+          cache: true
+      - name: Verificar Visual Studio y ATL
+        shell: pwsh
+        run: |
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $installation = & $vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.ATL -property installationPath
+          if (!$installation) { throw 'Falta Visual Studio C++ ATL en el entorno Windows' }
+      - run: flutter pub get
+      - run: flutter build windows --release
+      - name: Preparar instalador de demostración
+        shell: pwsh
+        run: iscc tool/windows-installer.iss
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TallerFlow-Windows-demo-${{ github.run_number }}
+          path: |
+            build/windows/x64/runner/Release/**
+            build/installer/TallerFlow-Setup.exe
+          retention-days: 1
+  native-apple:
+    needs: validate
+    timeout-minutes: 30
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter build macos --release
+      - run: flutter build ios --simulator --debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TallerFlow-macOS-e-iOS-simulador
+          path: |
+            build/macos/Build/Products/Release/*.app
+            build/ios/iphonesimulator/*.app
+          retention-days: 1
+  android:
+    needs: validate
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter build apk --debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TallerFlow-Android-demo
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 1

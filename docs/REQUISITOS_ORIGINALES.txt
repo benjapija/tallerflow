@@ -1,0 +1,299 @@
+Actúa como responsable de producto, diseñador y desarrollador de TallerFlow, una aplicación profesional para talleres de vehículos.
+
+Quiero una aplicación para iOS, Android y Windows que conecte a los operarios con la oficina. Cada operario tendrá su propia cuenta y utilizará la app en su móvil para registrar trabajos, horas, piezas y consumibles. La oficina recibirá una nota con precios, revisará los importes y gestionará la facturación y el cobro.
+
+Utiliza una aplicación común con vistas y permisos según el perfil del usuario.
+
+El recorrido principal será:
+Recepción → diagnóstico e inspección → presupuesto y autorización → reparación → nota automática → comprobación final → revisión de oficina → facturación, cobro y entrega.
+
+La aplicación debe permitir una jornada real de trabajo incluso con el asistente de IA deshabilitado.
+
+1. ENTORNO DE DESARROLLO: SOLO DISPONGO DE UN MAC
+
+Todo el trabajo que deba realizar personalmente debe hacerse mediante aplicaciones compatibles con macOS o servicios accesibles desde su navegador.
+
+Utiliza:
+- Flutter y Dart para las aplicaciones.
+- Supabase para usuarios, base de datos, archivos y comunicación entre dispositivos.
+- Almacenamiento local para conservar registros y trabajar sin conexión.
+- La API de OpenAI desde el servidor para las funciones de IA.
+
+Desarrolla y prueba iOS y Android desde el Mac. Prepara también una versión de escritorio para macOS que permita revisar las pantallas de oficina durante el desarrollo.
+
+Para Windows:
+- Compila la aplicación nativa en un entorno Windows de GitHub Actions.
+- Permite descargar las versiones generadas desde el Mac.
+- Prevé pruebas manuales en un Windows remoto para comprobar interfaz, instalación y funciones específicas.
+- No consideres que compilar correctamente demuestra por sí solo que funciona correctamente.
+
+Comprueba la compatibilidad de las dependencias con las plataformas previstas. Adapta las instrucciones al procesador y a la versión de macOS de mi equipo.
+
+El portal del cliente será accesible desde navegador y necesitará alojamiento HTTPS. Mantén la aplicación nativa de Windows para oficina.
+
+Empieza con un taller. Prepara la estructura para incorporar otros posteriormente, manteniendo sus datos aislados.
+
+2. USUARIOS, PERMISOS Y DATOS
+
+Crea tres perfiles:
+- Operario: trabajos asignados, tiempos, piezas, fotografías, observaciones, historial técnico y asistente de IA.
+- Oficina: clientes, vehículos, asignación de trabajos, presupuestos, autorizaciones, revisión de notas, facturación y cobros.
+- Administrador: usuarios, permisos, tarifas, impuestos, catálogo y configuración.
+
+La visibilidad de costes y precios será configurable. Aplica los permisos también en el servidor.
+
+Conserva un registro de quién modificó tiempos, cantidades, precios, autorizaciones y cobros.
+
+Protege los archivos y la información almacenada en los dispositivos. Las claves privadas de OpenAI y las credenciales privilegiadas del servidor nunca deben incluirse en las aplicaciones.
+
+3. RECEPCIÓN, VEHÍCULOS E HISTORIAL
+
+Cada vehículo tendrá:
+- Identificador interno estable.
+- Matrícula y país de matriculación.
+- Bastidor o VIN.
+- Marca, modelo, año y motorización.
+- Kilometraje.
+- Cliente asociado.
+
+Permite buscar por matrícula, VIN, cliente o teléfono. Normaliza las matrículas para admitir espacios o guiones.
+
+La recepción debe ser rápida y configurable. Permite registrar:
+- Síntomas comunicados por el cliente, conservando su descripción original.
+- Fotografías y daños previos.
+- Kilometraje de entrada.
+- Ubicación del vehículo y de sus llaves.
+- Fecha prevista y observaciones.
+
+Genera un QR por orden para abrirla desde el móvil. El QR identifica la reparación; el acceso sigue sujeto a los permisos del usuario.
+
+El historial incluirá reparaciones, fechas, kilometraje, operarios, horas, piezas, síntomas, DTC, fotografías, diagnósticos confirmados y documentos.
+
+Conserva el historial técnico cuando cambie la matrícula o el propietario. Ese cambio no debe conceder al nuevo propietario acceso a facturas ni datos personales anteriores.
+
+La identificación externa por matrícula o VIN requiere un proveedor autorizado; la búsqueda básica consulta los vehículos registrados en el taller.
+
+4. ÓRDENES, TIEMPOS Y CAPTURA RÁPIDA
+
+Cada orden tendrá tareas, operarios asignados, prioridad, fecha prevista y estados de trabajo.
+
+Estados iniciales:
+Pendiente, en diagnóstico, esperando autorización, esperando piezas, en reparación, terminada, verificada y entregada.
+
+Mantén el estado del cobro separado. Permite avanzar tareas autorizadas aunque otra tarea de la misma orden esté bloqueada.
+
+El operario podrá:
+- Abrir trabajos mediante búsqueda o QR.
+- Iniciar, pausar y terminar un cronómetro por tarea.
+- Añadir tiempo manualmente con motivo y trazabilidad.
+- Registrar piezas y consumibles.
+- Adjuntar fotografías y observaciones.
+- Indicar bloqueos y trabajo pendiente.
+- Enviar el trabajo terminado a oficina.
+
+Distingue tiempo estimado, tiempo trabajado y tiempo facturable. Las esperas no se convertirán automáticamente en mano de obra cobrada.
+
+Permite varios operarios en una reparación, evitando sesiones incompatibles de un mismo operario. Conserva el cronómetro al cerrar la app o reiniciar el móvil.
+
+Añade plantillas editables para servicios repetitivos. Comprueba referencias, cantidades y operaciones para cada vehículo y evita duplicar cargos incluidos en un paquete.
+
+En fases posteriores, incorpora:
+- Dictado convertido en un borrador revisable.
+- Lectura de matrículas, VIN y referencias mediante cámara.
+- Lectura de códigos de barras de piezas.
+
+El usuario debe confirmar los datos antes de guardarlos. Evita contar dos veces un tiempo registrado mediante dictado y cronómetro.
+
+5. INSPECCIÓN, PRESUPUESTOS Y PORTAL DEL CLIENTE
+
+Permite inspecciones configurables con estados:
+Correcto, necesita seguimiento y requiere atención.
+
+Relaciona cada hallazgo con fotografías y observaciones. Un hallazgo no debe convertirse automáticamente en una reparación cobrable.
+
+Los presupuestos tendrán versiones y partidas con descripción, piezas, mano de obra, impuestos e importes.
+
+Registra qué partidas autorizó o rechazó el cliente, cuándo y sobre qué versión. Las ampliaciones o cambios de alcance y precio deben solicitar nueva autorización según la política configurada.
+
+Conserva los trabajos ya autorizados cuando se prepare una ampliación. Un enlace antiguo no debe aprobar inadvertidamente una versión nueva.
+
+La oficina podrá registrar autorizaciones obtenidas por otros canales, indicando quién, cuándo, versión y soporte cuando corresponda.
+
+Crea un portal sencillo que el cliente abra desde navegador, sin instalar otra app. Permitirá:
+- Consultar el presupuesto y sus evidencias.
+- Aceptar o rechazar partidas.
+- Consultar un estado comprensible de la reparación.
+- Acceder a los documentos autorizados para ese cliente.
+
+Utiliza acceso temporal, revocable y con verificación del destinatario. No concedas acceso solo por conocer una matrícula.
+
+Guarda las recomendaciones pospuestas en el historial para retomarlas posteriormente, sin tratarlas como trabajos aprobados.
+
+6. CATÁLOGO, ALMACÉN Y COMPRAS
+
+El catálogo incluirá referencia, descripción, proveedor, unidad de medida, coste, precio de venta, existencias y stock mínimo.
+
+Admite unidades y cantidades decimales, por ejemplo litros de aceite. Mantén coherencia entre envases comprados y cantidades consumidas.
+
+Distingue:
+- Pieza reservada.
+- Pieza consumida.
+- Pieza devuelta al almacén.
+- Pieza devuelta al proveedor.
+- Pieza aportada por el cliente.
+
+La reserva no equivale al consumo.
+
+Permite pedidos manuales vinculados a reparaciones, con cantidades solicitadas, recibidas y pendientes, fecha prevista y recepciones parciales.
+
+Conserva la trazabilidad de movimientos y devoluciones. Evita descontar dos veces una pieza.
+
+La selección automática de recambios compatibles y los pedidos directos a proveedores quedan condicionados a datos fiables, APIs y acuerdos concretos.
+
+7. NOTA AUTOMÁTICA, CALIDAD, FACTURACIÓN Y COBROS
+
+Genera la nota a partir de los registros confirmados:
+Descripción, mano de obra, piezas, cantidades, precios, descuentos, impuestos y total.
+
+Los cálculos deben ser deterministas, con valores monetarios decimales y redondeo consistente. La IA no calcula ni modifica importes.
+
+Guarda los precios aplicados para que un cambio del catálogo no altere documentos anteriores.
+
+Antes del cierre, muestra a oficina:
+- Cronómetros activos.
+- Tareas incompletas.
+- Líneas sin precio o pendientes de revisión.
+- Ampliaciones sin autorización.
+- Conflictos de datos o de stock.
+- Registros pendientes de sincronización.
+
+Permite excepciones justificadas a perfiles autorizados, como un consumo sin cobro.
+
+Añade una comprobación final configurable: trabajo realizado, resultado, síntomas pendientes y validación del técnico. Genera un informe de entrega con fotografías cuando resulte útil.
+
+Permite exportar notas y presupuestos a PDF con los datos del taller.
+
+Antes de desarrollar facturación fiscal definitiva, confirma el país, los requisitos aplicables y el programa de facturación existente. Mientras tanto, identifica claramente notas y presupuestos.
+
+Los documentos emitidos se corrigen mediante un procedimiento trazable.
+
+Registra pagos completos, parciales y pendientes, con importe, fecha y medio. Entregado no significa automáticamente pagado; oficina podrá autorizar una entrega con saldo pendiente y dejar constancia.
+
+Las integraciones con terminales de pago se evaluarán posteriormente.
+
+8. ORGANIZACIÓN, GARANTÍAS E INFORMES
+
+Crea un panel de oficina con:
+- Vehículos y tareas en curso.
+- Motivo de cada bloqueo.
+- Responsable y siguiente acción.
+- Fecha prevista.
+- Trabajos terminados pendientes de revisión.
+- Importes pendientes de cobro.
+
+Permite un resumen de traspaso de turno: qué se hizo, qué falta, mediciones relevantes y ubicación de llaves y piezas.
+
+Si el vehículo regresa, crea una orden vinculada a la reparación original. El personal clasificará si es garantía, reincidencia o una avería diferente. Conserva el documento original.
+
+Muestra tiempo estimado, trabajado y facturado, ingresos y costes registrados por reparación. Calcula un margen estimado con el coste de piezas y el coste horario interno configurado; no lo presentes como beneficio neto. Indica cuándo faltan costes.
+
+Prepara para fases posteriores agenda de operarios y elevadores, seguimiento de mantenimiento y gestión de flotas.
+
+9. ASISTENTE DE IA TÉCNICO
+
+El asistente ayudará a interpretar DTC, relacionar síntomas, consultar documentación y proponer comprobaciones.
+
+Antes de dar instrucciones específicas, verifica marca, modelo, año, motor y, cuando sea necesario, VIN o variante.
+
+Distingue:
+- Información documentada.
+- Hipótesis.
+- Comprobaciones propuestas.
+- Mediciones registradas.
+- Diagnóstico confirmado por el técnico.
+
+Un DTC no demuestra por sí solo que una pieza esté averiada.
+
+Cada respuesta técnica debe identificar sus fuentes. Si falta información, explica qué necesita. No inventes conexiones, pines, pares de apriete, valores ni especificaciones.
+
+Para esquemas eléctricos y mecánicos:
+- Utiliza documentación del fabricante o proveedores contratados.
+- Confirma que la licencia admite integración y uso con IA.
+- Recupera y muestra el documento original correspondiente al vehículo.
+- Trata los diagramas como contenido visual cuando proceda, sin asumir que una búsqueda textual contiene toda la información.
+- Si el acceso o la correspondencia no están confirmados, indícalo.
+
+Añade un cuaderno de diagnóstico:
+Síntoma → hipótesis → comprobación → resultado → conclusión → intervención → verificación.
+
+Permite una biblioteca de casos propios validados por una persona, aislada por taller y con datos personales minimizados. Un caso parecido es un antecedente, no una prueba de la causa actual. Permite revisar o retirar conclusiones si una avería reaparece.
+
+10. IA PARA OFICINA
+
+Permite generar borradores claros de notas e informes a partir de trabajos realmente registrados.
+
+La IA podrá resumir y mejorar la redacción, pero no inventar operaciones, piezas, diagnósticos, autorizaciones ni importes.
+
+Mantén revisión humana antes de incorporar el texto a un documento final.
+
+Envía solo la información necesaria y establece límites de consumo y modelos configurables desde el servidor.
+
+11. SIN CONEXIÓN, IMPORTACIÓN Y RECUPERACIÓN
+
+Permite registrar tiempos, consumos y notas sin conexión sobre trabajos y catálogo descargados.
+
+Muestra claramente qué está guardado en el dispositivo y qué está sincronizado.
+
+Al reconectar:
+- Evita duplicados por reintentos.
+- Conserva los registros reales.
+- Detecta conflictos sin sobrescribirlos silenciosamente.
+- Señala discrepancias de stock para revisión.
+
+No supongas que el servidor conoce todos los cambios de móviles desconectados. Reconcílialos antes del cierre.
+
+Si llegan datos después de emitir un documento, consérvalos como incidencia para oficina; no alteres silenciosamente el documento ni descartes el registro.
+
+Permite importar clientes, vehículos y catálogo mediante CSV, con vista previa y detección de duplicados.
+
+Incluye exportación de datos y copias de seguridad. Verifica la restauración en un entorno de prueba antes de utilizar el sistema en producción.
+
+La IA y las consultas a proveedores externos requieren conexión.
+
+12. DISEÑO, FASES Y ENTREGA
+
+Diseña en español, con botones grandes, pocos pasos y formularios configurables. En escritorio, utiliza tablas, filtros y navegación mediante teclado y ratón.
+
+Organiza el desarrollo:
+
+Fase 1:
+Usuarios, vehículos, recepción breve, QR, órdenes, cronómetro, piezas, plantillas, nota automática, autorizaciones registradas por oficina, revisión de cierre, historial y panel básico. Diseña la sincronización desde el inicio y valida la pérdida de conexión antes del piloto.
+
+Fase 2:
+Inspección visual completa, portal del cliente, aceptación digital, almacén avanzado, compras y devoluciones, garantías, documentos PDF, cobros y capacidades sin conexión ampliadas.
+
+Fase 3:
+IA técnica y administrativa, cuaderno de diagnóstico, biblioteca validada, dictado y lectura mediante cámara.
+
+Fase 4:
+Agenda avanzada, mantenimiento, flotas e integraciones con facturación, proveedores, equipos de diagnosis y pagos, tras confirmar necesidad y compatibilidad.
+
+Antes de usar datos reales, valida permisos, aislamiento de talleres, cálculos, sincronización, exportación y recuperación.
+
+Comprueba especialmente:
+- Varios operarios trabajando sin perder registros.
+- Tiempos reales y facturables separados.
+- Ampliaciones pendientes sin convertirse en cargos aprobados.
+- Enlaces antiguos sin aceptar presupuestos nuevos inadvertidamente.
+- Reservas, consumos y devoluciones sin duplicar stock.
+- Reintentos y datos tardíos sin pérdidas ni cambios silenciosos.
+- Cambios de propietario sin revelar documentos personales anteriores.
+- Garantías vinculadas sin alterar la reparación original.
+- IA sin añadir trabajos inexistentes ni afirmar datos técnicos sin respaldo.
+- Restauración de una copia y funcionamiento en las plataformas previstas.
+
+Entrega código organizado, configuración de base de datos, datos de demostración, instrucciones para Mac y pruebas de los procesos críticos.
+
+Al empezar, presenta las pantallas, la arquitectura, el alcance de la primera versión y las dependencias externas. Explica en lenguaje sencillo qué se instala en el Mac, qué funciona en la nube y qué necesita contratos o credenciales.
+
+Concreta, al iniciar la implementación, el país de facturación, el proveedor de documentación técnica y el software existente del taller.
