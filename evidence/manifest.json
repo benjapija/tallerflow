@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "date": "2026-10-06",
+  "billingCountry": "ES",
+  "scope": "Bloque de fiabilidad de fase 1; fase 1 incompleta",
+  "flutterTestsPassed": 27,
+  "postgresCoreChecksPassed": 15,
+  "postgresReliabilityChecksPassed": 29,
+  "postgresChecksPassed": 44,
+  "previewRenderTestsPassed": 2,
+  "previewImages": 5,
+  "analyzerClean": true,
+  "nativePlatformsValidated": [],
+  "webPreviewBuilt": true,
+  "cloudConfigured": false,
+  "cloudIssuingImplemented": true,
+  "cloudIssuingValidatedHosted": false,
+  "localDatabaseRuntime": "PostgreSQL/PGlite con Auth y JWT simulados",
+  "physicalRestartValidated": false,
+  "productionReady": false,
+  "pendingExternalValidation": [
+    "Supabase/Auth alojado",
+    "Dos móviles físicos y oficina",
+    "Almacenamiento seguro y reinicio nativo",
+    "Compilación/instalación Windows en GitHub y Windows remoto",
+    "Exportación y restauración completas"
+  ],
+  "localBrowserVerified": true,
+  "localBrowserScenario": "Dos confirmaciones, móvil Lucía desconectado, emisión bloqueada"
+}

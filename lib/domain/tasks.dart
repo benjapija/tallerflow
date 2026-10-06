@@ -44,6 +44,10 @@ Map<String, dynamic> newTask(
   'billableMinutes': 0,
   'rateCents': state.settings['hourlyRateCents'] ?? 4800,
   'taxBps': state.settings['taxBps'] ?? 2100,
+  'discountBps': 0,
+  'priceVersion': 1,
+  'internalCostCents': state.settings['internalHourlyCostCents'] ?? 0,
+  'internalCostKnown': state.settings['internalCostKnown'] == true,
   'scopeVersion': 1,
   'block': null,
 };

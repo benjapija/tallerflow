@@ -1,0 +1,11 @@
+TallerFlow 0.2 · verificación del navegador · 2026-10-06
+URL local: http://127.0.0.1:8777/
+Entorno: compilación web release, datos ficticios, servidor simulado en memoria.
+1. Configuración → Probar dos móviles y oficina.
+2. Oficina abrió Renault Kangoo y solicitó cierre sobre revisión 0.
+3. Oficina confirmó: bloqueo local visible y 1/3 dispositivos confirmados.
+4. Lucía pasó a modo sin conexión sin confirmar.
+5. Álex actualizó y confirmó: bloqueo local visible y 2/3 confirmados.
+6. Oficina actualizó y consultó la orden: 2/3 confirmados y Emitir nota desactivado.
+Captura: browser-cierre-v02.png.
+Este recorrido no acredita persistencia nativa, reinicio físico ni Supabase alojado.

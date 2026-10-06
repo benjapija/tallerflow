@@ -1,11 +1,11 @@
 # Supabase de pruebas · desarrollo actual
 
-Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. Migraciones 001–005 y función workshop-members desplegadas. Taller ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La primera pertenencia administradora espera confirmación de la identidad del correo; no se concede acceso por aproximación del nombre. No hay llamadas de IA ni claves privadas en Flutter.
+Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. Migraciones 001–008 y función workshop-members desplegadas. Taller ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La primera pertenencia administradora espera confirmación de la identidad del correo; no se concede acceso por aproximación del nombre. No hay llamadas de IA ni claves privadas en Flutter.
 
 ## Configuración desde el Mac
 
 1. Utiliza el proyecto conectado solo con datos ficticios. Para otro entorno, crea un proyecto independiente.
-2. En una base nueva aplica las migraciones de supabase/migrations en orden. En una base existente aplica solo las nuevas. Despliega supabase/functions/workshop-members/index.ts y handler.ts con verify_jwt=true. El entorno de pruebas conectado ya tiene estas cinco migraciones.
+2. En una base nueva aplica las migraciones de supabase/migrations en orden. En una base existente aplica solo las nuevas. Despliega supabase/functions/workshop-members/index.ts y handler.ts con verify_jwt=true. El entorno de pruebas conectado ya tiene estas ocho migraciones.
 3. Mantén expuesto solo `public` en la Data API; no expongas `private`. No concedas escritura directa a tablas.
 4. La primera cuenta administradora la crea el propietario del proyecto en Authentication → Users y se vincula por su UUID exacto mediante el bootstrap. Las posteriores se crean desde Configuración → Administración → Crear cuenta. El servicio exige administrador activo, dispositivo y sesión vigentes. Cada persona utiliza sus propias credenciales.
 5. config/pilot.public.json contiene solo URL, clave publicable y taller de pruebas. Es información pública de cliente y no otorga acceso sin Auth. Para otra instalación puedes usar client-config.json, excluido de Git:
@@ -18,10 +18,10 @@ Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. Migraciones 001�
 }
 ```
 
-6. Con Xcode completo disponible, abre la versión nativa desde Mac:
+6. Compila el cliente conectado para Windows en GitHub Actions, o para un simulador/móvil autorizado desde el Mac. No se prepara una aplicación macOS. Para Android, con su SDK disponible:
 
 ```sh
-flutter run -d macos --dart-define-from-file=client-config.json
+flutter run -d ID_ANDROID --dart-define-from-file=config/pilot.public.json
 ```
 
 7. Inicia sesión con una cuenta real de **pruebas**. Su primer acceso necesita conexión. A partir de la descarga validada podrá reabrir la caché cifrada durante la vigencia definida.
@@ -36,6 +36,9 @@ Nunca incluyas `service_role`, contraseña de base de datos o clave OpenAI en la
 | `device_snapshot(workshop_id, device_id)` | Registra identidad/sesión y órdenes descargadas; devuelve estado, recibos, incidencias, cierres y equipos accesibles |
 | `apply_operation(workshop_id, device_id, operation)` | Trabajo operativo validado, idempotente y conservado ante conflicto o llegada tardía |
 | `reliability_command(workshop_id, device_id, command_id, action, payload)` | Cierre, confirmación, emisión, resolución, retirada, fin real de cronómetro y sustitución |
+| `management_command(...)` | Configuración, usuarios, catálogo y plantillas con revisión y auditoría |
+| `vehicle_command(...)` | Matrícula y propietario; conserva identidad estable, alias y destinatarios históricos |
+| `export_workshop(...)` / `restore_workshop(...)` | Archivo de las tablas permitidas; recuperación aislada |
 
 Acciones de fiabilidad: `request_close`, `ack_close`, `issue`, `resolve`, `retire_device`, `end_retired_timer` y `replace_device`. La operación antigua `issue` permanece prohibida. `workshop_snapshot` se conserva como lectura compatible, pero no concede inscripción de dispositivos ni permiso para saltarse el protocolo.
 
@@ -55,6 +58,8 @@ Para una instalación 0.1 anterior sin vínculos de sesión, utiliza un entorno 
 
 Tarifas, impuestos, permisos, catálogo y plantillas versionadas se editan desde Configuración con motivo, revisión y auditoría. La función workshop-members usa exclusivamente una clave de servicio del entorno del servidor. El cliente conserva el ID y los datos no secretos de una solicitud incierta; al reintentar no crea otra identidad ni cambia su contraseña. Archivar una solicitud conserva evidencia y no borra cuentas.
 
-La copia portable cifrada incorpora servidor y dispositivo, pendientes, documentos, auditoría, gestión y solicitudes de alta sin credenciales. La restauración exige taller aislado, nueva identidad de dispositivo y UUID Auth originales; retira dispositivos históricos e invalida cierres activos. Fotos/Storage, recuperación Auth entre proyectos y uso de archivos nativos siguen pendientes. La función de altas mantiene autentificación JWT y comprueba también el usuario contra Auth antes de preparar solicitudes. Referencia: https://supabase.com/docs/guides/functions/auth-headers
+La copia portable cifrada incorpora servidor y dispositivo, pendientes, documentos, auditoría, gestión y solicitudes de alta sin credenciales. La restauración exige taller aislado, nueva identidad de dispositivo y UUID Auth originales; retira dispositivos históricos e invalida cierres activos. Fotos y archivos locales pendientes se incluyen en la copia y se validan por hash antes de restaurar. La migración de fotos y workshop-photos v1 están desplegadas. El bucket privado se crea mediante Storage API tras autorizar una captura; no se modifican sus tablas internas por SQL. La lectura exige una sesión activa y asignación/perfil, no permite URLs firmadas y los archivos no admiten UPDATE/DELETE. Quedan pruebas HTTP reales, recuperación Auth entre proyectos, copias superiores a 32 MiB y uso nativo. La función de altas mantiene autentificación JWT y comprueba también el usuario contra Auth antes de preparar solicitudes. Referencia: https://supabase.com/docs/guides/functions/auth-headers
 
 Referencia de las funciones y permisos: [funciones de base de datos de Supabase](https://supabase.com/docs/guides/database/functions).
+
+La primera cuenta administradora confirmada es **ramirezbroja013@gmail.com**. Se vinculó con auditoría y sin leer su contraseña; esto no acredita haber iniciado sesión en la aplicación.

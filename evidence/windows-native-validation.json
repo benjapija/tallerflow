@@ -1,0 +1,17 @@
+{
+  "runId": 37502393567,
+  "commit": "e26a77a8d8c99dadd7750b1c6eb0cd400f3ace70",
+  "url": "https://github.com/benjapija/tallerflow/actions/runs/37502393567",
+  "platform": "Windows Server 2025 virtual GitHub runner",
+  "result": "passed",
+  "nativeLaunches": 2,
+  "nativeEncryptedFile": true,
+  "nativeCredentialStore": true,
+  "offlineRecordsRecovered": 2,
+  "duplicateTimeSessions": false,
+  "automaticBilling": false,
+  "backend": "fictional-in-memory",
+  "realAuthHttpValidated": false,
+  "installerManuallyValidated": false,
+  "artifactSha256": "d1b39149d9876815584c2469cf4f29f0d9a114bc14d36a20a783320375eab731"
+}

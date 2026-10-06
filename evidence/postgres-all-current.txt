@@ -1,0 +1,91 @@
+$ node database_test.mjs && node reliability_test.mjs && node backup_test.mjs && node management_test.mjs && node account_test.mjs && node account_function_test.mjs
+PASS Reception canonicalizes plate and refuses injected approval/prices
+PASS Duplicate reception tasks are retained as a conflict without creating an order or another vehicle
+PASS Direct table mutation is denied to authenticated clients
+PASS Workshop isolation and anonymous reads are enforced
+PASS Technician receives assigned data without money or prior documents
+PASS Technician cannot authorize or forge a different actor
+PASS Authorized timer starts; retry has exactly one effect
+PASS Concurrent same-user timer and unauthorized extension are retained as conflicts
+PASS Retry key with altered payload is rejected
+PASS Manual time overlapping an active session cannot be duplicated
+PASS Server freezes catalog price and consumes decimal quantities once
+PASS Partial return succeeds; excess return is preserved as a conflict
+PASS Stale office review cannot silently overwrite another change
+PASS Legacy issue cannot bypass all-device atomic closure
+PASS Late records are retained without changing an emitted document
+PASS All private tables have RLS enabled
+16 database checks passed. PGlite executes PostgreSQL; hosted Supabase/Auth/Storage need separate integration tests.
+PASS Downloads enrol two technicians and office; direct privileged helpers denied
+PASS Concurrent last-stock consumption is retained as conflict without negative stock
+PASS Same UUID after lost response produces one effect
+PASS Technician cannot resolve incidents or retire devices
+PASS Office retries with original actor, preserving evidence and resolution audit
+PASS Original device receives resolution receipt and can reconcile its preserved queue
+PASS Active timer prevents acknowledgement
+PASS Change during closure invalidates request and old confirmation
+PASS Offline second technician blocks issue despite office empty queue
+PASS Lost acknowledgement response can be retried idempotently
+PASS New device enrolment invalidates fully confirmed request
+PASS Retirement never counts as normal reconciliation
+PASS Device retirement invalidates affected closure and cannot silently bypass it
+PASS Retired device cannot download or confirm, but recovered record is conserved
+PASS Retired record requires review; retry creates attributable correction before issue
+PASS Issue is atomic, computes frozen prices and labels administrative exception
+PASS Issuing retry returns same document, without duplicate document rows
+PASS Late operation after issue creates incident and leaves document unchanged
+PASS Late resolution cannot mutate emitted document, archive retains original and reason
+PASS Authenticated clients and private helpers cannot bypass immutability
+PASS Commands and device snapshots isolate workshops and reject anonymous access
+PASS Technician snapshots redact amounts in conflicts and documents
+PASS Retired owner registers replacement idempotently without restoring old authority
+PASS Recovered offline reception is retained even if its order was never uploaded
+PASS Lost active timer remains explicit until office records actual end with evidence
+PASS Fresh sign-in rebinds active identity and invalidates old closure confirmations
+PASS Retirement blocks all earlier sessions bound to the same physical identity
+PASS Signed-out session cannot modify or read even with an unexpired JWT
+PASS All reliability tables use RLS
+29 reliability checks passed. PostgreSQL/PGlite with simulated Auth; no hosted Supabase or physical devices.
+PASS Export contains documents, late originals, audit and all protocol tables, without Auth secrets
+PASS Technician and anonymous cannot export private workshop data
+PASS Malformed cross-workshop archive is rejected atomically
+PASS Missing Auth identity blocks restore without changing existing data
+PASS Independent database restores original documents, records and audit
+PASS Restored acknowledgements remain historical, active closure is invalidated and account request cannot gain authority
+PASS Lost restoration reply can be retried without duplicate documents or original operations
+PASS Same restore ID with changed content and restore over populated workshop are rejected
+PASS Historical device sessions stay retired and cannot mint another editing identity
+PASS Restored issued document remains immutable and further records remain late
+10 backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.
+PASS Administrator settings update is audited; stale concurrent update is rejected
+PASS Settings reject missing or excessive tax without partial changes
+PASS Command retries are idempotent and altered payload is rejected
+PASS Last administrator cannot disable or demote itself
+PASS Technician has neither administration API nor hidden tariff/cost data
+PASS Configurable price and cost access is enforced by the server
+PASS Catalog adjustment retains previous movements and frozen prices
+PASS Duplicate catalog references and inactive consumption are prevented
+PASS Versioned templates prepare unauthorized tasks after compatibility review
+PASS Tasks reject foreign assignees and retain evidence on stale editing
+PASS Active timers prevent reassignment and account removal
+PASS Task blocks require a responsible member and stop starts until resolved
+PASS Scope edits preserve prior authorization and other task consent
+PASS Cancellation retains tasks and refuses work with recorded time/consumption
+PASS Priority/location updates are scoped, audited and require latest revision
+PASS Backup includes management data, versions and permissions
+16 administration and task checks passed. Hosted Auth and actual devices require separate validation.
+PASS Admin prepares a stable request and excludes credential fields
+PASS Clients cannot read requests or invoke elevated finalization
+PASS Foreign existing identities are never adopted or given membership
+PASS Only the matching server marker can finalize; retries have one membership and audit effect
+PASS Retired or reassigned device and inactive admin revoke provisioning authority
+PASS Non-admin cannot prepare accounts and permissions are validated before any request
+PASS Workshop archive includes account recovery records without passwords
+7 account provisioning checks passed. Auth API and native operation require separate validation.
+PASS Unauthorized requests have no provisioning effects
+PASS Credential-like payload fields are removed before prepare and an uncertain finish is recoverable
+PASS Retry reuses the existing Auth identity after interrupted finalization
+PASS Revocation checked during prepare prevents new identities
+PASS Invalid passwords and identifiers fail before storage
+PASS Authentication outages return a controlled response without provisioning
+6 account function checks passed with simulated Auth API.

@@ -1,0 +1,10 @@
+PASS Registration changes retain stable ID, original document and technical data
+PASS Previous registration finds the same car and recipient on a later visit
+PASS Owner transfer leaves every previous recipient and issued document unchanged
+PASS New visits use the new recipient; stale offline owner data is retained as conflict
+PASS An earlier recipient ID cannot be renamed into a new owner
+PASS Technicians see technical history without recipient details or personal documents
+PASS Anonymous access and direct recipient mutation remain denied
+PASS Workshop isolation and ambiguous registration/VIN prevent cross-linking
+PASS Full export includes immutable recipients, aliases and changes without transferring document access
+9 vehicle PostgreSQL integration tests passed (local PGlite, synthetic Auth)

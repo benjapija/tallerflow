@@ -8,6 +8,7 @@ await db.exec(`create role anon;create role authenticated;create role service_ro
  create table auth.users(id uuid primary key,email text,raw_app_meta_data jsonb default '{}');create table auth.sessions(id uuid primary key,user_id uuid not null);
  create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
  grant usage on schema auth to authenticated;grant execute on function auth.uid() to authenticated;`);
+await db.exec(await readFile(new URL('./storage_fixture.sql',import.meta.url),'utf8'));
 for(const f of (await readdir(new URL('../supabase/migrations/',import.meta.url))).filter(f=>f.endsWith('.sql')).sort())await db.exec(await readFile(new URL(`../supabase/migrations/${f}`,import.meta.url),'utf8'));
 await db.query("insert into auth.users(id,email) values($1,'admin@example.invalid'),($2,'tech@example.invalid')",[admin,tech]);
 await db.query("insert into private.workshops(id,name) values($1,'Fictional account tests')",[w]);
@@ -59,7 +60,7 @@ try{
  });
  await test('Workshop archive includes account recovery records without passwords',async()=>{
   const a=(await db.query('select public.export_workshop($1,$2) r',[w,device])).rows[0].r;
-  assert.equal(a.databaseVersion,4);assert.equal(a.tables.account_requests.length,1);assert(!JSON.stringify(a).includes(p.password));
+  assert.equal(a.databaseVersion,6);assert.equal(a.tables.account_requests.length,1);assert(!JSON.stringify(a).includes(p.password));
   assert(a.tables.devices.length>0);
  });
  console.log(`${passed} account provisioning checks passed. Auth API and native operation require separate validation.`);

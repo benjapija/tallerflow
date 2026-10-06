@@ -1,0 +1,16 @@
+PASS Reception canonicalizes plate and refuses injected approval/prices
+PASS Direct table mutation is denied to authenticated clients
+PASS Workshop isolation and anonymous reads are enforced
+PASS Technician receives assigned data without money or prior documents
+PASS Technician cannot authorize or forge a different actor
+PASS Authorized timer starts; retry has exactly one effect
+PASS Concurrent same-user timer and unauthorized extension are retained as conflicts
+PASS Retry key with altered payload is rejected
+PASS Manual time overlapping an active session cannot be duplicated
+PASS Server freezes catalog price and consumes decimal quantities once
+PASS Partial return succeeds; excess return is preserved as a conflict
+PASS Stale office review cannot silently overwrite another change
+PASS Legacy issue cannot bypass all-device atomic closure
+PASS Late records are retained without changing an emitted document
+PASS All private tables have RLS enabled
+15 database checks passed. PGlite executes PostgreSQL; hosted Supabase/Auth/Storage need separate integration tests.

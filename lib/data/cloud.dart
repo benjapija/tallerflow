@@ -1,7 +1,9 @@
+import 'dart:typed_data';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../domain/engine.dart';
 import '../domain/models.dart';
+import 'photo_blobs.dart';
 
 class SecureSessionStorage extends LocalStorage {
   const SecureSessionStorage();
@@ -21,6 +23,18 @@ class SecureSessionStorage extends LocalStorage {
 }
 
 abstract class Remote {
+  Future<Map<String, dynamic>> preparePhoto(
+    String commandId,
+    Map<String, dynamic> metadata,
+  ) => throw UnsupportedError('Servicio de fotos no disponible');
+  Future<Map<String, dynamic>> restoredPhotoInfo(String id) =>
+      throw UnsupportedError('Servicio de recuperación de fotos no disponible');
+  Future<void> uploadPhoto(Map<String, dynamic> metadata, Uint8List bytes) =>
+      throw UnsupportedError('Storage no disponible');
+  Future<Map<String, dynamic>> finalizePhoto(String id) =>
+      throw UnsupportedError('Verificación de fotos no disponible');
+  Future<Uint8List> downloadPhoto(Map<String, dynamic> metadata) =>
+      throw UnsupportedError('Storage no disponible');
   Future<Map<String, dynamic>> createMember(
     String id,
     Map<String, dynamic> preferences,
@@ -63,6 +77,75 @@ class SupabaseRemote extends Remote {
   bool get requiresLease => true;
   @override
   void bindDevice(String id) => deviceId = id;
+  Future<Map<String, dynamic>> _photoService(Map<String, dynamic> body) async {
+    final response = await client.functions
+        .invoke(
+          'workshop-photos',
+          body: {'workshopId': workshopId, 'deviceId': deviceId, ...body},
+        )
+        .timeout(const Duration(seconds: 45));
+    return Map<String, dynamic>.from(response.data);
+  }
+
+  @override
+  Future<Map<String, dynamic>> preparePhoto(
+    String commandId,
+    Map<String, dynamic> metadata,
+  ) => _photoService({
+    'action': 'prepare',
+    'commandId': commandId,
+    'payload': metadata,
+  });
+  @override
+  Future<Map<String, dynamic>> restoredPhotoInfo(String id) =>
+      _photoService({'action': 'restore', 'photoId': id});
+  @override
+  Future<Map<String, dynamic>> finalizePhoto(String id) =>
+      _photoService({'action': 'verify', 'photoId': id});
+  @override
+  Future<Uint8List> downloadPhoto(Map<String, dynamic> metadata) => client
+      .storage
+      .from('tallerflow-photos')
+      .download(metadata['path'])
+      .timeout(const Duration(seconds: 30));
+  @override
+  Future<void> uploadPhoto(
+    Map<String, dynamic> metadata,
+    Uint8List bytes,
+  ) async {
+    if (bytes.length != metadata['size'] ||
+        await PhotoBlobs.digest(bytes) != metadata['sha256']) {
+      throw const FormatException('Fotografía dañada');
+    }
+    try {
+      await client.storage
+          .from('tallerflow-photos')
+          .uploadBinary(
+            metadata['path'],
+            bytes,
+            fileOptions: const FileOptions(
+              upsert: false,
+              contentType: 'image/jpeg',
+              cacheControl: '0',
+            ),
+          )
+          .timeout(const Duration(seconds: 45));
+    } on StorageException catch (e) {
+      if (!['409', '400'].contains(e.statusCode) ||
+          !(e.message.toLowerCase().contains('already exists') ||
+              e.error == 'Duplicate')) {
+        rethrow;
+      }
+      final existing = await downloadPhoto(metadata);
+      if (existing.length != metadata['size'] ||
+          await PhotoBlobs.digest(existing) != metadata['sha256']) {
+        throw const FormatException(
+          'El archivo remoto no coincide; no se sobrescribirá',
+        );
+      }
+    }
+  }
+
   @override
   Future<Map<String, dynamic>> createMember(
     String id,
@@ -145,12 +228,16 @@ class SupabaseRemote extends Remote {
   ) async => Map<String, dynamic>.from(
     await client
         .rpc(
-          [
-                'settings_save',
-                'member_save',
-                'catalog_save',
-                'template_save',
-              ].contains(action)
+          action.startsWith('photo_')
+              ? 'photo_command'
+              : action == 'vehicle_change'
+              ? 'vehicle_command'
+              : [
+                  'settings_save',
+                  'member_save',
+                  'catalog_save',
+                  'template_save',
+                ].contains(action)
               ? 'management_command'
               : 'reliability_command',
           params: {

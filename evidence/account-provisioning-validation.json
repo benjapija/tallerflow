@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-06",
+  "project": "gpseuqmzbazifmkhjyby",
+  "function": "workshop-members",
+  "deploymentVersion": 1,
+  "verifyJwt": true,
+  "supabaseJsVersion": "2.99.3",
+  "registryVersionConfirmed": true,
+  "localPostgresChecks": 7,
+  "simulatedAuthApiFunctionChecks": 6,
+  "flutterRecoveryChecks": 4,
+  "realAuthSignInValidated": false,
+  "nativeValidated": false,
+  "firstAdminMembership": "Pending email identity confirmation",
+  "hostedSqlChecks": 7,
+  "syntheticFixturesRolledBack": true,
+  "anonymousFunctionStatus": 401
+}

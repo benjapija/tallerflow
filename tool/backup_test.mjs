@@ -10,6 +10,7 @@ async function setup(){
  await db.exec(`create role anon; create role authenticated; create role service_role; create schema auth; create table auth.users(id uuid primary key); create table auth.sessions(id uuid primary key,user_id uuid not null);
  create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
  grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;`);
+await db.exec(await readFile(new URL('./storage_fixture.sql',import.meta.url),'utf8'));
  for(const f of migrations) await db.exec(await readFile(new URL(`../supabase/migrations/${f}`,import.meta.url),'utf8'));
  await db.query('insert into auth.users values($1),($2),($3)',[admin,tech,foreign]);
  await db.query("insert into private.workshops(id,name) values($1,'Recovery test')",[w]);

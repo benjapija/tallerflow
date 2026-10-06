@@ -1,0 +1,6 @@
+00:00 +0: loading /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/account_creation_test.dart
+00:00 +0: Interrupted account creation survives restart and backup with a stable ID and no credentials
+00:00 +1: Failed durable save prevents any remote account creation
+00:00 +2: Different pending payload is rejected and archival preserves uncertain identity for retry
+00:00 +3: Revoked access, short passwords and unsupported cost permissions prevent network effects
+00:00 +4: All tests passed!

@@ -1,6 +1,8 @@
 import 'models.dart';
 import 'management.dart';
 import 'tasks.dart';
+import 'vehicles.dart';
+import 'pricing.dart';
 
 class RuleException implements Exception {
   final String message;
@@ -93,7 +95,15 @@ class WorkshopState {
     applied: (j['applied'] as List? ?? []).cast<String>().toSet(),
     incidents: (j['incidents'] as List? ?? []).cast<Map<String, dynamic>>(),
     configuration: {
-      for (final k in ['settings', 'templates', 'managementRevision'])
+      for (final k in [
+        'settings',
+        'templates',
+        'managementRevision',
+        'vehicleProfiles',
+        'vehicleHistory',
+        'photoManifest',
+        'restoreFilesPending',
+      ])
         if (j.containsKey(k)) k: j[k],
     },
   );
@@ -183,15 +193,8 @@ class WorkshopState {
         throw const RuleException('Matrícula y síntoma son obligatorios');
       }
       d['plate'] = normalizePlate(d['plate']);
-      final existing = orders.values
-          .where(
-            (o) =>
-                (o.data['vin'] != '' && o.data['vin'] == d['vin']) ||
-                (o.data['country'] == d['country'] &&
-                    o.plate == normalizePlate(d['plate'])),
-          )
-          .firstOrNull;
-      if (existing != null) d['vehicleId'] = existing.data['vehicleId'];
+      d.addAll(attachReceptionVehicle(this, d, op.orderId));
+      d['receivedAt'] = op.at.toUtc().toIso8601String();
       d['id'] = op.orderId;
       d['revision'] = 0;
       d['status'] = 'pending';
@@ -331,7 +334,9 @@ class WorkshopState {
         final item = catalog.firstWhere((c) => c.id == p['itemId']);
         final q = p['quantityMilli'] as int;
         if (!item.active) throw const RuleException('Referencia desactivada');
-        if (q <= 0) throw const RuleException('La cantidad debe ser positiva');
+        if (q <= 0 || q > 100000000) {
+          throw const RuleException('Cantidad fuera del intervalo admitido');
+        }
         order.parts.add({
           'id': op.id,
           'taskId': t['id'],
@@ -418,6 +423,12 @@ class WorkshopState {
         }
         final amount = p['approvedCents'] as int;
         if (amount < 0) throw const RuleException('Importe inválido');
+        if (t['authorization'] != null) {
+          t['previousAuthorizations'] = [
+            ...(t['previousAuthorizations'] as List? ?? []),
+            cloneMap(t['authorization']),
+          ];
+        }
         t['authorized'] = true;
         t['approvedCents'] = amount;
         t['authorization'] = {
@@ -427,6 +438,8 @@ class WorkshopState {
           'actorId': actor.id,
           'at': op.at.toUtc().toIso8601String(),
           'approvedCents': amount,
+          'scopeVersion': t['scopeVersion'] ?? 1,
+          'priceVersion': t['priceVersion'] ?? 1,
         };
       case 'billable':
         office();
@@ -442,6 +455,8 @@ class WorkshopState {
           throw const RuleException('Indica el motivo de la revisión');
         }
         t['billableMinutes'] = minutes;
+      case 'pricing_review':
+        applyPricingReview(order, op, actor);
       case 'review_parts':
         office();
         for (final part in order.parts) {

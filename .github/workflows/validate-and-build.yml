@@ -43,18 +43,24 @@ jobs:
           $installation = & $vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.ATL -property installationPath
           if (!$installation) { throw 'Falta Visual Studio C++ ATL en el entorno Windows' }
       - run: flutter pub get
-      - run: flutter build windows --release
-      - name: Preparar instalador de demostración
+      - run: flutter build windows --release --dart-define-from-file=config/pilot.public.json
+      - name: Preparar instalador del piloto
         shell: pwsh
         run: iscc tool/windows-installer.iss
+      - name: Identificar el código de la compilación
+        shell: bash
+        run: |
+          mkdir -p build/deliverables
+          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'platform':'${{ runner.os }}','realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
       - uses: actions/upload-artifact@v4
         with:
-          name: TallerFlow-Windows-demo-${{ github.run_number }}
+          name: TallerFlow-Windows-piloto-${{ github.run_number }}
           path: |
             build/windows/x64/runner/Release/**
             build/installer/TallerFlow-Setup.exe
+            build/deliverables/source-commit.json
           retention-days: 1
-  native-apple:
+  ios-simulator:
     needs: validate
     timeout-minutes: 30
     runs-on: macos-latest
@@ -66,17 +72,22 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: flutter build macos --release
-      - run: flutter build ios --simulator --debug
-      - name: Conservar permisos y enlaces de las aplicaciones Apple
+      - run: flutter build ios --simulator --debug --dart-define-from-file=config/pilot.public.json
+      - name: Conservar permisos y enlaces del simulador iOS
         run: |
           mkdir -p build/deliverables
-          tar -czf build/deliverables/TallerFlow-macOS-demo.tar.gz -C build/macos/Build/Products/Release TallerFlow.app
           tar -czf build/deliverables/TallerFlow-iOS-simulador.tar.gz -C build/ios/iphonesimulator Runner.app
+      - name: Identificar el código de la compilación
+        shell: bash
+        run: |
+          mkdir -p build/deliverables
+          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'platform':'${{ runner.os }}','realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
       - uses: actions/upload-artifact@v4
         with:
-          name: TallerFlow-macOS-e-iOS-simulador
-          path: build/deliverables/*.tar.gz
+          name: TallerFlow-iOS-simulador
+          path: |
+            build/deliverables/*.tar.gz
+            build/deliverables/source-commit.json
           retention-days: 1
   android:
     needs: validate
@@ -94,9 +105,16 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: flutter build apk --debug
+      - run: flutter build apk --debug --dart-define-from-file=config/pilot.public.json
+      - name: Identificar el código de la compilación
+        shell: bash
+        run: |
+          mkdir -p build/deliverables
+          python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'platform':'${{ runner.os }}','realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
       - uses: actions/upload-artifact@v4
         with:
-          name: TallerFlow-Android-demo
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: TallerFlow-Android-piloto
+          path: |
+            build/app/outputs/flutter-apk/app-debug.apk
+            build/deliverables/source-commit.json
           retention-days: 1

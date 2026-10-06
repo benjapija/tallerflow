@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -9,6 +10,11 @@ import 'demo.dart';
 import 'vault.dart';
 import 'session_policy.dart';
 import 'account_creation.dart';
+import '../domain/vehicles.dart';
+import '../domain/photos.dart';
+import 'photo_blobs.dart';
+part 'controller_photos.dart';
+part 'controller_photo_backup.dart';
 
 class WorkshopController extends ChangeNotifier {
   final Vault vault;
@@ -31,6 +37,9 @@ class WorkshopController extends ChangeNotifier {
   Map<String, dynamic>? restoredArchive;
   Map<String, dynamic>? pendingAccountCreation;
   List<Map<String, dynamic>> accountCreationHistory = [];
+  List<Map<String, dynamic>> photoQueue = [], photoHistory = [];
+  Set<String> cachedPhotoHashes = {};
+  Map<String, dynamic>? captureTicket;
   bool accessRevoked = false;
   bool _disposed = false;
   @override
@@ -74,6 +83,36 @@ class WorkshopController extends ChangeNotifier {
       );
   bool get prices => actor.isOffice || actor.seePrices;
   bool get costs => actor.role == Role.admin || actor.seeCosts;
+  Future<void> changeVehicle(Map<String, dynamic> payload) => _locked(() async {
+    _checkAccess();
+    if (!actor.isOffice || outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+      throw const RuleException(
+        'Conecta como oficina y sincroniza los pendientes',
+      );
+    }
+    if (demo) {
+      final before = state;
+      final next = state.copy();
+      applyVehicleChange(
+        next,
+        const Uuid().v4(),
+        payload,
+        actor,
+        clock().toUtc(),
+      );
+      state = next;
+      try {
+        await _persist();
+      } catch (_) {
+        state = before;
+        rethrow;
+      }
+      notifyListeners();
+    } else {
+      _checkOnline();
+      await _command('vehicle_change', payload);
+    }
+  });
   Future<void> createMember(
     Map<String, dynamic> input,
     String password,
@@ -250,6 +289,14 @@ class WorkshopController extends ChangeNotifier {
           ? null
           : Map<String, dynamic>.from(saved['pendingAccountCreation']);
       accountCreationHistory = _maps(saved['accountCreationHistory']);
+      photoQueue = _maps(saved['photoQueue']);
+      photoHistory = _maps(saved['photoHistory']);
+      cachedPhotoHashes = (saved['cachedPhotoHashes'] as List? ?? [])
+          .cast<String>()
+          .toSet();
+      captureTicket = saved['captureTicket'] == null
+          ? null
+          : cloneMap(Map<String, dynamic>.from(saved['captureTicket']));
       validatedAt = DateTime.tryParse(saved['validatedAt'] ?? '');
       lastObservedAt = DateTime.tryParse(saved['lastObservedAt'] ?? '');
       accessRevoked = saved['accessRevoked'] == true;
@@ -302,6 +349,10 @@ class WorkshopController extends ChangeNotifier {
     'restoredArchive': restoredArchive,
     'pendingAccountCreation': pendingAccountCreation,
     'accountCreationHistory': accountCreationHistory,
+    'photoQueue': photoQueue,
+    'photoHistory': photoHistory,
+    'cachedPhotoHashes': cachedPhotoHashes.toList(),
+    'captureTicket': captureTicket,
   };
 
   Future<Map<String, dynamic>> exportBackup({bool complete = false}) =>
@@ -313,6 +364,7 @@ class WorkshopController extends ChangeNotifier {
           );
         }
         final server = complete ? await remote!.exportWorkshop() : null;
+        final files = await _exportPhotoFiles(server);
         return {
           'kind': 'TallerFlow',
           'version': 1,
@@ -321,7 +373,8 @@ class WorkshopController extends ChangeNotifier {
           'workshopId': state.workshopId,
           'actorId': actor.id,
           'scope': complete ? 'workshop-and-device' : 'device',
-          'local': cloneMap(localArchive()),
+          'local': _portableLocal(),
+          'photoFiles': files,
           'server': ?server,
         };
       });
@@ -339,7 +392,8 @@ class WorkshopController extends ChangeNotifier {
     }
     if (outbox.isNotEmpty ||
         pendingCommands.isNotEmpty ||
-        pendingAccountCreation != null) {
+        pendingAccountCreation != null ||
+        hasPendingPhotos) {
       throw const RuleException(
         'Conserva y reconcilia los pendientes de este equipo antes de restaurar otra copia',
       );
@@ -349,6 +403,11 @@ class WorkshopController extends ChangeNotifier {
         local['actor']['id'] != actor.id ||
         local['state']['workshopId'] != state.workshopId) {
       throw const RuleException('Contenido de copia incompatible');
+    }
+    final files = await _validatePhotoFiles(archive);
+    _validatePhotoLocal(local, files);
+    if (local['captureTicket'] is Map) {
+      local['captureTicket'].remove('sourcePath');
     }
     // Parse before writing. The imported lease never grants permission.
     WorkshopState.fromJson(Map<String, dynamic>.from(local['state']));
@@ -420,6 +479,12 @@ class WorkshopController extends ChangeNotifier {
       'originalLocal': cloneMap(Map<String, dynamic>.from(archive['local']))
         ..remove('restoredArchive'),
     };
+    // Immutable encrypted blobs complete first. An interrupted metadata write
+    // leaves only harmless unreferenced files, never a dangling queue.
+    for (final file in files.entries) {
+      await vault.photos.write(file.key, file.value);
+    }
+    local['cachedPhotoHashes'] = files.keys.toList();
     // Atomic encrypted write completes before replacing in-memory state.
     await vault.write(local);
     await load();
@@ -435,15 +500,37 @@ class WorkshopController extends ChangeNotifier {
         archive['workshopId'] != state.workshopId ||
         archive['server'] == null ||
         outbox.isNotEmpty ||
-        pendingCommands.isNotEmpty) {
+        pendingCommands.isNotEmpty ||
+        hasPendingPhotos) {
       throw const RuleException(
         'Restauración completa: administrador, taller correcto y equipo sin pendientes',
       );
     }
-    final result = await remote!.restoreWorkshop(
-      archive['archiveId'],
-      Map<String, dynamic>.from(archive['server']),
-    );
+    final files = await _validatePhotoFiles(archive);
+    final server = Map<String, dynamic>.from(archive['server']);
+    final expected = WorkshopController._maps(server['photoFiles']);
+    for (final photo in expected.where((p) => p['filePresent'] == true)) {
+      final bytes = files[photo['sha256']];
+      if (bytes == null || bytes.length != photo['size']) {
+        throw const RuleException(
+          'La copia no contiene todos los archivos originales',
+        );
+      }
+    }
+    final result = await remote!.restoreWorkshop(archive['archiveId'], server);
+    for (final photo in expected.where((p) => p['filePresent'] == true)) {
+      final info = await remote!.restoredPhotoInfo(photo['id']);
+      if (info['id'] != photo['id'] ||
+          info['orderId'] != photo['orderId'] ||
+          info['sha256'] != photo['sha256'] ||
+          info['size'] != photo['size']) {
+        throw const RuleException(
+          'El servidor no coincide con el manifiesto de recuperación',
+        );
+      }
+      await remote!.uploadPhoto(info, files[photo['sha256']]!);
+      await remote!.finalizePhoto(photo['id']);
+    }
     await _refresh();
     notifyListeners();
     return result;
@@ -483,7 +570,8 @@ class WorkshopController extends ChangeNotifier {
           'Orden bloqueada en este dispositivo para el cierre. Sincroniza para conocer su resultado.',
         );
       }
-      if (failures.isNotEmpty && ['billable', 'authorize'].contains(kind)) {
+      if (failures.isNotEmpty &&
+          ['billable', 'authorize', 'pricing_review'].contains(kind)) {
         throw const RuleException(
           'Resuelve los conflictos antes de revisar importes',
         );
@@ -602,7 +690,9 @@ class WorkshopController extends ChangeNotifier {
         oldRevoked = accessRevoked,
         oldObserved = lastObservedAt,
         oldRetiredTimers = retiredTimers,
-        oldServerConflicts = serverConflicts;
+        oldServerConflicts = serverConflicts,
+        oldPhotoQueue = photoQueue.toList(),
+        oldPhotoHistory = photoHistory.toList();
     state = next;
     actor = nextActor;
     outbox = remaining;
@@ -615,6 +705,7 @@ class WorkshopController extends ChangeNotifier {
     validatedAt = stamp;
     lastObservedAt = stamp;
     accessRevoked = false;
+    _reconcilePhotos();
     try {
       await _persist();
     } catch (_) {
@@ -630,6 +721,8 @@ class WorkshopController extends ChangeNotifier {
       lastObservedAt = oldObserved;
       retiredTimers = oldRetiredTimers;
       serverConflicts = oldServerConflicts;
+      photoQueue = oldPhotoQueue;
+      photoHistory = oldPhotoHistory;
       rethrow;
     }
   }
@@ -666,6 +759,8 @@ class WorkshopController extends ChangeNotifier {
         }
         // Do not remove evidence until a server snapshot confirms it and is saved.
       }
+      await _refresh();
+      await _uploadPhotos();
       await _refresh();
       if (failures.isNotEmpty) {
         syncError = 'Registros conservados para revisión de oficina.';
@@ -769,7 +864,7 @@ class WorkshopController extends ChangeNotifier {
   }) => _locked(() async {
     _checkOnline();
     await _refresh();
-    if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+    if (outbox.isNotEmpty || pendingCommands.isNotEmpty || hasPendingPhotos) {
       throw const RuleException(
         'Sincroniza los registros y comandos locales antes de solicitar cierre.',
       );
@@ -784,7 +879,7 @@ class WorkshopController extends ChangeNotifier {
     _checkOnline();
     await _refresh();
     _checkAccess();
-    if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+    if (outbox.isNotEmpty || pendingCommands.isNotEmpty || hasPendingPhotos) {
       throw const RuleException(
         'Sincroniza todos los registros de este dispositivo antes de confirmar.',
       );
@@ -825,7 +920,7 @@ class WorkshopController extends ChangeNotifier {
     _checkOnline();
     await _refresh();
     if (!actor.isOffice) throw const RuleException('Solo oficina puede emitir');
-    if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+    if (outbox.isNotEmpty || pendingCommands.isNotEmpty || hasPendingPhotos) {
       throw const RuleException('Sincroniza antes de emitir');
     }
     final request = closure(id);
@@ -984,6 +1079,23 @@ class WorkshopController extends ChangeNotifier {
           ),
     );
     if (!demo) {
+      if (photoQueue.any((p) => p['orderId'] == o.id) ||
+          captureTicket?['orderId'] == o.id) {
+        values.add(
+          'Hay fotografías locales pendientes de guardar o sincronizar',
+        );
+      }
+      if (photoManifest.any(
+        (p) =>
+            p['orderId'] == o.id && ['pending', 'review'].contains(p['status']),
+      )) {
+        values.add(
+          'Hay fotografías pendientes de subida o revisión de oficina',
+        );
+      }
+      if (state.configuration['restoreFilesPending'] == true) {
+        values.add('Completa la recuperación de los archivos originales');
+      }
       final request = closure(o.id);
       if (request == null) {
         values.add('Oficina debe solicitar el cierre entre dispositivos');

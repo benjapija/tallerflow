@@ -7,9 +7,11 @@ import 'data/controller.dart';
 import 'data/local.dart';
 import 'domain/models.dart';
 import 'ui/app.dart';
+import 'data/order_link_inbox.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  OrderLinkInbox.shared.startNative();
   const url = String.fromEnvironment('SUPABASE_URL');
   const key = String.fromEnvironment('SUPABASE_PUBLISHABLE_KEY');
   const workshop = String.fromEnvironment('WORKSHOP_ID');
@@ -127,7 +129,8 @@ class _LoginAppState extends State<LoginApp> {
         controller: controller!,
         onLogout: () async {
           if (controller!.outbox.isNotEmpty ||
-              controller!.pendingCommands.isNotEmpty) {
+              controller!.pendingCommands.isNotEmpty ||
+              controller!.hasPendingPhotos) {
             throw StateError(
               'Sincroniza los registros antes de cerrar sesión.',
             );
@@ -136,6 +139,7 @@ class _LoginAppState extends State<LoginApp> {
             scope: SignOutScope.local,
           );
           controller!.dispose();
+          OrderLinkInbox.shared.clear();
           setState(() => controller = null);
         },
       );

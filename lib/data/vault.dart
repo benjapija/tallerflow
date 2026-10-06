@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cryptography/cryptography.dart';
+import 'photo_blobs.dart';
 
 abstract interface class StringStore {
   Future<String?> read();
@@ -19,8 +20,10 @@ class MemoryStore implements StringStore {
 class Vault {
   final StringStore store;
   final SecretKey key;
+  final PhotoBlobs photos;
   final AesGcm cipher = AesGcm.with256bits();
-  Vault(this.store, this.key);
+  Vault(this.store, this.key, {PhotoBlobs? photos})
+    : photos = photos ?? PhotoBlobs.memory(key);
   Future<Map<String, dynamic>?> read() async {
     final raw = await store.read();
     if (raw == null) return null;

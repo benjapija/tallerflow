@@ -1,0 +1,57 @@
+-- Hosted SQL only: fictional identities and workshop, rolled back completely.
+do $$
+declare w uuid:=gen_random_uuid();a uuid:=gen_random_uuid();t uuid:=gen_random_uuid();
+ desk uuid:=gen_random_uuid();phone uuid:=gen_random_uuid();oid uuid:=gen_random_uuid();tid uuid:=gen_random_uuid();item uuid:=gen_random_uuid();pid uuid:=gen_random_uuid();
+ op jsonb;r jsonb;s jsonb;n jsonb;v jsonb;passed int:=0;completed boolean:=false;
+begin
+ begin
+  insert into auth.users(id) values(a),(t);insert into auth.sessions(id,user_id) values(desk,a),(phone,t);
+  insert into private.workshops(id,name,settings) values(w,'TallerFlow · precios ficticios transaccionales',jsonb_build_object('hourlyRateCents',4801,'taxBps',2100,'internalHourlyCostCents',2200,'internalCostKnown',true));
+  insert into private.members values(w,a,'Oficina ficticia','admin',true,true),(w,t,'Operario ficticio','technician',false,true);
+  insert into private.catalog(workshop_id,id,reference,description,unit,price_cents,cost_cents,stock_milli) values(w,item,'FICTOIL','Material ficticio','L',1450,650,10000);
+  insert into private.catalog_details values(w,item,2100,true,true,'Ficticio');
+  perform set_config('request.jwt.claim.sub',a::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',a,'session_id',desk)::text,true);
+  execute 'set local role authenticated';perform public.device_snapshot(w,desk);
+  op:=jsonb_build_object('id',gen_random_uuid(),'orderId',oid,'actorId',a,'kind','receive','at',now(),'baseRevision',0,'payload',jsonb_build_object('plate','FICT0008','country','ES','vin','','vehicle','Vehículo ficticio','engine','Prueba','client','Cliente ficticio','phone','','km',1,'symptom','Ficticio','location','Box','keys','Panel','due','Hoy','priority','Normal','tasks',jsonb_build_array(jsonb_build_object('id',tid,'title','Tarea ficticia','assignees',jsonb_build_array(t),'estimateMinutes',30,'internalCostCents',1))));
+  r:=public.apply_operation(w,desk,op);s:=public.device_snapshot(w,desk);
+  if r->>'status'<>'accepted' or s->'orders'->0->'tasks'->0->>'internalCostCents'<>'2200' then raise exception 'FAIL frozen internal cost';end if;passed:=passed+1;
+  op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('kind','authorize','baseRevision',s->'orders'->0->'revision','payload',jsonb_build_object('taskId',tid,'approvedCents',50000,'version',1,'customer','Ficticio','evidence','Autorización ficticia'));
+  r:=public.apply_operation(w,desk,op);if r->>'status'<>'accepted' then raise exception 'FAIL authorization';end if;
+  s:=public.device_snapshot(w,desk);op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('kind','billable','baseRevision',s->'orders'->0->'revision','payload',jsonb_build_object('taskId',tid,'minutes',37,'reason','Revisión ficticia'));
+  r:=public.apply_operation(w,desk,op);if r->>'status'<>'accepted' then raise exception 'FAIL billable';end if;
+  op:=jsonb_set(op,'{id}',to_jsonb(pid))||jsonb_build_object('kind','part','payload',jsonb_build_object('taskId',tid,'itemId',item,'kind','consume','quantityMilli',4500));
+  r:=public.apply_operation(w,desk,op);if r->>'status'<>'accepted' then raise exception 'FAIL consumption';end if;
+  op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('kind','return','payload',jsonb_build_object('sourceId',pid,'quantityMilli',500));
+  r:=public.apply_operation(w,desk,op);if r->>'status'<>'accepted' then raise exception 'FAIL return';end if;
+  s:=public.device_snapshot(w,desk);op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('kind','pricing_review','baseRevision',s->'orders'->0->'revision','payload',jsonb_build_object('target','labor','targetId',tid,'unitPriceCents',4801,'taxBps',2100,'discountBps',1250,'charge',true,'reason','Descuento ficticio'));
+  r:=public.apply_operation(w,desk,op);if r->>'status'<>'accepted' or public.apply_operation(w,desk,op)<>r then raise exception 'FAIL review idempotency';end if;passed:=passed+1;
+  s:=public.device_snapshot(w,desk);op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('baseRevision',s->'orders'->0->'revision','payload',jsonb_build_object('target','part','targetId',pid,'unitPriceCents',1450,'taxBps',2100,'discountBps',1000,'charge',true,'reason','Descuento material ficticio'));
+  r:=public.apply_operation(w,desk,op);if r->>'status'<>'accepted' then raise exception 'FAIL part discount';end if;
+  execute 'reset role';select private.note_snapshot(data) into n from private.orders where workshop_id=w and id=oid;
+  if n->>'netCents'<>'7811' or n->>'taxCents'<>'1640' or n->>'totalCents'<>'9451' then raise exception 'FAIL integer calculation: %',n;end if;passed:=passed+1;
+  execute 'set local role authenticated';s:=public.device_snapshot(w,desk);op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('baseRevision',s->'orders'->0->'revision','payload',jsonb_build_object('target','part','targetId',pid,'unitPriceCents',1450,'taxBps',2100,'discountBps',0,'charge',false,'reason','Atención comercial ficticia'));
+  r:=public.apply_operation(w,desk,op);s:=public.device_snapshot(w,desk);
+  if r->>'status'<>'accepted' or s->'catalog'->0->>'stockMilli'<>'10000' or s->'orders'->0->'parts'->0->>'costCents'<>'650' or s->'orders'->0->'parts'->0->>'quantityMilli'<>'4500' then raise exception 'FAIL no-charge stock/cost';end if;
+  if (s->'catalog'->0->>'stockMilli')::bigint-(select coalesce(sum(case when x->>'kind'='consume' then (x->>'quantityMilli')::bigint when x->>'kind'='return' then -(x->>'quantityMilli')::bigint else 0 end),0) from jsonb_array_elements(s->'orders'->0->'parts') x)<>6000 then raise exception 'FAIL inventory ledger';end if;passed:=passed+1;
+  execute 'reset role';select private.note_snapshot(data) into n from private.orders where workshop_id=w and id=oid;
+  if n->'lines'->1->>'netCents'<>'0' or n->'lines'->1->>'discountCents'<>'5800' or n->'lines'->1->>'noChargeReason'<>'Atención comercial ficticia' then raise exception 'FAIL no-charge evidence';end if;passed:=passed+1;
+  execute 'set local role authenticated';op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('baseRevision',s->'orders'->0->'revision','payload',(op->'payload')||jsonb_build_object('charge',true,'reason','Nuevo cobro ficticio'));
+  r:=public.apply_operation(w,desk,op);s:=public.device_snapshot(w,desk);v:=s->'orders'->0->'tasks'->0;
+  if r->>'status'<>'accepted' or v->>'authorized'<>'false' or v->'previousAuthorizations'->0->>'version'<>'1' then raise exception 'FAIL fresh approval';end if;passed:=passed+1;
+  op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('kind','authorize','baseRevision',s->'orders'->0->'revision','payload',jsonb_build_object('taskId',tid,'approvedCents',50000,'version',2,'customer','Ficticio','evidence','Nueva autorización ficticia','priceVersion',0));
+  r:=public.apply_operation(w,desk,op);s:=public.device_snapshot(w,desk);
+  if r->>'status'<>'accepted' or s->'orders'->0->'tasks'->0->'authorization'->>'priceVersion'<>'5' then raise exception 'FAIL authoritative price version';end if;passed:=passed+1;
+  perform set_config('request.jwt.claim.sub',t::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',t,'session_id',phone)::text,true);
+  s:=public.device_snapshot(w,phone);
+  if s::text like '%"unitPriceCents"%' or s::text like '%"pricingReviews"%' or s::text like '%"costCents"%' or s::text like '%"internalCostCents"%' then raise exception 'FAIL financial redaction';end if;passed:=passed+1;
+  op:=jsonb_set(op,'{id}',to_jsonb(gen_random_uuid()))||jsonb_build_object('actorId',t,'kind','pricing_review');
+  begin perform public.apply_operation(w,phone,op);raise exception 'FAIL operator pricing privilege';exception when insufficient_privilege then passed:=passed+1;end;
+  perform set_config('request.jwt.claim.sub',a::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',a,'session_id',desk)::text,true);
+  r:=public.export_workshop(w,desk);
+  if jsonb_array_length(r->'tables'->'orders'->0->'data'->'pricingReviews')<>4 then raise exception 'FAIL review archive';end if;passed:=passed+1;
+  execute 'reset role';completed:=true;raise exception 'ROLLBACK_SYNTHETIC_SUCCESS' using errcode='P0002';
+ exception when no_data_found then if not completed then raise;end if;end;
+ if exists(select 1 from private.workshops where id=w) or exists(select 1 from auth.users where id in(a,t)) then raise exception 'FAIL fixture rollback';end if;
+ perform set_config('tallerflow.pricing_smoke',jsonb_build_object('checks',passed,'fixtureRolledBack',true,'environment','Hosted PostgreSQL; synthetic identities','authApiValidated',false,'nativeValidated',false)::text,false);
+end $$;
+select current_setting('tallerflow.pricing_smoke')::jsonb as validation;

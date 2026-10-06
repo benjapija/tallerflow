@@ -1,0 +1,11 @@
+PASS Export contains documents, late originals, audit and all protocol tables, without Auth secrets
+PASS Technician and anonymous cannot export private workshop data
+PASS Malformed cross-workshop archive is rejected atomically
+PASS Missing Auth identity blocks restore without changing existing data
+PASS Independent database restores original documents, records and audit
+PASS Restored acknowledgements remain historical, active closure is invalidated and account request cannot gain authority
+PASS Lost restoration reply can be retried without duplicate documents or original operations
+PASS Same restore ID with changed content and restore over populated workshop are rejected
+PASS Historical device sessions stay retired and cannot mint another editing identity
+PASS Restored issued document remains immutable and further records remain late
+10 backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.

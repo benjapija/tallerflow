@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-06",
+  "flutterPassed": 69,
+  "postgresPassed": 109,
+  "mockServicesPassed": 14,
+  "photoPostgresChecks": 12,
+  "photoFlutterChecks": 6,
+  "photoMockServiceChecks": 8,
+  "photoHostedSqlChecks": 10,
+  "hostedFunction": "workshop-photos",
+  "version": 1,
+  "verifyJwt": true,
+  "hostedStorageHttp": false,
+  "realAuthLogin": false,
+  "cameraPhysical": false,
+  "qrParserChecks": 4,
+  "nativeLinkLaunch": false,
+  "independentRecovery": "two local PostgreSQL databases and separate encrypted device keys",
+  "portableBackupMaxBytes": 33554432,
+  "sdkLicensesPending": true
+}

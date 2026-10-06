@@ -1,0 +1,13 @@
+PASS Authorized prepare is stable after lost response and metadata ID reuse is rejected
+PASS Assigned uploader may INSERT only exact reserved path and cannot fabricate evidence
+PASS Immutable file denies UPDATE, DELETE and signed URLs while allowing authenticated download
+PASS Pending verification blocks closure and document issuance
+PASS Verifier rejects changed hash and attaches verified file once across retries
+PASS Unassigned account cannot read another operator evidence or reserve its order
+PASS Office reads files and session revocation immediately invalidates a previously permitted file
+PASS Complete export includes original file manifest and no Storage or Auth table writes
+PASS Independent recovery rejects absent attached-file manifest before any data is restored
+PASS Independent recovery retires old devices and requires original files before new work
+PASS Restoration uploads remain immutable and repeated verification clears the file gate without rewriting order
+PASS Recovered original device evidence needs office review and cannot be attached by its operator
+12 photo checks passed in local PostgreSQL/PGlite, including an independent recovery database. Storage HTTP and camera remain separate validations.

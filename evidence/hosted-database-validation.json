@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-06",
+  "project": "gpseuqmzbazifmkhjyby",
+  "plan": "free",
+  "database": "PostgreSQL 17.11",
+  "migrationsApplied": [
+    "core",
+    "reliability",
+    "backup",
+    "management",
+    "account_provisioning",
+    "reception_validation",
+    "vehicle_history",
+    "pricing_review",
+    "private_photos"
+  ],
+  "checksPassed": 48,
+  "checksByModule": {
+    "core": 10,
+    "accounts": 7,
+    "vehicleHistory": 11,
+    "pricing": 10,
+    "photos": 10
+  },
+  "fixtureRolledBack": true,
+  "identities": "Synthetic users and sessions inside rolled-back transactions",
+  "realAuthSignInValidated": false,
+  "nativeValidated": false,
+  "securityAdvisors": {
+    "infoRlsPrivateDenyDirect": 27,
+    "warnLeakedPasswordProtectionDisabled": 1
+  }
+}

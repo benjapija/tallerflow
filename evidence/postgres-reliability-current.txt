@@ -1,0 +1,30 @@
+PASS Downloads enrol two technicians and office; direct privileged helpers denied
+PASS Concurrent last-stock consumption is retained as conflict without negative stock
+PASS Same UUID after lost response produces one effect
+PASS Technician cannot resolve incidents or retire devices
+PASS Office retries with original actor, preserving evidence and resolution audit
+PASS Original device receives resolution receipt and can reconcile its preserved queue
+PASS Active timer prevents acknowledgement
+PASS Change during closure invalidates request and old confirmation
+PASS Offline second technician blocks issue despite office empty queue
+PASS Lost acknowledgement response can be retried idempotently
+PASS New device enrolment invalidates fully confirmed request
+PASS Retirement never counts as normal reconciliation
+PASS Device retirement invalidates affected closure and cannot silently bypass it
+PASS Retired device cannot download or confirm, but recovered record is conserved
+PASS Retired record requires review; retry creates attributable correction before issue
+PASS Issue is atomic, computes frozen prices and labels administrative exception
+PASS Issuing retry returns same document, without duplicate document rows
+PASS Late operation after issue creates incident and leaves document unchanged
+PASS Late resolution cannot mutate emitted document, archive retains original and reason
+PASS Authenticated clients and private helpers cannot bypass immutability
+PASS Commands and device snapshots isolate workshops and reject anonymous access
+PASS Technician snapshots redact amounts in conflicts and documents
+PASS Retired owner registers replacement idempotently without restoring old authority
+PASS Recovered offline reception is retained even if its order was never uploaded
+PASS Lost active timer remains explicit until office records actual end with evidence
+PASS Fresh sign-in rebinds active identity and invalidates old closure confirmations
+PASS Retirement blocks all earlier sessions bound to the same physical identity
+PASS Signed-out session cannot modify or read even with an unexpired JWT
+PASS All reliability tables use RLS
+29 reliability checks passed. PostgreSQL/PGlite with simulated Auth; no hosted Supabase or physical devices.

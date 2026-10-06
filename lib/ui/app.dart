@@ -12,6 +12,13 @@ import 'simulation.dart';
 import 'backup_panel.dart';
 import 'management_panel.dart';
 import 'task_management.dart';
+import 'vehicle_history.dart';
+import '../domain/vehicles.dart';
+import 'pricing_panel.dart';
+import '../domain/order_links.dart';
+import '../data/order_link_inbox.dart';
+import 'qr_scanner.dart';
+import 'photo_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -105,6 +112,11 @@ class _WorkshopHomeState extends State<WorkshopHome>
   void initState() {
     super.initState();
     c.addListener(changed);
+    OrderLinkInbox.shared.addListener(openPendingLink);
+    WidgetsBinding.instance.addPostFrameCallback((_) => openPendingLink());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(runAction(() => recoverInterruptedPhotoCapture(c)));
+    });
     WidgetsBinding.instance.addObserver(this);
     var ticks = 0;
     ticker = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -119,12 +131,31 @@ class _WorkshopHomeState extends State<WorkshopHome>
   void dispose() {
     ticker.cancel();
     c.removeListener(changed);
+    OrderLinkInbox.shared.removeListener(openPendingLink);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   void changed() {
-    if (mounted) setState(() {});
+    if (mounted) {
+      setState(() {});
+      openPendingLink();
+    }
+  }
+
+  void openPendingLink() {
+    if (!mounted || !c.accessAllowed) return;
+    final ref = OrderLinkInbox.shared.pending;
+    if (ref == null) return;
+    final order = ref.resolve(c.visibleOrders);
+    if (order == null) {
+      return; // It may arrive after login or the next snapshot.
+    }
+    OrderLinkInbox.shared.clear();
+    setState(() {
+      selected = order.id;
+      page = 1;
+    });
   }
 
   @override
@@ -187,20 +218,20 @@ class _WorkshopHomeState extends State<WorkshopHome>
   }
 
   Future<void> openQr() async {
-    final code = await textDialog(
-      context,
-      'Abrir orden por QR o código',
-      'Código de la orden',
-      initial: '',
-      help:
-          'Pega tallerflow://order/… o introduce OT-1048. El código no concede permisos.',
-    );
+    final code = await readOrderCode(context);
     if (code == null) return;
-    final id = code.split('/').last.trim();
-    final found = c.visibleOrders.where(
-      (o) => o.id == id || o.number.toUpperCase() == code.trim().toUpperCase(),
-    );
-    if (found.isEmpty) {
+    WorkOrder? found;
+    try {
+      found = OrderReference.parse(code).resolve(c.visibleOrders);
+    } on FormatException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.message)));
+      }
+      return;
+    }
+    if (found == null) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -211,7 +242,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
       return;
     }
     setState(() {
-      selected = found.first.id;
+      selected = found!.id;
       page = 1;
     });
   }
@@ -269,7 +300,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
         : c.visibleOrders.where((o) => o.id == selected).firstOrNull;
     return Scaffold(
       drawer: wide ? null : Drawer(child: sidebar()),
-      bottomNavigationBar: wide
+      bottomNavigationBar: wide || ![0, 1, 4].contains(page)
           ? null
           : NavigationBar(
               selectedIndex: page == 0
@@ -335,7 +366,14 @@ class _WorkshopHomeState extends State<WorkshopHome>
                         child: order != null
                             ? detail(order, wide)
                             : page == 2
-                            ? vehicles()
+                            ? VehicleHistory(
+                                controller: c,
+                                query: search,
+                                openOrder: (id) => setState(() {
+                                  selected = id;
+                                  page = 1;
+                                }),
+                              )
                             : page == 3
                             ? catalog()
                             : page == 4
@@ -663,6 +701,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
   );
   Widget dashboard(bool wide) {
     final all = c.visibleOrders;
+    final profiles = {for (final v in vehicleProfiles(c.state)) v['id']: v};
     final filtered = all
         .where(
           (o) =>
@@ -671,7 +710,13 @@ class _WorkshopHomeState extends State<WorkshopHome>
                       .toLowerCase()
                       .contains(search.toLowerCase()) ||
               (filter == null || o.status == filter) &&
-                  normalizePlate(o.plate).contains(normalizePlate(search)),
+                  (normalizePlate(o.plate).contains(normalizePlate(search)) ||
+                      (profiles[o.data['vehicleId']] != null &&
+                          vehicleMatches(
+                            profiles[o.data['vehicleId']]!,
+                            search,
+                            personal: c.actor.isOffice,
+                          ))),
         )
         .toList();
     final active = all.where((o) => o.status != OrderStatus.delivered).length;
@@ -1368,7 +1413,9 @@ class _WorkshopHomeState extends State<WorkshopHome>
                   child: Column(
                     children: [
                       QrImageView(
-                        data: 'tallerflow://order/${o.id}',
+                        data: c.demo && o.id.startsWith('o-')
+                            ? o.number
+                            : orderLink(o.id),
                         size: 220,
                       ),
                       const Text(
@@ -1383,7 +1430,11 @@ class _WorkshopHomeState extends State<WorkshopHome>
                   TextButton(
                     onPressed: () {
                       Clipboard.setData(
-                        ClipboardData(text: 'tallerflow://order/${o.id}'),
+                        ClipboardData(
+                          text: c.demo && o.id.startsWith('o-')
+                              ? o.number
+                              : orderLink(o.id),
+                        ),
                       );
                       Navigator.pop(ctx);
                     },
@@ -1401,6 +1452,20 @@ class _WorkshopHomeState extends State<WorkshopHome>
           ),
         ]),
         const SizedBox(height: 18),
+        PhotoPanel(controller: c, order: o),
+        const SizedBox(height: 18),
+        if (c.prices || c.costs) ...[
+          PricingPanel(
+            order: o,
+            canEdit: c.actor.isOffice,
+            showPrices: c.prices,
+            showCosts: c.costs,
+            settings: c.state.settings,
+            members: c.state.members,
+            onReview: (p) => perform(o.id, 'pricing_review', p),
+          ),
+          const SizedBox(height: 18),
+        ],
         if (!c.demo && !o.issued)
           section('Confirmación de este dispositivo', [
             Text(
@@ -1783,7 +1848,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
             children: [
               Expanded(
                 child: Text(
-                  '${l['description']}\n${l['quantity']}',
+                  '${l['description']}\n${l['quantity']}${(l['discountCents'] ?? 0) > 0 ? '\nDescuento: ${money(l['discountCents'])}' : ''}${l['charge'] == false ? '\nSin cobro: ${l['noChargeReason'] ?? ''}' : ''}',
                   style: const TextStyle(fontSize: 11, height: 1.5),
                 ),
               ),
@@ -1837,44 +1902,6 @@ class _WorkshopHomeState extends State<WorkshopHome>
     ]);
   }
 
-  Widget vehicles() => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      heading(
-        'Vehículos e historial',
-        'El identificador interno conserva el historial del vehículo.',
-      ),
-      for (final o in c.visibleOrders)
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: section(o.vehicle, [
-            Wrap(
-              spacing: 24,
-              runSpacing: 16,
-              children: [
-                info('Matrícula', o.plate),
-                info('Identificador', o.data['vehicleId']),
-                info('VIN', o.data['vin'] ?? 'Pendiente'),
-                info('Cliente actual', o.client),
-                info('Kilometraje de entrada', '${o.data['km']} km'),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              '${o.number} · ${o.symptom}',
-              style: const TextStyle(color: muted, height: 1.5),
-            ),
-            TextButton(
-              onPressed: () => setState(() {
-                selected = o.id;
-                page = 1;
-              }),
-              child: const Text('Ver reparación e historial técnico'),
-            ),
-          ]),
-        ),
-    ],
-  );
   Widget catalog() => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -2248,6 +2275,7 @@ String auditLabel(String kind) =>
       'finish_task': 'Tarea terminada',
       'authorize': 'Autorización registrada',
       'billable': 'Minutos facturables revisados',
+      'pricing_review': 'Precio, descuento o cobro revisado',
       'quality': 'Comprobación final',
       'issue': 'Nota emitida',
       'receive': 'Recepción creada',
@@ -2260,5 +2288,10 @@ String auditLabel(String kind) =>
       'replace_device': 'Dispositivo sustituido',
       'end_retired_timer': 'Fin de cronómetro recuperado',
       'session_rebound': 'Acceso revalidado',
+      'photo_prepare': 'Carga de fotografía preparada',
+      'photo_verified': 'Fotografía verificada',
+      'photo_approve': 'Fotografía recuperada incorporada',
+      'photo_archive': 'Fotografía archivada con motivo',
+      'photo_file_restored': 'Archivo de fotografía recuperado',
     }[kind] ??
     kind;

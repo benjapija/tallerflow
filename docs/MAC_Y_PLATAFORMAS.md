@@ -1,74 +1,43 @@
-# Preparación del Mac y plataformas
+# Desarrollo y revisión desde el Mac
 
-## Equipo comprobado
+El Mac es el equipo de desarrollo. Por petición del usuario del 6 de octubre de 2026 no se entrega una aplicación macOS. Los clientes previstos siguen siendo Windows, Android e iOS; la demostración se revisa en navegador.
 
-El 6 de octubre de 2026: Apple Silicon (`arm64`), macOS 27.0.1, herramientas de línea de comandos de Apple disponibles. No se encontró Xcode completo, Android Studio ni Flutter previamente instalado. Se preparó Flutter 3.47.6/Dart 3.13.5 dentro de la carpeta de trabajo de esta conversación; no se instaló software de pago ni se cambiaron preferencias del sistema.
+## Herramientas comprobadas
 
-La compilación web, el analizador y las pruebas de Flutter funcionaron desde este Mac. Las pruebas de interfaz se ejecutaron con el motor de pruebas de Flutter, sin un simulador iOS ni una app nativa macOS. Las pruebas nativas reales siguen pendientes.
+Mac Apple Silicon, macOS 27.0.1; Flutter 3.47.6 y Dart 3.13.5 preparados en `../../work/flutter` respecto al proyecto. El SDK temporal no se incluye en el ZIP del código. Xcode 27 está instalado desde Apple y reconoce la cuenta del usuario con un Personal Team. No se ha contratado una membresía Apple. Android Studio está instalado y las herramientas oficiales descargadas/verificadas. El gestor encuentra siete licencias del SDK pendientes; su aceptación personal y la instalación del SDK/emulador siguen abiertas.
 
-## Qué instalar y para qué
+La compilación web, el analizador y las pruebas locales funcionan desde este Mac. La demo utiliza datos ficticios y servidor simulado. No proporciona acceso al taller alojado.
 
-| Aplicación en el Mac | Utilidad |
-|---|---|
-| VS Code con extensión Flutter/Dart | Abrir y editar el código |
-| Flutter SDK estable para Apple Silicon | Compilar y probar Flutter/Dart |
-| Xcode completo desde Apple | iOS, simulador y aplicación de oficina macOS |
-| Android Studio para Apple Silicon | SDK Android, emulador ARM y conexión a móvil |
-| CocoaPods cuando lo soliciten los plugins | Integrar los plugins nativos de Apple |
-| Navegador | Supabase, GitHub, descargar versiones y portal futuro |
-| Windows App u otro cliente remoto | Acceder al Windows de prueba sin desarrollar allí |
+## Revisar la demo
 
-Elige Xcode compatible con tu versión concreta de macOS 27.0.1 y los dispositivos de prueba; no se ha comprobado la instalación de esa combinación. La guía oficial requiere Xcode completo para [iOS](https://docs.flutter.dev/platform-integration/ios/setup) y [macOS](https://docs.flutter.dev/platform-integration/macos/setup). La [preparación Android](https://docs.flutter.dev/platform-integration/android/setup) se hace en este mismo Mac.
+En la carpeta de la demo ejecuta **Abrir TallerFlow.command**. Utiliza Python 3 y abre `http://127.0.0.1:8777/`. Si ya está abierta, recarga la página después de actualizar sus archivos. Configuración permite cambiar de perfil y simular dos móviles y oficina.
 
-La carpeta preparada está en `../../work/flutter` respecto del proyecto original. El SDK no se incluye en el ZIP del código. Para una instalación permanente utiliza la [guía oficial de Flutter para Mac](https://docs.flutter.dev/install/manual) y el paquete **Apple Silicon/ARM64**; utiliza la versión fijada 3.47.6 para reproducir esta entrega.
+## Compilar las aplicaciones
 
-En Terminal, situado en la carpeta TallerFlow:
+En el repositorio privado `benjapija/tallerflow`, Actions → **TallerFlow · validar y compilar** realiza las comprobaciones y genera Windows, Android e iOS simulador. El trabajo iOS utiliza un Mac alojado; el ejecutable de oficina se genera en Windows. No necesitas instalar Visual Studio en tu Mac.
+
+La primera ejecución ya produjo Windows con instalador Inno Setup, APK debug Android e iOS simulador. Son compilaciones del commit c6f9c09, anteriores al código actual de cuentas, historial y precios. Los archivos originales se conservan identificados como `compilacion-1`; no son una versión completa del piloto.
+
+Un segundo workflow, **TallerFlow · validar Windows nativo**, ha ejecutado dos procesos reales de la aplicación en Windows Server 2025 alojado. Comprueba almacenamiento cifrado, Credential Manager, conservación de registros sin conexión, reinicio y sincronización sin duplicados. El servidor es ficticio. Instalador, actualización/desinstalación y cuentas Supabase reales requieren comprobaciones adicionales. Evidencias: `evidence/windows-native-validation.json` y su ZIP de registros.
+
+El cliente conectado utiliza `config/pilot.public.json`: URL, clave publicable y taller ficticio. Nunca añadas contraseña de base de datos, clave de servicio ni clave OpenAI. El primer acceso de cada cuenta necesita conexión.
+
+## iOS y Android
+
+Desde el Mac, con un simulador o dispositivo autorizado y su SDK disponible:
 
 ```sh
-flutter doctor -v
 flutter pub get
 flutter analyze
 flutter test
 flutter devices
-flutter run -d macos
+flutter run -d ID_DISPOSITIVO --dart-define-from-file=config/pilot.public.json
 ```
 
-Para iOS, abre el simulador desde Xcode y selecciona su identificador con `flutter run -d ID`. Para iPhone físico, configura equipo de firma y modo de desarrollo en Xcode; la publicación requiere la cuenta de desarrollador y firma correspondientes.
+El simulador iOS necesita los componentes de Xcode y acceso a sus carpetas normales de caché. Las herramientas de esta conversación no han recibido ese permiso; no afecta a la compilación alojada. Android necesita su SDK. El usuario ha indicado que no dispone de más teléfonos: no se da por comprobado un equipo físico ni se compra ninguno.
 
-Para Android, abre el administrador de dispositivos de Android Studio, crea un emulador ARM64 y comprueba las licencias del SDK. Usa `flutter run -d ID` para el emulador o un móvil autorizado. No firmes una distribución real con la clave debug de esta entrega.
+Las versiones se fijan en `pubspec.lock`. Android mínimo 24 y copias automáticas desactivadas para evitar restaurar un almacén sin su clave; iOS mínimo efectivo 15 por el selector de archivos. Las declaraciones de plataforma de los paquetes no sustituyen pruebas de funcionamiento.
 
-## Dependencias y compatibilidad
+Referencias: [Flutter iOS](https://docs.flutter.dev/platform-integration/ios/setup), [Flutter Android](https://docs.flutter.dev/platform-integration/android/setup), [Flutter Windows](https://docs.flutter.dev/platform-integration/windows/building), [instalación Flutter](https://docs.flutter.dev/install/manual), [almacenamiento seguro](https://pub.dev/packages/flutter_secure_storage).
 
-Las versiones efectivamente resueltas se fijan en `pubspec.lock`; que un paquete declare una plataforma no sustituye la prueba nativa.
-
-| Dependencia | iOS | Android | macOS | Windows | Función |
-|---|---|---|---|---|---|
-| `supabase_flutter` | Declarada | Declarada | Declarada | Declarada | Cuenta y comunicación con servidor |
-| `flutter_secure_storage` | Declarada | Declarada | Declarada | Declarada | Clave del almacén y sesión |
-| `path_provider` | Declarada | Declarada | Declarada | Declarada | Carpeta privada de aplicación |
-| `cryptography` | Dart | Dart | Dart | Dart | Cifrado AES-GCM |
-| `qr_flutter` | Flutter | Flutter | Flutter | Flutter | Generación del QR |
-| `uuid` | Dart | Dart | Dart | Dart | Identificadores de operaciones |
-
-Documentación de los autores: [Supabase Flutter](https://pub.dev/packages/supabase_flutter), [almacenamiento seguro](https://pub.dev/packages/flutter_secure_storage), [carpetas nativas](https://pub.dev/packages/path_provider), [criptografía](https://pub.dev/packages/cryptography), [QR](https://pub.dev/packages/qr_flutter).
-
-Configuraciones preparadas: Android API mínima 24 e Internet; copias automáticas Android desactivadas para no restaurar un almacén sin su clave; red saliente y Keychain en macOS; entitlement de Keychain en iOS. Proyecto macOS mínimo 12.0 y plugin seguro iOS mínimo 13.0. El mínimo efectivo puede aumentar con Flutter u otros plugins y deberá comprobarse al compilar.
-
-## Windows desde tu Mac
-
-El archivo `.github/workflows/validate-and-build.yml` compila Windows en `windows-2025`, después de validación. Comprueba Visual Studio C++ ATL, construye la aplicación y un instalador Inno Setup. Esa imagen declara ATL en su [inventario oficial](https://raw.githubusercontent.com/actions/runner-images/main/images/windows/Windows2025-Readme.md). No necesitas instalar Visual Studio en tu Mac.
-
-1. Coloca el contenido del proyecto en la raíz de un repositorio GitHub.
-2. Entra desde el navegador en Actions → TallerFlow · validar y compilar → Run workflow.
-3. Descarga el artefacto `TallerFlow-Windows-demo-N` desde tu Mac.
-4. Conserva todo el directorio de la aplicación: el ejecutable necesita DLL, plugins y datos; no copies solo el `.exe`.
-5. En el Windows remoto, prueba tanto el instalador como la carpeta portable. Comprueba el runtime Visual C++ requerido por Flutter. El instalador de demostración no incluye todavía firma Authenticode ni distribución del runtime.
-6. Sigue el guion de validación y registra versión de Windows, escala de pantalla, resultado y evidencias.
-
-El workflow **no se ha ejecutado** porque no se ha creado ni conectado un repositorio para esta entrega. No hay binarios Windows comprobados ni instalador validado todavía. Compilar correctamente no demostrará que instalación, cifrado, sesión e interfaz funcionen.
-
-La [documentación oficial de Windows](https://docs.flutter.dev/platform-integration/windows/building) explica el paquete nativo y sus componentes. Para producción habrá que firmar, versionar y probar instalación, actualización y desinstalación sin pérdida accidental del almacén.
-
-## Qué vive en la nube
-
-Supabase aloja Auth, PostgreSQL y posteriormente Storage privado y funciones. GitHub Actions proporciona los equipos de compilación. El futuro portal necesita HTTPS y un servicio de verificación de destinatario. OpenAI y la documentación técnica solo se consultarán desde servidor y con conexión. No son necesarios para utilizar los flujos locales de esta demostración.
+Las próximas compilaciones del workflow utilizan la configuración pública del piloto y adjuntan source-commit.json con el commit y la ejecución. La demo web sigue utilizando datos ficticios. Cámara QR: iOS/Android; Windows admite código manual o lector de teclado. Las plataformas no soportadas no muestran una cámara inexistente.

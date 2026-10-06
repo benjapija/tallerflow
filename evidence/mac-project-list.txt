@@ -1,0 +1,48 @@
+2026-10-06 22:31:49.628 xcodebuild[20324:1057531]  DVTFilePathFSEvents: Failed to start fs event stream.
+2026-10-06 22:31:50.235 xcodebuild[20324:1057531] CoreSimulatorService connection became invalid.  Simulator services will no longer be available.
+2026-10-06 22:31:50.237 xcodebuild[20324:1057579] Logging connecton invalid: <OS_xpc_error: <dictionary: 0x1f5758b60> { count = 1, transaction: 0, voucher = 0x0, contents =
+	"XPCErrorDescription" => <string: 0x1f5758ca0> { string cache = 0x0, length = 18, contents = "Connection invalid" }
+}>
+2026-10-06 22:31:50.237 xcodebuild[20324:1057579] Error opening log file (/Users/benja/Library/Logs/CoreSimulator/CoreSimulator.com.apple.dt.xcodebuild.log): Operation not permitted
+[-[SimServiceContext sendRequest:]:1961] ERROR : Unable to deliver request ({
+    "developer_dir" = "/Applications/Xcode.app/Contents/Developer";
+    request = "set_developer_dir";
+}) because we are not connected to CoreSimulatorService.
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -list -project macos/Runner.xcodeproj -derivedDataPath build/macos -scheme Runner
+
+2026-10-06 22:31:50.360 xcodebuild[20324:1057528] [MT] DVTAssertions: Warning in DVTFrameworks/DVTFoundation/FileTypes/DVTFileDataTypeDetection.m:80
+Details:  detectedTypeIdentifier (com.apple.binary-property-list) does not conform to matchedTypeIdentifier in MagicFileDataTypeDetector extenson com.apple.property-list. When both are specified, this conformance is required unless overridden by setting allowNonInheritance. extension.identifier:Xcode.MagicFileDataTypeDetector.BinaryPlist
+Object:   <DVTFileDataTypeDetectionMagicCache: 0x7492a39f50>
+Method:   -initWithExtension:
+Thread:   <_NSMainThread: 0x104e39340>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-10-06 22:31:50.360 xcodebuild[20324:1057528] [MT] DVTAssertions: Warning in DVTFrameworks/DVTFoundation/FileTypes/DVTFileDataTypeDetection.m:80
+Details:  detectedTypeIdentifier (com.apple.xml-property-list) does not conform to matchedTypeIdentifier in MagicFileDataTypeDetector extenson com.apple.property-list. When both are specified, this conformance is required unless overridden by setting allowNonInheritance. extension.identifier:Xcode.MagicFileDataTypeDetector.XMLPlist
+Object:   <DVTFileDataTypeDetectionMagicCache: 0x7492a39f50>
+Method:   -initWithExtension:
+Thread:   <_NSMainThread: 0x104e39340>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+[-[SimServiceContext initWithDeveloperDir:connectionType:error:]:499] WARN  : Unable to discover any Simulator runtimes. Developer Directory is /Applications/Xcode.app/Contents/Developer.
+[-[SimDiskImageManager init]:175] ERROR : Could not kickstart simdiskimaged; SimDiskImageManager services will not be available: Error Domain=NSPOSIXErrorDomain Code=53 "Software caused connection abort" UserInfo={NSLocalizedDescription=Error returned in reply from CoreSimulatorService: Connection invalid}
+[-[SimDiskImageManager _onQueue_checkConnection:]:239] ERROR : simdiskimaged returned error (invalid), marking disconnected.
+[-[SimServiceContext initWithDeveloperDir:connectionType:error:]_block_invoke:556] ERROR : Could not get list of trusted mount directories: Error Domain=com.apple.CoreSimulator.SimError Code=410 "The service used to manage runtime disk images (simdiskimaged) crashed or is not responding" UserInfo={NSLocalizedDescription=The service used to manage runtime disk images (simdiskimaged) crashed or is not responding}
+[-[SimDiskImageManager _onQueue_checkConnection:]:239] ERROR : simdiskimaged returned error (invalid), marking disconnected.
+[-[SimServiceContext sendRequest:reply:error:]:1982] ERROR : Unable to deliver request ({
+    request = "notification_subscription";
+    "set_path" = "/Users/benja/Library/Developer/CoreSimulator/Devices";
+}) because we are not connected to CoreSimulatorService.
+2026-10-06 22:31:50.405 xcodebuild[20324:1057530] Error Domain=NSPOSIXErrorDomain Code=61 "Connection refused" UserInfo={NSLocalizedDescription=CoreSimulatorService connection became invalid.  Simulator services will no longer be available.}
+[-[SimServiceContext sendRequest:reply:error:]:1982] ERROR : Unable to deliver request ({
+    request = "notification_subscription";
+    "set_path" = "/Users/benja/Library/Developer/CoreSimulator/Devices";
+}) because we are not connected to CoreSimulatorService.
+2026-10-06 22:31:50.406 xcodebuild[20324:1057579] Error Domain=NSPOSIXErrorDomain Code=61 "Connection refused" UserInfo={NSLocalizedDescription=CoreSimulatorService connection became invalid.  Simulator services will no longer be available.}
+2026-10-06 22:31:50.406 xcodebuild[20324:1057530]  IDESimulatorAvailability: startObservingSimulatorUpdates() FAILED to register SimDeviceSet observer
+2026-10-06 22:31:50.406 xcodebuild[20324:1057579]  iOSSimulator: [SimServiceContext defaultDeviceSetWithError:] returned nil (Error Domain=NSPOSIXErrorDomain Code=61 "Connection refused" UserInfo={NSLocalizedFailureReason=Failed to subscribe to notifications from CoreSimulatorService., NSLocalizedDescription=Failed to initialize simulator device set., NSUnderlyingError=0x7492937ea0 {Error Domain=NSPOSIXErrorDomain Code=61 "Connection refused" UserInfo={NSLocalizedDescription=CoreSimulatorService connection became invalid.  Simulator services will no longer be available.}}}). Simulator device support disabled.
+Resolve Package Graph
+Failed to determine if database is empty or not: You don’t have permission to save the file “org.swift.swiftpm” in the folder “Caches”.Failed to determine if database is empty or not: You don’t have permission to save the file “org.swift.swiftpm” in the folder “Caches”.failed loading cached manifest for 'fluttergeneratedpluginswiftpackage': You don’t have permission to save the file “manifests” in the folder “org.swift.swiftpm”.failed closing manifest db cache: You don’t have permission to save the file “manifests” in the folder “org.swift.swiftpm”.You don’t have permission to save the file “ManifestLoading” in the folder “manifests”.
+2026-10-06 22:31:50.625 xcodebuild[20324:1057528] Writing error result bundle to /var/folders/69/p8cqcj7s0b7g33bsdcg6s1dm0000gn/T/ResultBundle_2026-06-10_22-31-0050.xcresult
+xcodebuild: error: Could not resolve package dependencies:
+  You don’t have permission to save the file “ManifestLoading” in the folder “manifests”.
+

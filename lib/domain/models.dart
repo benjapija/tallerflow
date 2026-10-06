@@ -33,6 +33,18 @@ int roundRatio(int numerator, int denominator) {
       : (numerator + denominator ~/ 2) ~/ denominator;
 }
 
+int roundProduct(int left, int right, int denominator) {
+  if (denominator <= 0) throw ArgumentError('Divisor inválido');
+  final numerator = BigInt.from(left) * BigInt.from(right);
+  final divisor = BigInt.from(denominator);
+  final value = (numerator.abs() + divisor ~/ BigInt.two) ~/ divisor;
+  final signed = numerator.isNegative ? -value : value;
+  if (signed.abs() > BigInt.from(9007199254740991)) {
+    throw const FormatException('Importe fuera del intervalo admitido');
+  }
+  return signed.toInt();
+}
+
 int parseQuantity(String value) {
   final s = value.trim().replaceAll(',', '.');
   if (!RegExp(r'^\d+(\.\d{1,3})?$').hasMatch(s)) {
@@ -42,7 +54,11 @@ int parseQuantity(String value) {
   final n =
       int.parse(p[0]) * 1000 +
       int.parse((p.length == 2 ? p[1] : '').padRight(3, '0'));
-  if (n <= 0) throw const FormatException('La cantidad debe ser positiva');
+  if (n <= 0 || n > 100000000) {
+    throw const FormatException(
+      'La cantidad debe estar entre 0,001 y 100.000 unidades',
+    );
+  }
   return n;
 }
 
@@ -194,32 +210,47 @@ NoteTotal calculateNote(WorkOrder order) {
   for (final t in order.tasks.where(
     (t) => t['authorized'] == true && t['billableMinutes'] > 0,
   )) {
-    final net = roundRatio(
-      (t['billableMinutes'] as int) * ((t['rateCents'] ?? 0) as int),
+    final gross = roundProduct(
+      t['billableMinutes'] as int,
+      (t['rateCents'] ?? 0) as int,
       60,
     );
+    final discount = roundProduct(gross, (t['discountBps'] ?? 0) as int, 10000);
+    final net = gross - discount;
     lines.add({
       'description': t['title'],
       'quantity': '${t['billableMinutes']} min',
       'netCents': net,
-      'taxCents': roundRatio(net * (t['taxBps'] as int), 10000),
+      'unitPriceCents': t['rateCents'],
+      'taxBps': t['taxBps'],
+      'grossCents': gross,
+      'discountBps': t['discountBps'] ?? 0,
+      'discountCents': discount,
+      'taxCents': roundProduct(net, t['taxBps'] as int, 10000),
       'taskId': t['id'],
     });
   }
-  for (final p in order.parts.where(
-    (p) => p['kind'] == 'consume' && p['charge'] == true,
-  )) {
-    final returned = order.parts
-        .where((r) => r['kind'] == 'return' && r['sourceId'] == p['id'])
-        .fold<int>(0, (sum, r) => sum + (r['quantityMilli'] as int));
-    final q = (p['quantityMilli'] as int) - returned;
+  for (final p in order.parts.where((p) => p['kind'] == 'consume')) {
+    final q = remainingConsumption(order, p);
     if (q <= 0) continue;
-    final net = roundRatio(q * (p['priceCents'] as int), 1000);
+    final gross = roundProduct(q, p['priceCents'] as int, 1000);
+    final discount = p['charge'] == true
+        ? roundProduct(gross, (p['discountBps'] ?? 0) as int, 10000)
+        : gross;
+    final net = gross - discount;
     lines.add({
       'description': p['description'],
       'quantity': '${quantity(q)} ${p['unit']}',
       'netCents': net,
-      'taxCents': roundRatio(net * (p['taxBps'] as int), 10000),
+      'unitPriceCents': p['priceCents'],
+      'taxBps': p['taxBps'],
+      'grossCents': gross,
+      'discountBps': p['charge'] == true ? p['discountBps'] ?? 0 : 10000,
+      'discountCents': discount,
+      'charge': p['charge'] == true,
+      'noChargeReason': p['noChargeReason'],
+      'partId': p['id'],
+      'taxCents': roundProduct(net, p['taxBps'] as int, 10000),
       'taskId': p['taskId'],
     });
   }
@@ -229,6 +260,12 @@ NoteTotal calculateNote(WorkOrder order) {
     lines,
   );
 }
+
+int remainingConsumption(WorkOrder order, Map<String, dynamic> part) =>
+    (part['quantityMilli'] as int) -
+    order.parts
+        .where((r) => r['kind'] == 'return' && r['sourceId'] == part['id'])
+        .fold<int>(0, (sum, r) => sum + (r['quantityMilli'] as int));
 
 List<String> closeIssues(
   WorkOrder order, {
@@ -261,6 +298,14 @@ List<String> closeIssues(
   }
   if (order.parts.any((p) => p['kind'] == 'consume' && p['reviewed'] != true)) {
     issues.add('Hay consumos pendientes de revisión');
+  }
+  if (order.parts.any(
+    (p) =>
+        p['kind'] == 'consume' &&
+        p['charge'] != true &&
+        (p['noChargeReason'] as String? ?? '').trim().isEmpty,
+  )) {
+    issues.add('Justifica los consumos sin cobro');
   }
   if (order.tasks.any(
     (t) =>

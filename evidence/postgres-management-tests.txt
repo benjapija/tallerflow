@@ -1,0 +1,17 @@
+PASS Administrator settings update is audited; stale concurrent update is rejected
+PASS Settings reject missing or excessive tax without partial changes
+PASS Command retries are idempotent and altered payload is rejected
+PASS Last administrator cannot disable or demote itself
+PASS Technician has neither administration API nor hidden tariff/cost data
+PASS Configurable price and cost access is enforced by the server
+PASS Catalog adjustment retains previous movements and frozen prices
+PASS Duplicate catalog references and inactive consumption are prevented
+PASS Versioned templates prepare unauthorized tasks after compatibility review
+PASS Tasks reject foreign assignees and retain evidence on stale editing
+PASS Active timers prevent reassignment and account removal
+PASS Task blocks require a responsible member and stop starts until resolved
+PASS Scope edits preserve prior authorization and other task consent
+PASS Cancellation retains tasks and refuses work with recorded time/consumption
+PASS Priority/location updates are scoped, audited and require latest revision
+PASS Backup includes management data, versions and permissions
+16 administration and task checks passed. Hosted Auth and actual devices require separate validation.

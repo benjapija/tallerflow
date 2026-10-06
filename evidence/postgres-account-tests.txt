@@ -1,0 +1,8 @@
+PASS Admin prepares a stable request and excludes credential fields
+PASS Clients cannot read requests or invoke elevated finalization
+PASS Foreign existing identities are never adopted or given membership
+PASS Only the matching server marker can finalize; retries have one membership and audit effect
+PASS Retired or reassigned device and inactive admin revoke provisioning authority
+PASS Non-admin cannot prepare accounts and permissions are validated before any request
+PASS Workshop archive includes account recovery records without passwords
+7 account provisioning checks passed. Auth API and native operation require separate validation.

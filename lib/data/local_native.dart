@@ -4,6 +4,7 @@ import 'package:cryptography/cryptography.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'vault.dart';
+import 'photo_blobs.dart';
 
 class AtomicFileStore implements StringStore {
   final File file;
@@ -50,5 +51,14 @@ Future<Vault> openVault(String scope) async {
     );
     await secure.write(key: keyName, value: encoded);
   }
-  return Vault(AtomicFileStore(file), SecretKey(base64Decode(encoded)));
+  final key = SecretKey(base64Decode(encoded));
+  return Vault(
+    AtomicFileStore(file),
+    key,
+    photos: PhotoBlobs(
+      (hash) =>
+          AtomicFileStore(File('${folder.path}/$scope.photos/$hash.blob')),
+      key,
+    ),
+  );
 }

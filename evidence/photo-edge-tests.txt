@@ -1,0 +1,9 @@
+PASS Invalid authentication has no privileged Storage effects
+PASS User-scoped denial precedes all service-role operations
+PASS Verified bytes are hashed and finalized; retry is delegated to SQL receipt
+PASS Corruption, oversize and non-JPEG files never reach finalization
+PASS Permission revocation after download is rechecked during finalization
+PASS Public or unavailable bucket aborts before download
+PASS Malformed actions and large metadata fail without privileged effects
+PASS Prepare uses stable caller command and returns only authorized info
+8 photo function checks passed with simulated Auth and Storage dependencies.

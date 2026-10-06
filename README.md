@@ -1,8 +1,8 @@
 # TallerFlow · desarrollo de fase 1
 
-Aplicación en español para conectar operarios y oficina y sustituir el papel en un taller de España. Conserva Flutter/Dart, Supabase y las aplicaciones previstas para iOS, Android y Windows, con macOS para desarrollo y revisión de oficina.
+Aplicación en español para conectar operarios y oficina y sustituir el papel en un taller de España. Conserva Flutter/Dart, Supabase y las aplicaciones previstas para iOS, Android y Windows. El Mac se utiliza para desarrollo y demostración en navegador; por petición del usuario del 6 de octubre no se entrega aplicación macOS.
 
-**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** La base 0.2 se conserva. Se han añadido copias portátiles cifradas, administración y organización de tareas. Las cinco primeras migraciones y el servicio de alta de cuentas están instalados en Supabase Free; el acceso con Auth y el funcionamiento nativo siguen pendientes de pruebas completas.
+**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** La base 0.2 se conserva. Incluye copias portátiles cifradas, administración, organización de tareas, historial de vehículos, cambios de matrícula y propietario, revisión justificada de precios, descuentos y consumos sin cobro. Las ocho primeras migraciones y el servicio de alta de cuentas están instalados en Supabase Free. Windows ha superado un circuito nativo de cierre/reapertura y almacenamiento seguro con servidor ficticio; el acceso con Auth real y el piloto completo siguen pendientes.
 
 Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md).
 
@@ -38,10 +38,11 @@ La recepción, tareas, tiempos estimados/trabajados/facturables separados, catá
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 42 pruebas Flutter aprobadas: fiabilidad, copias cifradas, administración, tareas y recuperación del alta sin guardar contraseñas.
-- 77 comprobaciones PostgreSQL/PGlite aprobadas aplicando las cinco migraciones; 6 pruebas de la función de alta con Auth simulado.
-- 17 comprobaciones de SQL alojado en Supabase aprobadas con identidades ficticias y recuperación completa de sus transacciones. No son inicios de sesión reales.
-- GitHub Actions ha validado el código del primer punto de control y compilado macOS e iOS en simulador. Las restantes compilaciones están en curso; ver evidencias y VALIDACION.md.
+- 59 pruebas Flutter aprobadas: fiabilidad, copias, administración, tareas, historial, privacidad y precios; analizador sin incidencias.
+- 97 comprobaciones PostgreSQL/PGlite aprobadas con las ocho migraciones; 6 pruebas adicionales del servicio de altas con Auth simulado.
+- 38 comprobaciones SQL alojadas: 10 de circuito, 7 de altas, 11 de historial y 10 de precios. Identidades ficticias y transacciones revertidas; no son inicios de sesión reales.
+- GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
+- Windows remoto en GitHub Actions: dos procesos nativos verifican almacén cifrado, Credential Manager, conservación de dos registros sin conexión, recuperación y un único efecto al reintentar. El servidor es ficticio; instalación manual y Auth real siguen pendientes.
 - Compilación web y capturas de las pantallas correctas.
 
 Los registros están en `evidence/`. [VALIDACION.md](docs/VALIDACION.md) distingue lo ejecutado de Supabase alojado, los reinicios físicos y las plataformas nativas pendientes. Compilar no demuestra funcionamiento nativo.

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-06",
+  "localFlutterTotalPassed": 59,
+  "localDatabaseTotalPassed": 97,
+  "localMockAuthFunctionPassed": 6,
+  "vehicle": {
+    "localDomain": 4,
+    "localWidget": 2,
+    "localPostgres": 9,
+    "hostedPostgres": 11
+  },
+  "pricing": {
+    "localDomain": 7,
+    "localWidget": 2,
+    "localPostgres": 10,
+    "hostedPostgres": 10
+  },
+  "realAuthValidated": false,
+  "nativeNewModulesValidated": false,
+  "issuedDocumentsRetained": true,
+  "fixtureRolledBack": true,
+  "macDesktopRemovedFromScope": true
+}

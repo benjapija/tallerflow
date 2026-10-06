@@ -1,0 +1,7 @@
+PASS Unauthorized requests have no provisioning effects
+PASS Credential-like payload fields are removed before prepare and an uncertain finish is recoverable
+PASS Retry reuses the existing Auth identity after interrupted finalization
+PASS Revocation checked during prepare prevents new identities
+PASS Invalid passwords and identifiers fail before storage
+PASS Authentication outages return a controlled response without provisioning
+6 account function checks passed with simulated Auth API.

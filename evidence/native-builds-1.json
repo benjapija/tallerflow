@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-06",
+  "repo": "benjapija/tallerflow",
+  "runId": 37493666952,
+  "commit": "c6f9c09cf2c61a08b45ac8b8d4a11218130de79d",
+  "validation": "passed",
+  "windowsBuild": "passed",
+  "windowsInstaller": "passed",
+  "macOsBuild": "passed",
+  "iosSimulatorBuild": "passed",
+  "androidDebugBuild": "passed",
+  "macOsFirstLaunch": "AMFI -424: ad hoc signature contains restricted entitlements; confirmed in native Console",
+  "macOsCodeSignature": "valid on disk, deep strict verification passed",
+  "macOsArchitecture": [
+    "arm64",
+    "x86_64"
+  ],
+  "physicalDeviceValidated": false,
+  "authValidated": false,
+  "downloadedArtifactsSha256": {
+    "Apple": "de0470bb3f722d7e48e1fff8ce1a82f5adfdf18a2f9c4d9c7536235184211078",
+    "Windows": "737a79c22ad27078662e9f98262b6316174566e1516023dc54d8f3bf45699cd8",
+    "Android": "7ad017e6c35d425b845fb73d2a11ae5962bf9aa5a519c143547a6e228c580247"
+  },
+  "requiresAppleProvisioningForKeychain": true
+}

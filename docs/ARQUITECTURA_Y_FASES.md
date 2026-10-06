@@ -1,4 +1,4 @@
-# Producto y arquitectura · 0.2
+# Producto y arquitectura · desarrollo actual
 
 España está confirmada. TallerFlow sustituye papel y programas antiguos; no se ha identificado un programa concreto ni un proveedor de documentación técnica contratado. Se mantienen Flutter/Dart, Supabase y aplicaciones nativas para operario, oficina y administrador. El portal, la IA y la facturación fiscal definitiva quedan fuera de este bloque.
 
@@ -46,7 +46,11 @@ La recuperación permite conservar evidencia original de equipos retirados, incl
 
 El bloque de fiabilidad 0.2 está implementado y probado localmente. Falta validar Supabase/Auth alojado y dispositivos físicos. La simulación utiliza el controlador y las pantallas Flutter con un servidor en memoria; no sustituye las pruebas PostgreSQL ni una instalación real.
 
-**Resto de fase 1:** administración de cuentas/permisos/tarifas/impuestos/catálogo/plantillas, edición y reasignación completa de tareas y operarios, prioridades y bloqueos, historial consolidado y privacidad ante cambio de propietario, descuentos y precios revisables con motivo, consumos sin cobro, costes/margen estimado, fotos/Storage, QR con cámara y enlaces nativos. Exportación, copia y restauración completas son condiciones anteriores a datos reales.
+**Avance de fase 1:** administración, altas recuperables sin contraseñas, tareas/asignaciones/bloqueos, historial consolidado y revisión de precios están implementados y comprobados localmente y con SQL alojado. Las matrículas anteriores son alias de la misma identidad. El cambio de propietario crea una identidad nueva y conserva los destinatarios y documentos originales. Los operarios reciben una proyección técnica sin esos datos personales. Un futuro portal necesitará su propio control de destinatario; no debe reutilizar la proyección de personal.
+
+Los precios aplicados se conservan por partida. Oficina registra motivo, autor, fecha y antes/después. Subir precio/impuesto, reducir descuento o volver a cobrar exige autorización nueva y conserva la anterior. Los descuentos se redondean antes del impuesto por línea. Un consumo sin cobro se refleja a cero en la nota, con motivo; sigue consumiendo existencias y coste. El margen estimado utiliza tiempo trabajado y piezas, y señala costes desconocidos.
+
+**Resto de fase 1:** fotos/Storage, cámara/QR, enlaces nativos, CSV, recuperación de Auth entre proyectos, copias grandes y comprobaciones nativas del circuito conectado. La aplicación macOS se retira del alcance; el Mac sigue como equipo de desarrollo. Exportación y restauración completas son condiciones anteriores a datos reales. Estado actualizado en PENDIENTES.md.
 
 **Fase 2:** inspección completa, presupuestos versionados, portal HTTPS con destinatario verificado, autorización digital, almacén/compras, garantías, PDF y pagos.
 

@@ -4,18 +4,20 @@
 
 | Entorno | Resultado ejecutado | Límite |
 |---|---|---|
-| Flutter local | 42 pruebas; analizador sin incidencias | No acredita plugins ni equipos físicos |
-| PostgreSQL/PGlite | 15 regresión + 29 fiabilidad + 10 copias + 16 gestión + 7 altas = 77 | Auth y sesiones simulados |
+| Flutter local | 59 pruebas; analizador sin incidencias | No acredita plugins ni equipos físicos |
+| PostgreSQL/PGlite | 16 regresión + 29 fiabilidad + 10 copias + 16 gestión + 9 historial + 10 precios + 7 altas = 97 | Auth y sesiones simulados |
 | Función de alta | 6 pruebas con API Auth simulada | No crea usuarios reales durante estas pruebas |
-| Supabase alojado | Cinco migraciones y función workshop-members desplegadas; 10 pruebas de circuito + 7 de altas | Identidades SQL ficticias; se revierte cada transacción |
+| Supabase alojado | Ocho migraciones y función workshop-members desplegadas; 10 circuito + 7 altas + 11 historial + 10 precios = 38 | Identidades SQL ficticias; se revierte cada transacción |
 | Protección de función alojada | Petición sin autorización devuelve 401 | Comprueba denegación, no un alta autenticada |
-| GitHub Actions #1 | Validación aprobada; compilaciones Apple correctas; otros trabajos en curso | Commit c6f9c09; contiene 38 pruebas Flutter y 69 SQL, anteriores al nuevo servicio de altas |
-| Uso nativo | Pendiente | Generar un ejecutable no demuestra su funcionamiento |
+| GitHub Actions #1 | Validación aprobada; compilaciones Apple correctas; los cuatro trabajos completados | Commit c6f9c09; contiene 38 pruebas Flutter y 69 SQL, anteriores al nuevo servicio de altas |
+| Windows remoto | Dos procesos de aplicación reales con Credential Manager y archivo cifrado; dos registros sin conexión recuperados y sincronizados una sola vez | Commit e26a77a, anterior a historial/precios; servidor ficticio, Auth HTTP no validado e instalador sin prueba manual |
+| macOS | Compilación antigua generada; lanzamiento rechazado por AMFI por entitlement de llavero sin perfil Apple | Plataforma retirada del alcance por petición del usuario el 6 de octubre; no bloquea la entrega |
+| iOS/Android | Compilación de simulador iOS y APK debug aprobadas | Funcionamiento en simuladores y equipos físicos pendiente |
 | Auth real | Pendiente de confirmar correo administrador y probar inicio de sesión | No se conocen ni se guardan contraseñas del usuario |
 
-Evidencias actuales: `flutter-tests-current.txt`, `analyze-current.txt`, `postgres-all-current.txt`, `hosted-database-validation.json`, `account-provisioning-validation.json`, `edge-unauthorized-hosted.txt` y la captura de GitHub. Las migraciones 001–005 se aplican en los bancos de pruebas locales.
+Evidencias actuales: `flutter-tests-current.txt`, `analyzer-current.txt`, `database-tests-current.txt`, `hosted-database-validation.json`, `account-provisioning-validation.json`, `vehicle-and-pricing-validation.json`, `windows-native-validation.json`, `windows-native-validation.zip` y `edge-unauthorized-hosted.txt`. Las migraciones 001–009 se aplican en los bancos de pruebas locales.
 
-Las copias incluyen estado de servidor, documentos inmutables, auditoría, sesiones históricas, cierres, solicitudes de cuentas y el estado local pendiente. El archivo portable está cifrado. Las contraseñas y los tokens Auth se excluyen. La recuperación en otra base requiere las identidades Auth originales; fotografías y copias grandes se incorporarán junto con Storage. Estos límites impiden considerar terminada la recuperación completa.
+Las copias incluyen estado de servidor, documentos inmutables, auditoría, sesiones históricas, cierres, solicitudes de cuentas y el estado local pendiente. El archivo portable está cifrado. Las contraseñas y los tokens Auth se excluyen. La recuperación en otra base requiere las identidades Auth originales; las fotos y sus pendientes se recuperan localmente con hash y clave de dispositivo distinta; copias grandes y recuperación Auth siguen pendientes. Estos límites impiden considerar terminada la recuperación completa.
 
 ## Cobertura del bloque solicitado
 
@@ -42,6 +44,14 @@ Se mantienen comprobaciones de matrícula/identidad, autorizaciones individuales
 
 ## Pendiente antes de piloto
 
-Prueba real entre cuentas de operario y oficina, dispositivos nativos, pérdida de conexión, suspensión/reinicio, permisos de cámara, almacenamiento seguro y recuperación de archivos. El Mac solo tiene herramientas de línea de comandos; Xcode completo y SDK Android no están confirmados. Las compilaciones Apple en GitHub permiten preparar ejecutables sin dar por instalada ninguna de estas herramientas en el Mac del usuario. Windows necesita un entorno remoto accesible y licenciado para instalación y uso.
+Prueba real entre cuentas de operario y oficina, pérdida de conexión, suspensión/reinicio, concurrencia, permisos de cámara y recuperación de archivos en los clientes conectados. Xcode 27 y una cuenta Apple personal ya están disponibles en el Mac; SDK Android local y equipos físicos pendientes. Windows se ha ejecutado en el entorno remoto de GitHub Actions, pero falta probar el instalador y el circuito con Auth real. Ya no se solicita una aplicación macOS.
 
-Historial/propietarios, precios y excepciones, fotos/QR, y fases siguientes siguen abiertos en PENDIENTES.md. Los datos fiscales y las fuentes técnicas requieren confirmación antes de completar sus módulos.
+Historial y revisión de precios están implementados y comprobados localmente y en SQL alojado. El propietario actual no sustituye al destinatario de reparaciones anteriores; el historial de operarios omite destinatarios y documentos personales. Aumentos de precio/impuesto, reducción de descuento y volver a cobrar invalidan la autorización anterior y conservan su evidencia. Descuentos y consumos sin cobro se calculan antes del impuesto; el movimiento y el coste permanecen. El margen es estimado y señala costes desconocidos. Storage HTTP real, cámara/QR físicos, copias grandes, recuperación Auth y las fases siguientes permanecen abiertos en PENDIENTES.md.
+
+El asesor de seguridad de Supabase comunica 27 avisos informativos de tablas privadas con RLS sin políticas directas: la denegación es deliberada y las APIs autorizadas controlan su acceso. También señala que la protección de contraseñas filtradas está desactivada; Supabase la reserva para Pro o superior. Se conserva Free y no se ha contratado un plan. Referencias: [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [contraseñas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection). Los datos fiscales y las fuentes técnicas requieren confirmación antes de completar sus módulos.
+
+## Fotos y enlaces · último avance
+
+69 pruebas Flutter, 109 comprobaciones PostgreSQL locales y 14 pruebas de servicios con dependencias simuladas aprobadas. Analizador sin incidencias. Fotos: 6 pruebas Flutter, 12 PostgreSQL (incluida otra base de recuperación), 8 del verificador simulado y 10 SQL alojadas en transacción revertida. QR: 4 pruebas del analizador estricto y acceso por órdenes permitidas.
+
+Se comprueban hash, cifrado, reinicio, respuesta perdida, disco lleno, archivo ausente, permisos, denegación de sustitución/borrado y URL firmada, retirada, revisión de oficina y bloqueo del cierre mientras faltan archivos. El fallo de revisión detectado en pruebas se corrigió usando la revisión de la fila autoritativa. La verificación HTTP real de Storage, las sesiones Auth reales, los permisos físicos de cámara y los enlaces del sistema siguen pendientes. Las compilaciones históricas no contienen estos cambios.

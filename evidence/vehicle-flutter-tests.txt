@@ -1,0 +1,8 @@
+00:00 +0: loading /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/vehicle_history_test.dart
+00:00 +0: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/vehicle_history_test.dart: Registration aliases retain technical identity and immutable issued data
+00:00 +1: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/vehicle_history_test.dart: Owner transfer preserves old recipient and reception uses the new identity
+00:00 +2: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/vehicle_history_test.dart: Technical history omits personal documents, prices and authorization evidence
+00:00 +3: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/vehicle_history_test.dart: Identifier collisions and technician changes are refused before mutation
+00:00 +4: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/vehicle_history_widget_test.dart: Mobile office changes the owner without altering the original repair
+00:00 +5: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/vehicle_history_widget_test.dart: Technical history hides owner controls and previous recipients
+00:00 +6: All tests passed!
