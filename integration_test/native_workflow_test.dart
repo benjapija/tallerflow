@@ -15,6 +15,7 @@ import 'package:tallerflow/ui/app.dart';
 // system credential store are real; the workshop server is explicitly fictional.
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  WidgetController.hitTestWarningShouldBeFatal = true;
   const scope = String.fromEnvironment('TF_RUN_SCOPE');
   const stage = String.fromEnvironment('TF_STAGE');
   const evidencePath = String.fromEnvironment(
@@ -69,10 +70,14 @@ void main() {
     await tester.tap(find.text('Volkswagen Golf'));
     await tester.pumpAndSettle();
     if (stage == 'record') {
+      await tester.ensureVisible(find.text('Iniciar').first);
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Iniciar').first);
       await waitForSavedRecords(1);
       expect(find.text('Pausar'), findsOneWidget);
       now = now.add(const Duration(seconds: 30));
+      await tester.ensureVisible(find.text('Pausar'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Pausar'));
       await waitForSavedRecords(2);
       expect(c.outbox, hasLength(2));
