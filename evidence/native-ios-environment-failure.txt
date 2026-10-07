@@ -1,0 +1,4 @@
+2026-10-07T00:55:38.0521340Z An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=403):
+2026-10-07T00:55:38.6599380Z     raise CalledProcessError(retcode, process.args,
+2026-10-07T00:55:38.6600390Z subprocess.CalledProcessError: Command '['xcrun', 'simctl', 'create', 'TallerFlow-QA', 'com.apple.CoreSimulator.SimDeviceType.iPhone-6s-Plus', 'com.apple.CoreSimulator.SimRuntime.iOS-26-5']' returned non-zero exit status 147.
+2026-10-07T00:55:38.6651770Z ##[error]Process completed with exit code 1.

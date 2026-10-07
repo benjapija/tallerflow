@@ -84,3 +84,7 @@ Migración 013 aplicada en el proyecto principal. Seis pruebas Flutter, ocho Pos
 ## Recuperación alojada y retirada · 7 de octubre
 
 Diez comprobaciones HTTP reales entre gpseuqmzbazifmkhjyby y qnbgbgumvxmmipjlkcgb (Free, coste confirmado 0 USD/mes). Dos UUID Auth originales recreados con contraseñas ficticias distintas. Se conservan documentos, operaciones, auditoría, fotografías originales y versiones de inspección; reintentos no duplican la restauración y los equipos históricos quedan retirados. Cuatro identidades Auth de prueba retiradas, cero sesiones/pertenencias/equipos activos, servicios temporales sustituidos por respuesta 410 y credenciales efímeras eliminadas. El circuito nativo Windows f9aeed3 también pasó fotos/copia/restauración entre dos procesos, con servidor ficticio.
+
+## Modelo inicial de presupuestos
+
+Seis pruebas de dominio de versiones inmutables, importes decimales con descuentos antes del IVA, rechazo de enlaces/versiones antiguos, caducidad, cambios de destinatario o alcance, decisiones por partida y permisos locales de oficina. El modelo es una base sin integración con pantallas, operaciones persistidas, permisos del servidor o portal; no concede autorizaciones de reparación.

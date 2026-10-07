@@ -23,11 +23,12 @@ jobs:
           runtimes=[r for r in read('runtimes')['runtimes'] if r.get('isAvailable') and r['identifier'].startswith('com.apple.CoreSimulator.SimRuntime.iOS-')]
           if not runtimes:raise SystemExit('No available iOS runtime')
           runtime=max(runtimes,key=lambda r:tuple(map(int,r['version'].split('.'))))
-          phones=[d for d in read('devicetypes')['devicetypes'] if d['name'].startswith('iPhone')]
-          if not phones:raise SystemExit('No iPhone simulator type')
-          device=subprocess.check_output(['xcrun','simctl','create','TallerFlow-QA',phones[-1]['identifier'],runtime['identifier']],text=True).strip()
+          phones=[d for d in read('devices')['devices'].get(runtime['identifier'],[]) if d.get('isAvailable') and d['name'].startswith('iPhone')]
+          if not phones:raise SystemExit('No available iPhone for this iOS runtime')
+          selected=next((d for d in phones if d['state']=='Booted'),phones[0])
+          device=selected['udid']
           with open(os.environ['GITHUB_ENV'],'a') as f:f.write('TF_SIMULATOR='+device+'\n')
-          subprocess.check_call(['xcrun','simctl','boot',device])
+          if selected['state']!='Booted':subprocess.check_call(['xcrun','simctl','boot',device])
           subprocess.check_call(['xcrun','simctl','bootstatus',device,'-b'])
           print('Available iOS runtime:',runtime['version'])
           PY

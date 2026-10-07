@@ -1,0 +1,14 @@
+00:10 +89: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +90: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +91: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +92: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:15 +93: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:15 +94: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:15 +95: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:15 +96: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:27 +97: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Missing, repeated, mixed and changed parts never yield a restorable archive
+00:37 +98: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Absent or changed photo bytes stop export and a failed staging write aborts recovery
+00:37 +99: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Malformed envelopes and unsafe limits are rejected before deriving a key
+00:37 +100: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Split recovery preserves original offline IDs and queued photos without restoring authorization
+00:37 +101: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A failed final metadata write leaves the current account state intact after staging split files
+00:37 +102: All tests passed!

@@ -17,7 +17,7 @@ Base: requisitos originales y entrega 0.2. La palabra «probado» identifica el 
 | Aplicación macOS | Fuera del alcance | Retirada por petición del usuario el 6 de octubre; el Mac sigue como equipo de desarrollo |
 | Windows | Compilación, instalador y circuito nativo remoto aprobados parcialmente | Dos procesos reales con cifrado, credenciales, fotos pendientes y recuperación de partes en Actions; falta instalación manual y cuentas Supabase reales desde la app |
 | Inspecciones configurables | Implementadas: 6 Flutter, 8 PostgreSQL local y 10 SQL alojadas | Versiones y evidencias conservadas; selección humana del resultado; falta uso nativo y recorrido HTTP específico |
-| Presupuestos y autorizaciones versionados | Pendiente | Partidas independientes, ampliaciones y decisiones por versión |
+| Presupuestos y autorizaciones versionados | En desarrollo: modelo local de versiones y decisiones con seis pruebas | Falta integrarlo con órdenes, persistencia, RPC, permisos del servidor, pantallas y portal; el modelo de borrador no concede autorizaciones de reparación |
 | Portal cliente | Pendiente tras fase 1 | HTTPS y verificación/revocación del destinatario |
 | Compras, almacén, garantías, PDF y cobros | Pendiente tras fase 1 | Desarrollo local; pasarela de pagos solo si se necesita integración |
 | IA técnica y administrativa | Pendiente | OpenAI desde servidor, presupuesto de consumo, fuentes autorizadas y revisión humana |
