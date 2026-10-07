@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../domain/diagnosis_notebook.dart';
+import '../domain/capture_draft.dart';
 import '../domain/models.dart';
 import 'dialogs.dart';
 
@@ -31,6 +32,7 @@ class DiagnosisPanel extends StatelessWidget {
         FieldSpec(
           'text',
           'Observación, comprobación o resultado',
+          capture: CaptureKind.technical,
           initial: previous?['text'] ?? '',
           multiline: true,
         ),

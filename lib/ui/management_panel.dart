@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../data/controller.dart';
 import '../domain/models.dart';
 import 'dialogs.dart';
+import '../domain/capture_draft.dart';
 
 class ManagementPanel extends StatefulWidget {
   final WorkshopController controller;
@@ -262,7 +263,12 @@ class _ManagementPanelState extends State<ManagementPanel> {
       context,
       item == null ? 'Nueva referencia' : 'Editar referencia',
       [
-        FieldSpec('reference', 'Referencia', initial: item?.reference ?? ''),
+        FieldSpec(
+          'reference',
+          'Referencia',
+          initial: item?.reference ?? '',
+          capture: CaptureKind.reference,
+        ),
         FieldSpec(
           'description',
           'Descripción',

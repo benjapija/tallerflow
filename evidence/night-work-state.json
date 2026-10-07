@@ -1,8 +1,8 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "b83d789bcf1c5080a99b1bf93af899aa39c22c25",
-  "appBuildCommit": "d48ad767b2b9b7134db77032cb1432f434284bbd",
-  "buildRun": 37579944888,
+  "sourceCommit": "fe1d63e4bb008bbee43016775ccb1582c3e8bfa3",
+  "appBuildCommit": "b83d789bcf1c5080a99b1bf93af899aa39c22c25",
+  "buildRun": 37582607709,
   "appBuildStatus": {
     "validate": "success",
     "windows": "success",
@@ -16,7 +16,7 @@
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
   "hostedMigrations": 23,
   "payments": "implemented, tested, deployed and published",
-  "flutterTests": 199,
+  "flutterTests": 208,
   "postgresChecks": 244,
   "mockServiceChecks": 26,
   "nextWork": "Valid-client hosted HTTP portal and reviewed text capture",
@@ -32,7 +32,6 @@
   "planning": "Implemented; 18 hosted SQL checks passed on principal; recovery migration requires explicit target approval",
   "recoveryProjectMigrations": 20,
   "maintenance": "Implemented; 18 hosted SQL checks passed on principal; offline, retry, restoration and form tested locally",
-  "pendingBuildRun": 37582607709,
-  "pendingBuildCommit": "b83d789bcf1c5080a99b1bf93af899aa39c22c25",
-  "fleets": "Implemented; 18 hosted SQL checks passed; local offline, owner review and archive recovery verified"
+  "fleets": "Implemented; 18 hosted SQL checks passed; local offline, owner review and archive recovery verified",
+  "capture": "Implemented; nine simulated-capture tests and web build passed; native build and physical permissions pending"
 }

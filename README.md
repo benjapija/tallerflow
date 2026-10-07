@@ -38,7 +38,7 @@ La recepción, tareas, tiempos estimados/trabajados/facturables separados, catá
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 199 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
+- 208 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
 - 244 comprobaciones PostgreSQL/PGlite y 26 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
 - 58 comprobaciones SQL alojadas históricas con transacciones revertidas y 15 del recorrido HTTP real, con talleres y cuentas ficticios aislados. Las pruebas nativas siguen separadas.
 - GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
@@ -84,3 +84,5 @@ Biblioteca propia: versiones técnicas, validación humana, retirada con histori
 Mantenimiento manual disponible en Historial de vehículos: criterios verificados, vencimientos, recurrencia e intervenciones conservadas. Consulta docs/MANTENIMIENTO.md.
 
 Flotas manuales: agrupación, vínculos con propietario original, seguimiento y archivo conservado. Consulta docs/FLOTAS.md.
+
+Dictado y lectura: borradores revisables en recepción, cuaderno y catálogo; lectura local en Android/iOS y códigos de piezas. Uso físico aún pendiente. Consulta docs/CAPTURA_REVISABLE.md.

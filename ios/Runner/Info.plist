@@ -6,8 +6,12 @@
 	<false/>
 	<key>CFBundleURLTypes</key>
 	<array><dict><key>CFBundleURLSchemes</key><array><string>tallerflow</string></array></dict></array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Dictar un borrador técnico que revisarás antes de guardarlo.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Convertir el dictado técnico en un borrador editable.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Fotografiar la reparación y leer el QR de una orden de TallerFlow.</string>
+	<string>Fotografiar la reparación, leer textos técnicos y abrir el QR de una orden de TallerFlow.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Elegir fotografías para adjuntarlas a la reparación.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>

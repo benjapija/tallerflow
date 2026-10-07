@@ -26,17 +26,36 @@ Future<String?> readOrderCode(BuildContext context) async {
   ).push<String>(MaterialPageRoute(builder: (_) => const OrderQrScanner()));
 }
 
+Future<String?> readPartReference(BuildContext context) async {
+  if (!hasMobileCamera) return null;
+  return Navigator.of(context).push<String>(
+    MaterialPageRoute(
+      builder: (_) => const OrderQrScanner(partReference: true),
+    ),
+  );
+}
+
 class OrderQrScanner extends StatefulWidget {
-  const OrderQrScanner({super.key});
+  final bool partReference;
+  const OrderQrScanner({super.key, this.partReference = false});
   @override
   State<OrderQrScanner> createState() => _OrderQrScannerState();
 }
 
 class _OrderQrScannerState extends State<OrderQrScanner>
     with WidgetsBindingObserver {
-  final scanner = MobileScannerController(
+  late final scanner = MobileScannerController(
     autoStart: false,
-    formats: const [BarcodeFormat.qrCode],
+    formats: widget.partReference
+        ? const [
+            BarcodeFormat.ean13,
+            BarcodeFormat.ean8,
+            BarcodeFormat.code128,
+            BarcodeFormat.code39,
+            BarcodeFormat.dataMatrix,
+            BarcodeFormat.qrCode,
+          ]
+        : const [BarcodeFormat.qrCode],
     detectionSpeed: DetectionSpeed.noDuplicates,
   );
   StreamSubscription<BarcodeCapture>? subscription;
@@ -71,13 +90,23 @@ class _OrderQrScannerState extends State<OrderQrScanner>
     for (final b in capture.barcodes) {
       if (b.rawValue == null) continue;
       try {
-        OrderReference.parse(b.rawValue!);
+        if (widget.partReference) {
+          if (b.rawValue!.trim().isEmpty || b.rawValue!.length > 100) {
+            throw const FormatException(
+              'Revisa una referencia de hasta 100 caracteres',
+            );
+          }
+        } else {
+          OrderReference.parse(b.rawValue!);
+        }
         returned = true;
         Navigator.of(context).pop(b.rawValue);
         return;
       } on FormatException {
         setState(
-          () => message = 'Ese QR no corresponde a una orden de TallerFlow.',
+          () => message = widget.partReference
+              ? 'Revisa el código de la pieza: hasta 100 caracteres.'
+              : 'Ese QR no corresponde a una orden de TallerFlow.',
         );
       }
     }
@@ -103,7 +132,13 @@ class _OrderQrScannerState extends State<OrderQrScanner>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Escanear QR de la orden')),
+    appBar: AppBar(
+      title: Text(
+        widget.partReference
+            ? 'Leer código de pieza'
+            : 'Escanear QR de la orden',
+      ),
+    ),
     body: Column(
       children: [
         Expanded(
@@ -119,7 +154,9 @@ class _OrderQrScannerState extends State<OrderQrScanner>
             children: [
               Text(
                 message ??
-                    'Apunta al QR de TallerFlow. El acceso depende de tu cuenta.',
+                    (widget.partReference
+                        ? 'Apunta al código de la pieza. Tendrás que revisar la referencia antes de usarla.'
+                        : 'Apunta al QR de TallerFlow. El acceso depende de tu cuenta.'),
               ),
               TextButton(
                 onPressed: () async {
@@ -127,13 +164,21 @@ class _OrderQrScannerState extends State<OrderQrScanner>
                   if (!context.mounted) return;
                   final code = await textDialog(
                     context,
-                    'Código de la orden',
-                    'Código o enlace',
+                    widget.partReference
+                        ? 'Referencia de la pieza'
+                        : 'Código de la orden',
+                    widget.partReference ? 'Referencia' : 'Código o enlace',
                     initial: '',
                   );
                   if (code != null && context.mounted) {
                     try {
-                      OrderReference.parse(code);
+                      if (widget.partReference) {
+                        if (code.trim().isEmpty || code.length > 100) {
+                          throw const FormatException('Revisa la referencia');
+                        }
+                      } else {
+                        OrderReference.parse(code);
+                      }
                       returned = true;
                       Navigator.of(context).pop(code);
                     } on FormatException catch (e) {

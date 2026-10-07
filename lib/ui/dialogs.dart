@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import '../domain/capture_draft.dart';
+import 'capture_dialog.dart';
+import '../data/text_capture.dart';
 import '../data/demo.dart';
 import '../domain/models.dart';
 import '../domain/linked_returns.dart';
@@ -8,6 +11,7 @@ class FieldSpec {
   final String key, label, initial;
   final bool required, multiline, numeric, obscure, readOnly;
   final Map<String, String>? choices;
+  final CaptureKind? capture;
   const FieldSpec(
     this.key,
     this.label, {
@@ -18,6 +22,7 @@ class FieldSpec {
     this.obscure = false,
     this.readOnly = false,
     this.choices,
+    this.capture,
   });
 }
 
@@ -27,11 +32,17 @@ Future<Map<String, dynamic>?> formDialog(
   List<FieldSpec> fields,
   Map<String, dynamic> Function(Map<String, String>) convert, {
   String? help,
+  TextCaptureBackend? captureBackend,
 }) => showDialog<Map<String, dynamic>>(
   context: context,
   barrierDismissible: false,
-  builder: (_) =>
-      FieldsDialog(title: title, fields: fields, convert: convert, help: help),
+  builder: (_) => FieldsDialog(
+    title: title,
+    fields: fields,
+    convert: convert,
+    help: help,
+    captureBackend: captureBackend,
+  ),
 );
 
 class FieldsDialog extends StatefulWidget {
@@ -39,12 +50,14 @@ class FieldsDialog extends StatefulWidget {
   final List<FieldSpec> fields;
   final Map<String, dynamic> Function(Map<String, String>) convert;
   final String? help;
+  final TextCaptureBackend? captureBackend;
   const FieldsDialog({
     super.key,
     required this.title,
     required this.fields,
     required this.convert,
     this.help,
+    this.captureBackend,
   });
   @override
   State<FieldsDialog> createState() => _FieldsDialogState();
@@ -54,6 +67,9 @@ class _FieldsDialogState extends State<FieldsDialog> {
   final form = GlobalKey<FormState>();
   late Map<String, String> values = {
     for (final f in widget.fields) f.key: f.initial,
+  };
+  late final fieldKeys = {
+    for (final f in widget.fields) f.key: GlobalKey<FormFieldState<String>>(),
   };
   String? error;
   @override
@@ -86,7 +102,7 @@ class _FieldsDialogState extends State<FieldsDialog> {
                     ),
                   ),
                 ),
-              for (final f in widget.fields)
+              for (final f in widget.fields) ...[
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: f.choices != null
@@ -110,6 +126,7 @@ class _FieldsDialogState extends State<FieldsDialog> {
                               : (v) => values[f.key] = v ?? '',
                         )
                       : TextFormField(
+                          key: fieldKeys[f.key],
                           initialValue: f.initial,
                           obscureText: f.obscure,
                           enableSuggestions: !f.obscure,
@@ -129,6 +146,17 @@ class _FieldsDialogState extends State<FieldsDialog> {
                           onChanged: (v) => values[f.key] = v,
                         ),
                 ),
+                if (f.capture != null)
+                  CaptureTextButton(
+                    backend: widget.captureBackend,
+                    kind: f.capture!,
+                    initial: values[f.key]!,
+                    onReviewed: (v) {
+                      fieldKeys[f.key]?.currentState?.didChange(v);
+                      setState(() => values[f.key] = v);
+                    },
+                  ),
+              ],
               if (error != null)
                 Text(error!, style: const TextStyle(color: Colors.red)),
             ],
@@ -145,7 +173,7 @@ class _FieldsDialogState extends State<FieldsDialog> {
         onPressed: () {
           if (!form.currentState!.validate()) return;
           try {
-            final result = widget.convert(values);
+            final result = widget.convert(Map<String, String>.from(values));
             Navigator.pop(context, result);
           } catch (e) {
             setState(
@@ -204,7 +232,12 @@ Future<Map<String, dynamic>?> receptionDialog(
   context,
   sourceOrderId == null ? 'Nueva recepción' : 'Regreso del vehículo',
   [
-    FieldSpec('plate', 'Matrícula', initial: initial['plate'] ?? ''),
+    FieldSpec(
+      'plate',
+      'Matrícula',
+      initial: initial['plate'] ?? '',
+      capture: CaptureKind.plate,
+    ),
     FieldSpec(
       'country',
       'País de matriculación',
@@ -213,6 +246,7 @@ Future<Map<String, dynamic>?> receptionDialog(
     FieldSpec(
       'vin',
       'VIN o bastidor (opcional)',
+      capture: CaptureKind.vin,
       initial: initial['vin'] ?? '',
       required: false,
     ),

@@ -1,3 +1,7 @@
+## Captura revisable
+
+208 pruebas Flutter completas y analizador sin incidencias. Nueve específicas comprueban borradores, alternativas, edición, cancelación y confirmaciones; capturador simulado, sin micrófono/cámara reales. Web release aprobada. iOS pasa a mínimo 15.5 para el OCR local. Compilación nativa pendiente.
+
 ## Flotas: avance comprobado
 
 199 pruebas Flutter completas aprobadas, analizador sin incidencias y 244 comprobaciones PostgreSQL/PGlite; 26 de servicios simulados y cinco del portal conservadas. Dieciocho SQL alojadas de flotas con datos sintéticos y rollback. Recuperación y formulario comprobados. Compilación nativa de mantenimiento b83d789 en curso; flotas aún pendiente de publicar/compilar.

@@ -1,0 +1,11 @@
+# Dictado y lectura revisable
+
+En recepción, matrícula y VIN ofrecen «Capturar y revisar texto». El cuaderno ofrece el mismo control en la observación técnica, y el catálogo en la referencia. El borrador permite dictado breve en español y, en Android/iPhone, lectura de texto mediante cámara. Las referencias admiten además códigos EAN, Code 128/39, Data Matrix y QR.
+
+La captura solo rellena el campo después de «He revisado: usar texto». El formulario original necesita su confirmación posterior. Se conserva el texto observado, se ofrecen alternativas cuando hay varios identificadores y no se sustituyen letras dudosas del VIN. Los tiempos, consumos, importes y autorizaciones siguen sus formularios propios: dictar «30 minutos» no suma tiempo a un cronómetro. Cancelar conserva el campo original. No se conserva un archivo de audio; las fotografías temporales del lector se retiran del caché propio, sin borrar originales externos.
+
+La voz utiliza [speech_to_text 7.5.0](https://pub.dev/packages/speech_to_text), licencia BSD-3-Clause. Se solicita reconocimiento en el equipo, en español y durante hasta 45 segundos; la disponibilidad depende del servicio de voz, idiomas y permisos del sistema. Windows está declarado en beta por el mantenedor y requiere validación antes del piloto. No se ha probado un micrófono real ni se solicita permiso al abrir el formulario.
+
+La lectura de texto usa [ML Kit](https://developers.google.com/ml-kit), cuyo procesamiento es local y [sin coste de API](https://developers.google.com/ml-kit/migration). Su [adaptador Flutter](https://pub.dev/packages/google_mlkit_text_recognition) tiene licencia MIT y admite Android/iOS; necesita iOS 15.5. El navegador y Windows mantienen entrada manual y dictado cuando su sistema lo permita. La cámara física y el lector de piezas todavía requieren un equipo; las pruebas automáticas usan un capturador ficticio.
+
+Nueve pruebas específicas cubren alternativas, caracteres inválidos, edición, resultados parciales, cancelación, cierre de la ventana y confirmación en dos pasos. El analizador no presenta incidencias; la batería completa incluye 208 pruebas Flutter. La compilación web aprobada no acredita cámara/micrófono nativo ni permisos de dispositivos.
