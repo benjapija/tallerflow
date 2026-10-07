@@ -111,6 +111,8 @@ class WorkshopState {
         'clients',
         'purchaseLedger',
         'caseLibrary',
+        'portalGrants',
+        'portalDocuments',
       ])
         if (j.containsKey(k)) k: j[k],
     },

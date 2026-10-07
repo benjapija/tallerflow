@@ -24,3 +24,7 @@ Supabase admite crear cuentas con UUID explícito mediante `auth.admin.createUse
 ## Biblioteca validada y formato 9
 
 El formato de base de datos 9 añade case_library con versiones originales y revisiones; cuadernos en órdenes, auditoría y recibos de comando también se conservan. Las copias 2–8 restauran con biblioteca vacía cuando no la contienen. Se comprobó la recuperación en bases independientes, reintento del mismo identificador y rechazo de filas incompletas. No se ha repetido aún el recorrido HTTP real entre proyectos para esta tabla nueva.
+
+## Portal y formato 10
+
+El formato 10 conserva concesiones de acceso, sus evidencias, decisiones, auditoría y recibos de reintento. Al restaurar, todos los enlaces del portal quedan inactivos aunque no hubieran caducado. Las autorizaciones originales permanecen en su presupuesto; oficina debe verificar de nuevo al destinatario y crear un acceso nuevo. La copia no contiene enlaces ni códigos en claro. Las copias 2–9 siguen admitidas y crean las tablas del portal vacías cuando no existen. Se comprobaron restauración completa, compatibilidad y reintentos localmente y las reglas de copia mediante SQL alojado. La recuperación HTTP entre proyectos del portal sigue pendiente.

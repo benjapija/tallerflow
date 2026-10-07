@@ -73,3 +73,7 @@ Los tres ZIP bc694d8 están descargados y verificados contra los SHA-256 de GitH
 ## Paquetes de compras y regresos · 7 de octubre
 
 Los tres ZIP 693ec5a están descargados; SHA-256 y source-commit.json coinciden con GitHub, ejecución 37569128092. Incluyen compras, recepción parcial, devoluciones y regresos por garantía, además de presupuestos, cobros y PDF. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es simulador. El cuaderno del código 620384f está compilándose en 37570655120. La biblioteca posterior está en la demo y en ambos proyectos Free; su compilación se registra al finalizar. No se acredita uso físico ni Auth nativo con estas compilaciones.
+
+## Paquetes verificados actuales
+
+Los ZIP bc86821 corresponden a la ejecución 37571952156, terminada correctamente en Windows, Android e iOS simulador. Sus hashes y source-commit.json coinciden; incluyen la biblioteca validada. Windows contiene installer/TallerFlow-Setup.exe, Android un APK debug e iOS una aplicación de simulador. El portal posterior está en desarrollo publicado por separado y aún requiere compilación nueva. La compilación no acredita uso físico ni inicio de sesión alojado nativo. Los hashes están en evidence/package-checkpoints.json.

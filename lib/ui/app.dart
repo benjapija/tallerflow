@@ -30,6 +30,7 @@ import 'purchase_panel.dart';
 import '../domain/linked_returns.dart';
 import 'diagnosis_panel.dart';
 import 'case_library_panel.dart';
+import 'portal_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -1193,6 +1194,8 @@ class _WorkshopHomeState extends State<WorkshopHome>
     final left = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        PortalPanel(controller: c, order: o, run: runAction),
+        const SizedBox(height: 18),
         TaskManagement(controller: c, order: o, perform: perform),
         const SizedBox(height: 18),
         DiagnosisPanel(

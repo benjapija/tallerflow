@@ -65,7 +65,7 @@ try{
  });
  await test('Full export includes immutable recipients, aliases and changes without transferring document access',async()=>{
   const a=(await db.query('select public.export_workshop($1,$2) r',[w,dev])).rows[0].r;
-  assert.equal(a.databaseVersion,9);assert.equal(a.tables.vehicle_changes.length,2);assert.equal(a.tables.order_recipient_refs.length,4);assert(a.tables.vehicle_identifiers.some(i=>i.value==='1234ABC'));assert.deepEqual(a.tables.documents[0].snapshot,doc);
+  assert.equal(a.databaseVersion,10);assert.equal(a.tables.vehicle_changes.length,2);assert.equal(a.tables.order_recipient_refs.length,4);assert(a.tables.vehicle_identifiers.some(i=>i.value==='1234ABC'));assert.deepEqual(a.tables.documents[0].snapshot,doc);
  });
  console.log(`${passed} vehicle PostgreSQL integration tests passed (local PGlite, synthetic Auth)`);
 }finally{await db.close();}

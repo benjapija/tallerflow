@@ -1,0 +1,45 @@
+{
+  "scope": "Actual hosted HTTP boundary; no valid customer-session flow or physical device",
+  "checks": [
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "check": "preflight",
+      "status": 204
+    },
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "check": "method refusal",
+      "status": 405
+    },
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "check": "missing credentials",
+      "status": 403
+    },
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "check": "unknown random grant",
+      "status": 403
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "check": "preflight",
+      "status": 204
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "check": "method refusal",
+      "status": 405
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "check": "missing credentials",
+      "status": 403
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "check": "unknown random grant",
+      "status": 403
+    }
+  ]
+}

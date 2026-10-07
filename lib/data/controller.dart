@@ -7,6 +7,7 @@ import '../domain/models.dart';
 import '../domain/engine.dart';
 import '../domain/purchases.dart';
 import '../domain/case_library.dart';
+import '../domain/portal.dart';
 import 'cloud.dart';
 import 'demo.dart';
 import 'vault.dart';
@@ -253,6 +254,55 @@ class WorkshopController extends ChangeNotifier {
           await _command(action, p);
         }
       });
+  Future<void> portal(String action, Map<String, dynamic> payload) =>
+      _locked(() async {
+        _checkAccess();
+        if (!actor.isOffice ||
+            (action == 'portal_configure' && actor.role != Role.admin)) {
+          throw const RuleException(
+            'Se requiere el perfil autorizado de oficina o administración',
+          );
+        }
+        if (outbox.isNotEmpty || pendingCommands.isNotEmpty || offline) {
+          throw const RuleException(
+            'Conecta y sincroniza los pendientes antes de gestionar accesos',
+          );
+        }
+        if (demo) {
+          if (action != 'portal_configure') {
+            throw const RuleException(
+              'Los accesos de cliente requieren un taller conectado',
+            );
+          }
+          validatePortalUrl(payload['url']);
+          final before = state;
+          state = state.copy();
+          state.configuration['settings'] = {
+            ...state.settings,
+            'portalBaseUrl': payload['url'],
+          };
+          try {
+            await _persist();
+          } catch (_) {
+            state = before;
+            rethrow;
+          }
+          notifyListeners();
+          return;
+        }
+        await _command(action, payload);
+      });
+  Future<PortalCredentials> createPortal(Map<String, dynamic> payload) async {
+    final credentials = PortalCredentials.generate();
+    final hashes = await credentials.hashes();
+    await portal('portal_create', {
+      ...payload,
+      'id': credentials.id,
+      ...hashes,
+    });
+    return credentials;
+  }
+
   Future<void> library(String action, Map<String, dynamic> payload) =>
       _locked(() async {
         _checkAccess();

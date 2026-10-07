@@ -1,3 +1,11 @@
+## Portal del destinatario · 7 de octubre de 2026
+
+Regresión completa: 162 Flutter; analizador sin incidencias; 204 PostgreSQL locales, 26 servicios simulados y cinco pruebas del cliente web. Compilación web aprobada. Quince SQL alojadas por proyecto Free, con Auth sintético y reversión completa; ocho HTTP reales de método, preflight y denegación sin credenciales. No acreditan el recorrido de un cliente válido por HTTP.
+
+El navegador ficticio comprobó la entrada con código, elección por partida, pérdida de la respuesta después de guardar y reintento sin duplicar ni decidir las demás partidas. Evidencia: evidence/portal-browser-retry.png. No es una prueba contra Supabase alojado.
+
+Se comprobaron caducidad, destinatario original, alcance explícito de fotos/documentos, aislamiento, revocación, cambios de presupuesto, copia completa y restauración que conserva decisiones y desactiva los accesos antiguos. La configuración HTTPS se restringe a administración. Las funciones están desplegadas en ambos proyectos; falta alojamiento público y uso nativo.
+
 ## Biblioteca validada · 7 de octubre
 
 157 Flutter, analizador limpio y compilación web aprobados. 189 comprobaciones PostgreSQL y 18 de servicios simulados. Nueve Flutter y once PostgreSQL específicos, más recuperación completa y legado 7/8; doce SQL alojadas por cada proyecto Free revertidas al terminar. Publicación requiere revisión técnica y de privacidad. Otros operarios reciben solo versión validada; fuente retirada genera aviso. Reintentos, reinicio, conflictos, retirada y originales conservados comprobados. Diecinueve migraciones principales. Auth HTTP específico y uso físico pendientes.

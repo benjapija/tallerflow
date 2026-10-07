@@ -25,11 +25,18 @@ async function login(db,user,dev){
 async function snap(db,dev){return(await db.query('select public.device_snapshot($1,$2) r',[w,dev])).rows[0].r;}
 async function test(name,fn){await fn();passed++;console.log('PASS '+name);}
 const source=await setup();const target=await setup();const legacyTarget=await setup();let archive;
-const closeOrder=id(),closeRequest=id(),accountRequest=id(),caseid=id();
+const closeOrder=id(),closeRequest=id(),accountRequest=id(),caseid=id(),portalOrder=id(),portalTask=id(),portalQuote=id(),portalLine=id(),grant=id(),customerDecision=id();
 try{
  await source.query("insert into private.members values($1,$2,'Tech','technician',false,true)",[w,tech]);
  await source.query("insert into private.catalog(workshop_id,id,reference,description,unit,price_cents,cost_cents,stock_milli) values($1,$2,'OIL','Oil','L',1200,500,2000)",[w,item]);
  await login(source,admin,sourceDev);await snap(source,sourceDev);
+ await source.query('select public.apply_operation($1,$2,$3)',[w,sourceDev,{id:id(),orderId:portalOrder,actorId:admin,kind:'receive',baseRevision:0,at:new Date().toISOString(),payload:{plate:'9999FIC',country:'ES',vin:'FICTIONAL-RECOVERY-PORTAL',vehicle:'Fictional',engine:'2020',client:'Fictional recipient',phone:'',km:100,symptom:'Fictional',tasks:[{id:portalTask,title:'Scope',assignees:[tech],estimateMinutes:30}]}}]);
+ await source.query('select public.apply_operation($1,$2,$3)',[w,sourceDev,{id:id(),orderId:portalOrder,actorId:admin,kind:'quote_draft',baseRevision:1,at:new Date().toISOString(),payload:{id:portalQuote,expectedVersion:0,title:'Fictional quote',reason:'Recovery test',validUntil:new Date(Date.now()+86400000).toISOString(),lines:[{id:portalLine,taskId:portalTask,description:'Scope',laborMinutes:30,parts:[]}]}}]);
+ const portalRevision=(await snap(source,sourceDev)).orders.find(o=>o.id===portalOrder).revision;
+ await source.query('select public.portal_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'portal_create',{id:grant,orderId:portalOrder,revision:portalRevision,quoteId:portalQuote,quoteVersion:1,tokenHash:'a'.repeat(64),codeHash:'b'.repeat(64),expiresAt:new Date(Date.now()+3600000).toISOString(),recipientConfirmed:true,verificationEvidence:'Fictional recipient verified',photoIds:[],documentIds:[],reason:'Recovery access'}]);
+ await source.exec('reset role;set role service_role');
+ assert.equal((await source.query('select public.customer_portal($1,$2,$3,$4,$5,$6) r',[grant,'a'.repeat(64),'b'.repeat(64),'decide',customerDecision,{decisions:[{lineId:portalLine,accepted:true}]}])).rows[0].r.accepted,true);
+ await login(source,admin,sourceDev);
  const data={plate:'1234ABC',country:'ES',vin:'VIN-TEST',vehicle:'Synthetic',engine:'2020',client:'Synthetic owner',phone:'',km:120,symptom:'Original symptom',tasks:[{id:task,title:'Test',assignees:[tech],estimateMinutes:30}]};
  let op={id:id(),orderId:order,actorId:admin,kind:'receive',baseRevision:0,at:new Date().toISOString(),payload:data};
  assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,op])).rows[0].r.status,'accepted');
@@ -41,7 +48,7 @@ try{
  const purchase=id(),purchaseLine=id();
  await source.query('select public.inventory_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'purchase_create',{revision:0,at:new Date().toISOString(),id:purchase,supplier:'Fictional recovery supplier',reference:'Recovery request',expectedAt:'2026-10-08T00:00:00Z',orderId:order,reason:'Fictional recovery purchase',lines:[{id:purchaseLine,itemId:item,packageSizeMilli:1000,packagesMilli:1000,unitCostCents:500}]}]);
  await source.query('select public.inventory_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'purchase_receive',{revision:1,at:new Date().toISOString(),purchaseId:purchase,lineId:purchaseLine,packagesMilli:1000,reference:'Fictional recovery delivery',reason:'Fictional material physically received'}]);
- const payment={id:id(),orderId:order,actorId:admin,kind:'payment_record',baseRevision:(await snap(source,sourceDev)).orders[0].revision,at:new Date().toISOString(),payload:{amountCents:2345,method:'cash',paidAt:new Date().toISOString(),reference:'Fictional receipt for recovery',reason:'Already received'}};
+ const payment={id:id(),orderId:order,actorId:admin,kind:'payment_record',baseRevision:(await snap(source,sourceDev)).orders.find(o=>o.id===order).revision,at:new Date().toISOString(),payload:{amountCents:2345,method:'cash',paidAt:new Date().toISOString(),reference:'Fictional receipt for recovery',reason:'Already received'}};
  assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,payment])).rows[0].r.status,'accepted');
  op={id:id(),orderId:order,actorId:admin,kind:'note',baseRevision:0,at:new Date().toISOString(),payload:{text:'Original late evidence'}};
  assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,op])).rows[0].r.status,'late');
@@ -105,6 +112,14 @@ try{
   await target.exec('reset role');assert.equal((await target.query('select count(*)::int n from private.audit where source_id is not null')).rows[0].n,archive.tables.audit.length);
   await login(target,admin,targetDev);
  });
+ await test('Restored portal links are disabled while original customer decisions and receipts survive',async()=>{
+  const s=await snap(target,targetDev);assert.equal(s.portalGrants[0].restored,true);
+  assert.equal(s.orders.find(o=>o.id===portalOrder).quoteLedger.decisions[0].id,customerDecision);
+  await target.exec('reset role;set role service_role');
+  assert.deepEqual((await target.query('select public.customer_portal($1,$2,$3,$4,$5,$6) r',[grant,'a'.repeat(64),'b'.repeat(64),'read',null,{}])).rows[0].r,{error:'access'});
+  await target.exec('reset role');assert.equal((await target.query('select id from private.portal_receipts')).rows[0].id,customerDecision);
+  await login(target,admin,targetDev);
+ });
  await test('Restored acknowledgements remain historical, active closure is invalidated and account request cannot gain authority',async()=>{
   await target.exec('reset role');
   assert.equal((await target.query('select status from private.close_requests where id=$1',[closeRequest])).rows[0].status,'invalidated');
@@ -145,6 +160,13 @@ try{
    const legacy=structuredClone(archive);legacy.databaseVersion=8;delete legacy.tables.case_library;
    await old.query('select public.restore_workshop($1,$2,$3,$4)',[w,oldDev,id(),legacy]);
    assert.deepEqual((await snap(old,oldDev)).caseLibrary,[]);assert.deepEqual((await snap(old,oldDev)).purchaseLedger,archive.tables.inventory_state[0].data);
+  }finally{await old.close();}
+ });
+ await test('Version nine archive restores without reactivating any customer link',async()=>{
+  const old=await setup();try{const oldDev=id();await login(old,admin,oldDev);await snap(old,oldDev);
+   const legacy=structuredClone(archive);legacy.databaseVersion=9;delete legacy.tables.portal_grants;delete legacy.tables.portal_receipts;
+   await old.query('select public.restore_workshop($1,$2,$3,$4)',[w,oldDev,id(),legacy]);
+   assert.deepEqual((await snap(old,oldDev)).portalGrants,[]);assert.equal((await snap(old,oldDev)).caseLibrary.length,1);
   }finally{await old.close();}
  });
  console.log(`${passed} backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.`);
