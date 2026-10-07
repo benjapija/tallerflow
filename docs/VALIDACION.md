@@ -1,4 +1,25 @@
-# Validación actual · fase 1 en desarrollo
+# Validación actual · 7 de octubre de 2026
+
+Datos ficticios. No se acredita un piloto real ni una aplicación macOS.
+
+| Entorno | Resultado actual | Límite |
+|---|---|---|
+| Flutter local | 108 pruebas y analizador limpio | Plugins físicos y piloto manual separados |
+| PostgreSQL/PGlite | 139 comprobaciones | Auth sintético |
+| Servicios locales | 18 comprobaciones de alta y fotos | Dependencias HTTP simuladas |
+| Supabase HTTP real | 15 Auth/fotos/cierre + 10 recuperación entre proyectos | Clientes HTTP de prueba; no sesión personal ni cámara |
+| Presupuestos SQL alojado | 10 comprobaciones en cada proyecto, todas revertidas | Auth sintético en SQL; circuito HTTP de presupuestos pendiente |
+| Windows nativo | Dos procesos; credenciales, archivos cifrados, fotos y copias por partes aprobados, f9aeed3 / 37553141586 | Servidor ficticio; instalador manual pendiente |
+| iOS nativo | Dos procesos del simulador; llavero, archivos cifrados, fotos y restauración con otra clave aprobados, 2ae0b87 / 37555896692 | Simulador, servidor ficticio; no iPhone físico |
+| Paquetes compilados | Windows, Android debug e iOS simulador, 23d62b8 / 37554417241; hashes verificados | Incluyen inspecciones; presupuestos integrados requieren la nueva compilación |
+
+Migración 014 de presupuestos aplicada en ambos proyectos. Las versiones y decisiones se incluyen en las órdenes y en las copias completas; las decisiones solo autorizan partidas aceptadas de la versión actual. El rechazo de una ampliación conserva el trabajo previo. Los documentos de presupuesto se excluyen del perfil operario incluso con permiso de precios. Las pruebas locales incluyen reinicio, copia, reintentos, cambios de revisión y autorizaciones parciales.
+
+Las advertencias del asesor siguen siendo las ya registradas: tablas del esquema privado con RLS sin políticas (denegación directa intencional; acceso mediante funciones verificadas) y protección de contraseñas filtradas desactivada. No se ha contratado un plan para cambiar esta última configuración. Referencia de configuración: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection.
+
+Los apartados siguientes son históricos: sus cifras, pendientes y fallos corresponden al momento indicado. El resumen de arriba y PENDIENTES.md prevalecen para el estado actual.
+
+# Registro de validaciones anteriores
 
 6 de octubre de 2026. Datos ficticios. Flutter 3.47.6 / Dart 3.13.5. Los registros de 0.2 permanecen en evidence y en su entrega original.
 

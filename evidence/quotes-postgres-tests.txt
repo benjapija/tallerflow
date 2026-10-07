@@ -1,0 +1,10 @@
+PASS Draft snapshots decimals and taxes without authorizing or consuming stock
+PASS Lost response is once; altered idempotency identity is refused
+PASS Office records exact-version evidence and authorizes only that task
+PASS Operators receive no quote documents, cannot decide, and cannot execute helpers
+PASS An extension preserves the original and its rejection preserves approved work
+PASS Batch below performed work, duplicate decisions, stale revisions and forged amount fail atomically
+PASS Changed prices require a reviewed current version
+PASS Malformed lines, duplicates, unknown tasks, empty scope and extra totals retain conflict evidence
+PASS Complete backup includes immutable versions, decisions, operation originals and audit
+9 quote checks passed in PostgreSQL/PGlite with synthetic Auth.

@@ -53,7 +53,11 @@ class SimulatedWorkshop {
     }
     return {
       ...cloneMap(state.toJson()),
-      'orders': visible.map((o) => o.data).toList(),
+      'orders': visible.map((o) {
+        final copy = cloneMap(o.data);
+        if (!actor.isOffice) copy.remove('quoteLedger');
+        return copy;
+      }).toList(),
       'actor': actor.toJson(),
       'serverTime': DateTime.now().toUtc().toIso8601String(),
       'receipts': records.values

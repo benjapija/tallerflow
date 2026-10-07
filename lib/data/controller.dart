@@ -640,17 +640,30 @@ class WorkshopController extends ChangeNotifier {
     String kind,
     Map<String, dynamic> payload, {
     DateTime? at,
+    int? expectedRevision,
   }) {
     if (kind == 'issue' && !demo) return issue(orderId);
     return _locked(() async {
       _checkAccess();
+      if (expectedRevision != null &&
+          state.orders[orderId]?.revision != expectedRevision) {
+        throw const RuleException(
+          'La orden cambió mientras revisabas el presupuesto. Ábrelo de nuevo',
+        );
+      }
       if (frozen(orderId)) {
         throw const RuleException(
           'Orden bloqueada en este dispositivo para el cierre. Sincroniza para conocer su resultado.',
         );
       }
       if (failures.isNotEmpty &&
-          ['billable', 'authorize', 'pricing_review'].contains(kind)) {
+          [
+            'billable',
+            'authorize',
+            'pricing_review',
+            'quote_draft',
+            'quote_decision',
+          ].contains(kind)) {
         throw const RuleException(
           'Resuelve los conflictos antes de revisar importes',
         );

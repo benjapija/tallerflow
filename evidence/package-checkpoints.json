@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-07",
+  "run": 37554417241,
+  "commit": "23d62b82b17d864aff1779f67b8d1753e3bff551",
+  "packages": [
+    {
+      "platform": "Windows",
+      "file": "TallerFlow-Windows-piloto-23d62b8.zip",
+      "sha256": "d742424673a5356b68b35182ed0125dfe3ea8e623915eb741ed946fa6eea398a",
+      "sourceCommitVerified": true,
+      "installerIncluded": true
+    },
+    {
+      "platform": "iOS simulator",
+      "file": "TallerFlow-iOS-simulador-23d62b8.zip",
+      "sha256": "b71b61e3014c2e43d241ee0a409e60972fe7dd143c5bc8b48f1a9fea42ae7d23",
+      "physicalPhoneValidated": false
+    },
+    {
+      "platform": "Android debug",
+      "file": "TallerFlow-Android-piloto-23d62b8.zip",
+      "sha256": "755c6ae2dc3c9aa07edbe40e6aab011008f7711aaf1b5b018f7016f37ad35cd2",
+      "physicalPhoneValidated": false
+    }
+  ]
+}

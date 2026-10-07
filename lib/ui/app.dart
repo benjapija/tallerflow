@@ -20,6 +20,7 @@ import '../data/order_link_inbox.dart';
 import 'qr_scanner.dart';
 import 'photo_panel.dart';
 import 'inspection_panel.dart';
+import 'quote_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -181,10 +182,11 @@ class _WorkshopHomeState extends State<WorkshopHome>
   Future<void> perform(
     String id,
     String kind,
-    Map<String, dynamic> payload,
-  ) async {
+    Map<String, dynamic> payload, {
+    int? expectedRevision,
+  }) async {
     try {
-      await c.execute(id, kind, payload);
+      await c.execute(id, kind, payload, expectedRevision: expectedRevision);
       if (!c.demo && !c.offline) unawaited(c.synchronize());
     } catch (e) {
       if (mounted) {
@@ -1462,6 +1464,17 @@ class _WorkshopHomeState extends State<WorkshopHome>
         ),
         const SizedBox(height: 18),
         if (c.prices || c.costs) ...[
+          if (c.actor.isOffice) ...[
+            QuotePanel(
+              order: o,
+              actor: c.actor,
+              catalog: c.state.catalog,
+              canEdit: !c.frozen(o.id),
+              onSave: (kind, p) =>
+                  perform(o.id, kind, p, expectedRevision: o.revision),
+            ),
+            const SizedBox(height: 18),
+          ],
           PricingPanel(
             order: o,
             canEdit: c.actor.isOffice,

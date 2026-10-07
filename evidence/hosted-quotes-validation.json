@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-07",
+  "projects": [
+    "gpseuqmzbazifmkhjyby",
+    "qnbgbgumvxmmipjlkcgb"
+  ],
+  "checksPerProject": 10,
+  "passed": true,
+  "environment": "Hosted PostgreSQL",
+  "realAuthLogin": false,
+  "rolledBack": true,
+  "functions": [
+    "quote_draft",
+    "quote_decision"
+  ],
+  "migration": "20261007011737_quotes.sql",
+  "checks": [
+    "decimals and tax snapshots; no work or stock mutation",
+    "idempotent replay",
+    "decision binds exact quote and authorized amount",
+    "extension preserves original authorization and version",
+    "old version refused",
+    "rejection preserves prior work",
+    "operator with price permission cannot read quote documents",
+    "operator decision refused",
+    "complete export includes original versions and decisions",
+    "private helper privileges revoked"
+  ]
+}

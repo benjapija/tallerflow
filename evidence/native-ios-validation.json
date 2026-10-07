@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-07",
+  "runId": 37555896692,
+  "sourceCommit": "2ae0b87df8421a8e188d32a70bec852949e3cb34",
+  "artifactId": 11454642188,
+  "sha256": "d8695a0b91ae0c067a33fc693d2e69cb62693d5a770a0a7cfa2aaa6f61d0df03",
+  "recordPassed": true,
+  "restorePassed": true,
+  "nativeKeychain": true,
+  "nativeEncryptedFiles": true,
+  "splitBackupRestoredUnderNewDeviceKey": true,
+  "pendingRecordsAfterRestore": 0,
+  "pendingPhotosAfterRestore": 0,
+  "environment": "iOS simulator on GitHub macOS runner",
+  "physicalIphone": false,
+  "server": "fictional-in-memory",
+  "realSupabaseAuth": false
+}

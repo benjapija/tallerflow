@@ -4,6 +4,7 @@ import 'tasks.dart';
 import 'vehicles.dart';
 import 'pricing.dart';
 import 'inspections.dart';
+import 'quotes.dart';
 
 class RuleException implements Exception {
   final String message;
@@ -244,6 +245,9 @@ class WorkshopState {
     }
 
     switch (op.kind) {
+      case 'quote_draft':
+      case 'quote_decision':
+        applyQuote(order, actor, op);
       case 'inspection_save':
         applyInspection(order, op, actor);
       case 'start':

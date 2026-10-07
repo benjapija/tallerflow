@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-07",
+  "flutterTotal": 108,
+  "quoteFlutterTests": 12,
+  "postgresTotal": 139,
+  "quotePostgresChecks": 9,
+  "mockServiceChecks": 18,
+  "hostedSqlChecksPerProject": 10,
+  "hostedSqlProjects": 2,
+  "hostedSqlRolledBack": true,
+  "hostedQuotesAuthHttp": false,
+  "nativeQuoteUiValidated": false,
+  "portalImplemented": false,
+  "migration": "20261007011737_quotes.sql",
+  "passed": true
+}

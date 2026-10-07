@@ -3,8 +3,7 @@ import 'engine.dart';
 import 'management.dart';
 import 'models.dart';
 
-// Pure draft model. UI, persisted operations, server permissions and portal are
-// deliberately separate pending integration; this never authorizes a WorkOrder.
+// Versions and customer decisions are separate, immutable snapshots.
 class QuoteLedger {
   final List<Map<String, dynamic>> _versions;
   final List<Map<String, dynamic>> _decisions;
@@ -183,6 +182,7 @@ class QuoteLedger {
       'actorId': actor.id,
       'operationId': op.id,
       'customer': order.client,
+      'ownerId': order.data['ownerId'],
       'lines': lines,
       'totalCents': lines.fold<int>(0, (v, l) => v + (l['totalCents'] as int)),
       'type': 'Presupuesto · no es una factura',
@@ -219,7 +219,9 @@ class QuoteLedger {
       throw const RuleException('El presupuesto ha caducado');
     }
     final customer = requiredText(p['customer'], 'Destinatario', max: 300);
-    if (customer != quote['customer'] || customer != order.client) {
+    if (customer != quote['customer'] ||
+        customer != order.client ||
+        quote['ownerId'] != order.data['ownerId']) {
       throw const RuleException('Revisa el destinatario del presupuesto');
     }
     if (![
@@ -296,6 +298,78 @@ class QuoteLedger {
     _decisions.add(recorded);
     return recorded;
   }
+}
+
+void applyQuote(WorkOrder order, Actor actor, Operation op) {
+  final ledger = QuoteLedger.fromJson(
+    Map<String, dynamic>.from(
+      order.data['quoteLedger'] ??
+          {'versions': <dynamic>[], 'decisions': <dynamic>[]},
+    ),
+  );
+  if (op.kind == 'quote_draft') {
+    ledger.prepare(order, actor, op);
+  } else {
+    final decision = ledger.recordDecision(order, actor, op);
+    // Validate the whole batch before changing any task. Rejecting an extension
+    // preserves the customer's previous authorization and completed work.
+    for (final line in decision['decisions']) {
+      if (line['accepted'] != true) continue;
+      final copy = WorkOrder(cloneMap(order.data));
+      copy.tasks.firstWhere((t) => t['id'] == line['taskId'])['authorized'] =
+          true;
+      for (final part in copy.parts.where(
+        (p) => p['taskId'] == line['taskId'] && p['kind'] == 'consume',
+      )) {
+        if ((part['priceCents'] as int) < 0 ||
+            (part['charge'] != true &&
+                (part['noChargeReason'] as String? ?? '').trim().isEmpty)) {
+          throw const RuleException('Revisa los consumos antes de autorizar');
+        }
+      }
+      final totals = calculateNote(copy).lines;
+      final performed = totals
+          .where((l) => l['taskId'] == line['taskId'])
+          .fold<int>(
+            0,
+            (sum, l) => sum + (l['netCents'] as int) + (l['taxCents'] as int),
+          );
+      if (performed > line['approvedCents']) {
+        throw const RuleException(
+          'La autorización no cubre el trabajo registrado',
+        );
+      }
+    }
+    for (final line in decision['decisions']) {
+      if (line['accepted'] != true) continue;
+      final task = order.tasks.firstWhere((t) => t['id'] == line['taskId']);
+      if (task['authorization'] != null) {
+        task['previousAuthorizations'] = [
+          ...(task['previousAuthorizations'] as List? ?? []),
+          cloneMap(task['authorization']),
+        ];
+      }
+      task['authorized'] = true;
+      task['approvedCents'] = line['approvedCents'];
+      task['authorization'] = {
+        'version': decision['version'],
+        'quoteId': decision['quoteId'],
+        'lineId': line['lineId'],
+        'decisionId': op.id,
+        'customer': decision['customer'],
+        'channel': decision['channel'],
+        'evidence': decision['evidence'],
+        'reason': decision['reason'],
+        'actorId': actor.id,
+        'at': decision['at'],
+        'approvedCents': line['approvedCents'],
+        'scopeVersion': task['scopeVersion'] ?? 1,
+        'priceVersion': task['priceVersion'] ?? 1,
+      };
+      order.data['quality'] = null;
+    }
+  }
+  order.data['quoteLedger'] = ledger.toJson();
 }
 
 void _office(WorkOrder order, Actor actor, Operation op) {

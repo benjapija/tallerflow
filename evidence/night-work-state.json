@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-07",
+  "sourceCommit": "2ae0b87df8421a8e188d32a70bec852949e3cb34",
+  "appBuildCommit": "23d62b82b17d864aff1779f67b8d1753e3bff551",
+  "buildRun": 37554417241,
+  "iosNativeRun": 37555896692,
+  "windowsNativeSuccessfulRun": 37553141586,
+  "hostedRecovery": true,
+  "allTemporaryAuthServicesRetired": true,
+  "nextIndependentWork": "Integrate QuoteLedger with order operations, server migration, screens and version-specific decisions, then portal and subsequent agreed scope",
+  "personalDependencies": [
+    "Android SDK license acceptance/local SDK",
+    "Native personal admin login",
+    "Physical camera and links/manual Windows installation",
+    "Fiscal workshop details and authorized technical provider",
+    "AI API credentials with confirmed free access or a user-approved budget"
+  ],
+  "automation": "continuar-tallerflow",
+  "automationActive": true,
+  "appBuildStatus": {
+    "validate": "success",
+    "windows": "success",
+    "ios-simulator": "success",
+    "android": "success"
+  },
+  "iosNativeStatus": "no-uninstall corrected restart test in progress"
+}
