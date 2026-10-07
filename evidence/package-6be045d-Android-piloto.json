@@ -1,0 +1,42 @@
+{
+  "archive": "TallerFlow-Android-piloto-6be045d.zip",
+  "artifactId": 11484566575,
+  "bytes": 115449038,
+  "sha256": "e2584e417cc61223dbac21254e3065accbaf81bb610d786c495ae7039ec0fec1",
+  "zipIntegrity": "passed",
+  "revisionVerified": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "runId": 37624370177,
+  "sourceMetadata": {
+    "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+    "run": "37624370177",
+    "runner": "Linux",
+    "platform": "android",
+    "realAuthValidated": false
+  },
+  "entries": 4,
+  "ocr": [
+    {
+      "checkedAt": "2026-10-07T13:13:26.263592Z",
+      "platform": "android",
+      "engine": "Bundled ML Kit Latin",
+      "checks": [
+        "upright fictional DTC and reference preserved",
+        "EXIF orientation restored before native OCR",
+        "blank image does not fabricate observations",
+        "file outside private cache refused and original retained",
+        "missing image is recoverable without technical details"
+      ],
+      "passed": 5,
+      "physicalCameraValidated": false,
+      "microphoneUsed": false,
+      "hostedAuthValidated": false
+    }
+  ],
+  "physicalUseValidated": false,
+  "packageDetails": {
+    "apk": "build/deliverables/TallerFlow-piloto.apk",
+    "apkSha256": "3684af22f586e843758cd83748daae6d79319ae75376cb1ee1886a87d13f8e7f",
+    "apkIntegrityVerified": true,
+    "distribution": "debug pilot"
+  }
+}

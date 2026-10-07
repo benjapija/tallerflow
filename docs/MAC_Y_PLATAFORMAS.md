@@ -2,7 +2,7 @@
 
 El Mac es exclusivamente desarrollo y demo web; no se entrega app macOS. La demo usa datos ficticios y no inicia sesión en el taller alojado.
 
-La revisión **8877298**, CI **37617149349**, aprobó Windows/Android/iOS, con OCR Android cinco e iOS seis comprobaciones. Los tres ZIP están descargados y verificados. Incluyen IA preparada/desactivada, corrección privada iOS y preparación fiscal por taller. iOS es simulador arm64/x86_64, mínimo 15.5; no instalable en iPhone. Todos los ZIP anteriores son históricos. Prevalecen evidence/package-checkpoints.json y el informe para elegir la entrega vigente.
+La revisión **6be045d**, CI **37624370177**, aprobó Windows/Android/iOS, con OCR Android cinco e iOS seis comprobaciones. Los tres ZIP están descargados y verificados. Incluyen IA preparada/desactivada, corrección privada iOS y preparación fiscal por taller, cálculo exacto y borradores AEAT locales sin transmisión. iOS es simulador arm64/x86_64, mínimo 15.5; no instalable en iPhone. Todos los ZIP anteriores son históricos. Prevalecen evidence/package-checkpoints.json y el informe para elegir la entrega vigente.
 
 Android: usuario confirma licencias aceptadas; SDK disponible. iPhone indicado: «iPhone 17 e»; falta conectarlo, confiar en el Mac y modo desarrollador. Windows con licencia para uso manual y entrada personal en la app siguen pendientes. Simulación, compilación e integración HTTP se distinguen de uso físico.
 

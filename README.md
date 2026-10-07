@@ -8,7 +8,7 @@ Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md). Uso de copias: [COPIAS_Y_RECUP
 
 ## Probar desde tu Mac
 
-La demostración está compilada para navegador. Abre el paquete `TallerFlow-demo-web-8877298.zip`, descomprímelo y ejecuta **Abrir TallerFlow.command**. Utiliza Python 3 y abre `http://127.0.0.1:8777/`. Si ya tienes esa demo abierta, recarga la página para cargar la versión nueva.
+La demostración está compilada para navegador. Abre el paquete `TallerFlow-demo-web-6be045d.zip`, descomprímelo y ejecuta **Abrir TallerFlow.command**. Utiliza Python 3 y abre `http://127.0.0.1:8777/`. Si ya tienes esa demo abierta, recarga la página para cargar la versión nueva.
 
 En **Configuración → Probar dos móviles y oficina** puedes alternar entre Álex, Lucía y oficina/administrador y desconectar cada dispositivo por separado. Es un servidor simulado en memoria, con datos ficticios; al salir o recargar se reinicia. No conecta a Supabase ni acredita una instalación real.
 
@@ -33,12 +33,12 @@ La guía [FIABILIDAD_Y_PRUEBA_MAC.md](docs/FIABILIDAD_Y_PRUEBA_MAC.md) explica c
 - Documentos inmutables, incidencias tardías y excepciones de cierre exclusivamente administrativas, explícitas y conservadas en la nota.
 - Simulación de dos móviles y oficina utilizando las pantallas y el controlador reales de Flutter.
 
-La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. Presupuestos, cobros y exportación PDF están integrados. El portal está implementado y desplegado en Supabase; falta confirmar el permiso preparado en GitHub para Cloudflare y publicar su dirección HTTPS pública; los recorridos HTTPS de acceso válido, decisiones y fotos seleccionadas están aprobados con datos ficticios. La agenda está implementada y desplegada en el principal. Mantenimiento y flotas están implementados y desplegados en el principal. La IA está preparada y desactivada por decisión del usuario; no se activa ni solicita saldo mientras mantenga esa decisión. La preparación fiscal por taller admite distintos titulares, territorios, SII y destinatarios, con motivo y auditoría; no habilita emisión. El motor fiscal y las integraciones externas siguen pendientes.
+La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. Presupuestos, cobros y exportación PDF están integrados. El portal está implementado y desplegado en Supabase; falta confirmar el permiso preparado en GitHub para Cloudflare y publicar su dirección HTTPS pública; los recorridos HTTPS de acceso válido, decisiones y fotos seleccionadas están aprobados con datos ficticios. La agenda está implementada y desplegada en el principal. Mantenimiento y flotas están implementados y desplegados en el principal. La IA está preparada y desactivada por decisión del usuario; no se activa ni solicita saldo mientras mantenga esa decisión. La preparación fiscal por taller admite distintos titulares, territorios, SII y destinatarios, con motivo y auditoría; no habilita emisión. El cálculo exacto y el adaptador AEAT local están implementados sin emisión; persistencia, series/cadena concurrente, documentos completos, adaptadores y pruebas oficiales siguen pendientes.
 
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 226 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
+- 243 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
 - 271 comprobaciones PostgreSQL/PGlite y 43 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
 - 58 comprobaciones SQL alojadas históricas con transacciones revertidas y 15 del recorrido HTTP real, con talleres y cuentas ficticios aislados. Las pruebas nativas siguen separadas.
 - GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
@@ -90,3 +90,5 @@ Dictado y lectura: borradores revisables en recepción, cuaderno y catálogo; le
 El asistente conserva fuentes, requiere revisión humana y recupera respuestas sin reenviar generación. Consulta [ASISTENTE_IA.md](docs/ASISTENTE_IA.md). Los resultados y paquetes vigentes están en PENDIENTES.md y evidence/package-checkpoints.json; los apartados históricos no sustituyen esas referencias.
 
 Desarrollo fiscal genérico: cálculo exacto y desglose conservado de notas; adaptador estatal solo local, con huella, QR de pruebas y borradores XML. Emisión desactivada. Estado y pendientes en [MOTOR_FISCAL_EN_DESARROLLO.md](docs/MOTOR_FISCAL_EN_DESARROLLO.md).
+
+Entrega vigente: **6be045d**, GitHub Actions **37624370177**, Windows/Android/iOS simulador aprobados y ZIP verificados. OCR Android cinco e iOS seis; ocho comprobaciones XSD locales. Ninguna emisión fiscal ni uso físico acreditados. Todos los paquetes con otros sufijos son históricos.

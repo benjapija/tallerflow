@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-07T13:17:39.148Z",
+  "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "run": 37624370177,
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 112802262126,
+      "name": "validate",
+      "conclusion": "success",
+      "startedAt": "2026-10-07T12:54:09Z",
+      "completedAt": "2026-10-07T12:59:23Z"
+    },
+    {
+      "id": 112804469558,
+      "name": "windows",
+      "conclusion": "success",
+      "startedAt": "2026-10-07T12:59:25Z",
+      "completedAt": "2026-10-07T13:05:58Z"
+    },
+    {
+      "id": 112804469562,
+      "name": "android",
+      "conclusion": "success",
+      "startedAt": "2026-10-07T12:59:26Z",
+      "completedAt": "2026-10-07T13:13:55Z"
+    },
+    {
+      "id": 112804469588,
+      "name": "ios-simulator",
+      "conclusion": "success",
+      "startedAt": "2026-10-07T12:59:28Z",
+      "completedAt": "2026-10-07T13:04:34Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 11484566575,
+      "name": "TallerFlow-Android-piloto",
+      "size": 115449038,
+      "digest": "sha256:e2584e417cc61223dbac21254e3065accbaf81bb610d786c495ae7039ec0fec1",
+      "sourceCommit": "6be045dfdc4c5f058f61878aba16a492bf8b782d"
+    },
+    {
+      "id": 11484152007,
+      "name": "TallerFlow-Windows-piloto-26",
+      "size": 26289563,
+      "digest": "sha256:07cb5443519636704cb87ab9ab83e449f956e3f3bbee2acf77dd5a624920e339",
+      "sourceCommit": "6be045dfdc4c5f058f61878aba16a492bf8b782d"
+    },
+    {
+      "id": 11484001912,
+      "name": "TallerFlow-iOS-simulador",
+      "size": 61946772,
+      "digest": "sha256:af9b782ca47dc48c424a5dbd05ef326ee728be92b2f0bcafffa9d4f000ed0674",
+      "sourceCommit": "6be045dfdc4c5f058f61878aba16a492bf8b782d"
+    }
+  ],
+  "physicalUseValidated": false,
+  "fiscalOfficialAccepted": false,
+  "realAiEnabled": false
+}

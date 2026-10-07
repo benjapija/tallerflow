@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-07T12:58:44.268691+00:00",
+  "scope": "Local demo, fictional office account; not hosted or physical",
+  "revision": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "order": "OT-1045",
+  "baseCents": 3600,
+  "taxCents": 756,
+  "totalCents": 4356,
+  "rateDisplayed": "21,00 % registrado",
+  "savedOriginalsChanged": false,
+  "fiscalEmissionEnabled": false,
+  "screenshot": "fiscal-tax-summary-browser.png"
+}

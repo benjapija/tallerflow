@@ -1,0 +1,23 @@
+{
+  "archive": "TallerFlow-Windows-piloto-6be045d.zip",
+  "artifactId": 11484152007,
+  "bytes": 26289563,
+  "sha256": "07cb5443519636704cb87ab9ab83e449f956e3f3bbee2acf77dd5a624920e339",
+  "zipIntegrity": "passed",
+  "revisionVerified": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "runId": 37624370177,
+  "sourceMetadata": {
+    "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+    "run": "37624370177",
+    "runner": "Windows",
+    "platform": "windows",
+    "realAuthValidated": false
+  },
+  "entries": 20,
+  "ocr": [],
+  "physicalUseValidated": false,
+  "packageDetails": {
+    "installer": "installer/TallerFlow-Setup.exe",
+    "portableIncluded": true
+  }
+}

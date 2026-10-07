@@ -1,16 +1,16 @@
 {
   "date": "2026-10-07",
-  "checkedAt": "2026-10-07T12:20:08.104159+00:00",
-  "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
-  "buildRun": 37617149349,
+  "checkedAt": "2026-10-07T13:20:30.014078+00:00",
+  "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "buildRun": 37624370177,
   "packages": [
     {
-      "file": "TallerFlow-Windows-piloto-8877298.zip",
-      "sha256": "a85d0efa4cb8e538691a6d03ebe83774dc0d3eaa25b25ba822d3b40093fda22e",
-      "bytes": 26279479,
+      "file": "TallerFlow-Windows-piloto-6be045d.zip",
+      "sha256": "07cb5443519636704cb87ab9ab83e449f956e3f3bbee2acf77dd5a624920e339",
+      "bytes": 26289563,
       "source": {
-        "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
-        "run": "37617149349",
+        "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+        "run": "37624370177",
         "runner": "Windows",
         "platform": "windows",
         "realAuthValidated": false
@@ -19,15 +19,19 @@
       "installerIncluded": true,
       "nativeEvidence": null,
       "physicalDeviceValidated": false,
-      "hostedNativeAuthValidated": false
+      "hostedNativeAuthValidated": false,
+      "details": {
+        "installer": "installer/TallerFlow-Setup.exe",
+        "portableIncluded": true
+      }
     },
     {
-      "file": "TallerFlow-Android-piloto-8877298.zip",
-      "sha256": "33fa852424b58cda161f23eaf2547a4f53ba294751fdd8378bb281fd7215bbfa",
-      "bytes": 115442720,
+      "file": "TallerFlow-Android-piloto-6be045d.zip",
+      "sha256": "e2584e417cc61223dbac21254e3065accbaf81bb610d786c495ae7039ec0fec1",
+      "bytes": 115449038,
       "source": {
-        "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
-        "run": "37617149349",
+        "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+        "run": "37624370177",
         "runner": "Linux",
         "platform": "android",
         "realAuthValidated": false
@@ -35,7 +39,7 @@
       "zipIntegrityVerified": true,
       "installerIncluded": false,
       "nativeEvidence": {
-        "checkedAt": "2026-10-07T12:14:08.170820Z",
+        "checkedAt": "2026-10-07T13:13:26.263592Z",
         "platform": "android",
         "engine": "Bundled ML Kit Latin",
         "checks": [
@@ -51,15 +55,21 @@
         "hostedAuthValidated": false
       },
       "physicalDeviceValidated": false,
-      "hostedNativeAuthValidated": false
+      "hostedNativeAuthValidated": false,
+      "details": {
+        "apk": "build/deliverables/TallerFlow-piloto.apk",
+        "apkSha256": "3684af22f586e843758cd83748daae6d79319ae75376cb1ee1886a87d13f8e7f",
+        "apkIntegrityVerified": true,
+        "distribution": "debug pilot"
+      }
     },
     {
-      "file": "TallerFlow-iOS-simulador-8877298.zip",
-      "sha256": "4f68e459c5c8faf67ac62131145fe188c7bd7aaa2751f205513b14996155f79e",
-      "bytes": 61920062,
+      "file": "TallerFlow-iOS-simulador-6be045d.zip",
+      "sha256": "af9b782ca47dc48c424a5dbd05ef326ee728be92b2f0bcafffa9d4f000ed0674",
+      "bytes": 61946772,
       "source": {
-        "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
-        "run": "37617149349",
+        "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+        "run": "37624370177",
         "runner": "macOS",
         "platform": "ios-simulator",
         "realAuthValidated": false
@@ -67,7 +77,7 @@
       "zipIntegrityVerified": true,
       "installerIncluded": false,
       "nativeEvidence": {
-        "checkedAt": "2026-10-07T12:03:42.740173Z",
+        "checkedAt": "2026-10-07T13:04:09.264936Z",
         "platform": "ios",
         "engine": "Apple Vision",
         "checks": [
@@ -84,9 +94,21 @@
         "hostedAuthValidated": false
       },
       "physicalDeviceValidated": false,
-      "hostedNativeAuthValidated": false
+      "hostedNativeAuthValidated": false,
+      "details": {
+        "bundleTar": "build/deliverables/TallerFlow-iOS-simulador.tar.gz",
+        "bundleId": "es.tallerflow.tallerflow",
+        "minimumIos": "15.5",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "tarPathsVerified": true,
+        "executableModePreserved": true,
+        "installableOnIPhone": false
+      }
     }
   ],
-  "olderPackages": "All other commit suffixes are historical, including 01576d2 and 641509f",
+  "olderPackages": "All other commit suffixes are historical, including 8877298, 01576d2 and 641509f",
   "physicalUseValidated": false
 }

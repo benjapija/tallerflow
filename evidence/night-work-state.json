@@ -1,8 +1,8 @@
 {
   "date": "2026-10-07",
-  "reportCutoff": "2026-10-07T12:20:58.185301+00:00",
-  "appBuildCommit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
-  "buildRun": 37617149349,
+  "reportCutoff": "2026-10-07T13:22:31.313045+00:00",
+  "appBuildCommit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "buildRun": 37624370177,
   "appBuildStatus": {
     "validate": "success",
     "windows": "success",
@@ -12,7 +12,7 @@
   "packagesDownloadedVerified": true,
   "hostedMigrations": 26,
   "recoveryProjectLogicalMigrations": 26,
-  "flutterTests": 226,
+  "flutterTests": 243,
   "postgresChecks": 271,
   "mockServiceChecks": 43,
   "portalClientChecks": 5,
@@ -27,7 +27,7 @@
   "nativeBackend": "Prior Windows/iOS persistence and recovery circuits use fictional backend; hosted personal native Auth and physical use pending",
   "paidServicesPurchased": false,
   "automationActive": true,
-  "nextWork": "Continue generic fiscal engine from official specs, update old Configuration future-phase copy in next code revision; complete only tasks whose personal dependencies are available. Recheck free build quota.",
+  "nextWork": "Continue fiscal persistence, numbering and concurrent chain with idempotency/recovery; full fiscal documents and circuit-specific adapters. Recheck free quota, use selective builds if authorised and within confirmed allowance.",
   "personalDependencies": [
     "GitHub permission confirmation for Cloudflare Pages",
     "iPhone connected/unlocked/trusted/developer mode",
@@ -39,5 +39,19 @@
     "windowsRun": 37553141586,
     "iosRun": 37555896692,
     "backend": "fictional"
-  }
+  },
+  "offlineFiscalSchemaChecks": 8,
+  "officialFiscalAcceptanceValidated": false,
+  "remainingIncludedBuildMinutes": 342.7,
+  "billableBuildUsd": 0,
+  "newSupabaseMigration": false,
+  "runtimeFilesVerified": 197,
+  "fiscalCore": "Exact arithmetic, preserved note tax summary, offline F1/cancellation XML and hash; emission/transmission disabled. Persistence, numbering, concurrent chain and complete documents/adapters pending.",
+  "fiscal": "Partially implemented generic engine and offline AEAT drafts; official fiscal emission remains disabled",
+  "fiscalOfficialServiceAcceptanceValidated": false,
+  "fiscalCoreImplemented": true,
+  "fiscalEmissionEnabled": false,
+  "fiscalTransportEnabled": false,
+  "fiscalDevelopmentRemaining": true,
+  "oldConfigurationCopyCorrected": true
 }

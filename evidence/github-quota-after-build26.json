@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-07T13:17:42.258Z",
+  "method": "GitHub billing UI read-only",
+  "afterRun": 37624370177,
+  "includedMinutes": 2000,
+  "consumedMinutes": 1657.3,
+  "remainingMinutes": 342.7,
+  "billableUsd": 0,
+  "grossUsd": 9.95,
+  "discountsUsd": 9.95,
+  "storageDisplayedGb": 0,
+  "storageLimitGb": 0.5,
+  "note": "Rounded UI storage figure; recheck before each build. No paid plan or payment authorised.",
+  "screenshot": "github-quota-after-build26.png"
+}

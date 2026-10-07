@@ -1,0 +1,11 @@
+{
+  "runId": 37624370177,
+  "runNumber": 26,
+  "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "scope": "Full validation and Windows, Android, iOS simulator builds requested after free quota check",
+  "requestedAt": "2026-10-07T12:54:55.527618+00:00",
+  "paidConsumptionAuthorized": false,
+  "budgetBeforeRun": "github-quota-before-build26.json",
+  "fiscalEmissionEnabled": false,
+  "realAiEnabled": false
+}

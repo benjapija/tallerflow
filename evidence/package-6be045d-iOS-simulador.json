@@ -1,0 +1,49 @@
+{
+  "archive": "TallerFlow-iOS-simulador-6be045d.zip",
+  "artifactId": 11484001912,
+  "bytes": 61946772,
+  "sha256": "af9b782ca47dc48c424a5dbd05ef326ee728be92b2f0bcafffa9d4f000ed0674",
+  "zipIntegrity": "passed",
+  "revisionVerified": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "runId": 37624370177,
+  "sourceMetadata": {
+    "commit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+    "run": "37624370177",
+    "runner": "macOS",
+    "platform": "ios-simulator",
+    "realAuthValidated": false
+  },
+  "entries": 4,
+  "ocr": [
+    {
+      "checkedAt": "2026-10-07T13:04:09.264936Z",
+      "platform": "ios",
+      "engine": "Apple Vision",
+      "checks": [
+        "upright fictional DTC and reference preserved",
+        "iOS private camera temporary directory accepted",
+        "EXIF orientation restored before native OCR",
+        "blank image does not fabricate observations",
+        "file outside private cache refused and original retained",
+        "missing image is recoverable without technical details"
+      ],
+      "passed": 6,
+      "physicalCameraValidated": false,
+      "microphoneUsed": false,
+      "hostedAuthValidated": false
+    }
+  ],
+  "physicalUseValidated": false,
+  "packageDetails": {
+    "bundleTar": "build/deliverables/TallerFlow-iOS-simulador.tar.gz",
+    "bundleId": "es.tallerflow.tallerflow",
+    "minimumIos": "15.5",
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "tarPathsVerified": true,
+    "executableModePreserved": true,
+    "installableOnIPhone": false
+  }
+}
