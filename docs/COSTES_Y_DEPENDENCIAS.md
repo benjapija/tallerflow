@@ -18,3 +18,5 @@ Android: el usuario confirmó haber aceptado las licencias; SDK encontrado. iPho
 Las notas/PDF actuales son documentos de trabajo hasta completar la validación fiscal. La investigación distingue normativa aprobada y anuncios pendientes; véase FACTURACION_ESPANA_PENDIENTE.md.
 
 Si en el futuro el usuario decide activar IA real, harán falta saldo gratuito confirmado, secreto solo en servidor y modelo/tarifa/límites autorizados. Esa activación no forma parte de la ejecución actual.
+
+Cuota observada tras run 25: 1.562,7/2.000 minutos usados, 437,3 disponibles, 0 USD facturables y almacenamiento 7%. El panel puede actualizarse con retraso; antes de otro trabajo hay que volver a comprobarlo. Evidencia github-quota-after-build25.json/png.

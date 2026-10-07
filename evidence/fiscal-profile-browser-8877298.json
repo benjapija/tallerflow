@@ -1,0 +1,15 @@
+{
+  "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+  "scope": "Local browser, simulated workshop; fictional data",
+  "steps": [
+    "Office demo has no fiscal administration button",
+    "Administrator simulation opens fiscal preparation",
+    "Legal form society selected",
+    "Empty reason rejected",
+    "Fictional reason entered, save confirmed as audited",
+    "Reopened form retains society and remaining unknown options"
+  ],
+  "realAuth": false,
+  "fiscalEmissionEnabled": false,
+  "screenshot": "fiscal-profile-browser-8877298.png"
+}

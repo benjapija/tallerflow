@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-07T12:20:08.104159+00:00",
+  "plan": "GitHub Free",
+  "includedMinutes": 2000,
+  "usedMinutes": 1562.7,
+  "remainingMinutes": 437.3,
+  "billableUsd": 0,
+  "storagePercent": 7,
+  "screenshot": "github-quota-after-build25.png",
+  "pendingBillingUpdatePossible": true,
+  "nextBuildMustRecheckQuota": true
+}

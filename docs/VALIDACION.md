@@ -1,13 +1,13 @@
 # Estado vigente de validación · 7 de octubre de 2026
 
-Corte de trabajo: 13:40, hora peninsular. Datos ficticios; no acredita piloto físico ni emisión fiscal.
+Corte de trabajo: 14:20, hora peninsular. Datos ficticios; no acredita piloto físico ni emisión fiscal.
 
 - Local: **226 Flutter**, analizador sin incidencias; **271 PostgreSQL/PGlite**, **43 servicios simulados** y **cinco pruebas del cliente del portal** aprobadas. Cinco Flutter y doce SQL de preparación fiscal: permisos, conflicto y respuesta perdida con reinicio; sin activar emisión. Ensayo de copias: 22 comprobaciones aprobadas en dos bases independientes, ahora con perfil fiscal y documentos originales.
 - Supabase real: **15 fase 1**, **12 módulos** y **nueve recuperación formato 13** con Auth real. CSV, presupuestos, cobros, compras/almacén, garantías, diagnóstico, biblioteca, agenda, mantenimiento y flotas conservan originales.
 - Principal y recuperación: **26 migraciones lógicas**. Recuperación: cinco migraciones ya instaladas y **83 invariantes SQL** con rollback. Perfil fiscal posterior: **12 en cada proyecto**, identidades sintéticas y rollback; no altera tarifas ni documentos.
 - Limpieza: diez cuentas ficticias bloqueadas, cero sesiones/miembros/dispositivos activos en pruebas, servicios temporales HTTP 410 y capacidad temporal eliminada; usuarios reales intactos.
-- CI **37610877432**, código **01576d2**: validación y las tres plataformas aprobadas. OCR Android cinco / iOS seis: lectura, orientación EXIF, blanco, restricciones privadas y archivos ausentes; JSON y registro adjuntos. Tres paquetes descargados y verificados contra SHA-256 y revisión. La pantalla fiscal requiere compilación posterior común.
-- Cuota anterior al siguiente juego: **1.467,7/2.000 minutos** usados, **532,3 disponibles**, **0 USD facturables**, almacenamiento 6%. Máximo configurado completo: 410 minutos ponderados. Sin contratación ni consumo de pago autorizado.
+- CI **37617149349**, código **8877298**: validación y las tres plataformas aprobadas. OCR Android cinco / iOS seis: lectura, orientación EXIF, blanco, restricciones privadas y archivos ausentes; JSON y registro adjuntos. Tres paquetes descargados y verificados contra SHA-256 y revisión. La preparación fiscal está incluida en las tres compilaciones.
+- Cuota observada después del run 25: **1.562,7/2.000 minutos** usados, **437,3 disponibles**, **0 USD facturables**, almacenamiento 7%. Volver a comprobar antes de otra ejecución. Máximo configurado completo: 410 minutos ponderados. Sin contratación ni consumo de pago autorizado.
 - Circuitos nativos anteriores Windows/iOS entre procesos: cifrado/llavero/pendientes/recuperación aprobados con servidor ficticio. Cámara, micrófono, QR/enlaces, selector y cuenta personal desde aplicación nativa pendientes.
 - IA desactivada por decisión del usuario; cero llamadas al proveedor. Portal público pendiente de confirmar permiso nuevo de GitHub para Cloudflare. Licencias Android aceptadas según el usuario; iPhone disponible sin conectar todavía.
 

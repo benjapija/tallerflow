@@ -39,3 +39,11 @@ La matriz identifica desarrollo pendiente. No promete cumplimiento ni conectores
 Cada cliente aportará denominación/NIF, domicilio, administración/régimen, series/última numeración, tipos de factura y representación/certificado aplicables. La obligación y sus plazos se verifican antes de activar emisión. Credenciales mediante servicio autorizado, sin chat ni inclusión en aplicaciones.
 
 No se ha contratado proveedor ni comprado certificado. Investigación, desarrollo y proyectos actuales gratuitos; cualquier coste se consultará. Notas/PDF actuales: **documentos de trabajo**. No se convierten retrospectivamente en factura ni recalculan emitidos; los cobros conservan referencias y auditoría.
+
+## Referencias técnicas confirmadas para continuar el desarrollo
+
+La [AEAT describe el ámbito SIF y exclusiones, incluido SII y residencia foral](https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/cuestiones-generales/quienes-estan-obligados-que-operaciones-incluyen.html). El [Gobierno Vasco distingue TicketBAI de las tres haciendas y sus registros de software](https://www.euskadi.eus/ticketbai/); Navarra se mantiene como revisión propia, sin asignarle TicketBAI por analogía.
+
+La [documentación técnica AEAT](https://www3.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/informacion-tecnica/especificaciones-tecnicas-firma-electronica-registros-evento.html) enlaza esquemas, WSDL, validaciones, hash, QR, declaraciones y portal externo de pruebas. Hay material público para avanzar en el motor sin conocer un cliente particular. Quedan implementación y pruebas de cadena/numeración, correcciones, formatos, fallos/reintentos y aislamiento antes de conectar acreditación de un taller. Leer documentación no acredita emisión oficial ni aceptación del servicio.
+
+Como ensayo técnico independiente se han reproducido los tres ejemplos de hash del [PDF enlazado por la AEAT](https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/IVA/VERI-FACTU/Veri-Factu_especificaciones_huella_hash_registros.pdf): primer alta, alta encadenada y anulación. Los SHA-256 coinciden; evidencia fiscal-hash-official-rehearsal.json. Es una comprobación preparatoria de ejemplos publicados, sin emisión ni llamada al servicio; todavía no existe el motor fiscal integrado.

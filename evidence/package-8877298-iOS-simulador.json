@@ -1,0 +1,35 @@
+{
+  "file": "TallerFlow-iOS-simulador-8877298.zip",
+  "artifactId": 11480133847,
+  "bytes": 61920062,
+  "sha256": "4f68e459c5c8faf67ac62131145fe188c7bd7aaa2751f205513b14996155f79e",
+  "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+  "run": 37617149349,
+  "zipIntegrity": "passed",
+  "source": {
+    "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+    "run": "37617149349",
+    "runner": "macOS",
+    "platform": "ios-simulator",
+    "realAuthValidated": false
+  },
+  "ocr": {
+    "checkedAt": "2026-10-07T12:03:42.740173Z",
+    "platform": "ios",
+    "engine": "Apple Vision",
+    "checks": [
+      "upright fictional DTC and reference preserved",
+      "iOS private camera temporary directory accepted",
+      "EXIF orientation restored before native OCR",
+      "blank image does not fabricate observations",
+      "file outside private cache refused and original retained",
+      "missing image is recoverable without technical details"
+    ],
+    "passed": 6,
+    "physicalCameraValidated": false,
+    "microphoneUsed": false,
+    "hostedAuthValidated": false
+  },
+  "physicalUseValidated": false,
+  "realAuthValidated": false
+}

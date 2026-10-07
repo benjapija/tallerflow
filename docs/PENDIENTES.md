@@ -1,6 +1,6 @@
 # Seguimiento del alcance acordado
 
-Actualizado el 7 de octubre de 2026, 13:40 (España peninsular). Datos ficticios. «Probado» siempre identifica el entorno y no acredita uso físico ni validación fiscal.
+Actualizado el 7 de octubre de 2026, 14:20 (España peninsular). Datos ficticios. «Probado» siempre identifica el entorno y no acredita uso físico ni validación fiscal.
 
 | Bloque | Estado comprobado | Pendiente exacto |
 |---|---|---|
@@ -15,8 +15,8 @@ Actualizado el 7 de octubre de 2026, 13:40 (España peninsular). Datos ficticios
 | Supabase principal | Plan Free; 26 migraciones lógicas; cuentas/permisos/fotos/portal/IA desplegados | Inicio de sesión personal nativo: ramirezbroja013@gmail.com |
 | Supabase recuperación | Autorización específica recibida; cinco migraciones aplicadas, 26 lógicas totales; 83 invariantes SQL revertidas y recuperación formato 13 real aprobadas | Recuperación manual desde aplicaciones; autorización anterior ya resuelta |
 | Windows | Aplicación e instalador compilados; circuito anterior entre procesos con credenciales/cifrado/pendientes aprobado en Windows de Actions, servidor ficticio | Equipo Windows con licencia para instalación, selector y uso manual con Supabase |
-| iOS | Vision aprobó en simulador lectura, carpeta temporal privada, EXIF, blanco, original externo denegado y archivo ausente | Seis comprobaciones y evidencia adjunta en revisión 01576d2; conectar el iPhone indicado por el usuario, desbloquear/confiar y modo desarrollador; firma personal y cámara/micrófono/QR |
-| Android | Licencias aceptadas según el usuario; SDK encontrado. APK compilado; emulador API 35 arranca con partición 2 GiB y espacio liberado | Cinco comprobaciones OCR aprobadas con evidencia en revisión 01576d2. No hay Android físico disponible |
+| iOS | Vision aprobó en simulador lectura, carpeta temporal privada, EXIF, blanco, original externo denegado y archivo ausente | Seis comprobaciones y evidencia adjunta en revisión 8877298; conectar el iPhone indicado por el usuario, desbloquear/confiar y modo desarrollador; firma personal y cámara/micrófono/QR |
+| Android | Licencias aceptadas según el usuario; SDK encontrado. APK compilado; emulador API 35 arranca con partición 2 GiB y espacio liberado | Cinco comprobaciones OCR aprobadas con evidencia en revisión 8877298. No hay Android físico disponible |
 | macOS | Fuera del alcance | Mac exclusivamente desarrollo y revisión de demo web |
 | Inspecciones | Versiones, evidencias y resultado humano implementados; pruebas locales, SQL y recuperación HTTP | Uso manual nativo |
 | Presupuestos y autorizaciones | Versiones/partidas inmutables; cálculo 4.661 céntimos y decisiones vigentes/reintentos aprobados con Auth real | Pantallas nativas y acceso final del destinatario desde portal publicado |
@@ -38,8 +38,10 @@ Actualizado el 7 de octubre de 2026, 13:40 (España peninsular). Datos ficticios
 
 226 Flutter; analizador sin incidencias; 271 PostgreSQL/PGlite, 43 servicios simulados y cinco del portal aprobados. En Supabase real se repitieron **15 comprobaciones de fase 1, 12 de módulos y nueve de recuperación actual**, con cinco usuarios ficticios por proyecto, JWT reales y datos aislados. Después: cero sesiones, miembros o dispositivos activos en las pruebas, usuarios ficticios bloqueados y ambos servicios temporales retirados (HTTP 410). Ningún usuario personal modificado. Evidencias: current-hosted-phase1, current-hosted-modules, current-hosted-recovery, current-hosted-cleanup y current-recovery-schema.
 
-La ejecución **37610877432**, revisión **01576d21d464bfa40049b6a6289fefb310952330**, aprobó validación, Windows, Android e iOS. Los tres ZIP están descargados y verificados contra hashes y revisión; OCR Android cinco, iOS seis, JSON y registro adjuntos. Los ZIP anteriores son históricos/intermedios.
+La ejecución **37617149349**, revisión **8877298a739fc1e8b7b004ac18b3cb61362c7d2d**, aprobó validación, Windows, Android e iOS. Los tres ZIP están descargados y verificados contra hashes y revisión; OCR Android cinco, iOS seis, JSON y registro adjuntos. Todos los ZIP anteriores, incluido 01576d2, son históricos.
 
-Preparación fiscal por taller: cinco Flutter y doce PostgreSQL incluidas en la batería; doce SQL con rollback en cada Supabase, usando identidades sintéticas. Copia formato 13 y restauración independiente aprobadas. No acredita Auth nativo ni validación fiscal. Nueva compilación común pendiente para incorporar la pantalla fiscal.
+Preparación fiscal por taller: cinco Flutter y doce PostgreSQL incluidas en la batería; doce SQL con rollback en cada Supabase, usando identidades sintéticas. Copia formato 13 y restauración independiente aprobadas. No acredita Auth nativo ni validación fiscal. Compilación común 37617149349, revisión 8877298: cuatro trabajos aprobados; tres paquetes descargados/verificados, Android OCR cinco e iOS seis.
 
 Las dependencias externas detienen únicamente sus tareas. No se generan prompts de continuación.
+
+Trabajo independiente siguiente: motor fiscal genérico y adaptadores oficiales según FACTURACION_ESPANA_PENDIENTE.md, preservando documentos de trabajo. Revisar además el texto antiguo de «Próximas fases» en Configuración, que aún anuncia módulos implementados. No confundir estos pendientes de desarrollo con dependencias personales.

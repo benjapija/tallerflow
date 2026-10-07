@@ -1,0 +1,19 @@
+{
+  "file": "TallerFlow-Windows-piloto-8877298.zip",
+  "artifactId": 11480713006,
+  "bytes": 26279479,
+  "sha256": "a85d0efa4cb8e538691a6d03ebe83774dc0d3eaa25b25ba822d3b40093fda22e",
+  "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+  "run": 37617149349,
+  "zipIntegrity": "passed",
+  "source": {
+    "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+    "run": "37617149349",
+    "runner": "Windows",
+    "platform": "windows",
+    "realAuthValidated": false
+  },
+  "ocr": null,
+  "physicalUseValidated": false,
+  "realAuthValidated": false
+}

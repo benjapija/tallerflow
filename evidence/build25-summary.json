@@ -1,0 +1,52 @@
+{
+  "run": 37617149349,
+  "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+  "jobs": [
+    {
+      "name": "validate",
+      "id": 112778146442,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "ios-simulator",
+      "id": 112780119857,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "windows",
+      "id": 112780119959,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "android",
+      "id": 112780120073,
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 11481706064,
+      "name": "TallerFlow-Android-piloto",
+      "size": 115442720,
+      "digest": "sha256:33fa852424b58cda161f23eaf2547a4f53ba294751fdd8378bb281fd7215bbfa"
+    },
+    {
+      "id": 11480713006,
+      "name": "TallerFlow-Windows-piloto-25",
+      "size": 26279479,
+      "digest": "sha256:a85d0efa4cb8e538691a6d03ebe83774dc0d3eaa25b25ba822d3b40093fda22e"
+    },
+    {
+      "id": 11480133847,
+      "name": "TallerFlow-iOS-simulador",
+      "size": 61920062,
+      "digest": "sha256:4f68e459c5c8faf67ac62131145fe188c7bd7aaa2751f205513b14996155f79e"
+    }
+  ],
+  "nativeBackend": "OCR runs in hosted Android emulator and iOS simulator; no physical camera or personal native Auth",
+  "physicalUseValidated": false
+}

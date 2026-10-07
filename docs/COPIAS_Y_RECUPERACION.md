@@ -40,3 +40,7 @@ Incluye previsiones por fecha/kilometraje, versiones, intervenciones y motivos. 
 ## Flotas y formato 13
 
 Incluye agrupaciones y vínculos originales, propietarios al incorporar, evidencia, versiones, auditoría y recibos. La restauración rechaza vehículos/autores ajenos, duplicados y datos incompletos de forma atómica. El formato 12 admite mantenimiento original con flotas vacías. El destino autorizado ya admite el formato 13; el recorrido HTTP real conservó flotas, propietarios y evidencias.
+
+## Preparación fiscal y copias
+
+El perfil preparatorio se conserva en workshop.settings sin elevar el formato 13. La batería de copias ha restaurado perfil y documentos originales en una base independiente; permanece emissionEnabled:false. La copia no crea un circuito fiscal validado ni recupera certificados o claves privadas.

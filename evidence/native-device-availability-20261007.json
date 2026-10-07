@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-07T12:12:00Z",
+  "scope": "Flutter local device discovery",
+  "devices": [
+    "macOS development host",
+    "Chrome browser"
+  ],
+  "iphoneConnected": false,
+  "androidPhysicalAvailable": false,
+  "macAppRequested": false
+}

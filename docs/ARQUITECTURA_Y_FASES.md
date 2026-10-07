@@ -64,4 +64,8 @@ La sincronización, cierre coordinado, retirada de dispositivos y documentos inm
 
 Los borradores de voz, texto de cámara y referencias no generan operaciones; únicamente pueden rellenar campos tras revisión, y el formulario exige su confirmación propia. El portal usa un enlace aleatorio y un código separado, conserva los destinatarios originales y responde sin identificadores internos de tareas, incluso después de autorizar. Sus decisiones conservan recibos idempotentes y auditoría originales.
 
-El principal tiene 24 migraciones. La recuperación mantiene el esquema anterior de 20; actualizar ese destino requiere el permiso específico pendiente. El proyecto no está terminado: faltan interfaces y servicios externos indicados en PENDIENTES.md, las licencias y cuentas personales y las comprobaciones nativas/físicas. No se entrega una aplicación macOS.
+Principal y recuperación tienen 26 migraciones lógicas; la autorización específica del destino está resuelta. Exportación/restauración actuales formato 13 y recorridos de módulos aprobaron con Auth real, cuentas ficticias retiradas. Quedan uso físico/manual y servicios externos según PENDIENTES.md.
+
+## Producto para distintos talleres
+
+El alcance comercial admite varios talleres, manteniendo aislamiento. Preparación fiscal es metadata por taller, reservada al administrador con revisión, recibos y auditoría; incluye titular, territorio, SII, clientes, volumen e impuesto. No deduce obligaciones ni habilita emisión, y conserva tarifas/documentos. Cada cliente aporta sus datos/series/acreditación durante el alta. No se impide desarrollar el motor genérico por desconocer un taller concreto; todavía faltan emisión fiscal y conectores oficiales. La IA permanece desactivada por decisión del usuario. No se entrega aplicación macOS.

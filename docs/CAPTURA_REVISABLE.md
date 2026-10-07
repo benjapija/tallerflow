@@ -1,6 +1,6 @@
 # Estado actual de captura · 7 de octubre de 2026
 
-Revisión humana y límites privados conservados. CI 37610877432 (01576d2) aprobó **cinco comprobaciones Android y seis iOS**: lectura ficticia, EXIF, blanco, original externo denegado y archivo ausente; iOS incluye temporal privado. Android usa partición 2 GiB y bash. JSON y registro obligatorios adjuntos. Los tres ZIP descargados/verificados. Cámara, QR y micrófono físicos pendientes; batería local completa: 226 Flutter.
+Revisión humana y límites privados conservados. CI 37617149349 (8877298) aprobó **cinco comprobaciones Android y seis iOS**: lectura ficticia, EXIF, blanco, original externo denegado y archivo ausente; iOS incluye temporal privado. Android usa partición 2 GiB y bash. JSON y registro obligatorios adjuntos. Los tres ZIP descargados/verificados. Cámara, QR y micrófono físicos pendientes; batería local completa: 226 Flutter.
 
 La descripción funcional siguiente sigue vigente. Los párrafos sobre antiguos fallos de compilación son históricos y quedan superados por las compilaciones y ensayos indicados arriba.
 

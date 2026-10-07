@@ -1,0 +1,13 @@
+{
+  "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+  "run": 37617149349,
+  "validationJob": 112778146442,
+  "conclusion": "success",
+  "flutterTests": 226,
+  "postgresChecks": 271,
+  "simulatedServices": 43,
+  "portalClientChecks": 5,
+  "analyzerClean": true,
+  "scope": "GitHub Actions full regression; synthetic Auth and mocked providers; no physical use",
+  "log": "build25-validation.log.txt"
+}

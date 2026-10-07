@@ -1,0 +1,16 @@
+{
+  "commit": "8877298a739fc1e8b7b004ac18b3cb61362c7d2d",
+  "archivePathsSafe": true,
+  "runnerExecutablePermissionsRetained": true,
+  "bundleId": "es.tallerflow.tallerflow",
+  "minimumOS": "15.5",
+  "platforms": [
+    "iPhoneSimulator"
+  ],
+  "iphonePhysicalInstallable": false,
+  "installationTestLocal": false,
+  "architectures": [
+    "x86_64",
+    "arm64"
+  ]
+}
