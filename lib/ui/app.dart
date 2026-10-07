@@ -27,6 +27,7 @@ import '../domain/document_export.dart';
 import 'document_export_button.dart';
 import '../domain/purchases.dart';
 import 'purchase_panel.dart';
+import '../domain/linked_returns.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -213,8 +214,29 @@ class _WorkshopHomeState extends State<WorkshopHome>
     });
   }
 
-  Future<void> receive() async {
-    final data = await receptionDialog(context, c.state.members);
+  Future<void> receive([WorkOrder? original]) async {
+    final profile = original == null
+        ? null
+        : vehicleProfiles(
+            c.state,
+          ).where((v) => v['id'] == original.vehicleId).firstOrNull;
+    final owner = profile?['owner'] as Map?;
+    final data = await receptionDialog(
+      context,
+      c.state.members,
+      sourceOrderId: original?.id,
+      initial: profile == null
+          ? const {}
+          : {
+              'plate': profile['plate'],
+              'country': profile['country'],
+              'vin': profile['vin'],
+              'vehicle': profile['vehicle'],
+              'engine': profile['engine'],
+              'client': owner?['name'] ?? '',
+              'phone': owner?['phone'] ?? '',
+            },
+    );
     if (data == null) return;
     final id = const Uuid().v4();
     await perform(id, 'receive', data);
@@ -1167,6 +1189,59 @@ class _WorkshopHomeState extends State<WorkshopHome>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TaskManagement(controller: c, order: o, perform: perform),
+        if (c.actor.isOffice &&
+            (o.issued ||
+                [
+                  OrderStatus.finished,
+                  OrderStatus.verified,
+                  OrderStatus.delivered,
+                ].contains(o.status)))
+          TextButton.icon(
+            onPressed: () => receive(o),
+            icon: const Icon(Icons.assignment_return_outlined),
+            label: const Text('Abrir regreso vinculado'),
+          ),
+        if (o.data['returnHistory'] is List &&
+            (o.data['returnHistory'] as List).isNotEmpty)
+          section('Regreso vinculado', [
+            for (final link in (o.data['returnHistory'] as List).reversed)
+              Text(
+                '${returnClassifications[link['classification']]} · ${link['reason']} · ${link['at']}',
+              ),
+            if (c.actor.isOffice && !o.issued)
+              TextButton(
+                onPressed: () async {
+                  final first = o.data['returnHistory'].first;
+                  final p = await formDialog(
+                    context,
+                    'Revisar clasificación del regreso',
+                    [
+                      FieldSpec(
+                        'classification',
+                        'Clasificación',
+                        initial: o.data['returnHistory'].last['classification'],
+                        choices: returnClassifications,
+                      ),
+                      const FieldSpec(
+                        'reason',
+                        'Motivo de la revisión',
+                        multiline: true,
+                      ),
+                    ],
+                    (v) => {...v, 'sourceOrderId': first['sourceOrderId']},
+                  );
+                  if (p != null) {
+                    await perform(
+                      o.id,
+                      'return_classify',
+                      p,
+                      expectedRevision: o.revision,
+                    );
+                  }
+                },
+                child: const Text('Revisar clasificación'),
+              ),
+          ]),
         const SizedBox(height: 18),
         section('Descripción del cliente', [
           Text(

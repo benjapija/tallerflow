@@ -61,6 +61,7 @@ class SimulatedWorkshop {
         if (!actor.isOffice) {
           copy.remove('quoteLedger');
           copy.remove('payments');
+          copy.remove('returnHistory');
           copy.remove('delivery');
         }
         return copy;

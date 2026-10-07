@@ -1,3 +1,7 @@
+# Regresos vinculados · 7 de octubre de 2026
+
+141 pruebas Flutter, análisis limpio y compilación web aprobados. 167 comprobaciones PostgreSQL y 18 de servicios simulados. Seis Flutter de regresos y ocho PostgreSQL específicos; ocho SQL alojadas en cada proyecto gratuito. Se conservan nota anterior y destinatario actual. La clasificación exige elección humana, y una revisión añade historial con control de versión. Esquema con diecisiete migraciones. Auth HTTP y uso manual nativo siguen pendientes.
+
 # Compras · 7 de octubre de 2026
 
 135 pruebas Flutter, análisis limpio y compilación web aprobados. 159 comprobaciones PostgreSQL más 18 de servicios simulados. Trece Flutter de compras, ocho PostgreSQL específicos y diez SQL por proyecto Supabase Free, revertidos al terminar. Copia/restauración conserva pedidos, movimientos y pendientes; rechaza ledger incompleto y conserva compatibilidad de la versión 7. Esquema con dieciséis migraciones. Auth HTTP y uso físico de compras pendientes.

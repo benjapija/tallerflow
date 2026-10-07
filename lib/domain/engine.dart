@@ -6,6 +6,7 @@ import 'pricing.dart';
 import 'inspections.dart';
 import 'quotes.dart';
 import 'payments.dart';
+import 'linked_returns.dart';
 
 class RuleException implements Exception {
   final String message;
@@ -206,6 +207,18 @@ class WorkshopState {
       d['times'] = <Map<String, dynamic>>[];
       d['parts'] = <Map<String, dynamic>>[];
       d['notes'] = <Map<String, dynamic>>[];
+      if (op.payload['returnLink'] != null) {
+        if (op.payload['returnLink'] is! Map<String, dynamic>) {
+          throw const RuleException('Referencia de reparación no válida');
+        }
+        attachReturn(
+          this,
+          WorkOrder(d),
+          op.payload['returnLink'],
+          actor,
+          op.at,
+        );
+      }
       orders[op.orderId] = WorkOrder(d);
       _record(op, actor);
       return;
@@ -248,6 +261,8 @@ class WorkshopState {
     }
 
     switch (op.kind) {
+      case 'return_classify':
+        reclassifyReturn(order, op, actor);
       case 'payment_record':
       case 'payment_reverse':
         applyPayment(order, actor, op);

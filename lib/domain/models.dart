@@ -158,6 +158,7 @@ class WorkOrder {
   final Map<String, dynamic> data;
   WorkOrder(this.data);
   String get id => data['id'];
+  String get vehicleId => data['vehicleId'] ?? id;
   String get number => data['number'];
   String get plate => data['plate'];
   String get vehicle => data['vehicle'];

@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-07",
+  "flutterTests": 141,
+  "postgresChecks": 167,
+  "mockServiceChecks": 18,
+  "localFeatureFlutterChecks": 6,
+  "localFeaturePostgresChecks": 8,
+  "hostedSQLChecksPerProject": 8,
+  "migrationsPrimary": 17,
+  "databaseVersion": 8,
+  "realAuthHTTPForLinkedReturns": false,
+  "physicalDeviceValidated": false,
+  "requiresHumanClassification": true,
+  "originalDocumentsPreserved": true,
+  "currentRecipientVerified": true,
+  "hostedFixturesRolledBack": true,
+  "paidServicesPurchased": false
+}

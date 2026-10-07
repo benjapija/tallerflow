@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import '../data/demo.dart';
 import '../domain/models.dart';
+import '../domain/linked_returns.dart';
 
 class FieldSpec {
   final String key, label, initial;
@@ -196,18 +197,39 @@ int parseMoney(String value) {
 
 Future<Map<String, dynamic>?> receptionDialog(
   BuildContext context,
-  List<Actor> members,
-) => formDialog(
+  List<Actor> members, {
+  Map<String, dynamic> initial = const {},
+  String? sourceOrderId,
+}) => formDialog(
   context,
-  'Nueva recepción',
+  sourceOrderId == null ? 'Nueva recepción' : 'Regreso del vehículo',
   [
-    const FieldSpec('plate', 'Matrícula'),
-    const FieldSpec('country', 'País de matriculación', initial: 'ES'),
-    const FieldSpec('vin', 'VIN o bastidor (opcional)', required: false),
-    const FieldSpec('vehicle', 'Marca y modelo'),
-    const FieldSpec('engine', 'Año y motorización', required: false),
-    const FieldSpec('client', 'Cliente'),
-    const FieldSpec('phone', 'Teléfono', required: false),
+    FieldSpec('plate', 'Matrícula', initial: initial['plate'] ?? ''),
+    FieldSpec(
+      'country',
+      'País de matriculación',
+      initial: initial['country'] ?? 'ES',
+    ),
+    FieldSpec(
+      'vin',
+      'VIN o bastidor (opcional)',
+      initial: initial['vin'] ?? '',
+      required: false,
+    ),
+    FieldSpec('vehicle', 'Marca y modelo', initial: initial['vehicle'] ?? ''),
+    FieldSpec(
+      'engine',
+      'Año y motorización',
+      initial: initial['engine'] ?? '',
+      required: false,
+    ),
+    FieldSpec('client', 'Cliente actual', initial: initial['client'] ?? ''),
+    FieldSpec(
+      'phone',
+      'Teléfono',
+      initial: initial['phone'] ?? '',
+      required: false,
+    ),
     const FieldSpec('km', 'Kilometraje de entrada', numeric: true),
     const FieldSpec(
       'symptom',
@@ -264,8 +286,25 @@ Future<Map<String, dynamic>?> receptionDialog(
         'yes': 'Sí, comprobadas por el taller',
       },
     ),
+    if (sourceOrderId != null) ...[
+      const FieldSpec(
+        'classification',
+        'Clasificación del regreso',
+        initial: '',
+        choices: {'': 'Selecciona la clasificación', ...returnClassifications},
+      ),
+      const FieldSpec(
+        'returnReason',
+        'Motivo de la clasificación',
+        multiline: true,
+      ),
+    ],
   ],
   (v) {
+    if (sourceOrderId != null &&
+        !returnClassifications.containsKey(v['classification'])) {
+      throw const FormatException('Selecciona la clasificación del regreso');
+    }
     final km = positiveInteger(v['km']!, allowZero: true);
     final tid = const Uuid().v4();
     final approved = false; // A template is never a customer authorization.
@@ -302,6 +341,12 @@ Future<Map<String, dynamic>?> receptionDialog(
       'priority': v['priority'],
       'tasks': [t],
       'quality': null,
+      if (sourceOrderId != null)
+        'returnLink': {
+          'sourceOrderId': sourceOrderId,
+          'classification': v['classification'],
+          'reason': v['returnReason'],
+        },
     };
   },
   help:
