@@ -38,8 +38,8 @@ La recepción, tareas, tiempos estimados/trabajados/facturables separados, catá
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 122 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
-- 149 comprobaciones PostgreSQL/PGlite y 18 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
+- 135 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
+- 159 comprobaciones PostgreSQL/PGlite y 18 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
 - 58 comprobaciones SQL alojadas históricas con transacciones revertidas y 15 del recorrido HTTP real, con talleres y cuentas ficticios aislados. Las pruebas nativas siguen separadas.
 - GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
 - Windows remoto en GitHub Actions: dos procesos nativos verifican almacén cifrado, Credential Manager, conservación de dos registros sin conexión, recuperación y un único efecto al reintentar. El servidor es ficticio; instalación manual y Auth real siguen pendientes.
@@ -72,3 +72,5 @@ Para conectar un entorno de pruebas nativo, sigue [SUPABASE.md](docs/SUPABASE.md
 Consulta [ARQUITECTURA_Y_FASES.md](docs/ARQUITECTURA_Y_FASES.md), [MAC_Y_PLATAFORMAS.md](docs/MAC_Y_PLATAFORMAS.md) y [ENTREGA_0_2.md](docs/ENTREGA_0_2.md). Los documentos de 0.1 se conservan en `docs/ARCHIVO_0_1/`; los requisitos originales permanecen en `docs/REQUISITOS_ORIGINALES.txt`.
 
 Las inspecciones conservan versiones sin cargos automáticos. La recuperación entre dos proyectos Supabase Free pasó diez pruebas HTTP reales con cuentas ficticias, documentos, auditoría y fotos originales; ambas pruebas temporales quedaron retiradas. Windows f9aeed3 pasó fotos cifradas y copia por partes entre dos procesos reales, con servidor ficticio. Consulta docs/VALIDACION.md para las pruebas específicas y sus límites.
+
+Pedidos, recepciones parciales y devoluciones manuales integrados en Catálogo. Instrucciones: [Compras y almacén](docs/COMPRAS_Y_ALMACEN.md). Copia de servidor versión 8, compatible con archivos anteriores.

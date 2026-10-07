@@ -1,8 +1,8 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "875324f2976e03c31fcf052e4f71bb56fd84fa7b",
-  "appBuildCommit": "c0f8a744aa67716a84e2f297d2c37bff081cf0c2",
-  "buildRun": 37558197890,
+  "sourceCommit": "bc694d86d449d8a716b459d497c74e15e0ce8cec",
+  "appBuildCommit": "bc694d86d449d8a716b459d497c74e15e0ce8cec",
+  "buildRun": 37565648080,
   "appBuildStatus": {
     "validate": "success",
     "windows": "success",
@@ -14,13 +14,14 @@
   "iosNativeRun": 37555896692,
   "iosNativeStatus": "success",
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
-  "hostedMigrations": 15,
+  "hostedMigrations": 16,
   "payments": "implemented, tested, deployed and published",
-  "flutterTests": 122,
-  "postgresChecks": 149,
+  "flutterTests": 135,
+  "postgresChecks": 159,
   "mockServiceChecks": 18,
-  "nextWork": "Manual purchases, warehouse and warranties; client portal and remaining agreed phases",
+  "nextWork": "Publish purchases; warranties and remaining scope",
   "paidServicesPurchased": false,
   "automationActive": true,
-  "pdf": "implemented and tested locally; publication in progress"
+  "pdf": "published; five local tests, all sample pages reviewed",
+  "purchases": "implemented, tested and deployed; publication in progress"
 }

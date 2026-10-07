@@ -12,7 +12,7 @@ Base: requisitos originales y entrega 0.2. La palabra «probado» identifica el 
 | Precios, descuentos, excepciones y margen | Implementados; pruebas locales y 10 alojadas aprobadas | Revisión con motivo, reautorización ante aumentos, descuentos antes del IVA y costes de consumos sin cobro; falta piloto manual nativo |
 | CSV de clientes, vehículos y catálogo | Implementado; 8 pruebas Flutter, 12 locales SQL y 10 alojadas aprobadas | Vista previa por fila, códigos de cliente, duplicados conservados, auditoría y reintentos; selector nativo y Auth HTTP pendientes |
 | Fotos privadas, QR y enlaces nativos | Implementados; pruebas locales y 10 SQL alojadas aprobadas | Descarga privada sin caché, revocación y Storage HTTP comprobados; cámara física y apertura por enlace del sistema pendientes |
-| Supabase alojado | Conectado, quince migraciones y funciones de altas/fotos aplicadas | Proyecto gpseuqmzbazifmkhjyby, plan Free; cuenta ramirezbroja013@gmail.com vinculada como administradora; cinco cuentas ficticias probaron Auth real y quedaron retiradas; falta iniciar sesión personalmente desde cliente nativo |
+| Supabase alojado | Conectado, dieciséis migraciones y funciones de altas/fotos aplicadas | Proyecto gpseuqmzbazifmkhjyby, plan Free; cuenta ramirezbroja013@gmail.com vinculada como administradora; cinco cuentas ficticias probaron Auth real y quedaron retiradas; falta iniciar sesión personalmente desde cliente nativo |
 | iOS/Android | Compilación en GitHub aprobada | Xcode 27 instalado y cuenta Apple conectada; Android Studio instalado y herramientas verificadas; licencias del SDK pendientes; llavero y recuperación iOS simulador comprobados con servidor ficticio; equipos físicos pendientes |
 | Aplicación macOS | Fuera del alcance | Retirada por petición del usuario el 6 de octubre; el Mac sigue como equipo de desarrollo |
 | Windows | Compilación, instalador y circuito nativo remoto aprobados parcialmente | Dos procesos reales con cifrado, credenciales, fotos pendientes y recuperación de partes en Actions; falta instalación manual y cuentas Supabase reales desde la app |
@@ -21,7 +21,8 @@ Base: requisitos originales y entrega 0.2. La palabra «probado» identifica el 
 | Portal cliente | Pendiente tras fase 1 | HTTPS y verificación/revocación del destinatario |
 | Cobros y entrega con saldo pendiente | Implementados y probados localmente y por SQL alojado | Pagos parciales, devoluciones vinculadas, saldo separado y entrega a crédito; ocho pruebas Flutter y diez SQL por proyecto; faltan Auth HTTP y uso manual nativo |
 | PDF de notas y presupuestos | Implementado y probado localmente | Cinco pruebas Flutter; copias de versiones guardadas, destinatario original y notas de varias páginas revisadas; selector y uso físico pendientes |
-| Compras, almacén y garantías | Pendiente | Pedidos manuales, recepciones parciales, devoluciones a proveedor y órdenes vinculadas; APIs de proveedores cuando se concreten |
+| Compras y almacén | Pedidos manuales, recepciones parciales y devoluciones al proveedor integrados | Trece Flutter, ocho PostgreSQL y diez SQL alojadas por proyecto; copias completas y pendientes incluidos, legado recuperable. Falta Auth HTTP, uso físico e integraciones de proveedor |
+| Garantías y órdenes vinculadas | Pendiente | Clasificación humana y conservación del documento original |
 | IA técnica y administrativa | Pendiente | OpenAI desde servidor, presupuesto de consumo, fuentes autorizadas y revisión humana |
 | Cuaderno y biblioteca validados | Pendiente | Desarrollo local independiente de IA |
 | Dictado y lectura con cámara | Pendiente | Captura nativa y proveedor cuando haya servicio externo |

@@ -1,0 +1,9 @@
+00:00 +0: loading /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/purchases_test.dart
+00:00 +0: Two five-litre packages request ten litres and creation does not change stock
+00:00 +1: Partial receipts keep frozen cost, remaining quantity and original order
+00:00 +2: Lost-response replay produces no second stock delta and changed identity is rejected
+00:00 +3: Concurrent or excessive supplier returns cannot consume reserved or absent stock
+00:00 +4: Unsupported precision, forged fields and unrelated repair orders are rejected
+00:00 +5: Operators and inactive accounts cannot record manual purchases
+00:00 +6: Ledger serialization retains movement evidence while returned views cannot alter originals
+00:00 +7: All tests passed!

@@ -24,7 +24,7 @@ async function login(db,user,dev){
 }
 async function snap(db,dev){return(await db.query('select public.device_snapshot($1,$2) r',[w,dev])).rows[0].r;}
 async function test(name,fn){await fn();passed++;console.log('PASS '+name);}
-const source=await setup();const target=await setup();let archive;
+const source=await setup();const target=await setup();const legacyTarget=await setup();let archive;
 const closeOrder=id(),closeRequest=id(),accountRequest=id();
 try{
  await source.query("insert into private.members values($1,$2,'Tech','technician',false,true)",[w,tech]);
@@ -38,6 +38,9 @@ try{
  await source.query("update private.orders set data=jsonb_set(data,'{document}',$1) where id=$2",[document,order]);
  await source.query("insert into private.documents(workshop_id,order_id,type,version,recipient_id,snapshot) values($1,$2,'work_note',1,$3,$4)",[w,order,admin,document]);
  await login(source,admin,sourceDev);
+ const purchase=id(),purchaseLine=id();
+ await source.query('select public.inventory_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'purchase_create',{revision:0,at:new Date().toISOString(),id:purchase,supplier:'Fictional recovery supplier',reference:'Recovery request',expectedAt:'2026-10-08T00:00:00Z',orderId:order,reason:'Fictional recovery purchase',lines:[{id:purchaseLine,itemId:item,packageSizeMilli:1000,packagesMilli:1000,unitCostCents:500}]}]);
+ await source.query('select public.inventory_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'purchase_receive',{revision:1,at:new Date().toISOString(),purchaseId:purchase,lineId:purchaseLine,packagesMilli:1000,reference:'Fictional recovery delivery',reason:'Fictional material physically received'}]);
  const payment={id:id(),orderId:order,actorId:admin,kind:'payment_record',baseRevision:(await snap(source,sourceDev)).orders[0].revision,at:new Date().toISOString(),payload:{amountCents:2345,method:'cash',paidAt:new Date().toISOString(),reference:'Fictional receipt for recovery',reason:'Already received'}};
  assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,payment])).rows[0].r.status,'accepted');
  op={id:id(),orderId:order,actorId:admin,kind:'note',baseRevision:0,at:new Date().toISOString(),payload:{text:'Original late evidence'}};
@@ -74,11 +77,17 @@ try{
   await assert.rejects(()=>target.query('select public.restore_workshop($1,$2,$3,$4)',[w,targetDev,rid,bad]),/Auth identities/);
   assert.equal((await snap(target,targetDev)).catalog.length,0);
  });
+ await test('Malformed inventory ledger blocks restoration atomically',async()=>{
+  const bad=structuredClone(archive);bad.tables.inventory_state[0].data={revision:2,orders:[]};
+  await assert.rejects(()=>target.query('select public.restore_workshop($1,$2,$3,$4)',[w,targetDev,rid,bad]));
+  assert.equal((await snap(target,targetDev)).catalog.length,0);
+ });
  let result;
  await test('Independent database restores original documents, records and audit',async()=>{
   result=(await target.query('select public.restore_workshop($1,$2,$3,$4) r',[w,targetDev,rid,archive])).rows[0].r;
   assert.equal(result.restored,true);const s=await snap(target,targetDev);
   assert.deepEqual(s.orders.find(o=>o.id===order).document,document);assert.equal(s.orders.find(o=>o.id===order).payments[0].id,payment.id);assert.equal(s.orders.find(o=>o.id===order).payments[0].amountCents,2345);assert.deepEqual(s.incidents.find(x=>x.operation.id===op.id).operation,op);
+  assert.deepEqual(s.purchaseLedger,archive.tables.inventory_state[0].data);assert.equal(s.catalog.find(x=>x.id===item).stockMilli,3000);
   await target.exec('reset role');assert.equal((await target.query('select count(*)::int n from private.audit where source_id is not null')).rows[0].n,archive.tables.audit.length);
   await login(target,admin,targetDev);
  });
@@ -111,5 +120,11 @@ try{
   assert.equal((await target.query('select public.apply_operation($1,$2,$3) r',[w,targetDev,late])).rows[0].r.status,'late');
   assert.deepEqual((await snap(target,targetDev)).orders.find(o=>o.id===order).document,document);
  });
+ await test('Version seven archives remain recoverable without a purchase table',async()=>{
+  const legacy=structuredClone(archive);legacy.databaseVersion=7;delete legacy.tables.inventory_state;
+  const dev=id();await login(legacyTarget,admin,dev);await snap(legacyTarget,dev);
+  await legacyTarget.query('select public.restore_workshop($1,$2,$3,$4)',[w,dev,id(),legacy]);
+  assert.equal((await snap(legacyTarget,dev)).purchaseLedger.revision,0);
+ });
  console.log(`${passed} backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.`);
-}finally{await source.close();await target.close();}
+}finally{await source.close();await target.close();await legacyTarget.close();}

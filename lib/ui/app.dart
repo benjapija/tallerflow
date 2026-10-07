@@ -25,6 +25,8 @@ import 'payment_panel.dart';
 import '../domain/payments.dart';
 import '../domain/document_export.dart';
 import 'document_export_button.dart';
+import '../domain/purchases.dart';
+import 'purchase_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -1952,6 +1954,19 @@ class _WorkshopHomeState extends State<WorkshopHome>
         'Catálogo del taller',
         'La reserva y el consumo se muestran por separado.',
       ),
+      if (c.actor.role == Role.admin ||
+          (c.actor.isOffice && c.actor.seeCosts)) ...[
+        PurchasePanel(
+          ledger: PurchaseLedger(c.state.configuration['purchaseLedger']),
+          catalog: c.state.catalog,
+          repairOrders: c.visibleOrders.toList(),
+          canEdit: c.accessAllowed,
+          pending: c.outbox.isNotEmpty || c.pendingCommands.isNotEmpty,
+          onSave: (action, payload) =>
+              runAction(() => c.inventory(action, payload)),
+        ),
+        const SizedBox(height: 24),
+      ],
       for (final item in c.state.catalog)
         Padding(
           padding: const EdgeInsets.only(bottom: 14),

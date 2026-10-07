@@ -1,3 +1,7 @@
+# Compras · 7 de octubre de 2026
+
+135 pruebas Flutter, análisis limpio y compilación web aprobados. 159 comprobaciones PostgreSQL más 18 de servicios simulados. Trece Flutter de compras, ocho PostgreSQL específicos y diez SQL por proyecto Supabase Free, revertidos al terminar. Copia/restauración conserva pedidos, movimientos y pendientes; rechaza ledger incompleto y conserva compatibilidad de la versión 7. Esquema con dieciséis migraciones. Auth HTTP y uso físico de compras pendientes.
+
 ## PDF de documentos guardados · 7 de octubre de 2026
 
 122 pruebas Flutter aprobadas (cinco de exportación), analizador limpio y compilación web aprobada. Tres PDF ficticios generados con pdf 3.13.1: nota, presupuesto y nota de 80 partidas/ocho páginas. Se extrajo el texto y se revisaron todas las páginas renderizadas: moneda y acentos, importes originales, destinatario, descuentos, advertencia fiscal y totales junto a las aclaraciones. No se incluyen costes internos ni se recalculan precios del catálogo. Selector nativo y funcionamiento físico pendientes.

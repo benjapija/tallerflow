@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 import '../domain/engine.dart';
+import '../domain/purchases.dart';
 import '../domain/models.dart';
 import 'cloud.dart';
 import 'demo.dart';
@@ -53,6 +54,8 @@ class SimulatedWorkshop {
     }
     return {
       ...cloneMap(state.toJson()),
+      if (!actor.isOffice || (actor.role != Role.admin && !actor.seeCosts))
+        'purchaseLedger': null,
       'orders': visible.map((o) {
         final copy = cloneMap(o.data);
         if (!actor.isOffice) {
@@ -241,6 +244,28 @@ class SimulatedWorkshop {
         }
       }
       final result = {'saved': true};
+      commands[id] = {
+        'device': device,
+        'action': action,
+        'payload': cloneMap(p),
+        'result': result,
+      };
+      return result;
+    }
+    if ([
+      'purchase_create',
+      'purchase_receive',
+      'supplier_return',
+    ].contains(action)) {
+      final next = state.copy();
+      applyPurchaseCommand(next, id, action, p, actor, DateTime.now().toUtc());
+      state = next;
+      final result = {
+        'saved': true,
+        'revision': PurchaseLedger(
+          next.configuration['purchaseLedger'],
+        ).revision,
+      };
       commands[id] = {
         'device': device,
         'action': action,

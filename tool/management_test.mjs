@@ -138,7 +138,7 @@ try{
  await login(office,desk);
  await test('Backup includes management data, versions and permissions',async()=>{
   const s=(await db.query('select public.export_workshop($1,$2) r',[w,desk])).rows[0].r;
-  assert.equal(s.databaseVersion,7);assert.equal(s.tables.templates[0].version,2);assert.ok(s.tables.member_permissions.length);assert.ok(s.tables.management_state[0].revision>0);
+  assert.equal(s.databaseVersion,8);assert.equal(s.tables.templates[0].version,2);assert.ok(s.tables.member_permissions.length);assert.ok(s.tables.management_state[0].revision>0);
  });
  console.log(`${passed} administration and task checks passed. Hosted Auth and actual devices require separate validation.`);
 }finally{await db.close();}

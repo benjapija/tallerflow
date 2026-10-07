@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-07",
+  "flutterTests": 135,
+  "postgresChecks": 159,
+  "mockServiceChecks": 18,
+  "localPurchaseChecks": 13,
+  "hostedSQLChecksPerProject": 10,
+  "projects": [
+    "gpseuqmzbazifmkhjyby",
+    "qnbgbgumvxmmipjlkcgb"
+  ],
+  "databaseVersion": 8,
+  "migrationsPrimary": 16,
+  "realAuthLoginForPurchases": false,
+  "physicalDeviceValidated": false,
+  "legacyRestoration": true,
+  "malformedInventoryRejected": true,
+  "hostedFixturesRolledBack": true,
+  "paidServicesPurchased": false
+}

@@ -251,7 +251,13 @@ class SupabaseRemote extends Remote {
   ) async => Map<String, dynamic>.from(
     await client
         .rpc(
-          action.startsWith('import_')
+          [
+                'purchase_create',
+                'purchase_receive',
+                'supplier_return',
+              ].contains(action)
+              ? 'inventory_command'
+              : action.startsWith('import_')
               ? 'import_command'
               : action.startsWith('photo_')
               ? 'photo_command'

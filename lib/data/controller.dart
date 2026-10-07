@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 import '../domain/models.dart';
 import '../domain/engine.dart';
+import '../domain/purchases.dart';
 import 'cloud.dart';
 import 'demo.dart';
 import 'vault.dart';
@@ -251,6 +252,50 @@ class WorkshopController extends ChangeNotifier {
           await _command(action, p);
         }
       });
+  Future<void> inventory(
+    String action,
+    Map<String, dynamic> payload,
+  ) => _locked(() async {
+    _checkAccess();
+    if (!actor.isOffice || (actor.role != Role.admin && !actor.seeCosts)) {
+      throw const RuleException(
+        'Se requiere permiso de oficina para gestionar costes',
+      );
+    }
+    if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+      throw const RuleException(
+        'Revisa y sincroniza los pendientes antes de registrar otro movimiento',
+      );
+    }
+    final p = {
+      ...payload,
+      'revision': PurchaseLedger(
+        state.configuration['purchaseLedger'],
+      ).revision,
+      'at': clock().toUtc().toIso8601String(),
+    };
+    if (demo) {
+      final before = state, next = state.copy();
+      applyPurchaseCommand(
+        next,
+        const Uuid().v4(),
+        action,
+        p,
+        actor,
+        clock().toUtc(),
+      );
+      state = next;
+      try {
+        await _persist();
+      } catch (_) {
+        state = before;
+        rethrow;
+      }
+      notifyListeners();
+    } else {
+      await _command(action, p, allowOffline: true);
+    }
+  });
   Future<Map<String, dynamic>> previewImport(ImportPreview preview) =>
       _locked(() async {
         _checkAccess();
@@ -937,9 +982,10 @@ class WorkshopController extends ChangeNotifier {
     String action,
     Map<String, dynamic> payload, {
     String? commandId,
+    bool allowOffline = false,
   }) async {
     _checkAccess();
-    if (demo || offline) {
+    if (demo || (offline && !allowOffline)) {
       throw const RuleException(
         'Esta acción requiere el servidor de pruebas conectado.',
       );
@@ -955,6 +1001,10 @@ class WorkshopController extends ChangeNotifier {
     } catch (_) {
       pendingCommands.remove(cmd);
       rethrow;
+    }
+    if (offline) {
+      notifyListeners();
+      return;
     }
     await _drainCommands();
     await _refresh();

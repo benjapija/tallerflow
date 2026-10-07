@@ -62,6 +62,10 @@ El simulador iOS aprobó el guardado y la recuperación entre procesos en 375558
 
 El código 1026352 añade presupuestos y decisiones por partida. La demo web local ya está compilada con ellos; los paquetes 23d62b8 todavía no los contienen. La nueva compilación se registra en el informe de avance y sus evidencias cuando termine.
 
-## Paquetes actuales de presupuestos · 7 de octubre
+## Paquetes históricos de presupuestos · 7 de octubre
 
-Los tres ZIP c0f8a74 están descargados y verificados contra los SHA-256 de GitHub (ejecución 37558197890). Incluyen presupuestos versionados y la corrección de IVA del catálogo. Son los paquetes actuales, por encima de los históricos 23d62b8. Los cobros posteriores todavía no están en esos ZIP. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es solo simulador.
+Los tres ZIP c0f8a74 están descargados y verificados contra los SHA-256 de GitHub (ejecución 37558197890). Incluyen presupuestos versionados y la corrección de IVA del catálogo. Sustituyeron a los históricos 23d62b8. Los cobros posteriores todavía no están en esos ZIP. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es solo simulador.
+
+## Paquetes actuales de cobros y PDF · 7 de octubre
+
+Los tres ZIP bc694d8 están descargados y verificados contra los SHA-256 de GitHub (ejecución 37565648080). Incluyen presupuestos, IVA corregido, cobros y PDF. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es solo simulador. Las compras posteriores están en el código y la demo, pendientes de su nueva compilación nativa.

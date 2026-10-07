@@ -107,6 +107,7 @@ class WorkshopState {
         'photoManifest',
         'restoreFilesPending',
         'clients',
+        'purchaseLedger',
       ])
         if (j.containsKey(k)) k: j[k],
     },
