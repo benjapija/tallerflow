@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-07T17:05:52.572419+00:00",
+  "environment": "Cloudflare Pages Free browser UI + real Supabase workshop-portal HTTP; SQL-prepared fictitious workshop; no native Auth",
+  "url": "https://tallerflow.pages.dev/",
+  "checks": [
+    {
+      "name": "Production HTTPS page delivered and security headers verified",
+      "status": "passed"
+    },
+    {
+      "name": "Missing private link disables reading",
+      "status": "passed"
+    },
+    {
+      "name": "Real hosted service returned exact fictional quote version1 and total4840cents",
+      "status": "passed"
+    },
+    {
+      "name": "Client accepted ScopeA and rejected ScopeB through published page",
+      "status": "passed"
+    },
+    {
+      "name": "Refresh retained both decisions",
+      "status": "passed"
+    },
+    {
+      "name": "Access credentials removed from address bar",
+      "status": "passed"
+    }
+  ],
+  "fictitiousDataOnly": true,
+  "nativeStaffLoginValidated": false,
+  "selectedPhotosValidated": false,
+  "physicalDeviceValidated": false,
+  "cleanup": "Revocation executed separately; see portal-pages-cleanup.json",
+  "sourceAtInitialPublication": "83e1e5bc9125b099007fd1bdd72eb152c53cc645",
+  "screenshots": [
+    "cloudflare-pages-published-20261007.png",
+    "portal-pages-fictional-decision-20261007.png"
+  ]
+}

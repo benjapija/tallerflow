@@ -32,14 +32,14 @@ class FiscalLine {
     _rate(rateBps);
     _rate(discountBps);
     if (treatment != FiscalTreatment.taxable) {
-      _text(legalReason, 'Motivo del tratamiento fiscal', 1000);
+      _text(legalReason, 'Motivo del tratamiento fiscal', 2000);
       if (rateBps != 0) {
         throw const RuleException(
           'Este tratamiento no repercute cuota; revisa el tipo',
         );
       }
     } else if (legalReason.isNotEmpty) {
-      _text(legalReason, 'Referencia fiscal', 1000);
+      _text(legalReason, 'Referencia fiscal', 2000);
     }
   }
 }
@@ -149,6 +149,159 @@ class FiscalCalculation {
       adjustmentReason,
     );
   }
+
+  /// Preserve a format-1 confirmed sandbox calculation. Its server rounds the
+  /// discounted rational amount once, which differs from calculate's policy.
+  /// Validation never replaces saved amounts with today's rates or totals.
+  factory FiscalCalculation.fromConfirmedSandbox(Map<String, dynamic> saved) {
+    final rawLines = saved['lines'];
+    if (rawLines is! List ||
+        rawLines.isEmpty ||
+        rawLines.length > 1000 ||
+        saved.keys.any(
+          (key) =>
+              !{'lines', 'baseCents', 'taxCents', 'totalCents'}.contains(key),
+        )) {
+      throw const RuleException('Cálculo de ensayo confirmado inválido');
+    }
+    final lines = <FiscalCalculatedLine>[], groups = <FiscalTaxGroup>[];
+    final ids = <String>{};
+    var baseSum = 0, taxSum = 0;
+    for (final raw in rawLines) {
+      if (raw is! Map ||
+          raw.keys.any(
+            (key) => !{
+              'id',
+              'description',
+              'unitCents',
+              'quantityMilli',
+              'discountBps',
+              'taxBps',
+              'tax',
+              'treatment',
+              'reason',
+              'baseCents',
+              'taxCents',
+              'totalCents',
+            }.contains(key),
+          )) {
+        throw const RuleException('Partida de ensayo confirmada inválida');
+      }
+      int number(String key, int low, int high) {
+        final value = raw[key];
+        if (value is! int || value < low || value > high) {
+          throw RuleException('Importe o cantidad guardada inválida: $key');
+        }
+        return value;
+      }
+
+      final id = raw['id'], description = raw['description'];
+      final reason = raw['reason'] ?? '';
+      if (id is! String ||
+          !RegExp(
+            r'^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$',
+            caseSensitive: false,
+          ).hasMatch(id) ||
+          !ids.add(id.toLowerCase()) ||
+          description is! String ||
+          description.trim() != description ||
+          description.runes.length > 500 ||
+          reason is! String ||
+          reason.runes.length > 2000) {
+        throw const RuleException('Identidad o texto guardado inválido');
+      }
+      final price = number('unitCents', 0, 1000000000000);
+      final quantity = number('quantityMilli', 1, 1000000000);
+      final discount = number('discountBps', 0, 10000);
+      final rate = number('taxBps', 0, 10000);
+      final tax = switch (raw['tax']) {
+        'iva' => FiscalTax.iva,
+        'igic' => FiscalTax.igic,
+        'ipsi' => FiscalTax.ipsi,
+        'other' => FiscalTax.other,
+        _ => throw const RuleException('Impuesto guardado inválido'),
+      };
+      final treatment = switch (raw['treatment']) {
+        'taxable' => FiscalTreatment.taxable,
+        'exempt' => FiscalTreatment.exempt,
+        'reverse_charge' => FiscalTreatment.reverseCharge,
+        'outside_scope' => FiscalTreatment.outsideScope,
+        _ => throw const RuleException('Tratamiento guardado inválido'),
+      };
+      final source = FiscalLine(
+        id: id,
+        description: description,
+        quantityMilli: quantity,
+        unitPriceCents: price,
+        discountBps: discount,
+        rateBps: rate,
+        tax: tax,
+        treatment: treatment,
+        legalReason: reason,
+      );
+      final numerator =
+          BigInt.from(price) *
+          BigInt.from(quantity) *
+          BigInt.from(10000 - discount);
+      final expectedBase =
+          ((numerator + BigInt.from(5000000)) ~/ BigInt.from(10000000));
+      if (expectedBase > BigInt.from(1000000000000)) {
+        throw const RuleException('Base guardada fuera de rango');
+      }
+      final base = number('baseCents', 0, 1000000000000);
+      final quota = number('taxCents', 0, 1000000000000);
+      final total = number('totalCents', 0, 1000000000000);
+      if (base != expectedBase.toInt() ||
+          quota != _product(base, rate, 10000) ||
+          total != base + quota) {
+        throw const RuleException('La partida confirmada no cuadra');
+      }
+      final gross = _product(price, quantity, 1000);
+      lines.add(
+        FiscalCalculatedLine._(source, gross, gross - base, base, quota),
+      );
+      final index = groups.indexWhere(
+        (group) =>
+            group.tax == tax &&
+            group.treatment == treatment &&
+            group.rateBps == rate &&
+            group.legalReason == reason,
+      );
+      final old = index < 0 ? null : groups.removeAt(index);
+      final group = FiscalTaxGroup._(
+        tax,
+        treatment,
+        rate,
+        reason,
+        _amount((old?.baseCents ?? 0) + base),
+        _amount((old?.taxCents ?? 0) + quota),
+      );
+      if (index < 0) {
+        groups.add(group);
+      } else {
+        groups.insert(index, group);
+      }
+      baseSum = _amount(baseSum + base);
+      taxSum = _amount(taxSum + quota);
+      _amount(baseSum + taxSum);
+    }
+    if (saved['baseCents'] is! int ||
+        saved['taxCents'] is! int ||
+        saved['totalCents'] is! int ||
+        saved['baseCents'] != baseSum ||
+        saved['taxCents'] != taxSum ||
+        saved['totalCents'] != baseSum + taxSum) {
+      throw const RuleException('Los totales confirmados no cuadran');
+    }
+    return FiscalCalculation._(
+      List.unmodifiable(lines),
+      List.unmodifiable(groups),
+      baseSum,
+      taxSum,
+      baseSum + taxSum,
+      '',
+    );
+  }
 }
 
 class SavedTaxGroup {
@@ -247,7 +400,9 @@ void _rate(int value) {
 }
 
 void _text(String value, String field, int max) {
-  if (value.trim().isEmpty || value.length > max || value.contains('\u0000')) {
+  if (value.trim().isEmpty ||
+      value.runes.length > max ||
+      value.contains('\u0000')) {
     throw RuleException('$field inválido');
   }
 }

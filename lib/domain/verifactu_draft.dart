@@ -118,9 +118,9 @@ class VerifactuDetail {
     return '<sf:DetalleDesglose>${_tag('Impuesto', taxCode)}'
         '${_tag('ClaveRegimen', regime)}'
         '${_tag(group.treatment == FiscalTreatment.exempt ? 'OperacionExenta' : 'CalificacionOperacion', classification)}'
-        '${group.treatment == FiscalTreatment.taxable ? _tag('TipoImpositivo', fiscalDecimal(group.rateBps)) : ''}'
+        '${{FiscalTreatment.taxable, FiscalTreatment.reverseCharge}.contains(group.treatment) ? _tag('TipoImpositivo', fiscalDecimal(group.rateBps)) : ''}'
         '${_tag('BaseImponibleOimporteNoSujeto', fiscalDecimal(group.baseCents))}'
-        '${group.treatment == FiscalTreatment.taxable ? _tag('CuotaRepercutida', fiscalDecimal(group.taxCents)) : ''}'
+        '${{FiscalTreatment.taxable, FiscalTreatment.reverseCharge}.contains(group.treatment) ? _tag('CuotaRepercutida', fiscalDecimal(group.taxCents)) : ''}'
         '</sf:DetalleDesglose>';
   }
 }
@@ -249,8 +249,9 @@ void _chain(VerifactuIdentity identity, String at, VerifactuAnchor? previous) {
   if (previous == null) return;
   if (identity.issuerNif != previous.identity.issuerNif ||
       DateTime.tryParse(at) == null ||
-      !DateTime.parse(at).isAfter(DateTime.parse(previous.generatedAt))) {
-    throw const RuleException('Cadena de otro emisor o fecha no posterior');
+      DateTime.parse(at).isBefore(DateTime.parse(previous.generatedAt))) {
+    // More than one ordered sandbox record may be created in the same second.
+    throw const RuleException('Cadena de otro emisor o fecha anterior');
   }
 }
 
@@ -284,7 +285,10 @@ String _text(String value, int max) {
   final text = value.trim();
   if (text.isEmpty ||
       text.runes.length > max ||
-      text.codeUnits.any((c) => c < 32 || c == 0xfffe || c == 0xffff)) {
+      text.codeUnits.any(
+        (c) =>
+            (c < 32 && !{9, 10, 13}.contains(c)) || c == 0xfffe || c == 0xffff,
+      )) {
     throw const RuleException('Texto del registro inválido');
   }
   return text;

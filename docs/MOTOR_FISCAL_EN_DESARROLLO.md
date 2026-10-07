@@ -13,9 +13,9 @@
 
 ## Evidencia y fuentes
 
-17 pruebas nuevas de Flutter: aritmética, ajustes, límites, permisos, documentos conservados, tres huellas oficiales, QR, XML, exclusiones y separación de emisores. La batería local completa tiene 243 pruebas; analizador limpio.
+17 pruebas nuevas de Flutter: aritmética, ajustes, límites, permisos, documentos conservados, tres huellas oficiales, QR, XML, exclusiones y separación de emisores. La batería anterior tenía 243 pruebas. El avance del cliente fiscal y sus reglas se verifica en la batería nueva; consultar el informe actual para no sumar pruebas repetidas.
 
-Ocho comprobaciones XML locales: integridad de tres esquemas oficiales guardados, dos registros válidos y rechazo de sistema ausente, impuesto desconocido y decimal con coma. Los XSD se conservan sin modificar, con origen y SHA-256 en `tool/fixtures/aeat/sources.json`; un catálogo local resuelve el esquema de firma de W3C. La validación se ejecuta sin red. **Superar XSD no acredita aceptación por AEAT ni cumplimiento de todas sus validaciones de negocio.**
+Diez comprobaciones XML locales, incluyendo dos originales confirmados ficticios y las ocho anteriores: integridad de tres esquemas oficiales guardados, dos registros válidos y rechazo de sistema ausente, impuesto desconocido y decimal con coma. Los XSD se conservan sin modificar, con origen y SHA-256 en `tool/fixtures/aeat/sources.json`; un catálogo local resuelve el esquema de firma de W3C. La validación se ejecuta sin red. **Superar XSD no acredita aceptación por AEAT ni cumplimiento de todas sus validaciones de negocio.**
 
 Fuentes oficiales consultadas:
 
@@ -26,8 +26,8 @@ Fuentes oficiales consultadas:
 
 ## Pendientes de desarrollo, independientes de un taller concreto
 
-1. Registro de borradores de ensayo persistente, series separadas, recibos, cadena de integridad y copias formato 14 implementados en servidor. Auth HTTP, recuperación alojada 14 y peticiones superpuestas aprobados; interfaz/cola local e integración XML pendientes. No equivale a numeración, cadena ni continuidad fiscales; véase REGISTRO_BORRADORES_FISCALES.md. El XML sigue siendo local.
-2. Facturas completas, simplificadas donde proceda, rectificativas por diferencias/sustitución, subsanaciones, rechazo previo, destinatarios extranjeros, anticipos y regímenes especiales. Recargos y retenciones aún no implementados en el cálculo genérico.
+1. Registro de borradores de ensayo persistente, series separadas, recibos, cadena de integridad y copias formato 14 implementados en servidor. Auth HTTP, recuperación alojada 14 y peticiones superpuestas aprobados; interfaz/cola local e integración XML ya implementadas y probadas localmente. Los originales XML quedan cifrados en el dispositivo y sus copias; su almacenamiento compartido en servidor aún no está implementado. No equivale a numeración, cadena ni continuidad fiscales; véase REGISTRO_BORRADORES_FISCALES.md. El XML sigue siendo local.
+2. Facturas completas, simplificadas donde proceda, rectificativas por diferencias/sustitución, subsanaciones, rechazo previo, destinatarios extranjeros, anticipos y regímenes especiales. El módulo puro fiscal_document_rules prepara F1/F2/cualificadas, R4/R5, subsanación con desglose original, extranjeros, anticipos, recargos y retenciones mediante declaración explícita; tiene 23 pruebas dedicadas. Su contrato persistente, interfaz y XML específico siguen pendientes. No habilita facturas ni inferencias tributarias; véase FISCAL_REGLAS_DOCUMENTOS_ENSAYO.md.
 3. Validaciones de negocio publicadas por AEAT, respuestas, rechazos y reintentos; transportes y pruebas oficiales. Declaración responsable del fabricante y circuitos de conservación/revisión necesarios antes de activar emisión.
 4. Adaptadores SII, territorios forales, B2B electrónico y Administraciones, según sus especificaciones oficiales; el adaptador estatal parcial no equivale a esa cobertura.
 5. Documentos fiscales y QR definitivo únicamente después de validar el circuito aplicable. Notas y PDF actuales siguen como documentos de trabajo.

@@ -45,6 +45,9 @@ abstract class Remote {
     'La creación de cuentas requiere el servicio conectado',
   );
   Future<Map<String, dynamic>> snapshot();
+  Future<Map<String, dynamic>> fiscalDrafts() => throw UnsupportedError(
+    'Este servidor no admite registros de ensayo fiscal',
+  );
   Future<Map<String, dynamic>> push(Operation operation, String deviceId);
   bool get requiresLease => false;
   void bindDevice(String id) {}
@@ -257,6 +260,16 @@ class SupabaseRemote extends Remote {
         .timeout(const Duration(seconds: 12)),
   );
   @override
+  Future<Map<String, dynamic>> fiscalDrafts() async =>
+      Map<String, dynamic>.from(
+        await client
+            .rpc(
+              'fiscal_drafts',
+              params: {'workshop_id': workshopId, 'device_id': deviceId},
+            )
+            .timeout(const Duration(seconds: 12)),
+      );
+  @override
   Future<Map<String, dynamic>> command(
     String id,
     String action,
@@ -270,6 +283,11 @@ class SupabaseRemote extends Remote {
                 'supplier_return',
               ].contains(action)
               ? 'inventory_command'
+              : [
+                  'fiscal_draft_append',
+                  'fiscal_draft_withdraw',
+                ].contains(action)
+              ? 'fiscal_draft_command'
               : action.startsWith('fleet_')
               ? 'fleet_command'
               : action.startsWith('care_')

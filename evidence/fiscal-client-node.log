@@ -1,0 +1,372 @@
+PASS Reception canonicalizes plate and refuses injected approval/prices
+PASS Duplicate reception tasks are retained as a conflict without creating an order or another vehicle
+PASS Direct table mutation is denied to authenticated clients
+PASS Workshop isolation and anonymous reads are enforced
+PASS Technician receives assigned data without money or prior documents
+PASS Technician cannot authorize or forge a different actor
+PASS Authorized timer starts; retry has exactly one effect
+PASS Concurrent same-user timer and unauthorized extension are retained as conflicts
+PASS Retry key with altered payload is rejected
+PASS Manual time overlapping an active session cannot be duplicated
+PASS Server freezes catalog price and consumes decimal quantities once
+PASS Partial return succeeds; excess return is preserved as a conflict
+PASS Stale office review cannot silently overwrite another change
+PASS Legacy issue cannot bypass all-device atomic closure
+PASS Late records are retained without changing an emitted document
+PASS All private tables have RLS enabled
+16 database checks passed. PGlite executes PostgreSQL; hosted Supabase/Auth/Storage need separate integration tests.
+PASS Downloads enrol two technicians and office; direct privileged helpers denied
+PASS Concurrent last-stock consumption is retained as conflict without negative stock
+PASS Same UUID after lost response produces one effect
+PASS Technician cannot resolve incidents or retire devices
+PASS Office retries with original actor, preserving evidence and resolution audit
+PASS Original device receives resolution receipt and can reconcile its preserved queue
+PASS Active timer prevents acknowledgement
+PASS Change during closure invalidates request and old confirmation
+PASS Offline second technician blocks issue despite office empty queue
+PASS Lost acknowledgement response can be retried idempotently
+PASS New device enrolment invalidates fully confirmed request
+PASS Retirement never counts as normal reconciliation
+PASS Device retirement invalidates affected closure and cannot silently bypass it
+PASS Retired device cannot download or confirm, but recovered record is conserved
+PASS Retired record requires review; retry creates attributable correction before issue
+PASS Issue is atomic, computes frozen prices and labels administrative exception
+PASS Issuing retry returns same document, without duplicate document rows
+PASS Late operation after issue creates incident and leaves document unchanged
+PASS Late resolution cannot mutate emitted document, archive retains original and reason
+PASS Authenticated clients and private helpers cannot bypass immutability
+PASS Commands and device snapshots isolate workshops and reject anonymous access
+PASS Technician snapshots redact amounts in conflicts and documents
+PASS Retired owner registers replacement idempotently without restoring old authority
+PASS Recovered offline reception is retained even if its order was never uploaded
+PASS Lost active timer remains explicit until office records actual end with evidence
+PASS Fresh sign-in rebinds active identity and invalidates old closure confirmations
+PASS Retirement blocks all earlier sessions bound to the same physical identity
+PASS Signed-out session cannot modify or read even with an unexpired JWT
+PASS All reliability tables use RLS
+29 reliability checks passed. PostgreSQL/PGlite with simulated Auth; no hosted Supabase or physical devices.
+PASS Export contains documents, late originals, audit and all protocol tables, without Auth secrets
+PASS Technician and anonymous cannot export private workshop data
+PASS Malformed cross-workshop archive is rejected atomically
+PASS Missing Auth identity blocks restore without changing existing data
+PASS Malformed inventory ledger blocks restoration atomically
+PASS Malformed or cross-workshop planning blocks restoration atomically
+PASS Invalid maintenance archive rejects foreign vehicles, dates, versions and chronology atomically
+PASS Malformed fleet recovery rejects foreign vehicles, actors, duplicate links and missing evidence atomically
+PASS Malformed case library blocks restoration atomically
+PASS Independent database restores original documents, records and audit
+PASS Restored portal links are disabled while original customer decisions and receipts survive
+PASS Restored acknowledgements remain historical, active closure is invalidated and account request cannot gain authority
+PASS Lost restoration reply can be retried without duplicate documents or original operations
+PASS Same restore ID with changed content and restore over populated workshop are rejected
+PASS Historical device sessions stay retired and cannot mint another editing identity
+PASS Restored issued document remains immutable and further records remain late
+PASS Version seven archives remain recoverable without a purchase table
+PASS Version eight archive restores with an empty case library
+PASS Version nine archive restores without reactivating any customer link
+PASS Version ten restores without an agenda and preserves portal revocation
+PASS Version eleven restores agenda and starts empty maintenance while retaining original evidence
+PASS Version twelve restores original maintenance with fleets initially empty
+22 backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.
+PASS Administrator settings update is audited; stale concurrent update is rejected
+PASS Settings reject missing or excessive tax without partial changes
+PASS Command retries are idempotent and altered payload is rejected
+PASS Last administrator cannot disable or demote itself
+PASS Technician has neither administration API nor hidden tariff/cost data
+PASS Configurable price and cost access is enforced by the server
+PASS Catalog adjustment retains previous movements and frozen prices
+PASS Duplicate catalog references and inactive consumption are prevented
+PASS Versioned templates prepare unauthorized tasks after compatibility review
+PASS Tasks reject foreign assignees and retain evidence on stale editing
+PASS Active timers prevent reassignment and account removal
+PASS Task blocks require a responsible member and stop starts until resolved
+PASS Scope edits preserve prior authorization and other task consent
+PASS Cancellation retains tasks and refuses work with recorded time/consumption
+PASS Priority/location updates are scoped, audited and require latest revision
+PASS Backup includes management data, versions and permissions
+16 administration and task checks passed. Hosted Auth and actual devices require separate validation.
+PASS Registration changes retain stable ID, original document and technical data
+PASS Previous registration finds the same car and recipient on a later visit
+PASS Owner transfer leaves every previous recipient and issued document unchanged
+PASS New visits use the new recipient; stale offline owner data is retained as conflict
+PASS An earlier recipient ID cannot be renamed into a new owner
+PASS Technicians see technical history without recipient details or personal documents
+PASS Anonymous access and direct recipient mutation remain denied
+PASS Workshop isolation and ambiguous registration/VIN prevent cross-linking
+PASS Full export includes immutable recipients, aliases and changes without transferring document access
+9 vehicle PostgreSQL integration tests passed (local PGlite, synthetic Auth)
+PASS Internal labor costs and initial prices come from validated workshop settings
+PASS Discounts apply to frozen prices and remaining quantity, with deterministic per-line tax
+PASS No-charge consumption keeps stock and source costs and documents its reason
+PASS Stale concurrent review preserves its original as conflict and does not replace current prices
+PASS Recharging a gift invalidates the old authorization and preserves its exact evidence
+PASS Invalid discounts, missing reasons, forged costs and unsupported targets are retained without mutation
+PASS Operator access hides price reviews, discounts and internal costs and cannot edit prices
+PASS Office without cost permission can inspect prices while internal cost snapshots remain absent
+PASS Portable export preserves review evidence, returned quantities and frozen costs
+PASS Late price reviews preserve issued personal documents and enter recovery evidence
+10 pricing PostgreSQL integration tests passed (local PGlite, synthetic Auth)
+PASS Admin prepares a stable request and excludes credential fields
+PASS Clients cannot read requests or invoke elevated finalization
+PASS Foreign existing identities are never adopted or given membership
+PASS Only the matching server marker can finalize; retries have one membership and audit effect
+PASS Retired or reassigned device and inactive admin revoke provisioning authority
+PASS Non-admin cannot prepare accounts and permissions are validated before any request
+PASS Workshop archive includes account recovery records without passwords
+7 account provisioning checks passed. Auth API and native operation require separate validation.
+PASS Unauthorized requests have no provisioning effects
+PASS Credential-like payload fields are removed before prepare and an uncertain finish is recoverable
+PASS Retry reuses the existing Auth identity after interrupted finalization
+PASS Revocation checked during prepare prevents new identities
+PASS Invalid passwords and identifiers fail before storage
+PASS Authentication outages return a controlled response without provisioning
+6 account function checks passed with simulated Auth API.
+PASS Authorized prepare is stable after lost response and metadata ID reuse is rejected
+PASS Assigned uploader may INSERT only exact reserved path and cannot fabricate evidence
+PASS Immutable file denies all direct reads, UPDATE, DELETE and signed URLs
+PASS Direct object GET is denied and authorized download metadata is isolated by role and session
+PASS Pending verification blocks closure and document issuance
+PASS Verifier rejects changed hash and attaches verified file once across retries
+PASS Unassigned account cannot read another operator evidence or reserve its order
+PASS Office reads files and session revocation immediately invalidates a previously permitted file
+PASS Complete export includes original file manifest and no Storage or Auth table writes
+PASS Independent recovery rejects absent attached-file manifest before any data is restored
+PASS Independent recovery retires old devices and requires original files before new work
+PASS Restoration uploads remain immutable and repeated verification clears the file gate without rewriting order
+PASS Recovered original device evidence needs office review and cannot be attached by its operator
+13 photo checks passed in local PostgreSQL/PGlite, including an independent recovery database. Storage HTTP and camera remain separate validations.
+PASS Invalid authentication has no privileged Storage effects
+PASS User-scoped denial precedes all service-role operations
+PASS Verified bytes are hashed and finalized; retry is delegated to SQL receipt
+PASS Corruption, oversize and non-JPEG files never reach finalization
+PASS Permission revocation after download is rechecked during finalization
+PASS Public or unavailable bucket aborts before download
+PASS Malformed actions and large metadata fail without privileged effects
+PASS Prepare uses stable caller command and returns only authorized info
+PASS Private POST download rechecks permissions and returns bytes without cache or signed URL
+PASS Revoked read has no privileged download effects
+PASS Revocation during byte transfer prevents any bytes from being returned
+PASS Download cannot return corrupt bytes or a changed manifest
+12 photo function checks passed with simulated Auth and Storage dependencies.
+PASS Preview distinguishes duplicate rows and validation errors without writing
+PASS Commit keeps per-row results and creates only valid unique rows with audit
+PASS Lost reply retry creates no extra client or audit and changed payload is rejected
+PASS Vehicle import binds the stable customer and current identifiers without creating repair orders
+PASS Repeated VIN or registration preserves existing owner and history; missing client is a row error
+PASS Office cannot import catalog and technician cannot preview clients or read private contacts
+PASS Admin catalog import retains exact decimal quantities and unknown costs
+PASS Catalog duplicate never overwrites price or stock and invalid quantities are row errors
+PASS Unexpected fields, repeated row IDs and wrong workshop leave no imported data
+PASS Account revocation blocks import retries and exported customers are included in current schema
+PASS Independent database recovers imported clients, vehicles, catalog and command originals
+PASS Version 6 recovery seeds historical owners without granting new document access
+12 CSV checks passed in local PostgreSQL/PGlite. Hosted Auth, HTTP and native CSV file pickers remain separate validations.
+PASS An assigned operator records findings without creating tasks or charges
+PASS A lost response replays the original once
+PASS Review keeps its previous version in private technical history
+PASS Concurrent stale revision and obsolete version retain conflict evidence
+PASS Invalid findings, duplicates, money injection and unrelated photos are rejected
+PASS Unassigned and revoked accounts cannot inspect an order
+PASS Resolved conflicts permit coordinated closure and late inspections preserve the document
+PASS Complete export keeps versions, originals, immutable document and audit
+8 inspection checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Draft snapshots decimals and taxes without authorizing or consuming stock
+PASS Lost response is once; altered idempotency identity is refused
+PASS Office records exact-version evidence and authorizes only that task
+PASS Operators receive no quote documents, cannot decide, and cannot execute helpers
+PASS An extension preserves the original and its rejection preserves approved work
+PASS Batch below performed work, duplicate decisions, stale revisions and forged amount fail atomically
+PASS Changed prices require a reviewed current version
+PASS Malformed lines, duplicates, unknown tasks, empty scope and extra totals retain conflict evidence
+PASS Complete backup includes immutable versions, decisions, operation originals and audit
+9 quote checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS No receipt before work-note issuance
+PASS Partial payment preserves issued note and integer balance
+PASS Lost response replays once; altered idempotency content fails
+PASS Two partial reversals retain original and reject an excessive third
+PASS Stale revision, extra fields, overpayment and invalid date retain conflicts without changing ledger
+PASS Missing source and refund before original receipt are rejected
+PASS Credit delivery records its reason and balance without creating money
+PASS Settlement after delivery preserves original credit decision and work note
+PASS Operators with price permission never see private receipts or delivery evidence and cannot record money
+PASS Complete backup contains receipts, linked reversals, original document and audit
+10 payment checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Request snapshots packages and cost without adding stock
+PASS Partial receipt applies five litres with original cost
+PASS Lost-response receipt is applied once and altered command identity fails
+PASS Stale, over-received and unknown fields are refused without changing stock
+PASS Supplier returns retain receipt, reduce stock once and cannot exceed original remainder
+PASS Operators and office without cost permission cannot view or modify purchases
+PASS Private stock helpers and state table are inaccessible directly
+PASS Complete export contains purchase ledger, movement receipts and updated stock
+8 purchase checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Linked reception retains source note and requires fresh authorization
+PASS Lost response preserves one link and one set of fresh tasks
+PASS Human reclassification appends history and retry is once
+PASS Stale reclassification and replacement of original reference retain conflicts
+PASS Foreign vehicle or unknown source rolls back reception atomically
+PASS Operators cannot classify or read personal classification evidence
+PASS Ownership change gives the new return its current recipient without copying old documents
+PASS Complete backup retains new link, classification history, original document and audit
+8 linked-return checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Hypotheses and measurements append without authorization, time or consumption
+PASS Conclusions and verification require human confirmation; price injection fails
+PASS Lost response is once and altered original command identity is refused
+PASS Correction appends its parent and stale reviews cannot replace it
+PASS Withdrawal retains evidence and its retry creates no second withdrawal
+PASS A technician cannot correct another author entry; office can review it
+PASS Technical evidence after issuance leaves original document and financial data intact
+PASS Unassigned technicians and private helper access are denied
+PASS Complete export preserves entries, withdrawals, original operation evidence and audit
+9 diagnosis checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Draft requires active source evidence, technical-only fields and proper assignment
+PASS Lost draft reply is retried once and altered command identity is refused
+PASS Explicit technical and privacy checks are both necessary before publishing
+PASS Published technical view excludes private source identities, authors, reasons and drafts
+PASS Another author, stale reviewer and direct private access cannot change cases
+PASS Workshop isolation and anonymous access are enforced on reads and writes
+PASS Source evidence withdrawal flags case and blocks revalidation
+PASS Office withdrawal retains all versions and audits without altering the repair document
+PASS Fresh evidence allows a new reviewed version while old versions remain original
+PASS Backup version nine includes versions, receipts, audit and source evidence
+PASS Retiring a device blocks retries even when command was already committed
+11 case-library checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Only admin can configure HTTPS portal without credentials or query and keep other settings
+PASS Office verifies recipient, scope, expiry and secret hashes before creation
+PASS Lost create reply returns original grant without another access and rejects altered identity
+PASS Staff and anonymous cannot invoke the service-only customer boundary
+PASS Link alone, wrong code and unknown grant return no private detail
+PASS Verified read exposes selected version and status without office notes, costs or contact
+PASS Customer acceptance applies exact original amount and records distinct customer identity
+PASS Decision response hides internal tasks while workshop keeps original audit links
+PASS Lost acceptance reply cannot duplicate authorization and changed decisions fail
+PASS Old link displays its version and never accepts a later version or invented amount
+PASS Revocation and expiry deny previous secrets and preserve original decisions
+PASS Five failed codes lock only the known grant; unknown token cannot lock access
+PASS Current owner transfer and retired issuing account stop previous recipient access
+PASS Complete archive includes grant hashes, customer decisions and audit without raw credentials
+14 customer portal checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Both strong credentials are required before privileged reads
+PASS Only hashes reach the server boundary and replies have no cache
+PASS Expired or revoked credentials never return private details
+PASS Malformed actions, extra identity, large bodies and method are refused
+PASS Decision retry preserves its chosen command identity and version authority stays in SQL
+PASS Private photo is checked before download and checked again before returning bytes
+PASS Revocation during transfer prevents photo disclosure
+PASS Corrupt or changed photo bytes and unavailable data do not leak server errors
+8 portal function checks passed with simulated server and Storage dependencies.
+PASS No plate, query or incomplete link authenticates the portal
+PASS Separate code normalization never accepts weak identifiers
+PASS Only explicit per-line choices become decisions, with no amount or identity
+PASS Lost response retries the same command and original choices over private POST
+PASS Refreshing reconciles a committed reply by exact original identity
+5 portal browser-client checks passed with simulated HTTP.
+PASS Admin configures lifts; office and technicians cannot change resources
+PASS Office reserves several technicians and lift without billing or changing repair
+PASS Lost response retries once; different payload with same ID is rejected
+PASS Stale simultaneous reservation cannot replace newer agenda
+PASS Any shared technician or lift blocks an overlapping appointment
+PASS Foreign order, duplicate members and missing or invalid timezone are rejected atomically
+PASS Technician sees own slots without office history or unassigned repair identifiers
+PASS Reprogramming preserves original slot, finishing and cancelling never erase versions
+PASS Indisponibility blocks slots, adjacent windows work, future reservations prevent lift retirement
+PASS Another workshop cannot see agenda; anonymous cannot call RPC or tables
+PASS Complete archive includes versioned agenda and command evidence
+PASS Revoked session stops queued reservations and replay
+12 planning checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Office plans explicit dates, mileage and manual criteria without changing repair
+PASS Response retries cannot duplicate plans or reuse altered content
+PASS Stale version, foreign vehicle, invalid calendar date and missing threshold fail atomically
+PASS Versions preserve original plan and same vehicle identity
+PASS Completion uses local calendar date, recurring thresholds and highest observed mileage
+PASS Lost completion reply reuses identity, while duplicate chronological and future entries fail
+PASS Month recurrence clamps January 31 and respects leap days
+PASS Single plan completion and pause keep evidence and cannot overwrite terminal plans
+PASS Assigned technicians see technical maintenance without office history; other technicians see none
+PASS Owner and plate changes retain technical plan without adding old customer documents
+PASS Current archive contains maintenance, immutable versions, audit and receipts
+PASS Workshop isolation, anonymous access and retired sessions are enforced
+12 maintenance checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Office grouping and membership preserve repairs and original owner evidence
+PASS Lost reply retains identity and rejects changed command reuse
+PASS Versions preserve prior group and organization
+PASS Stale writes, foreign owner or vehicle, and missing evidence fail atomically
+PASS One active membership requires explicit removal before transfer
+PASS Archive requires removal and cannot overwrite historical fleet
+PASS Owner changes retain original binding and require new verification
+PASS Technicians cannot read personal fleet evidence or mutate groups
+PASS Archive contains memberships, versions, audit and receipts
+PASS Workshop boundaries, direct table access and anonymous calls are denied
+10 fleet checks passed in PostgreSQL/PGlite with synthetic Auth.
+PASS Technical projection omits personal identity, notes, actors, costs and withdrawn evidence
+PASS Office projection separates completed time, consumption and return from reservations
+PASS Staff cannot invoke service budget or finish endpoints
+PASS Repair revision, foreign workshop, session and role are checked before consuming budget
+PASS A lost reply returns the original reservation and never starts a second model request
+PASS Completed response requires human review and stays immutable under retries
+PASS Read-only recovery returns only the original actor and device response
+PASS Actual consumption releases only the unused reservation and uncertain work retains its full charge
+PASS Request count is capped independently from its amount
+PASS Invalid budgets and hashes are rejected without receipts or audit
+PASS Result cannot finish a different reservation
+PASS Archive retains AI receipts and audit without changing orders or document snapshots
+PASS Removed session cannot preview evidence or spend budget
+PASS Anonymous access and direct receipt writes are denied
+14 AI checks passed in PostgreSQL/PGlite with synthetic Auth; no provider request.
+PASS Service stays disabled without explicit free credits, rates, budget or model
+PASS Authentication is checked before contextual reads
+PASS Preview exposes selected source fields without identity, private fields or cached copies
+PASS Method, oversized bodies, malformed UUID and server configuration overrides are refused
+PASS Technical identity, privacy and original source confirmations are mandatory
+PASS Request sends only necessary sources and uses server model, structured draft and no storage
+PASS Grounded draft preserves known DTC and returns explicit review with original sources
+PASS Unbacked specifications, amounts, unknown DTC, missing sources and unexpected fields fail review
+PASS Office drafts require registered sources and contain no generated prices or operations
+PASS Retries return an immutable completed receipt without calling the provider again
+PASS Pending and uncertain retries remain consumed rather than duplicate external work
+PASS Provider refusal, incomplete results and usage outside reservation remain uncertain
+PASS Revoked membership or changed evidence after generation cannot publish a draft
+PASS Denied budget makes no provider request and hides internal errors
+PASS Network interruption consumes the reservation and never writes a generated repair
+PASS Cost ceiling uses integer arithmetic and rounds upward without floating-point error
+PASS Read-only recovery never spends or resubmits a model request
+17 AI service checks passed with simulated Auth, database and provider; zero external API calls.
+PASS Admin stores preparation independently for the workshop
+PASS Lost reply retries the original command without new revision
+PASS Reusing identity with changed profile or reason is rejected
+PASS Stale preparation conflicts instead of overwriting
+PASS Server refuses activation, secrets, unknown or incomplete options
+PASS Options stay preparatory for each Spanish territory and legal form
+PASS Tariff changes keep preparation and existing document unchanged
+PASS Backup retains profile, immutable document and reasoned audit
+PASS Office and technician cannot update preparation
+PASS Foreign workshop remains unchanged and inaccessible
+PASS Session revocation blocks configuration
+PASS Anonymous and direct access cannot bypass the public command
+12 fiscal preparation checks passed in PostgreSQL/PGlite; emission remains disabled.
+PASS Append computes the amount and allocates only a sandbox number
+PASS Lost reply retries return the original identity, number and fingerprint
+PASS Reusing command identity with changed data fails
+PASS Stale head or altered expected fingerprint fails without consuming a number
+PASS Two queued contenders on the same head have exactly one effect
+PASS Prefixes have their own counters and share the installation chain
+PASS Another installation starts a distinct chain
+PASS Another issuer is isolated even with the same installation and series
+PASS Invalid lines, dates, treatment and activation are rejected atomically
+PASS Reasoned special treatment is explicit, with zero tax
+PASS Half cents round per line and quantities remain exact
+PASS Withdrawal retains the original and never recycles its number
+PASS Withdrawals cannot cross installation, issuer or replace original data
+PASS Office and technician cannot read or append private fiscal drafts
+PASS A member of another workshop cannot read this ledger
+PASS Direct client reads, private helpers and anonymous RPCs are denied
+PASS Original ledger entries cannot be updated or deleted
+PASS Current backup contains every series, record, receipt and reasoned audit
+PASS Missing ledger table rejects recovery before it can be mistaken for an empty series
+PASS Tampered fingerprint, missing records, receipts or audit reject recovery atomically
+PASS Recovery preserves immutable contents and freezes restored installations
+PASS Version 13 archives remain compatible but cannot hide nonempty fiscal data
+PASS SII and foral preparation cannot silently choose the draft circuit
+PASS Revoked Auth session also blocks an idempotent retry
+24 fiscal draft ledger checks passed in PostgreSQL/PGlite; queued calls are not a multi-connection concurrency proof. No fiscal emission or hosted Auth HTTP.
+3 PostgreSQL sandbox fingerprint vectors passed; no hosted request or AEAT submission.

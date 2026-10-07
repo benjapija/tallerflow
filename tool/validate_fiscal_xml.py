@@ -40,6 +40,21 @@ def main():
 
     for name in ["high", "cancellation"]:
         validate(fixtures / (name + ".xml"), True, name + " matches official XSD")
+    manifest_path = fixtures / "ledger-manifest.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text())
+        if not isinstance(manifest, list) or not manifest:
+            raise AssertionError("Empty confirmed-ledger XML evidence")
+        for entry in manifest:
+            name = entry["file"]
+            if Path(name).name != name or not name.startswith("ledger-") or not name.endswith(".xml"):
+                raise AssertionError("Invalid local ledger XML evidence filename")
+            data = (fixtures / name).read_bytes()
+            assert hashlib.sha256(data).hexdigest().upper() == entry["xmlSha256"]
+            assert data.decode("utf-8") == entry["xml"]
+            assert entry["emissionEnabled"] is False and entry["transmissionEnabled"] is False
+            assert entry["ledgerHash"] != entry["aeatHash"]
+            validate(fixtures / name, True, name + " confirmed sandbox projection matches XSD")
     sf = "{https://www2.agenciatributaria.gob.es/static_files/common/internet/dep/aplicaciones/es/aeat/tike/cont/ws/SuministroInformacion.xsd}"
     high = (fixtures / "high.xml").read_text()
     with tempfile.TemporaryDirectory(prefix="tallerflow-fiscal-") as temp:

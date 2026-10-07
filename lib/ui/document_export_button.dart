@@ -23,15 +23,19 @@ class _DocumentExportButtonState extends State<DocumentExportButton> {
     setState(() => busy = true);
     try {
       final source = widget.source();
-      final identity =
-          await formDialog(context, 'Datos del taller para esta copia PDF', [
-            const FieldSpec('name', 'Nombre del taller'),
-            const FieldSpec(
-              'contact',
-              'Dirección y contacto (opcional)',
-              required: false,
-            ),
-          ], (values) => Map<String, dynamic>.from(values));
+      final identity = await formDialog(
+        context,
+        'Datos del taller para esta copia PDF',
+        [
+          const FieldSpec('name', 'Nombre del taller'),
+          const FieldSpec(
+            'contact',
+            'Dirección y contacto (opcional)',
+            required: false,
+          ),
+        ],
+        (values) => Map<String, dynamic>.from(values),
+      );
       if (identity == null) return;
       final bytes = await buildDocumentPdf(
         source,

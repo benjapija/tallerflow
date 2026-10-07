@@ -11,6 +11,9 @@ import '../domain/portal.dart';
 import '../domain/planning.dart';
 import '../domain/maintenance.dart';
 import '../domain/fleets.dart';
+import '../domain/fiscal_drafts.dart';
+import '../domain/fiscal_draft_xml.dart';
+import '../domain/verifactu_draft.dart';
 import 'cloud.dart';
 import 'demo.dart';
 import 'vault.dart';
@@ -23,6 +26,7 @@ import 'photo_blobs.dart';
 part 'controller_photos.dart';
 part 'controller_photo_backup.dart';
 part 'controller_assistant.dart';
+part 'controller_fiscal_drafts.dart';
 
 class WorkshopController extends ChangeNotifier {
   final Vault vault;
@@ -49,6 +53,10 @@ class WorkshopController extends ChangeNotifier {
   Set<String> cachedPhotoHashes = {};
   Map<String, dynamic>? captureTicket;
   List<Map<String, dynamic>> assistantRecords = [];
+  Map<String, dynamic> _fiscalDraftLedger = emptyFiscalDraftLedger();
+  List<Map<String, dynamic>> _fiscalDraftQueue = [];
+  List<Map<String, dynamic>> _fiscalDraftXmlArtifacts = [];
+  bool _fiscalDraftsLoaded = false;
   bool accessRevoked = false;
   bool _disposed = false;
   @override
@@ -652,6 +660,15 @@ class WorkshopController extends ChangeNotifier {
           : cloneMap(Map<String, dynamic>.from(saved['captureTicket']));
       assistantRecords = _maps(saved['assistantRecords']);
       _validateAssistantRecords(assistantRecords);
+      await _validateFiscalLocal(saved);
+      _fiscalDraftLedger = cloneMap(
+        Map<String, dynamic>.from(
+          saved['fiscalDraftLedger'] ?? emptyFiscalDraftLedger(),
+        ),
+      );
+      _fiscalDraftQueue = _maps(saved['fiscalDraftQueue']);
+      _fiscalDraftXmlArtifacts = _maps(saved['fiscalDraftXmlArtifacts']);
+      _fiscalDraftsLoaded = saved['fiscalDraftsLoaded'] == true;
       validatedAt = DateTime.tryParse(saved['validatedAt'] ?? '');
       lastObservedAt = DateTime.tryParse(saved['lastObservedAt'] ?? '');
       accessRevoked = saved['accessRevoked'] == true;
@@ -675,6 +692,39 @@ class WorkshopController extends ChangeNotifier {
 
   static List<Map<String, dynamic>> _maps(dynamic values) =>
       (values as List? ?? []).map((v) => Map<String, dynamic>.from(v)).toList();
+  static bool _containsAdministrativeFiscalData(dynamic value) {
+    bool populated(dynamic rows) =>
+        rows != null &&
+        (rows is List
+            ? rows.isNotEmpty
+            : rows is Map
+            ? rows.isNotEmpty
+            : true);
+    if (value is Map) {
+      if (populated(value['fiscalDraftQueue']) ||
+          populated(value['fiscalDraftXmlArtifacts'])) {
+        return true;
+      }
+      final ledger = value['fiscalDraftLedger'];
+      if (ledger is Map) {
+        if ([
+          'heads',
+          'series',
+          'records',
+        ].any((key) => populated(ledger[key]))) {
+          return true;
+        }
+      } else if (ledger != null) {
+        return true;
+      }
+      // Recovery evidence keeps previous/original snapshots. Protect those
+      // private records as well as the currently selected cache, without
+      // discarding the originals or their audit history.
+      return value.values.any(_containsAdministrativeFiscalData);
+    }
+    return value is List && value.any(_containsAdministrativeFiscalData);
+  }
+
   Future<void> _persist() {
     final now = clock().toUtc();
     if (lastObservedAt == null || now.isAfter(lastObservedAt!)) {
@@ -709,6 +759,10 @@ class WorkshopController extends ChangeNotifier {
     'cachedPhotoHashes': cachedPhotoHashes.toList(),
     'captureTicket': captureTicket,
     'assistantRecords': assistantRecords,
+    'fiscalDraftLedger': _fiscalDraftLedger,
+    'fiscalDraftQueue': _fiscalDraftQueue,
+    'fiscalDraftXmlArtifacts': _fiscalDraftXmlArtifacts,
+    'fiscalDraftsLoaded': _fiscalDraftsLoaded,
   };
 
   Future<Map<String, dynamic>> exportBackup({
@@ -719,6 +773,12 @@ class WorkshopController extends ChangeNotifier {
     if (complete && (actor.role != Role.admin || demo || offline)) {
       throw const RuleException(
         'Conecta como administrador para copiar el servidor',
+      );
+    }
+    if (actor.role != Role.admin &&
+        _containsAdministrativeFiscalData(localArchive())) {
+      throw const RuleException(
+        'Esta copia conserva ensayos de administración. Recupera el acceso administrador antes de exportarla',
       );
     }
     final server = complete ? await remote!.exportWorkshop() : null;
@@ -753,6 +813,7 @@ class WorkshopController extends ChangeNotifier {
         pendingCommands.isNotEmpty ||
         pendingAccountCreation != null ||
         assistantRecords.any((r) => r['status'] == 'pending') ||
+        hasPendingFiscalDrafts ||
         hasPendingPhotos) {
       throw const RuleException(
         'Conserva y reconcilia los pendientes de este equipo antes de restaurar otra copia',
@@ -760,6 +821,7 @@ class WorkshopController extends ChangeNotifier {
     }
     final local = cloneMap(Map<String, dynamic>.from(archive['local']));
     _validateAssistantRecords(_maps(local['assistantRecords']));
+    await _validateFiscalLocal(local);
     if (![1, 2].contains(local['schema']) ||
         local['actor']['id'] != actor.id ||
         local['state']['workshopId'] != state.workshopId) {
@@ -858,6 +920,7 @@ class WorkshopController extends ChangeNotifier {
     if (actor.role != Role.admin ||
         archive['workshopId'] != state.workshopId ||
         archive['server'] == null ||
+        hasPendingFiscalDrafts ||
         outbox.isNotEmpty ||
         pendingCommands.isNotEmpty ||
         hasPendingPhotos) {
@@ -1141,6 +1204,16 @@ class WorkshopController extends ChangeNotifier {
       await _refresh();
       await _uploadPhotos();
       await _refresh();
+      try {
+        await _drainFiscalDrafts();
+        if (_fiscalDraftsLoaded &&
+            actor.role == Role.admin &&
+            !hasPendingFiscalDrafts) {
+          await _refreshFiscalDraftLedger();
+        }
+      } catch (e) {
+        syncError = 'Ensayos conservados para reconciliar: $e';
+      }
       if (failures.isNotEmpty) {
         syncError = 'Registros conservados para revisión de oficina.';
       }
@@ -1415,7 +1488,12 @@ class WorkshopController extends ChangeNotifier {
     };
     final oldDevice = deviceId,
         oldCommands = pendingCommands.toList(),
-        oldHistory = commandHistory.toList();
+        oldHistory = commandHistory.toList(),
+        oldFiscalQueue = _fiscalDraftQueue;
+    _fiscalDraftQueue = _maps(cloneMap({'rows': _fiscalDraftQueue})['rows']);
+    for (final request in _fiscalDraftQueue) {
+      request['sourceDeviceRetained'] = true;
+    }
     for (final cmd in pendingCommands) {
       commandHistory.add({
         ...cmd,
@@ -1436,6 +1514,7 @@ class WorkshopController extends ChangeNotifier {
       deviceId = oldDevice;
       pendingCommands = oldCommands;
       commandHistory = oldHistory;
+      _fiscalDraftQueue = oldFiscalQueue;
       rethrow;
     }
     remote!.bindDevice(deviceId);

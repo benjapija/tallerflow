@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-07T17:05:52.574498+00:00",
+  "Flutter": 333,
+  "PostgreSQLPGlite": 295,
+  "PostgreSQLJsonbVectors": 3,
+  "simulatedServices": 43,
+  "simulatedPortalClient": 5,
+  "VMXmlProjection": 13,
+  "offlineXsdChecks": 10,
+  "webRelease": "passed",
+  "format": "passed",
+  "staticAnalysis": "passed",
+  "fiscalDocumentRulesIncludedInFlutterTotal": 23,
+  "nativeHostedAuthThisExecution": "not tested",
+  "emissionEnabled": false,
+  "transmissionEnabled": false,
+  "realAiEnabled": false
+}

@@ -1,0 +1,79 @@
+{
+  "scope": "Local PostgreSQL/PGlite jsonb::text and sandbox fingerprints, fictional only",
+  "cases": [
+    {
+      "body": {
+        "b": 2,
+        "a": 1,
+        "long": "Álvarez & <ensayo>",
+        "z": [
+          true,
+          false,
+          null,
+          7
+        ]
+      },
+      "previousHash": "",
+      "canonical": "{\"a\": 1, \"b\": 2, \"z\": [true, false, null, 7], \"long\": \"Álvarez & <ensayo>\"}",
+      "ledgerHash": "CBB9620D500F67D6A792B01C97B2E0CD6720AE8B0581DFBAC9971630E5F6D5E5"
+    },
+    {
+      "body": {
+        "é": "España 🛠",
+        "a": "quote \" slash \\ line\n tab\t",
+        "zz": 1000000000000,
+        "汉": "漢字"
+      },
+      "previousHash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "canonical": "{\"a\": \"quote \\\" slash \\\\ line\\n tab\\t\", \"zz\": 1000000000000, \"é\": \"España 🛠\", \"汉\": \"漢字\"}",
+      "ledgerHash": "B31968B98CA820C95E161DBE45E7F8489134EAF08EE8C5F531F54AE236217854"
+    },
+    {
+      "body": {
+        "draftFormat": 1,
+        "scope": "sandbox",
+        "emissionEnabled": false,
+        "transmissionEnabled": false,
+        "id": "00000000-0000-4000-8000-000000000001",
+        "issuerNif": "B12345678",
+        "installation": "sandbox-a",
+        "sequence": 1,
+        "kind": "draft",
+        "prefix": "ENSAYO-A",
+        "number": 1,
+        "reason": "Ensayo ficticio",
+        "actorId": "00000000-0000-4000-8000-000000000002",
+        "deviceId": "00000000-0000-4000-8000-000000000003",
+        "createdAt": "2026-10-07T12:00:00.123456+00:00",
+        "issueDate": "2026-10-07",
+        "recipient": {
+          "name": "Cliente ficticio",
+          "nif": "12345678Z"
+        },
+        "calculation": {
+          "lines": [
+            {
+              "id": "00000000-0000-4000-8000-000000000004",
+              "description": "Revisión ficticia",
+              "unitCents": 3333,
+              "quantityMilli": 1500,
+              "discountBps": 1250,
+              "taxBps": 2100,
+              "tax": "iva",
+              "treatment": "taxable",
+              "baseCents": 4375,
+              "taxCents": 919,
+              "totalCents": 5294
+            }
+          ],
+          "baseCents": 4375,
+          "taxCents": 919,
+          "totalCents": 5294
+        }
+      },
+      "previousHash": "",
+      "canonical": "{\"id\": \"00000000-0000-4000-8000-000000000001\", \"kind\": \"draft\", \"scope\": \"sandbox\", \"number\": 1, \"prefix\": \"ENSAYO-A\", \"reason\": \"Ensayo ficticio\", \"actorId\": \"00000000-0000-4000-8000-000000000002\", \"deviceId\": \"00000000-0000-4000-8000-000000000003\", \"sequence\": 1, \"createdAt\": \"2026-10-07T12:00:00.123456+00:00\", \"issueDate\": \"2026-10-07\", \"issuerNif\": \"B12345678\", \"recipient\": {\"nif\": \"12345678Z\", \"name\": \"Cliente ficticio\"}, \"calculation\": {\"lines\": [{\"id\": \"00000000-0000-4000-8000-000000000004\", \"tax\": \"iva\", \"taxBps\": 2100, \"taxCents\": 919, \"baseCents\": 4375, \"treatment\": \"taxable\", \"unitCents\": 3333, \"totalCents\": 5294, \"description\": \"Revisión ficticia\", \"discountBps\": 1250, \"quantityMilli\": 1500}], \"taxCents\": 919, \"baseCents\": 4375, \"totalCents\": 5294}, \"draftFormat\": 1, \"installation\": \"sandbox-a\", \"emissionEnabled\": false, \"transmissionEnabled\": false}",
+      "ledgerHash": "D69FD5964396F9899B7ECD512FEBD31A0EC256FF7FA39CB2D1D9636BCA5DDAA0"
+    }
+  ]
+}

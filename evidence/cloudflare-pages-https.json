@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-07T16:55:25.591198+00:00",
+  "url": "https://tallerflow.pages.dev/",
+  "environment": "Cloudflare Pages Free production, HTTPS checked by curl with certificate validation",
+  "checks": [
+    {
+      "name": "HTTPS status 200",
+      "status": "passed"
+    },
+    {
+      "name": "portal delivered",
+      "status": "passed"
+    },
+    {
+      "name": "no store",
+      "status": "passed"
+    },
+    {
+      "name": "no referrer",
+      "status": "passed"
+    },
+    {
+      "name": "nosniff",
+      "status": "passed"
+    },
+    {
+      "name": "frames denied",
+      "status": "passed"
+    },
+    {
+      "name": "restricted CSP",
+      "status": "passed"
+    }
+  ],
+  "headers": {
+    "cache-control": "no-store",
+    "referrer-policy": "no-referrer",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; connect-src https://gpseuqmzbazifmkhjyby.supabase.co; img-src 'self' blob:; frame-ancestors 'none'; object-src 'none'; base-uri 'none'; form-action 'self'"
+  },
+  "nativeSupabaseValidated": false
+}

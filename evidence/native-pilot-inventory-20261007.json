@@ -1,0 +1,53 @@
+{
+  "preparedAt": "2026-10-07T15:51:56Z",
+  "observedBetween": {
+    "from": "2026-10-07T15:41:07Z",
+    "to": "2026-10-07T15:44:55Z"
+  },
+  "scope": "Read-only local SDK and device inventory from sandboxed subagent; no native application run",
+  "android": {
+    "sdkPath": "/Users/benja/Library/Android/sdk",
+    "adbVersion": "1.0.41 / 37.0.1-15733141",
+    "existingDaemonObserved": true,
+    "existingDaemonAddress": "127.0.0.1:5037",
+    "deviceListCommand": "adb -H 127.0.0.1 -P 5037 devices -l",
+    "deviceListResult": "blocked",
+    "reason": "Sandbox denied connection to the existing local ADB daemon; no new daemon was started",
+    "physicalDeviceAvailability": "unknown from this inventory",
+    "licenseAcceptance": "Previously confirmed by user; not requested again"
+  },
+  "ios": {
+    "xcodeDevicectlHelpAvailable": true,
+    "deviceListResult": "timeout after five seconds",
+    "simulatorInventoryResult": "blocked by CoreSimulator service access and denied log write",
+    "physicalDeviceAvailability": "unknown from this inventory",
+    "userReportedPhone": "iPhone 17 e; model not verified by CLI"
+  },
+  "windows": {
+    "virtualBoxVersion": "7.2.20",
+    "staticRegistryPath": "/Users/benja/Library/VirtualBox/VirtualBox.xml",
+    "registeredMachines": 0,
+    "virtualMachineStarted": false,
+    "userReportedAvailability": "User confirmed to root that they do not have Windows",
+    "manualWindowsAccessAndLicenseConfirmed": false
+  },
+  "restrictions": {
+    "newPermissionRequested": false,
+    "nativeTestsExecuted": false,
+    "personalLoginPerformed": false,
+    "credentialsIncluded": false,
+    "paidResourceUsed": false,
+    "aiCalled": false
+  },
+  "interpretation": "A blocked inventory is not evidence that a phone or simulator is absent. Compilation and historical simulated tests do not prove NativoSupabase or physical use.",
+  "protocol": "docs/RECORRIDOS_PILOTO_NATIVO.md",
+  "rootFollowup": {
+    "recordedAt": "2026-10-07T15:55:30.084687+00:00",
+    "source": "Root agent CLI query with network grant; exact query timestamp not supplied",
+    "androidDeviceList": "empty",
+    "androidInterpretation": "No device listed by ADB at that query; does not prove no owned Android device or later connection",
+    "iosDeviceList": "timeout after five seconds",
+    "iosReportedDiagnostic": "DVTFilePathFSEvents",
+    "iosInterpretation": "Cannot determine iPhone attachment from timeout; no device identifiers included"
+  }
+}

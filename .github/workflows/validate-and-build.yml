@@ -14,7 +14,8 @@ permissions:
   contents: read
 jobs:
   validate:
-    timeout-minutes: 20
+    # One full manual run is capped at 330 conservative included minutes.
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +30,16 @@ jobs:
       - run: flutter test
       - name: Generar registros fiscales ficticios sin emisión
         run: flutter test test/verifactu_draft_test.dart --dart-define=WRITE_FISCAL_EVIDENCE=true
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm install
+        working-directory: tool
+      - run: npm test
+        working-directory: tool
+      - name: Proyectar XML desde originales de ensayo confirmados
+        run: dart run tool/generate_fiscal_xml_fixtures.dart
       - name: Preparar validación XML local
         run: |
           if ! command -v xmllint >/dev/null 2>&1; then
@@ -37,17 +48,10 @@ jobs:
           fi
       - name: Comprobar XML fiscal contra esquemas oficiales sin red
         run: python3 tool/validate_fiscal_xml.py
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-      - run: npm install
-        working-directory: tool
-      - run: npm test
-        working-directory: tool
   windows:
     needs: validate
     if: ${{ !inputs.ios_only && !inputs.mobile_only }}
-    timeout-minutes: 30
+    timeout-minutes: 20
     runs-on: windows-2025
     steps:
       - uses: actions/checkout@v4
@@ -82,7 +86,7 @@ jobs:
           retention-days: 1
   ios-simulator:
     needs: validate
-    timeout-minutes: 30
+    timeout-minutes: 24
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -124,11 +128,11 @@ jobs:
   android:
     needs: validate
     if: ${{ !inputs.ios_only }}
-    timeout-minutes: 30
+    timeout-minutes: 25
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '17'

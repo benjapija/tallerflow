@@ -130,6 +130,7 @@ class _LoginAppState extends State<LoginApp> {
         onLogout: () async {
           if (controller!.outbox.isNotEmpty ||
               controller!.pendingCommands.isNotEmpty ||
+              controller!.hasPendingFiscalDrafts ||
               controller!.hasPendingPhotos) {
             throw StateError(
               'Sincroniza los registros antes de cerrar sesión.',

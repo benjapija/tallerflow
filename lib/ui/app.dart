@@ -11,6 +11,9 @@ import 'dialogs.dart';
 import 'simulation.dart';
 import 'backup_panel.dart';
 import 'management_panel.dart';
+import 'fiscal_drafts_panel.dart';
+import 'fiscal_draft_xml_panel.dart';
+import '../domain/fiscal_drafts.dart';
 import 'task_management.dart';
 import 'vehicle_history.dart';
 import '../domain/vehicles.dart';
@@ -2083,7 +2086,10 @@ class _WorkshopHomeState extends State<WorkshopHome>
           catalog: c.state.catalog,
           repairOrders: c.visibleOrders.toList(),
           canEdit: c.accessAllowed,
-          pending: c.outbox.isNotEmpty || c.pendingCommands.isNotEmpty,
+          pending:
+              c.outbox.isNotEmpty ||
+              c.pendingCommands.isNotEmpty ||
+              c.hasPendingFiscalDrafts,
           onSave: (action, payload) =>
               runAction(() => c.inventory(action, payload)),
         ),
@@ -2387,6 +2393,40 @@ class _WorkshopHomeState extends State<WorkshopHome>
       ),
       ManagementPanel(controller: c),
       const SizedBox(height: 18),
+      FiscalDraftsPanel(
+        actor: c.actor,
+        accessAllowed: c.accessAllowed,
+        offline: c.offline,
+        demo: c.demo,
+        loaded: c.fiscalDraftsLoaded,
+        ledger: c.fiscalDraftLedger,
+        fiscalProfile: Map<String, dynamic>.from(
+          c.state.settings['fiscalProfile'] ?? {},
+        ),
+        queue: c.fiscalDraftQueue
+            .where(
+              (q) => ['pending', 'rejected', 'conflict'].contains(q['status']),
+            )
+            .toList(),
+        history: c.fiscalDraftQueue
+            .where((q) => ['confirmed', 'reviewed'].contains(q['status']))
+            .toList(),
+        calculate: fiscalDraftCalculation,
+        onPrepare: c.prepareFiscalDraft,
+        onWithdraw: c.withdrawFiscalDraft,
+        onRefresh: c.refreshFiscalDrafts,
+        onRetry: c.retryFiscalDraft,
+        onReview: c.reviewFiscalDraft,
+      ),
+      const SizedBox(height: 18),
+      FiscalDraftXmlPanel(
+        actor: c.actor,
+        accessAllowed: c.accessAllowed,
+        confirmedRecords: fiscalDraftRows(c.fiscalDraftLedger['records']),
+        artifacts: c.fiscalDraftXmlArtifacts,
+        onGenerate: c.generateFiscalDraftXml,
+      ),
+      const SizedBox(height: 18),
       BackupPanel(controller: c),
       const SizedBox(height: 18),
       section('Perfiles y permisos', [
@@ -2431,7 +2471,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
       const SizedBox(height: 18),
       section('Estado de los módulos', [
         const Text(
-          'Compras, almacén, garantías, agenda, mantenimiento y flotas disponibles.\nPortal del cliente con autorización por versión; publicación final pendiente.\nAsistente con revisión humana; IA real desactivada.\nPreparación fiscal disponible; emisión fiscal e integraciones pendientes de validación.',
+          'Compras, almacén, garantías, agenda, mantenimiento y flotas disponibles.\nPortal del cliente con autorización por versión; publicación final pendiente.\nAsistente con revisión humana; IA real desactivada.\nPreparación fiscal, registros de ensayo y XML técnicos F1 disponibles.\nEmisión y transmisión fiscales desactivadas; adaptadores e integraciones pendientes de validación.',
           style: TextStyle(height: 1.8, color: muted),
         ),
       ]),

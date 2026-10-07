@@ -1,0 +1,88 @@
+{
+  "scope": "Pre-dispatch budget estimate for one complete manual validate-and-build workflow; no workflow dispatched by this preparation",
+  "preparedAt": "2026-10-07T15:36:51Z",
+  "timezone": "Europe/Madrid",
+  "quotaObservation": {
+    "source": "GitHub billing read by parent agent; observation precise time was not recorded",
+    "observedNotAfter": "2026-10-07T15:36:29Z",
+    "includedMinutes": 2000,
+    "usedMinutes": 1657.3,
+    "remainingMinutes": 342.7,
+    "billableUsd": 0,
+    "displayedStorageUsedGb": 0,
+    "displayedStorageIncludedGb": 0.5
+  },
+  "jobs": [
+    {
+      "id": "validate",
+      "os": "Linux",
+      "timeoutMinutes": 15,
+      "usdPerMinute": 0.006,
+      "historicalWeight": 1
+    },
+    {
+      "id": "windows",
+      "os": "Windows",
+      "timeoutMinutes": 20,
+      "usdPerMinute": 0.01,
+      "historicalWeight": 2
+    },
+    {
+      "id": "ios-simulator",
+      "os": "macOS",
+      "timeoutMinutes": 24,
+      "usdPerMinute": 0.062,
+      "historicalWeight": 10
+    },
+    {
+      "id": "android",
+      "os": "Linux",
+      "timeoutMinutes": 25,
+      "usdPerMinute": 0.006,
+      "historicalWeight": 1
+    }
+  ],
+  "historicalPlanningMinutes": 320,
+  "currentRateEquivalentUsd": 1.928,
+  "currentRateEquivalentLinuxMinutes": 321.333333,
+  "conservativePlanningAllowanceLinuxMinutes": 330,
+  "reserveMinutesAfterConservativeAllowance": 12.7,
+  "billingRateEquivalenceIsNotAFreeQuotaGuarantee": true,
+  "workflowTriggers": "workflow_dispatch only; no push, pull_request, schedule, or repository_dispatch added",
+  "manualWorkflowsReviewed": [
+    "validate-and-build.yml",
+    "native-ios.yml",
+    "validate-native-windows.yml"
+  ],
+  "artifactRetentionDays": 1,
+  "beforeDispatchRequired": [
+    "Check current account quota again and confirm no competing runs on any repository are consuming the same allowance",
+    "Check shared artifact/Packages storage and accrued usage; displayed storage can lag",
+    "Run one complete workflow only; any retry or separate native workflow requires a new allowance check",
+    "Do not enable paid overage, larger runners, plans or charges"
+  ],
+  "validation": {
+    "workflowStructure": "Checked locally; all three workflow triggers remain manual",
+    "nodeJavaActionVersions": "setup-node v6 and setup-java v6 release documentation checked; retained Node24, Temurin17, hosted runners",
+    "newCoverage": [
+      "npm test includes PostgreSQL canonical text/digest vectors",
+      "Dart generates XML projections from confirmed sandbox fixture records before offline XSD validation"
+    ],
+    "hostedRun": "Not dispatched; only root may dispatch after all local checks and refreshed allowance pass"
+  },
+  "sources": [
+    "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+    "https://github.com/actions/setup-node/releases/tag/v6.0.0",
+    "https://github.com/actions/setup-java/releases/tag/v6.0.0"
+  ],
+  "refreshedAt": "2026-10-07T17:07:56.395148+00:00",
+  "confirmedBeforeDispatch": {
+    "includedUsedMinutes": 1657.3,
+    "includedTotalMinutes": 2000,
+    "remainingMinutes": 342.7,
+    "billableUsd": 0,
+    "storageUsedGb": 0.1,
+    "storageIncludedGb": 0.5,
+    "oneCandidateExpectedArtifactGb": 0.21
+  }
+}

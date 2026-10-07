@@ -308,11 +308,13 @@ void main() {
     },
   );
   test(
-    'Other taxpayer chains and non-monotonic timestamps cannot be mixed',
+    'Other taxpayer chains and reversed timestamps cannot be mixed; equal seconds are ordered separately',
     () async {
       final high = await draft();
+      final sameSecond = await draft(previous: high.anchor);
+      expect(sameSecond.xml, contains('<sf:RegistroAnterior>'));
       await expectLater(
-        draft(previous: high.anchor),
+        draft(previous: high.anchor, at: '2024-01-01T19:20:29+01:00'),
         throwsA(isA<RuleException>()),
       );
       final foreign = VerifactuAnchor(
@@ -327,6 +329,38 @@ void main() {
       await expectLater(
         draft(previous: foreign, at: '2024-01-01T19:20:31+01:00'),
         throwsA(isA<RuleException>()),
+      );
+    },
+  );
+  test(
+    'Reverse charge S2 explicitly serializes the zero rate and quota required by AEAT',
+    () async {
+      final calculation = FiscalCalculation.calculate([
+        FiscalLine(
+          id: 'reverse',
+          description: 'Ensayo ficticio',
+          quantityMilli: 1000,
+          unitPriceCents: 10000,
+          rateBps: 0,
+          tax: FiscalTax.iva,
+          treatment: FiscalTreatment.reverseCharge,
+          legalReason: 'Motivo ficticio',
+        ),
+      ]);
+      final high = await draft(
+        c: calculation,
+        details: [
+          VerifactuDetail(
+            group: calculation.groups.single,
+            regime: '01',
+            classification: 'S2',
+          ),
+        ],
+      );
+      expect(high.xml, contains('<sf:TipoImpositivo>0.00</sf:TipoImpositivo>'));
+      expect(
+        high.xml,
+        contains('<sf:CuotaRepercutida>0.00</sf:CuotaRepercutida>'),
       );
     },
   );
