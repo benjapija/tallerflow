@@ -26,7 +26,7 @@ Fuentes oficiales consultadas:
 
 ## Pendientes de desarrollo, independientes de un taller concreto
 
-1. Registro de borradores de ensayo persistente, series separadas, recibos, cadena de integridad y copias formato 14 implementados en servidor. Interfaz/cola local, integración XML, Auth HTTP, recuperación alojada 14 y concurrencia entre conexiones pendientes. No equivale a numeración, cadena ni continuidad fiscales; véase REGISTRO_BORRADORES_FISCALES.md. El XML sigue siendo local.
+1. Registro de borradores de ensayo persistente, series separadas, recibos, cadena de integridad y copias formato 14 implementados en servidor. Auth HTTP, recuperación alojada 14 y peticiones superpuestas aprobados; interfaz/cola local e integración XML pendientes. No equivale a numeración, cadena ni continuidad fiscales; véase REGISTRO_BORRADORES_FISCALES.md. El XML sigue siendo local.
 2. Facturas completas, simplificadas donde proceda, rectificativas por diferencias/sustitución, subsanaciones, rechazo previo, destinatarios extranjeros, anticipos y regímenes especiales. Recargos y retenciones aún no implementados en el cálculo genérico.
 3. Validaciones de negocio publicadas por AEAT, respuestas, rechazos y reintentos; transportes y pruebas oficiales. Declaración responsable del fabricante y circuitos de conservación/revisión necesarios antes de activar emisión.
 4. Adaptadores SII, territorios forales, B2B electrónico y Administraciones, según sus especificaciones oficiales; el adaptador estatal parcial no equivale a esa cobertura.

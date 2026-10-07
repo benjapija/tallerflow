@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-10-07T14:44:51.550914+00:00",
+  "databaseArchiveVersion": 14,
+  "sourceMigrationIntroducedAt": "1e65b8dec72f360fc24a6cda1c21c726427ae74f",
+  "httpChecks": {
+    "phase1": 15,
+    "modules": 12,
+    "fiscalSandbox": 13,
+    "recoveryBetweenProjects": 11,
+    "total": 51
+  },
+  "passed": true,
+  "fictitiousUsersPerProject": 5,
+  "fixtureRun": "ebc8c85d-6668-4963-82ad-4e40536554a7",
+  "ordinaryAuthPostgrestStorageUsed": true,
+  "overlappingHttpDraftTransactionsValidated": true,
+  "distinctDatabaseBackendProcessIdsObserved": false,
+  "privatePhotoOriginalRecovered": true,
+  "sandboxRecordsRecovered": 4,
+  "laterFreshInstallationSurvivesRestoreRetry": true,
+  "newNativeBuild": false,
+  "nativeApplicationCommit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "physicalUseValidated": false,
+  "officialFiscalAcceptanceValidated": false,
+  "fiscalEmissionEnabled": false,
+  "realAiEnabled": false,
+  "cleanup": "Ten fictional accounts banned; no active fixture sessions/members/devices; temporary services HTTP 410; ephemeral capability/config removed; original fictional records retained",
+  "fixtureCorrections": [
+    "Module defaults must be set before reception; prior quote retained with captured prices, new quote correctly 4661 cents",
+    "Recovery destination requires only its bootstrap administrator/current device; extra unused fictional memberships removed before restoration"
+  ],
+  "evidence": [
+    "fiscal14-hosted-phase1.json",
+    "fiscal14-hosted-modules.json",
+    "fiscal14-hosted-drafts.json",
+    "fiscal14-hosted-recovery.json",
+    "fiscal14-hosted-cleanup.json"
+  ]
+}

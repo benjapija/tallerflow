@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-07T14:39:24.552Z",
+  "runId": "ebc8c85d-6668-4963-82ad-4e40536554a7",
+  "source": "gpseuqmzbazifmkhjyby",
+  "destination": "qnbgbgumvxmmipjlkcgb",
+  "workshop": "cdae65c8-0108-4124-994b-5ba28a08fe3e",
+  "environment": "Two real hosted Supabase projects; Auth, PostgREST, private Storage and Edge HTTP",
+  "nativeValidated": false,
+  "physicalDeviceValidated": false,
+  "checks": [
+    "Five fictitious identities authenticate in both projects without copying their passwords or sessions",
+    "Source JWT cannot authenticate to the destination",
+    "Current format 14 exports documents, private photos, all module state and sandbox fiscal receipts",
+    "Restoration is idempotent and rejects altered content under the same identity",
+    "Historical source devices are retired and never regain authority",
+    "Incomplete recovery blocks new work until every original photo is verified",
+    "Original private photo bytes and hashes are recovered through ordinary authenticated upload",
+    "Restored documents, operations, CSV, quotes, payments, inventory, diagnosis and module histories retain their exact originals",
+    "Recovered sandbox installations are frozen while contents and numbering remain original",
+    "Restore retries cannot freeze a later fresh sandbox installation or duplicate originals",
+    "An unrelated identity and signed-out operator cannot access the restored workshop"
+  ],
+  "passed": true,
+  "photosRecovered": 1,
+  "reconstructedLegacyClients": 1,
+  "documentTotalCents": 3300,
+  "sandboxRecordsRecovered": 4,
+  "totalChecks": 11
+}

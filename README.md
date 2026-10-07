@@ -94,3 +94,5 @@ Desarrollo fiscal genérico: cálculo exacto y desglose conservado de notas; ada
 Entrega vigente: **6be045d**, GitHub Actions **37624370177**, Windows/Android/iOS simulador aprobados y ZIP verificados. OCR Android cinco e iOS seis; ocho comprobaciones XSD locales. Ninguna emisión fiscal ni uso físico acreditados. Todos los paquetes con otros sufijos son históricos.
 
 Registro persistente de borradores de ensayo en servidor, sin nueva pantalla: series separadas, reintentos, originales y copia formato 14. 24 PostgreSQL nuevas y 16 SQL revertidas por Supabase. Cliente y demo conservan 6be045d; el ZIP de código identifica el nuevo servidor por separado. [Alcance y pendientes](docs/REGISTRO_BORRADORES_FISCALES.md).
+
+Validación alojada formato 14: 51 comprobaciones HTTP con Auth real (15 fase 1, 12 módulos, 13 borradores, 11 recuperación). Fotos/registros originales y nueva instalación tras reintentar preservados. Ambas funciones de ensayo retiradas con HTTP 410; diez cuentas ficticias sin acceso activo. Interfaz de borradores y XML aún pendientes; nunca habilita emisión. Evidencia: evidence/fiscal14-hosted-summary.json.

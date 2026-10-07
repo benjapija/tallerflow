@@ -24,9 +24,10 @@ try{
   }
   await cmd('tech1','import_command','import_commit',{kind:'clients',reason:'Denied',rows:[]},randomUUID(),true);
  });
+ const rates=await snap('admin');await cmd('admin','management_command','settings_save',{revision:rates.managementRevision,reason:'Fictional quote calculation fixture',settings:{hourlyRateCents:5000,taxBps:2100,internalHourlyCostCents:2500,internalCostKnown:true}});
+ // Reception captures the current defaults; later setting edits never silently reprice it.
  if(!(await snap('office')).orders.some(o=>o.id===oid))await op('office',oid,'receive',{plate:'9911FIC',country:'ES',vin:'CSV-CURRENT-'+cfg.runId,vehicle:'Vehículo ficticio CSV',engine:'Prueba',client:'Cliente ficticio CSV',phone:'',km:100,symptom:'Prueba HTTP de módulos',tasks:[{id:tid,title:'Tarea ficticia',estimateMinutes:30,assignees:[cfg.users.tech1.id]}]});
  let quote1,approved;
- const rates=await snap('admin');await cmd('admin','management_command','settings_save',{revision:rates.managementRevision,reason:'Fictional quote calculation fixture',settings:{hourlyRateCents:5000,taxBps:2100,internalHourlyCostCents:2500,internalCostKnown:true}});
  await check('Versioned quotes calculate 4661 cents, retry once and bind authorization to the reviewed version',async()=>{
   const p={id:qid,expectedVersion:0,title:'Presupuesto ficticio',reason:'Initial review',validUntil:new Date(Date.now()+86400000).toISOString(),lines:[{id:lid,taskId:tid,description:'Trabajo ficticio',laborMinutes:30,parts:[{reference:'OIL',description:'Aceite ficticio',unit:'litro',quantityMilli:1500,unitPriceCents:1001,taxBps:2100,discountBps:1000}]}]};
   const first=await op('office',oid,'quote_draft',p);assert.deepEqual(await rpc('office','apply_operation',{workshop_id:cfg.workshop,device_id:cfg.users.office.device,operation:first.record}),first.result);
@@ -92,8 +93,8 @@ try{
  await check('Fleet owner-bound memberships retain work and reject operator access',async()=>{
   let s=await snap('office');const o=s.orders.find(x=>x.id===oid),gid=randomUUID();await cmd('office','fleet_command','fleet_group',{id:gid,revision:s.fleets.revision,name:'Flota ficticia',organization:'Empresa ficticia',reason:'Manual reviewed group'});s=await snap('office');await cmd('office','fleet_command','fleet_attach',{id:gid,revision:s.fleets.revision,membershipId:randomUUID(),vehicleId:o.vehicleId,ownerId:o.ownerId,reference:'Unidad ficticia',evidence:'Fictional owner verified',reason:'Confirmed membership'});s=await snap('office');assert.deepEqual(s.orders.find(x=>x.id===oid),o);assert.equal((await snap('tech1')).fleets.groups.length,0);await cmd('tech1','fleet_command','fleet_group',{id:randomUUID(),revision:s.fleets.revision,name:'Denied',organization:'Denied',reason:'Denied'},randomUUID(),true);
  });
- await check('Format 13 export includes every new module and their command receipts',async()=>{
-  const a=await rpc('admin','export_workshop',{workshop_id:cfg.workshop,device_id:cfg.users.admin.device});assert.equal(a.databaseVersion,13);for(const k of ['planning_state','maintenance_state','fleet_state','case_library','command_receipts'])assert.ok(a.tables[k].length>0,k);assert.ok(a.tables.orders.find(x=>x.id===cfg.orderId).data.payments.length===3);proof.operationCount=a.tables.operations.length;
+ await check('Format 14 export includes every new module and their command receipts',async()=>{
+  const a=await rpc('admin','export_workshop',{workshop_id:cfg.workshop,device_id:cfg.users.admin.device});assert.equal(a.databaseVersion,14);for(const k of ['planning_state','maintenance_state','fleet_state','case_library','command_receipts'])assert.ok(a.tables[k].length>0,k);assert.ok(a.tables.orders.find(x=>x.id===cfg.orderId).data.payments.length===3);proof.operationCount=a.tables.operations.length;
  });
  proof.passed=true;
 }catch(e){proof.error=e.message;console.error(e.message);process.exitCode=1;}

@@ -1,6 +1,6 @@
 {
   "date": "2026-10-07",
-  "reportCutoff": "2026-10-07T14:02:57.771787+00:00",
+  "reportCutoff": "2026-10-07T14:44:51.550914+00:00",
   "appBuildCommit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
   "buildRun": 37624370177,
   "appBuildStatus": {
@@ -16,7 +16,7 @@
   "postgresChecks": 295,
   "mockServiceChecks": 43,
   "portalClientChecks": 5,
-  "hostedHTTPChecksCurrent": 36,
+  "hostedHTTPChecksCurrent": 51,
   "currentHostedFixtureRetired": true,
   "fiscalPreparation": "Implemented; five Flutter and twelve PostgreSQL; twelve rolled-back hosted SQL per project. Always disabled emission. Independent restore passed.",
   "fiscalEngine": "Not integrated; generic development and official validation pending. Per-workshop onboarding data must not block generic design.",
@@ -27,7 +27,7 @@
   "nativeBackend": "Prior Windows/iOS persistence and recovery circuits use fictional backend; hosted personal native Auth and physical use pending",
   "paidServicesPurchased": false,
   "automationActive": true,
-  "nextWork": "Integrate sandbox draft interface/queue and XML; validate real HTTP v14 recovery and multiconnection conflicts. Then official fiscal series/documents/adapters. Preserve IA off, no paid resources and existing native 6be packages.",
+  "nextWork": "Integrate sandbox draft interface/queue and XML. Then official fiscal series/documents/adapters and official validation. Preserve IA off, free resources and unchanged native 6be packages.",
   "personalDependencies": [
     "GitHub permission confirmation for Cloudflare Pages",
     "iPhone connected/unlocked/trusted/developer mode",
@@ -46,7 +46,7 @@
   "billableBuildUsd": 0,
   "newSupabaseMigration": true,
   "runtimeFilesVerified": 320,
-  "fiscalCore": "Exact arithmetic, preserved note tax summary and offline AEAT draft adapter. Persistent sandbox ledger deployed with v14 backup, own integrity hash and admin session/device controls; app interface, XML coupling and real multiconnection concurrency remain pending. Fiscal emission/transmission disabled.",
+  "fiscalCore": "Exact arithmetic, preserved note tax summary and offline AEAT draft adapter. Persistent sandbox ledger deployed with v14 backup, own integrity hash and admin session/device controls; HTTP concurrency and hosted v14 recovery passed; app interface and XML coupling remain pending. Fiscal emission/transmission disabled.",
   "fiscal": "Partially implemented generic engine and offline AEAT drafts; official fiscal emission remains disabled",
   "fiscalOfficialServiceAcceptanceValidated": false,
   "fiscalCoreImplemented": true,
@@ -61,10 +61,17 @@
   "fiscalSandboxInterfaceImplemented": false,
   "hostedFiscalDraftSqlChecksPerProject": 16,
   "fiscalDraftMulticonnectionConcurrencyValidated": false,
-  "hostedAuthHttpFormat14Validated": false,
+  "hostedAuthHttpFormat14Validated": true,
   "sourceCommit": "1e65b8dec72f360fc24a6cda1c21c726427ae74f",
   "clientTrackedGitFilesVerifiedUnchanged": 171,
   "clientFilesVerifiedLocallyUnchanged": 165,
   "clientSourceUnchangedFromBuild26": true,
-  "currentSourceCiValidated": false
+  "currentSourceCiValidated": false,
+  "hostedPhase1Checks": 15,
+  "hostedModuleChecks": 12,
+  "hostedFiscalDraftChecks": 13,
+  "hostedRecoveryFormat14Checks": 11,
+  "fiscalDraftOverlappingHttpConcurrencyValidated": true,
+  "distinctPostgresBackendIdsObserved": false,
+  "ephemeralCapabilityRemoved": true
 }

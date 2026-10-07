@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-07T14:42:26.009Z",
+  "projects": [
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "active_members": 0,
+      "active_devices": 0,
+      "sessions": 0,
+      "banned_fictional_users": 5
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "active_members": 0,
+      "active_devices": 0,
+      "sessions": 0,
+      "banned_fictional_users": 5
+    }
+  ],
+  "serviceStatus": "Replaced with 410-only handlers, no administrative imports or environment reads",
+  "originalFictionalRecordsRetained": true,
+  "realUsersChanged": false,
+  "runId": "ebc8c85d-6668-4963-82ad-4e40536554a7",
+  "httpStatuses": [
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "httpStatus": 410
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "httpStatus": 410
+    }
+  ],
+  "ephemeralConfigurationRemoved": true,
+  "capabilityDeleted": true
+}

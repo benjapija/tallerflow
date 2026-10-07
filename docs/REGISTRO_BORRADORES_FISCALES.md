@@ -24,8 +24,10 @@ Tras recuperar, las instalaciones antiguas quedan congeladas. Se conservan sus d
 
 En cada Supabase: 16 comprobaciones SQL, identidades Auth sintéticas y rollback completo. No son inicios de sesión GoTrue ni peticiones HTTP del cliente. Once pruebas Flutter de copias se repitieron; siguen incluidas en las 243 de la batería anterior. No se generaron nuevas aplicaciones nativas: el cliente y la demo continúan en 6be045d.
 
+Se añadieron **13 comprobaciones HTTP con GoTrue real** y **11 de restauración entre ambos proyectos, formato 14**. Dos peticiones HTTP superpuestas para la misma cabecera producen un solo efecto; dos reintentos de una identidad conservan el mismo resultado. No se observaron identificadores internos de procesos PostgreSQL. La recuperación conserva cuatro registros, fotos y módulos, congela las instalaciones antiguas y no congela una instalación nueva al reintentar. Diez cuentas ficticias retiradas, cero sesiones/miembros/dispositivos activos, servicios temporales HTTP 410 y capacidad eliminada. Evidencia fiscal14-hosted-summary.json. No acredita aplicación nativa ni aceptación oficial.
+
 ## Pendientes
 
-Interfaz y cola local de borradores, integración con el adaptador XML, pruebas HTTP con Auth real, recuperación formato 14 entre proyectos y concurrencia entre conexiones. Después, numeración/series fiscales, continuidad real, documentos completos, rectificaciones, validaciones de negocio, transportes y pruebas oficiales. Las notas y PDF actuales siguen siendo documentos de trabajo; IA real desactivada y recursos gratuitos.
+Interfaz y cola local de borradores e integración con el adaptador XML. Después, numeración/series fiscales, continuidad real, documentos completos, rectificaciones, validaciones de negocio, transportes y pruebas oficiales. Las notas y PDF actuales siguen siendo documentos de trabajo; IA real desactivada y recursos gratuitos.
 
 Referencias de implementación: [funciones de Supabase](https://supabase.com/docs/guides/database/functions), [RLS y permisos](https://supabase.com/docs/guides/database/postgres/row-level-security), [bloqueos de PostgreSQL](https://www.postgresql.org/docs/current/explicit-locking.html). Alcance fiscal oficial en [MOTOR_FISCAL_EN_DESARROLLO.md](MOTOR_FISCAL_EN_DESARROLLO.md).

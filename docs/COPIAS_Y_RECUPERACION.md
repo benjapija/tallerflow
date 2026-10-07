@@ -10,7 +10,7 @@ Para recuperar un equipo, selecciona todas las partes, introduce la contraseña 
 
 ## Recuperar en otro proyecto Supabase
 
-Es una tarea administrativa separada; la recuperación alojada entre dos proyectos aprobó diez comprobaciones HTTP iniciales y nueve adicionales del formato actual 13 con cuentas ficticias. El procedimiento conserva los UUID originales del taller y de cada cuenta, y nunca recupera contraseñas, claves privadas ni tokens desde una copia de la aplicación.
+Es una tarea administrativa separada; la recuperación alojada entre dos proyectos aprobó diez comprobaciones HTTP iniciales y nueve históricas del formato 13 y once actuales del formato 14 con cuentas ficticias. El procedimiento conserva los UUID originales del taller y de cada cuenta, y nunca recupera contraseñas, claves privadas ni tokens desde una copia de la aplicación.
 
 1. Prepara un proyecto de recuperación vacío y aplica todas las migraciones, además de las funciones `workshop-members` y `workshop-photos` con JWT obligatorio. Mantén `private` fuera de la Data API.
 2. Un administrador del servicio debe recrear o verificar las identidades Auth con sus **UUID originales**, mediante la API administrativa del servidor. El correo debe verificarse con su titular; no se deduce de nombres ni se concede acceso por parecido. Utiliza contraseñas nuevas o recuperación de acceso. No reutilices contraseñas antiguas ni exportes `auth.users` hacia la aplicación.
@@ -47,4 +47,4 @@ El perfil preparatorio se conserva en workshop.settings sin elevar el formato 13
 
 ## Formato 14 · registro de ensayo
 
-Incluye fiscal_draft_heads, fiscal_draft_series y fiscal_draft_records, con recibos y auditoría. Dos bases locales independientes comprobaron conservación, cadena/cálculos/contadores, omisiones y rollback, legado 13 y reintentos. Las instalaciones antiguas quedan congeladas; repetir una restauración no congela instalaciones nuevas posteriores. Las pruebas HTTP previas corresponden a formato 13; Auth HTTP y recuperación alojada 14 aún pendientes. No contiene facturas fiscales ni activa emisión.
+Incluye fiscal_draft_heads, fiscal_draft_series y fiscal_draft_records, con recibos y auditoría. Dos bases locales independientes comprobaron conservación, cadena/cálculos/contadores, omisiones y rollback, legado 13 y reintentos. Las instalaciones antiguas quedan congeladas; repetir una restauración no congela instalaciones nuevas posteriores. Las pruebas HTTP actuales aprueban formato 14 entre ambos proyectos: once comprobaciones con sesiones reales, foto original, cuatro registros, módulos y congelación; nueve anteriores de formato 13 se conservan como históricas. No contiene facturas fiscales ni activa emisión.

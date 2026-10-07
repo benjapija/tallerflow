@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-07T14:36:46.440Z",
+  "runId": "ebc8c85d-6668-4963-82ad-4e40536554a7",
+  "workshop": "cdae65c8-0108-4124-994b-5ba28a08fe3e",
+  "environment": "Real hosted Auth and PostgREST HTTP; fictional accounts",
+  "nativeValidated": false,
+  "realAdminPasswordRead": false,
+  "checks": [
+    "CSV preview and commit preserve fictional clients, vehicles and catalog with role enforcement",
+    "Versioned quotes calculate 4661 cents, retry once and bind authorization to the reviewed version",
+    "Partial receipt, linked refund and settlement retain the exact issued document",
+    "Administrator grants office cost management explicitly and the original denial stays enforced",
+    "Purchase partial reception and supplier return preserve package quantities and original work",
+    "Warranty reception links the original repair without inheriting authorizations or changing its note",
+    "Diagnostic correction and withdrawal retain original human observations",
+    "Case library requires technical/privacy review and hides drafts and source identities",
+    "Agenda enforces two operators, lift collisions, retries and private office evidence",
+    "Maintenance records local calendar recurrence without mutating issued documents",
+    "Fleet owner-bound memberships retain work and reject operator access",
+    "Format 14 export includes every new module and their command receipts"
+  ],
+  "passed": true,
+  "operationCount": 29,
+  "totalChecks": 12
+}

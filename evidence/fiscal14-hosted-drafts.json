@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-07T14:37:22.374Z",
+  "runId": "ebc8c85d-6668-4963-82ad-4e40536554a7",
+  "workshop": "cdae65c8-0108-4124-994b-5ba28a08fe3e",
+  "environment": "Real GoTrue Auth and overlapping PostgREST HTTP requests; fictional accounts",
+  "checks": [
+    "Five isolated identities authenticate with real GoTrue sessions",
+    "An administrator configures a non-emitting fictional common-territory profile",
+    "Append calculates 5294 cents and stores the original sandbox body",
+    "A lost reply reuses the exact command identity and number",
+    "Changing an existing identity or using a stale chain is rejected",
+    "Two overlapping HTTP transactions for one head commit exactly one new number",
+    "Overlapping retries of one identity have only one effect",
+    "Malformed data or attempted activation leaves counters and original records unchanged",
+    "Withdrawal preserves the original and never reuses its number",
+    "Office and operators cannot read or append administrative drafts",
+    "Another workshop, anonymous access and direct table reads are denied",
+    "Format 14 exports sandbox chains, records, receipts and audit without sessions",
+    "Logout revokes ledger reads and idempotent retries before JWT expiry"
+  ],
+  "passed": true,
+  "nativeValidated": false,
+  "physicalDeviceValidated": false,
+  "officialFiscalAcceptanceValidated": false,
+  "fiscalEmissionEnabled": false,
+  "fiscalTransmissionEnabled": false,
+  "overlappingHttpRequests": 2,
+  "distinctBackendProcessIdsObserved": false,
+  "databaseArchiveVersion": 14,
+  "recordsExported": 4,
+  "totalChecks": 13
+}
