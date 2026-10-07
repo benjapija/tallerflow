@@ -1,6 +1,6 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "5c6fde2263d1711f2d89df1a9dfc3efe8af3fa74",
+  "sourceCommit": "693ec5a5346ed1855a8263b94ae3dabe5b98d7c0",
   "appBuildCommit": "bc694d86d449d8a716b459d497c74e15e0ce8cec",
   "buildRun": 37565648080,
   "appBuildStatus": {
@@ -14,15 +14,18 @@
   "iosNativeRun": 37555896692,
   "iosNativeStatus": "success",
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
-  "hostedMigrations": 17,
+  "hostedMigrations": 18,
   "payments": "implemented, tested, deployed and published",
-  "flutterTests": 141,
-  "postgresChecks": 167,
+  "flutterTests": 148,
+  "postgresChecks": 176,
   "mockServiceChecks": 18,
-  "nextWork": "Publish linked returns and compile native packages; customer portal and diagnostic notebook",
+  "nextWork": "Publish diagnosis notebook; verify native run 37569128092; validated library and customer portal",
   "paidServicesPurchased": false,
   "automationActive": true,
   "pdf": "published; five local tests, all sample pages reviewed",
   "purchases": "implemented, tested, deployed and published",
-  "linkedReturns": "implemented, tested, deployed; publication in progress"
+  "linkedReturns": "implemented, tested, deployed and published",
+  "pendingBuildRun": 37569128092,
+  "pendingBuildCommit": "693ec5a5346ed1855a8263b94ae3dabe5b98d7c0",
+  "diagnosisNotebook": "implemented, tested and deployed; publication in progress"
 }

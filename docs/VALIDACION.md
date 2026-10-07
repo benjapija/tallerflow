@@ -1,3 +1,7 @@
+# Cuaderno de diagnóstico · 7 de octubre de 2026
+
+148 pruebas Flutter, análisis limpio y compilación web aprobados. 176 comprobaciones PostgreSQL y 18 de servicios simulados. Siete Flutter específicos, nueve PostgreSQL y ocho SQL por proyecto alojado, revertidos al terminar. Reinicio sin conexión y pérdida de respuesta conservan identificadores y una sola entrada. Conclusiones requieren confirmación explícita. Evidencia técnica posterior conserva la nota emitida. Esquema con dieciocho migraciones. Auth HTTP específico y clientes físicos pendientes.
+
 # Regresos vinculados · 7 de octubre de 2026
 
 141 pruebas Flutter, análisis limpio y compilación web aprobados. 167 comprobaciones PostgreSQL y 18 de servicios simulados. Seis Flutter de regresos y ocho PostgreSQL específicos; ocho SQL alojadas en cada proyecto gratuito. Se conservan nota anterior y destinatario actual. La clasificación exige elección humana, y una revisión añade historial con control de versión. Esquema con diecisiete migraciones. Auth HTTP y uso manual nativo siguen pendientes.

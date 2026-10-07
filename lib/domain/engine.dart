@@ -7,6 +7,7 @@ import 'inspections.dart';
 import 'quotes.dart';
 import 'payments.dart';
 import 'linked_returns.dart';
+import 'diagnosis_notebook.dart';
 
 class RuleException implements Exception {
   final String message;
@@ -229,7 +230,13 @@ class WorkshopState {
       throw const RuleException('Esta orden no está asignada a tu cuenta');
     }
     if (order.issued &&
-        !['deliver', 'payment_record', 'payment_reverse'].contains(op.kind)) {
+        ![
+          'deliver',
+          'payment_record',
+          'payment_reverse',
+          'diagnosis_add',
+          'diagnosis_withdraw',
+        ].contains(op.kind)) {
       if (!replay) {
         throw const RuleException(
           'La nota está emitida. Registra una incidencia en oficina',
@@ -261,6 +268,9 @@ class WorkshopState {
     }
 
     switch (op.kind) {
+      case 'diagnosis_add':
+      case 'diagnosis_withdraw':
+        applyDiagnosisEntry(order, op, actor);
       case 'return_classify':
         reclassifyReturn(order, op, actor);
       case 'payment_record':

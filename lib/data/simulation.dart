@@ -133,6 +133,8 @@ class SimulatedWorkshop {
               'deliver',
               'payment_record',
               'payment_reverse',
+              'diagnosis_add',
+              'diagnosis_withdraw',
             ].contains(op.kind))) {
       status = 'late';
       reason = 'Registro tardío o de dispositivo retirado';

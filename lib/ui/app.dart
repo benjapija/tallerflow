@@ -28,6 +28,7 @@ import 'document_export_button.dart';
 import '../domain/purchases.dart';
 import 'purchase_panel.dart';
 import '../domain/linked_returns.dart';
+import 'diagnosis_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -1189,6 +1190,13 @@ class _WorkshopHomeState extends State<WorkshopHome>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TaskManagement(controller: c, order: o, perform: perform),
+        const SizedBox(height: 18),
+        DiagnosisPanel(
+          order: o,
+          actor: c.actor,
+          onSave: (kind, p, revision) =>
+              perform(o.id, kind, p, expectedRevision: revision),
+        ),
         if (c.actor.isOffice &&
             (o.issued ||
                 [

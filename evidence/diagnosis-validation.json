@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-07",
+  "flutterTests": 148,
+  "postgresChecks": 176,
+  "mockServiceChecks": 18,
+  "featureFlutterTests": 7,
+  "featurePostgresChecks": 9,
+  "hostedSQLChecksPerProject": 8,
+  "migrationsPrimary": 18,
+  "databaseVersion": 8,
+  "realAuthHTTPForDiagnosis": false,
+  "physicalDeviceValidated": false,
+  "requiresPersonalConfirmation": true,
+  "immutableOriginalEntries": true,
+  "issuedNotePreserved": true,
+  "offlineRestartAndLostReply": true,
+  "hostedFixturesRolledBack": true,
+  "paidServicesPurchased": false
+}
