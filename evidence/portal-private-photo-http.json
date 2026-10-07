@@ -1,0 +1,66 @@
+{
+  "environment": "Supabase Free primary; real HTTPS and private Storage",
+  "fixture": "Fictional JPEG, synthetic workshop metadata, banned issuing identity; no staff Auth session or active device",
+  "checks": [
+    {
+      "name": "Temporary fixture rejects absent capability",
+      "status": "passed"
+    },
+    {
+      "name": "One fictional JPEG uploaded to private Storage",
+      "status": "passed"
+    },
+    {
+      "name": "Valid recipient sees only explicitly selected photo metadata",
+      "status": "passed"
+    },
+    {
+      "name": "Recipient receives exact verified private JPEG by HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Retry returns the same immutable photo",
+      "status": "passed"
+    },
+    {
+      "name": "Unselected photo from another fictional repair denied",
+      "status": "passed"
+    },
+    {
+      "name": "Unknown photo denied",
+      "status": "passed"
+    },
+    {
+      "name": "Incorrect separate code denies selected photo",
+      "status": "passed"
+    },
+    {
+      "name": "Storage public address does not disclose the JPEG",
+      "status": "passed"
+    },
+    {
+      "name": "Retired grant denies selected photo",
+      "status": "passed"
+    },
+    {
+      "name": "Temporary photo fixture service retired",
+      "status": "passed"
+    }
+  ],
+  "limitations": [
+    "Upload uses scoped temporary fixture service, not native staff upload",
+    "Native camera, staff Auth and public hosting not validated"
+  ],
+  "checkedAt": "2026-10-07T08:09:59.500Z",
+  "passed": 11,
+  "cleanup": {
+    "activeLinks": 0,
+    "activeMembers": 0,
+    "activeDevices": 0,
+    "sessions": 0,
+    "temporaryFunctionResponse": 410,
+    "administrativeClientRemoved": true,
+    "ephemeralCredentialsRemoved": true,
+    "fictionalJPEGConservedInPrivateStorage": true
+  }
+}

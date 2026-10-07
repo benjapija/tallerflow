@@ -47,7 +47,9 @@ import ImageIO
           let request = VNRecognizeTextRequest()
           request.recognitionLevel = .accurate
           request.recognitionLanguages = ["es-ES", "en-US"]
-          request.usesLanguageCorrection = true
+          // Technical identifiers must reach the human review without spelling
+          // corrections intended for prose.
+          request.usesLanguageCorrection = false
           try VNImageRequestHandler(cgImage: image, orientation: orientation, options: [:]).perform([request])
           let text = (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
           DispatchQueue.main.async {

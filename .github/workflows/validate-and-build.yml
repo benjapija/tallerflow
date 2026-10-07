@@ -6,6 +6,10 @@ on:
         description: 'Compilar solo iOS después de la validación completa'
         type: boolean
         default: false
+      mobile_only:
+        description: 'Compilar y probar Android/iOS conservando el paquete Windows anterior'
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -20,7 +24,7 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: dart format --output=none --set-exit-if-changed lib test tool/render_preview_test.dart
+      - run: dart format --output=none --set-exit-if-changed lib test integration_test tool/render_preview_test.dart
       - run: flutter analyze
       - run: flutter test
       - uses: actions/setup-node@v4
@@ -32,7 +36,7 @@ jobs:
         working-directory: tool
   windows:
     needs: validate
-    if: ${{ !inputs.ios_only }}
+    if: ${{ !inputs.ios_only && !inputs.mobile_only }}
     timeout-minutes: 30
     runs-on: windows-2025
     steps:
@@ -88,17 +92,29 @@ jobs:
         run: |
           mkdir -p build/deliverables
           python3 -c "import json,os; json.dump({'commit':os.environ['GITHUB_SHA'],'run':os.environ['GITHUB_RUN_ID'],'runner':'${{ runner.os }}','platform':os.environ['GITHUB_JOB'],'realAuthValidated':False},open('build/deliverables/source-commit.json','w'),indent=2)"
+      - name: Probar lector local con imágenes ficticias en simulador
+        run: |
+          python3 tool/prepare_ios_simulator.py
+          set -o pipefail
+          flutter test integration_test/native_text_reader_test.dart -d "$TF_SIMULATOR" 2>&1 | tee native-ocr-ios.log
+      - name: Recoger evidencia del lector iOS
+        if: always()
+        run: |
+          container=$(xcrun simctl get_app_container "$TF_SIMULATOR" es.tallerflow.tallerflow data) || exit 0
+          cp "$container"/Documents/native-test-evidence/ocr.json build/deliverables/ocr-ios.json || true
       - uses: actions/upload-artifact@v4
         with:
           name: TallerFlow-iOS-simulador
           path: |
             build/deliverables/*.tar.gz
             build/deliverables/source-commit.json
+            build/deliverables/ocr-ios.json
+            native-ocr-ios.log
           retention-days: 1
   android:
     needs: validate
     if: ${{ !inputs.ios_only }}
-    timeout-minutes: 20
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -113,6 +129,25 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: flutter build apk --debug --dart-define-from-file=config/pilot.public.json
+      - name: Conservar APK de aplicación antes del ensayo
+        run: |
+          mkdir -p build/deliverables
+          cp build/app/outputs/flutter-apk/app-debug.apk build/deliverables/TallerFlow-piloto.apk
+      - name: Preparar aceleración del emulador aislado
+        run: |
+          sudo chown "$(id -un)" /dev/kvm
+          sudo chmod 600 /dev/kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            set -o pipefail
+            flutter test integration_test/native_text_reader_test.dart -d emulator-5554 2>&1 | tee native-ocr-android.log
+            adb shell run-as es.tallerflow.tallerflow cat app_flutter/native-test-evidence/ocr.json > build/deliverables/ocr-android.json
       - name: Identificar el código de la compilación
         shell: bash
         run: |
@@ -122,6 +157,8 @@ jobs:
         with:
           name: TallerFlow-Android-piloto
           path: |
-            build/app/outputs/flutter-apk/app-debug.apk
+            build/deliverables/TallerFlow-piloto.apk
             build/deliverables/source-commit.json
+            build/deliverables/ocr-android.json
+            native-ocr-android.log
           retention-days: 1
