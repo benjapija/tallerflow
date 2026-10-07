@@ -52,7 +52,7 @@ try{
   await db.exec('reset role;set role anon');await assert.rejects(()=>db.query('select public.planning_command($1,$2,$3,$4,$5)',[w,ad,id(),'schedule_status',{}]),/permission denied/);await login(admin,ad);
  });
  await test('Complete archive includes versioned agenda and command evidence',async()=>{
-  const archive=(await db.query('select public.export_workshop($1,$2) r',[w,ad])).rows[0].r;assert.equal(archive.databaseVersion,11);assert.deepEqual(archive.tables.planning_state[0].data,(await snap()).planning);assert.ok(archive.tables.command_receipts.find(r=>r.id===cid));assert.equal(archive.tables.audit.filter(r=>r.kind==='schedule_booking').length,4);
+  const archive=(await db.query('select public.export_workshop($1,$2) r',[w,ad])).rows[0].r;assert.equal(archive.databaseVersion,12);assert.deepEqual(archive.tables.planning_state[0].data,(await snap()).planning);assert.ok(archive.tables.command_receipts.find(r=>r.id===cid));assert.equal(archive.tables.audit.filter(r=>r.kind==='schedule_booking').length,4);
  });
  await test('Revoked session stops queued reservations and replay',async()=>{
   await db.exec('reset role');await db.query('delete from auth.sessions where id=$1',[ad]);await db.exec('set role authenticated');await assert.rejects(()=>command('schedule_booking',p,cid),/session/);

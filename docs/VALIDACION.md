@@ -1,3 +1,7 @@
+## Avance del 7 de octubre: mantenimiento
+
+188 pruebas Flutter completas aprobadas; analizador sin incidencias; 232 comprobaciones PostgreSQL/PGlite, 26 de servicios simulados y cinco del cliente del portal aprobadas. Dieciocho SQL alojadas de mantenimiento, y regresiones de agenda (18) y portal (15), aprobadas en el principal con datos sintéticos y rollback. Web release compilada. Paquetes de agenda d48ad76 descargados y hashes/commit verificados; uso físico y Auth nativo pendientes.
+
 ## Agenda · 7 de octubre de 2026
 
 Regresión: 174 Flutter de la batería completa y una prueba posterior del formulario, total 175. Analizador sin incidencias antes de la última corrección de presentación; revisión final en curso. 218 PostgreSQL locales, 26 servicios simulados y cinco pruebas del cliente web. Trece Flutter y doce PostgreSQL específicas de agenda, con intervalos simultáneos, indisponibilidades, roles, reinicios, reintentos, persistencia fallida y hora española en cambio de verano/invierno. La prueba del formulario conserva los datos rechazados por solapamiento. Dieciocho SQL alojadas aprobadas en el principal, con Auth sintético y reversión total. Recuperación real del formato 11 bloqueada por permiso específico del segundo proyecto.

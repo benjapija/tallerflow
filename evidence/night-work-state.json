@@ -1,8 +1,8 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "bab8642f8e1fe253db747a8e8577ba2727f76e1a",
-  "appBuildCommit": "bab8642f8e1fe253db747a8e8577ba2727f76e1a",
-  "buildRun": 37577274243,
+  "sourceCommit": "d48ad767b2b9b7134db77032cb1432f434284bbd",
+  "appBuildCommit": "d48ad767b2b9b7134db77032cb1432f434284bbd",
+  "buildRun": 37579944888,
   "appBuildStatus": {
     "validate": "success",
     "windows": "success",
@@ -14,12 +14,12 @@
   "iosNativeRun": 37555896692,
   "iosNativeStatus": "success",
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
-  "hostedMigrations": 21,
+  "hostedMigrations": 22,
   "payments": "implemented, tested, deployed and published",
-  "flutterTests": 174,
-  "postgresChecks": 218,
+  "flutterTests": 188,
+  "postgresChecks": 232,
   "mockServiceChecks": 26,
-  "nextWork": "Publish agenda; maintenance and fleets",
+  "nextWork": "Fleet management and hosted valid-client HTTP portal",
   "paidServicesPurchased": false,
   "automationActive": true,
   "pdf": "published; five local tests, all sample pages reviewed",
@@ -30,5 +30,6 @@
   "portalClientChecks": 5,
   "portal": "Implemented and deployed; public HTTPS hosting and valid-session hosted HTTP flow pending",
   "planning": "Implemented; 18 hosted SQL checks passed on principal; recovery migration requires explicit target approval",
-  "recoveryProjectMigrations": 20
+  "recoveryProjectMigrations": 20,
+  "maintenance": "Implemented; 18 hosted SQL checks passed on principal; offline, retry, restoration and form tested locally"
 }

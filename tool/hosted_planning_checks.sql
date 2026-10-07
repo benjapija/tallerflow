@@ -27,7 +27,7 @@ begin
  perform set_config('request.jwt.claim.sub',a::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',a,'session_id',sid)::text,true);
  s:=public.workshop_snapshot(other);if jsonb_array_length(s->'planning'->'bookings')<>0 then raise exception 'Cross-workshop read';end if;passed:=passed+1;
  if has_table_privilege('authenticated','private.planning_state','select') or has_function_privilege('anon','public.planning_command(uuid,uuid,uuid,text,jsonb)','execute') then raise exception 'Direct access';end if;passed:=passed+1;
- r:=public.export_workshop(w,dev);if r->>'databaseVersion'<>'11' or jsonb_array_length(r->'tables'->'planning_state')<>1 then raise exception 'Archive missing';end if;perform private.validate_planning(w,r->'tables'->'planning_state'->0->'data');passed:=passed+1;
+ r:=public.export_workshop(w,dev);if r->>'databaseVersion'<>'12' or jsonb_array_length(r->'tables'->'planning_state')<>1 then raise exception 'Archive missing';end if;perform private.validate_planning(w,r->'tables'->'planning_state'->0->'data');passed:=passed+1;
  perform set_config('tallerflow.planning_checks',passed::text,true);
 end $$;
 select current_setting('tallerflow.planning_checks')::int as checks_passed,'Hosted PostgreSQL; synthetic Auth; full rollback' as scope;

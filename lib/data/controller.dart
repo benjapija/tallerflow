@@ -9,6 +9,7 @@ import '../domain/purchases.dart';
 import '../domain/case_library.dart';
 import '../domain/portal.dart';
 import '../domain/planning.dart';
+import '../domain/maintenance.dart';
 import 'cloud.dart';
 import 'demo.dart';
 import 'vault.dart';
@@ -349,6 +350,54 @@ class WorkshopController extends ChangeNotifier {
           }
         }
       });
+
+  Future<void> maintenance(
+    String action,
+    Map<String, dynamic> payload,
+  ) => _locked(() async {
+    _checkAccess();
+    if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+      throw const RuleException(
+        'Sincroniza y revisa los pendientes antes de registrar mantenimiento',
+      );
+    }
+    final p = {
+      ...payload,
+      'revision':
+          payload['revision'] ??
+          MaintenanceLedger(state.configuration['maintenance']).revision,
+    };
+    final next = state.copy();
+    applyMaintenanceCommand(
+      next,
+      const Uuid().v4(),
+      action,
+      p,
+      actor,
+      clock().toUtc(),
+    );
+    if (demo) {
+      final before = state;
+      state = next;
+      try {
+        await _persist();
+      } catch (_) {
+        state = before;
+        rethrow;
+      }
+      notifyListeners();
+    } else {
+      try {
+        await _command(action, p, allowOffline: true);
+      } on RuleException {
+        if (!offline && !accessRevoked && pendingCommands.isEmpty) {
+          await _refresh();
+          notifyListeners();
+        }
+        rethrow;
+      }
+    }
+  });
 
   Future<void> library(String action, Map<String, dynamic> payload) =>
       _locked(() async {

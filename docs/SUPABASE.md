@@ -1,6 +1,6 @@
 # Supabase de pruebas · desarrollo actual
 
-Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. El principal tiene veintiuna migraciones y funciones workshop-members, workshop-photos y workshop-portal desplegadas. Taller piloto ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La pertenencia administradora corresponde al UUID de ramirezbroja013@gmail.com confirmado por el usuario; no se ha leído su contraseña. El recorrido HTTP real se validó en otros dos talleres ficticios, ahora sin cuentas ni dispositivos activos.
+Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. El principal tiene veintidós migraciones y funciones workshop-members, workshop-photos y workshop-portal desplegadas. Taller piloto ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La pertenencia administradora corresponde al UUID de ramirezbroja013@gmail.com confirmado por el usuario; no se ha leído su contraseña. El recorrido HTTP real se validó en otros dos talleres ficticios, ahora sin cuentas ni dispositivos activos.
 
 ## Configuración desde el Mac
 
@@ -81,3 +81,5 @@ Diez comprobaciones HTTP reales entre gpseuqmzbazifmkhjyby y qnbgbgumvxmmipjlkcg
 workshop-portal usa verify_jwt=false porque el destinatario no tiene una cuenta de personal. Cada POST exige enlace secreto y código independiente; sus hashes se verifican en el servidor antes de acceder a presupuestos, decisiones o fotos. El servicio utiliza la clave administrativa exclusivamente en su entorno. Personal y anónimos carecen de permisos para invocar customer_portal directamente. Las altas y revocaciones de oficina sí requieren sesión/dispositivo/rol vigentes.
 
 La agenda está aplicada en el principal gpseuqmzbazifmkhjyby, con dieciocho SQL alojadas aprobadas y formato de copia 11. qnbgbgumvxmmipjlkcgb conserva el esquema con portal (veinte migraciones equivalentes). La revisión automática rechazó aplicar allí la agenda porque requiere autorización concreta del destino, incluso tras comprobar la misma organización y plan Free. Se ha solicitado ese permiso y se continúa el trabajo independiente.
+
+Mantenimiento: migración 20261007061600 instalada en el principal; 18 comprobaciones alojadas con rollback. El proyecto de recuperación permanece sin agenda/mantenimiento hasta aprobación específica.

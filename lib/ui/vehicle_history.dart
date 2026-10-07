@@ -7,6 +7,7 @@ import 'dialogs.dart';
 import 'csv_panel.dart';
 import 'photo_panel.dart';
 import 'inspection_panel.dart';
+import 'maintenance_panel.dart';
 
 class VehicleHistory extends StatelessWidget {
   final WorkshopController controller;
@@ -155,6 +156,7 @@ class VehicleHistory extends StatelessWidget {
                           ),
                         ],
                       ),
+                    MaintenancePanel(controller: c, vehicle: v),
                     const Divider(height: 24),
                     for (final entry in history.where(
                       (h) => h['vehicleId'] == v['id'],

@@ -68,7 +68,7 @@ try{
   const c=(await snap()).caseLibrary[0];assert.equal(c.versions.length,3);assert.equal(c.activeVersion,3);assert.equal(c.withdrawn,false);assert.equal(c.needsReview,false);
  });
  await test('Backup version nine includes versions, receipts, audit and source evidence',async()=>{
-  const a=(await db.query('select public.export_workshop($1,$2) r',[w,dev])).rows[0].r;assert.equal(a.databaseVersion,11);assert.equal(a.tables.case_library[0].data.versions.length,3);assert.ok(a.tables.command_receipts.find(x=>x.id===cid));assert.equal(a.tables.audit.filter(x=>x.kind==='case_withdraw').length,1);
+  const a=(await db.query('select public.export_workshop($1,$2) r',[w,dev])).rows[0].r;assert.equal(a.databaseVersion,12);assert.equal(a.tables.case_library[0].data.versions.length,3);assert.ok(a.tables.command_receipts.find(x=>x.id===cid));assert.equal(a.tables.audit.filter(x=>x.kind==='case_withdraw').length,1);
  });
  await test('Retiring a device blocks retries even when command was already committed',async()=>{
   await db.exec('reset role');await db.query('update private.devices set retired_at=now() where workshop_id=$1 and id=$2',[w,td]);await login(admin,ad);await db.query("select set_config('request.jwt.claim.sub',$1,false)",[tech]);await db.query("select set_config('request.jwt.claims',$1,false)",[JSON.stringify({sub:tech,session_id:td})]);dev=td;await assert.rejects(()=>command('case_draft',p,cid),/retired|Active authenticated device/i);

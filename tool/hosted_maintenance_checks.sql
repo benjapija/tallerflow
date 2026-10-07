@@ -1,0 +1,36 @@
+begin;
+do $$
+declare w uuid:=gen_random_uuid();other uuid:=gen_random_uuid();a uuid:=gen_random_uuid();t uuid:=gen_random_uuid();sid uuid:=gen_random_uuid();dev uuid:=gen_random_uuid();td uuid:=gen_random_uuid();ts uuid:=gen_random_uuid();pid uuid:=gen_random_uuid();oid uuid:=gen_random_uuid();task uuid:=gen_random_uuid();cid uuid:=gen_random_uuid();vid uuid;p jsonb;r jsonb;s jsonb;before_order jsonb;failed boolean;passed int:=0;
+begin
+ insert into auth.users(id,email) values(a,'maintenance-admin-'||a||'@example.invalid'),(t,'maintenance-tech-'||t||'@example.invalid');insert into auth.sessions(id,user_id) values(sid,a),(ts,t);
+ insert into private.workshops(id,name) values(w,'Fictional maintenance'),(other,'Fictional maintenance isolation');insert into private.members values(w,a,'Admin','admin',true,true),(w,t,'Tech','technician',false,true),(other,a,'Admin','admin',true,true);
+ perform set_config('request.jwt.claim.sub',a::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',a,'session_id',sid)::text,true);
+ s:=public.device_snapshot(w,dev);
+ r:=public.apply_operation(w,dev,jsonb_build_object('id',gen_random_uuid(),'orderId',oid,'actorId',a,'kind','receive','baseRevision',0,'at',now(),'payload',jsonb_build_object('plate','9262FIC','country','ES','vin','FICTIONAL-MAINTENANCE','vehicle','Fictional','engine','2020','client','Fictional owner','phone','','km',128000,'symptom','Fictional symptom','tasks',jsonb_build_array(jsonb_build_object('id',task,'title','Diagnosis','assignees',jsonb_build_array(t),'estimateMinutes',30)))));
+ if r->>'status'<>'accepted' then raise exception 'Source fixture failed';end if;
+ s:=public.device_snapshot(w,dev);before_order:=s->'orders'->0;vid:=(before_order->>'vehicleId')::uuid;
+ p:=jsonb_build_object('id',pid,'revision',0,'vehicleId',vid,'title','Fictional oil','source','Manual criterion verified','zone','Europe/Madrid','dueDate','2026-10-08','dueKm',130000,'intervalMonths',12,'intervalKm',15000,'reason','Fictional plan');
+ r:=public.maintenance_command(w,dev,cid,'care_plan',p);if r->>'saved'<>'true' then raise exception 'Plan';end if;passed:=passed+1;
+ if public.maintenance_command(w,dev,cid,'care_plan',p)<>r then raise exception 'Retry';end if;passed:=passed+1;
+ failed:=false;begin perform public.maintenance_command(w,dev,cid,'care_plan',p||'{"title":"Changed"}');exception when others then failed:=true;end;if not failed then raise exception 'Changed retry';end if;passed:=passed+1;
+ failed:=false;begin perform public.maintenance_command(w,dev,gen_random_uuid(),'care_plan',p);exception when others then failed:=true;end;if not failed then raise exception 'Stale office';end if;passed:=passed+1;
+ failed:=false;begin perform public.maintenance_command(w,dev,gen_random_uuid(),'care_plan',p||jsonb_build_object('id',gen_random_uuid(),'revision',1,'vehicleId',gen_random_uuid()));exception when others then failed:=true;end;if not failed then raise exception 'Foreign vehicle';end if;passed:=passed+1;
+ failed:=false;begin perform public.maintenance_command(w,dev,gen_random_uuid(),'care_plan',p||'{"revision":1,"dueDate":"2026-02-30"}');exception when others then failed:=true;end;if not failed then raise exception 'Invalid date';end if;passed:=passed+1;
+ perform public.maintenance_command(w,dev,gen_random_uuid(),'care_plan',p||'{"revision":1,"title":"Fictional oil revised"}');s:=public.device_snapshot(w,dev);if jsonb_array_length(s->'maintenance'->'plans'->0->'versions')<>2 or s->'maintenance'->'plans'->0->'versions'->0->>'title'<>'Fictional oil' then raise exception 'Original version';end if;passed:=passed+1;
+ p:=jsonb_build_object('id',pid,'revision',2,'performedAt','2026-09-30T22:30:00Z','km',129000,'orderId',oid,'evidence','Fictional completion verified','reason','Manual record');cid:=gen_random_uuid();r:=public.maintenance_command(w,dev,cid,'care_complete',p);s:=public.device_snapshot(w,dev);
+ if s->'maintenance'->'plans'->0->>'dueDate'<>'2027-10-01' or (s->'maintenance'->'plans'->0->>'dueKm')::int<>144000 or s->'maintenance'->'plans'->0->'completions'->0->>'performedDate'<>'2026-10-01' then raise exception 'Recurrence or local day';end if;passed:=passed+1;
+ if public.maintenance_command(w,dev,cid,'care_complete',p)<>r or jsonb_array_length(s->'maintenance'->'plans'->0->'completions')<>1 then raise exception 'Completion retry';end if;passed:=passed+1;
+ failed:=false;begin perform public.maintenance_command(w,dev,gen_random_uuid(),'care_complete',p||'{"revision":3}');exception when others then failed:=true;end;if not failed then raise exception 'Duplicate visit';end if;passed:=passed+1;
+ failed:=false;begin perform public.maintenance_command(w,dev,gen_random_uuid(),'care_complete',p||jsonb_build_object('revision',3,'performedAt',now()+interval '1 day'));exception when others then failed:=true;end;if not failed then raise exception 'Future completion';end if;passed:=passed+1;
+ if s->'orders'->0<>before_order or (s->'vehicleProfiles'->0->>'km')::int<>129000 then raise exception 'Repair changed or known mileage missing';end if;passed:=passed+1;
+ perform set_config('request.jwt.claim.sub',t::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',t,'session_id',ts)::text,true);s:=public.device_snapshot(w,td);
+ if jsonb_array_length(s->'maintenance'->'plans')<>1 or jsonb_array_length(s->'maintenance'->'plans'->0->'events')<>0 or jsonb_array_length(s->'maintenance'->'plans'->0->'versions')<>0 then raise exception 'Technician privacy';end if;passed:=passed+1;
+ failed:=false;begin perform public.maintenance_command(w,td,gen_random_uuid(),'care_pause',jsonb_build_object('id',pid,'revision',3,'reason','Forbidden'));exception when others then failed:=true;end;if not failed then raise exception 'Technician wrote';end if;passed:=passed+1;
+ perform set_config('request.jwt.claim.sub',a::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',a,'session_id',sid)::text,true);s:=public.workshop_snapshot(other);if jsonb_array_length(s->'maintenance'->'plans')<>0 then raise exception 'Other workshop';end if;passed:=passed+1;
+ perform public.maintenance_command(w,dev,gen_random_uuid(),'care_pause',jsonb_build_object('id',pid,'revision',3,'reason','Fictional pause'));s:=public.device_snapshot(w,dev);if s->'maintenance'->'plans'->0->>'status'<>'paused' or jsonb_array_length(s->'maintenance'->'plans'->0->'completions')<>1 then raise exception 'Pause erased evidence';end if;passed:=passed+1;
+ if has_table_privilege('authenticated','private.maintenance_state','select') or has_function_privilege('anon','public.maintenance_command(uuid,uuid,uuid,text,jsonb)','execute') then raise exception 'Direct access';end if;passed:=passed+1;
+ r:=public.export_workshop(w,dev);if r->>'databaseVersion'<>'12' or jsonb_array_length(r->'tables'->'maintenance_state')<>1 then raise exception 'Archive';end if;perform private.validate_maintenance(w,r->'tables'->'maintenance_state'->0->'data');passed:=passed+1;
+ perform set_config('tallerflow.maintenance_checks',passed::text,true);
+end $$;
+select current_setting('tallerflow.maintenance_checks')::int as checks_passed,'Hosted PostgreSQL; synthetic Auth; full rollback' as scope;
+rollback;

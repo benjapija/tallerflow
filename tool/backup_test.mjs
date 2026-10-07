@@ -70,6 +70,10 @@ try{
  const planningLift=id(),planningBooking=id();
  await source.query('select public.planning_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'schedule_resource',{id:planningLift,revision:0,name:'Recovery lift',active:true,reason:'Fictional configuration'}]);
  await source.query('select public.planning_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'schedule_booking',{id:planningBooking,revision:1,title:'Fictional recovery appointment',start:'2026-10-08T09:00:00Z',end:'2026-10-08T10:00:00Z',kind:'appointment',assignees:[tech],liftId:planningLift,orderId:order,reason:'Fictional recovered slot'}]);
+ const careid=id();
+ const vid=(await snap(source,sourceDev)).orders.find(o=>o.id===order).vehicleId;
+ await source.query('select public.maintenance_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'care_plan',{id:careid,revision:0,vehicleId:vid,title:'Fictional oil',source:'Manual criterion',zone:'Europe/Madrid',dueDate:'2026-10-08',dueKm:130000,intervalMonths:12,intervalKm:15000,reason:'Recovery evidence'}]);
+ await source.query('select public.maintenance_command($1,$2,$3,$4,$5)',[w,sourceDev,id(),'care_complete',{id:careid,revision:1,performedAt:'2026-10-06T12:00:00Z',km:129000,orderId:order,evidence:'Fictional completion',reason:'Recovery evidence'}]);
  archive=(await source.query('select public.export_workshop($1,$2) r',[w,sourceDev])).rows[0].r;
  await test('Export contains documents, late originals, audit and all protocol tables, without Auth secrets',async()=>{
   assert.equal(archive.tables.documents[0].snapshot.totalCents,12345);
@@ -108,6 +112,14 @@ try{
    assert.equal((await snap(target,targetDev)).orders.length,0);
   }
  });
+ await test('Invalid maintenance archive rejects foreign vehicles, dates, versions and chronology atomically',async()=>{
+  for(const field of ['vehicleId','dueDate','versions','completions']) {
+   const bad=structuredClone(archive),p=bad.tables.maintenance_state[0].data.plans[0];
+   p[field]=field==='vehicleId'?id():field==='dueDate'?'2026-02-30':field==='versions'?[]:[...p.completions,...p.completions];
+   await assert.rejects(()=>target.query('select public.restore_workshop($1,$2,$3,$4)',[w,targetDev,rid,bad]));
+   assert.equal((await snap(target,targetDev)).orders.length,0);
+  }
+ });
  await test('Malformed case library blocks restoration atomically',async()=>{
   const bad=structuredClone(archive);bad.tables.case_library[0].data={revision:2,versions:[]};
   await assert.rejects(()=>target.query('select public.restore_workshop($1,$2,$3,$4)',[w,targetDev,rid,bad]));
@@ -119,6 +131,7 @@ try{
   assert.equal(result.restored,true);const s=await snap(target,targetDev);
   assert.deepEqual(s.orders.find(o=>o.id===order).document,document);assert.equal(s.orders.find(o=>o.id===order).payments[0].id,payment.id);assert.equal(s.orders.find(o=>o.id===order).payments[0].amountCents,2345);assert.deepEqual(s.incidents.find(x=>x.operation.id===op.id).operation,op);
   assert.deepEqual(s.planning,archive.tables.planning_state[0].data);
+  assert.deepEqual(s.maintenance,archive.tables.maintenance_state[0].data);
   assert.deepEqual(s.caseLibrary[0].versions,archive.tables.case_library[0].data.versions);assert.equal(s.caseLibrary[0].activeVersion,1);assert.equal(s.caseLibrary[0].needsReview,false);
   assert.deepEqual(s.purchaseLedger,archive.tables.inventory_state[0].data);assert.equal(s.catalog.find(x=>x.id===item).stockMilli,3000);
   await target.exec('reset role');assert.equal((await target.query('select count(*)::int n from private.audit where source_id is not null')).rows[0].n,archive.tables.audit.length);
@@ -162,30 +175,37 @@ try{
   assert.deepEqual((await snap(target,targetDev)).orders.find(o=>o.id===order).document,document);
  });
  await test('Version seven archives remain recoverable without a purchase table',async()=>{
-  const legacy=structuredClone(archive);legacy.databaseVersion=7;delete legacy.tables.inventory_state;delete legacy.tables.case_library;
+  const legacy=structuredClone(archive);legacy.databaseVersion=7;delete legacy.tables.maintenance_state;delete legacy.tables.inventory_state;delete legacy.tables.case_library;
   const dev=id();await login(legacyTarget,admin,dev);await snap(legacyTarget,dev);
   await legacyTarget.query('select public.restore_workshop($1,$2,$3,$4)',[w,dev,id(),legacy]);
   assert.equal((await snap(legacyTarget,dev)).purchaseLedger.revision,0);
  });
  await test('Version eight archive restores with an empty case library',async()=>{
   const old=await setup();try{const oldDev=id();await login(old,admin,oldDev);await snap(old,oldDev);
-   const legacy=structuredClone(archive);legacy.databaseVersion=8;delete legacy.tables.case_library;
+   const legacy=structuredClone(archive);legacy.databaseVersion=8;delete legacy.tables.maintenance_state;delete legacy.tables.case_library;
    await old.query('select public.restore_workshop($1,$2,$3,$4)',[w,oldDev,id(),legacy]);
    assert.deepEqual((await snap(old,oldDev)).caseLibrary,[]);assert.deepEqual((await snap(old,oldDev)).purchaseLedger,archive.tables.inventory_state[0].data);
   }finally{await old.close();}
  });
  await test('Version nine archive restores without reactivating any customer link',async()=>{
   const old=await setup();try{const oldDev=id();await login(old,admin,oldDev);await snap(old,oldDev);
-   const legacy=structuredClone(archive);legacy.databaseVersion=9;delete legacy.tables.portal_grants;delete legacy.tables.portal_receipts;
+   const legacy=structuredClone(archive);legacy.databaseVersion=9;delete legacy.tables.maintenance_state;delete legacy.tables.portal_grants;delete legacy.tables.portal_receipts;
    await old.query('select public.restore_workshop($1,$2,$3,$4)',[w,oldDev,id(),legacy]);
    assert.deepEqual((await snap(old,oldDev)).portalGrants,[]);assert.equal((await snap(old,oldDev)).caseLibrary.length,1);
   }finally{await old.close();}
  });
  await test('Version ten restores without an agenda and preserves portal revocation',async()=>{
   const old=await setup();try{const oldDev=id();await login(old,admin,oldDev);await snap(old,oldDev);
-   const legacy=structuredClone(archive);legacy.databaseVersion=10;delete legacy.tables.planning_state;
+   const legacy=structuredClone(archive);legacy.databaseVersion=10;delete legacy.tables.maintenance_state;delete legacy.tables.planning_state;
    await old.query('select public.restore_workshop($1,$2,$3,$4)',[w,oldDev,id(),legacy]);
    assert.equal((await snap(old,oldDev)).planning.revision,0);assert.equal((await snap(old,oldDev)).portalGrants[0].restored,true);
+  }finally{await old.close();}
+ });
+ await test('Version eleven restores agenda and starts empty maintenance while retaining original evidence',async()=>{
+  const old=await setup();try{const oldDev=id();await login(old,admin,oldDev);await snap(old,oldDev);
+   const legacy=structuredClone(archive);legacy.databaseVersion=11;delete legacy.tables.maintenance_state;
+   await old.query('select public.restore_workshop($1,$2,$3,$4)',[w,oldDev,id(),legacy]);
+   assert.equal((await snap(old,oldDev)).maintenance.revision,0);assert.deepEqual((await snap(old,oldDev)).planning,archive.tables.planning_state[0].data);
   }finally{await old.close();}
  });
  console.log(`${passed} backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.`);

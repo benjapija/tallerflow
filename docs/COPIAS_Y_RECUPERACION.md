@@ -32,3 +32,7 @@ El formato 10 conserva concesiones de acceso, sus evidencias, decisiones, audito
 ## Agenda y formato 11
 
 Se añaden reservas, elevadores, historial de versiones y evidencias; la copia de este equipo conserva las propuestas de agenda que aún no llegaron al servidor. Se comprobó la restauración en una base independiente, con validación de referencias del taller e intervalos. El formato 10 puede restaurarse con agenda vacía. El proyecto de recuperación alojado sigue en el esquema anterior mientras la revisión automática exige autorización específica: no admite las exportaciones nuevas hasta aplicar la migración de agenda. La prueba HTTP anterior entre proyectos permanece como evidencia histórica del formato correspondiente.
+
+## Mantenimiento y formato 12
+
+Incluye previsiones por fecha/kilometraje, versiones, intervenciones y motivos. La restauración valida identidad del vehículo, órdenes, autores, fechas locales, cronología e intervalos; un fallo revierte toda la restauración. El formato 11 se recupera con mantenimiento vacío. El proyecto principal tiene esta migración; el de recuperación necesita el permiso específico solicitado antes de admitir formato 12.

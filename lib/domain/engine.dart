@@ -114,6 +114,7 @@ class WorkshopState {
         'portalGrants',
         'portalDocuments',
         'planning',
+        'maintenance',
       ])
         if (j.containsKey(k)) k: j[k],
     },

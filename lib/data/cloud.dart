@@ -257,6 +257,8 @@ class SupabaseRemote extends Remote {
                 'supplier_return',
               ].contains(action)
               ? 'inventory_command'
+              : action.startsWith('care_')
+              ? 'maintenance_command'
               : action.startsWith('schedule_')
               ? 'planning_command'
               : action.startsWith('portal_')
