@@ -19,6 +19,7 @@ dependencies:
   app_links: 7.2.2
   path: 1.9.1
   image: 4.10.1
+  pdf: 3.13.1
 dev_dependencies:
   http: 1.6.0
   flutter_test:

@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-07",
+  "flutterTotal": 122,
+  "pdfTests": 5,
+  "library": "pdf 3.13.1",
+  "font": "Manrope bundled",
+  "sampleDocuments": 3,
+  "samplePages": [
+    1,
+    1,
+    8
+  ],
+  "visualReviewAllPages": true,
+  "savedRecipientAndAmountsPreserved": true,
+  "costsExcluded": true,
+  "nativeFilePickerValidated": false,
+  "realAuthHttp": false,
+  "paidServiceUsed": false
+}

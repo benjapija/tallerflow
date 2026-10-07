@@ -4,6 +4,8 @@ import '../domain/models.dart';
 import '../domain/engine.dart';
 import '../domain/quotes.dart';
 import 'dialogs.dart';
+import '../domain/document_export.dart';
+import 'document_export_button.dart';
 
 class QuotePanel extends StatelessWidget {
   final WorkOrder order;
@@ -226,6 +228,12 @@ class QuotePanel extends StatelessWidget {
                 ),
                 children: [
                   quoteContent(q),
+                  if (actor.isOffice)
+                    DocumentExportButton(
+                      source: () => DocumentExport.quote(q, actor),
+                      filename:
+                          'TallerFlow-presupuesto-${q["id"]}-v${q["version"]}.pdf',
+                    ),
                   if (canEdit && !order.issued)
                     Wrap(
                       spacing: 12,
@@ -261,7 +269,15 @@ class QuotePanel extends StatelessWidget {
                   ))
                     ExpansionTile(
                       title: Text('${q['title']} · versión ${q['version']}'),
-                      children: [quoteContent(q)],
+                      children: [
+                        quoteContent(q),
+                        if (actor.isOffice)
+                          DocumentExportButton(
+                            source: () => DocumentExport.quote(q, actor),
+                            filename:
+                                'TallerFlow-presupuesto-${q["id"]}-v${q["version"]}.pdf',
+                          ),
+                      ],
                     ),
                 ],
               ),

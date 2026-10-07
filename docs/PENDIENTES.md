@@ -20,7 +20,8 @@ Base: requisitos originales y entrega 0.2. La palabra «probado» identifica el 
 | Presupuestos y autorizaciones versionados | Integrados con órdenes, persistencia, servidor y oficina; pruebas locales y SQL alojado aprobadas | Decisiones por partida, versiones inmutables, impuestos y copias; falta HTTP de presupuestos con Auth real, uso nativo de sus pantallas y portal del destinatario |
 | Portal cliente | Pendiente tras fase 1 | HTTPS y verificación/revocación del destinatario |
 | Cobros y entrega con saldo pendiente | Implementados y probados localmente y por SQL alojado | Pagos parciales, devoluciones vinculadas, saldo separado y entrega a crédito; ocho pruebas Flutter y diez SQL por proyecto; faltan Auth HTTP y uso manual nativo |
-| Compras, almacén, garantías y PDF | En desarrollo | PDF continúa; pedidos manuales, recepciones parciales y garantías pendientes; APIs de proveedores cuando se concreten |
+| PDF de notas y presupuestos | Implementado y probado localmente | Cinco pruebas Flutter; copias de versiones guardadas, destinatario original y notas de varias páginas revisadas; selector y uso físico pendientes |
+| Compras, almacén y garantías | Pendiente | Pedidos manuales, recepciones parciales, devoluciones a proveedor y órdenes vinculadas; APIs de proveedores cuando se concreten |
 | IA técnica y administrativa | Pendiente | OpenAI desde servidor, presupuesto de consumo, fuentes autorizadas y revisión humana |
 | Cuaderno y biblioteca validados | Pendiente | Desarrollo local independiente de IA |
 | Dictado y lectura con cámara | Pendiente | Captura nativa y proveedor cuando haya servicio externo |

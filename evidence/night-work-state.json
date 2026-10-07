@@ -1,6 +1,6 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "c0f8a744aa67716a84e2f297d2c37bff081cf0c2",
+  "sourceCommit": "875324f2976e03c31fcf052e4f71bb56fd84fa7b",
   "appBuildCommit": "c0f8a744aa67716a84e2f297d2c37bff081cf0c2",
   "buildRun": 37558197890,
   "appBuildStatus": {
@@ -15,11 +15,12 @@
   "iosNativeStatus": "success",
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
   "hostedMigrations": 15,
-  "payments": "implemented, 8 Flutter, 10 PostgreSQL, 10 SQL per hosted project; publication in progress",
-  "flutterTests": 117,
+  "payments": "implemented, tested, deployed and published",
+  "flutterTests": 122,
   "postgresChecks": 149,
   "mockServiceChecks": 18,
-  "nextWork": "PDF export, then manual purchases/warehouse, warranties, customer portal and remaining agreed phases",
+  "nextWork": "Manual purchases, warehouse and warranties; client portal and remaining agreed phases",
   "paidServicesPurchased": false,
-  "automationActive": true
+  "automationActive": true,
+  "pdf": "implemented and tested locally; publication in progress"
 }

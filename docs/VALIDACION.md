@@ -1,3 +1,7 @@
+## PDF de documentos guardados · 7 de octubre de 2026
+
+122 pruebas Flutter aprobadas (cinco de exportación), analizador limpio y compilación web aprobada. Tres PDF ficticios generados con pdf 3.13.1: nota, presupuesto y nota de 80 partidas/ocho páginas. Se extrajo el texto y se revisaron todas las páginas renderizadas: moneda y acentos, importes originales, destinatario, descuentos, advertencia fiscal y totales junto a las aclaraciones. No se incluyen costes internos ni se recalculan precios del catálogo. Selector nativo y funcionamiento físico pendientes.
+
 ## Cobros y entrega · 7 de octubre de 2026
 
 117 pruebas Flutter y 149 comprobaciones PostgreSQL/PGlite, más 18 de servicios simulados, aprobadas. Cobros: ocho pruebas Flutter y diez PostgreSQL; restauración de cobro/documento/auditoría entre dos bases independiente ampliada. Pagos parciales, devoluciones parciales vinculadas, concurrencia de dos oficinas, reinicio cifrado, copia local, pérdida de respuesta, sobrepago y permisos comprobados. Diez SQL alojadas por cada proyecto Free, revertidas; no son un inicio de sesión Auth HTTP ni uso manual nativo. Migración 015 desplegada en ambos proyectos.

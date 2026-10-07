@@ -23,6 +23,8 @@ import 'inspection_panel.dart';
 import 'quote_panel.dart';
 import 'payment_panel.dart';
 import '../domain/payments.dart';
+import '../domain/document_export.dart';
+import 'document_export_button.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -1876,6 +1878,11 @@ class _WorkshopHomeState extends State<WorkshopHome>
         ? o.data['document'] as Map<String, dynamic>
         : calculateNote(o).toJson();
     return section(o.issued ? 'Nota emitida' : 'Borrador de nota', [
+      if (o.issued && c.actor.isOffice)
+        DocumentExportButton(
+          source: () => DocumentExport.note(o, c.actor),
+          filename: 'TallerFlow-nota-${o.number}.pdf',
+        ),
       for (final l in note['lines'])
         Padding(
           padding: const EdgeInsets.only(bottom: 14),
@@ -2287,7 +2294,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
       const SizedBox(height: 18),
       section('Próximas fases', [
         const Text(
-          'Inspecciones visuales, fotografías y documentos PDF.\nPortal del cliente con verificación y autorización por versión.\nCompras, cobros y garantías.\nAsistente técnico con fuentes y revisión humana.\nFacturación fiscal española e integraciones.',
+          'Portal del cliente con verificación y autorización por versión.\nCompras, almacén y garantías.\nAsistente técnico con fuentes y revisión humana.\nFacturación fiscal española e integraciones.',
           style: TextStyle(height: 1.8, color: muted),
         ),
       ]),
