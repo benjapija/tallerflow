@@ -35,11 +35,11 @@ jobs:
       - name: Trabajo sin conexión y guardado nativo
         run: |
           set -o pipefail
-          flutter test integration_test/native_workflow_test.dart -d "$TF_SIMULATOR" --dart-define=TF_STAGE=record --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }}-ios 2>&1 | tee native-ios-record.log
+          flutter test --no-uninstall integration_test/native_workflow_test.dart -d "$TF_SIMULATOR" --dart-define=TF_STAGE=record --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }}-ios 2>&1 | tee native-ios-record.log
       - name: Otro proceso recupera fotos y copia cifrada
         run: |
           set -o pipefail
-          flutter test integration_test/native_workflow_test.dart -d "$TF_SIMULATOR" --dart-define=TF_STAGE=restore --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }}-ios 2>&1 | tee native-ios-restore.log
+          flutter test --no-uninstall integration_test/native_workflow_test.dart -d "$TF_SIMULATOR" --dart-define=TF_STAGE=restore --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }}-ios 2>&1 | tee native-ios-restore.log
       - name: Recoger comprobaciones del contenedor del simulador
         if: always()
         run: |

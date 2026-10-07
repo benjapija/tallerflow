@@ -88,3 +88,7 @@ Diez comprobaciones HTTP reales entre gpseuqmzbazifmkhjyby y qnbgbgumvxmmipjlkcg
 ## Modelo inicial de presupuestos
 
 Seis pruebas de dominio de versiones inmutables, importes decimales con descuentos antes del IVA, rechazo de enlaces/versiones antiguos, caducidad, cambios de destinatario o alcance, decisiones por partida y permisos locales de oficina. El modelo es una base sin integración con pantallas, operaciones persistidas, permisos del servidor o portal; no concede autorizaciones de reparación.
+
+## Corrección del entorno iOS
+
+El primer proceso iOS pasó, pero Flutter elimina por defecto la aplicación de integración al terminar cada prueba (`IntegrationTestDevice.kill`, opción `uninstall`). Eso eliminó el contenedor antes del segundo proceso. La prueba de reinicio se repite con `--no-uninstall`, manteniendo los archivos originales sin copiarlos ni reinyectarlos. El fallo inicial permanece en evidencia; todavía no se da iOS por validado.
