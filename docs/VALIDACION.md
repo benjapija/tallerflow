@@ -1,3 +1,7 @@
+## Flotas: avance comprobado
+
+199 pruebas Flutter completas aprobadas, analizador sin incidencias y 244 comprobaciones PostgreSQL/PGlite; 26 de servicios simulados y cinco del portal conservadas. Dieciocho SQL alojadas de flotas con datos sintéticos y rollback. Recuperación y formulario comprobados. Compilación nativa de mantenimiento b83d789 en curso; flotas aún pendiente de publicar/compilar.
+
 ## Avance del 7 de octubre: mantenimiento
 
 188 pruebas Flutter completas aprobadas; analizador sin incidencias; 232 comprobaciones PostgreSQL/PGlite, 26 de servicios simulados y cinco del cliente del portal aprobadas. Dieciocho SQL alojadas de mantenimiento, y regresiones de agenda (18) y portal (15), aprobadas en el principal con datos sintéticos y rollback. Web release compilada. Paquetes de agenda d48ad76 descargados y hashes/commit verificados; uso físico y Auth nativo pendientes.

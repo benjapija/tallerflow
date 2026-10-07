@@ -36,3 +36,7 @@ Se añaden reservas, elevadores, historial de versiones y evidencias; la copia d
 ## Mantenimiento y formato 12
 
 Incluye previsiones por fecha/kilometraje, versiones, intervenciones y motivos. La restauración valida identidad del vehículo, órdenes, autores, fechas locales, cronología e intervalos; un fallo revierte toda la restauración. El formato 11 se recupera con mantenimiento vacío. El proyecto principal tiene esta migración; el de recuperación necesita el permiso específico solicitado antes de admitir formato 12.
+
+## Flotas y formato 13
+
+Incluye agrupaciones y vínculos originales, propietarios al incorporar, evidencia, versiones, auditoría y recibos. La restauración rechaza vehículos/autores ajenos, duplicados y datos incompletos de forma atómica. El formato 12 admite mantenimiento original con flotas vacías. El proyecto de recuperación necesita las migraciones nuevas antes de admitir formato 13.

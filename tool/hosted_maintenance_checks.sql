@@ -29,7 +29,7 @@ begin
  perform set_config('request.jwt.claim.sub',a::text,true);perform set_config('request.jwt.claims',jsonb_build_object('sub',a,'session_id',sid)::text,true);s:=public.workshop_snapshot(other);if jsonb_array_length(s->'maintenance'->'plans')<>0 then raise exception 'Other workshop';end if;passed:=passed+1;
  perform public.maintenance_command(w,dev,gen_random_uuid(),'care_pause',jsonb_build_object('id',pid,'revision',3,'reason','Fictional pause'));s:=public.device_snapshot(w,dev);if s->'maintenance'->'plans'->0->>'status'<>'paused' or jsonb_array_length(s->'maintenance'->'plans'->0->'completions')<>1 then raise exception 'Pause erased evidence';end if;passed:=passed+1;
  if has_table_privilege('authenticated','private.maintenance_state','select') or has_function_privilege('anon','public.maintenance_command(uuid,uuid,uuid,text,jsonb)','execute') then raise exception 'Direct access';end if;passed:=passed+1;
- r:=public.export_workshop(w,dev);if r->>'databaseVersion'<>'12' or jsonb_array_length(r->'tables'->'maintenance_state')<>1 then raise exception 'Archive';end if;perform private.validate_maintenance(w,r->'tables'->'maintenance_state'->0->'data');passed:=passed+1;
+ r:=public.export_workshop(w,dev);if r->>'databaseVersion'<>'13' or jsonb_array_length(r->'tables'->'maintenance_state')<>1 then raise exception 'Archive';end if;perform private.validate_maintenance(w,r->'tables'->'maintenance_state'->0->'data');passed:=passed+1;
  perform set_config('tallerflow.maintenance_checks',passed::text,true);
 end $$;
 select current_setting('tallerflow.maintenance_checks')::int as checks_passed,'Hosted PostgreSQL; synthetic Auth; full rollback' as scope;

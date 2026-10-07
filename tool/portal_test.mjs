@@ -71,7 +71,7 @@ try{
   await db.exec('reset role');await db.query('update private.vehicle_profiles set owner_id=$1 where workshop_id=$2',[original,w]);await db.query('update private.members set active=false where workshop_id=$1 and user_id=$2',[w,admin]);assert.deepEqual(await access('read',{},null,transferred),{error:'access'});await db.exec('reset role');await db.query('update private.members set active=true where workshop_id=$1 and user_id=$2',[w,admin]);
  });
  await test('Complete archive includes grant hashes, customer decisions and audit without raw credentials',async()=>{
-  await login(admin,ad);const a=(await db.query('select public.export_workshop($1,$2) r',[w,dev])).rows[0].r;assert.equal(a.databaseVersion,12);assert.ok(a.tables.portal_grants.length>=4);assert.equal(a.tables.portal_receipts.length,1);assert.equal(a.tables.audit.filter(x=>x.kind==='portal_decision').length,1);assert.equal(a.tables.orders[0].data.quoteLedger.decisions[0].channel,'portal');
+  await login(admin,ad);const a=(await db.query('select public.export_workshop($1,$2) r',[w,dev])).rows[0].r;assert.equal(a.databaseVersion,13);assert.ok(a.tables.portal_grants.length>=4);assert.equal(a.tables.portal_receipts.length,1);assert.equal(a.tables.audit.filter(x=>x.kind==='portal_decision').length,1);assert.equal(a.tables.orders[0].data.quoteLedger.decisions[0].channel,'portal');
  });
  console.log(`${passed} customer portal checks passed in PostgreSQL/PGlite with synthetic Auth.`);
 }finally{await db.close();}

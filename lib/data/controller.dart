@@ -10,6 +10,7 @@ import '../domain/case_library.dart';
 import '../domain/portal.dart';
 import '../domain/planning.dart';
 import '../domain/maintenance.dart';
+import '../domain/fleets.dart';
 import 'cloud.dart';
 import 'demo.dart';
 import 'vault.dart';
@@ -321,6 +322,52 @@ class WorkshopController extends ChangeNotifier {
         };
         final next = state.copy();
         applyPlanningCommand(
+          next,
+          const Uuid().v4(),
+          action,
+          p,
+          actor,
+          clock().toUtc(),
+        );
+        if (demo) {
+          final before = state;
+          state = next;
+          try {
+            await _persist();
+          } catch (_) {
+            state = before;
+            rethrow;
+          }
+          notifyListeners();
+        } else {
+          try {
+            await _command(action, p, allowOffline: true);
+          } on RuleException {
+            if (!offline && !accessRevoked && pendingCommands.isEmpty) {
+              await _refresh();
+              notifyListeners();
+            }
+            rethrow;
+          }
+        }
+      });
+
+  Future<void> fleet(String action, Map<String, dynamic> payload) =>
+      _locked(() async {
+        _checkAccess();
+        if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+          throw const RuleException(
+            'Sincroniza y revisa los pendientes antes de registrar flotas',
+          );
+        }
+        final p = {
+          ...payload,
+          'revision':
+              payload['revision'] ??
+              FleetLedger(state.configuration['fleets']).revision,
+        };
+        final next = state.copy();
+        applyFleetCommand(
           next,
           const Uuid().v4(),
           action,

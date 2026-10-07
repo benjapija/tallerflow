@@ -5,6 +5,7 @@ import '../domain/purchases.dart';
 import '../domain/case_library.dart';
 import '../domain/planning.dart';
 import '../domain/maintenance.dart';
+import '../domain/fleets.dart';
 import '../domain/models.dart';
 import 'cloud.dart';
 import 'demo.dart';
@@ -59,6 +60,7 @@ class SimulatedWorkshop {
       ...cloneMap(state.toJson()),
       'caseLibrary': visibleLibrary(state, actor),
       'planning': visiblePlanning(state, actor),
+      'fleets': visibleFleets(state, actor),
       'maintenance': visibleMaintenance(state, actor),
       if (!actor.isOffice || (actor.role != Role.admin && !actor.seeCosts))
         'purchaseLedger': null,
@@ -268,6 +270,24 @@ class SimulatedWorkshop {
       final result = {
         'saved': true,
         'revision': PlanningLedger(state.configuration['planning']).revision,
+      };
+      commands[id] = {
+        'device': device,
+        'action': action,
+        'payload': cloneMap(p),
+        'result': result,
+      };
+      return result;
+    }
+    if (action.startsWith('fleet_')) {
+      final next = state.copy();
+      applyFleetCommand(next, id, action, p, actor, DateTime.now().toUtc());
+      state = next;
+      final result = {
+        'saved': true,
+        'revision': MaintenanceLedger(
+          state.configuration['maintenance'],
+        ).revision,
       };
       commands[id] = {
         'device': device,

@@ -32,6 +32,7 @@ import 'diagnosis_panel.dart';
 import 'case_library_panel.dart';
 import 'portal_panel.dart';
 import 'planning_panel.dart';
+import 'fleet_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -413,6 +414,15 @@ class _WorkshopHomeState extends State<WorkshopHome>
                             ? catalog()
                             : page == 4
                             ? reviewList()
+                            : page == 8
+                            ? FleetPanel(
+                                controller: c,
+                                run: runAction,
+                                openOrder: (id) => setState(() {
+                                  selected = id;
+                                  page = 1;
+                                }),
+                              )
                             : page == 7
                             ? PlanningPanel(controller: c, run: runAction)
                             : page == 6
@@ -494,8 +504,10 @@ class _WorkshopHomeState extends State<WorkshopHome>
             (5, Icons.tune_rounded, 'Configuración'),
             (6, Icons.menu_book_outlined, 'Biblioteca técnica'),
             (7, Icons.calendar_month_outlined, 'Agenda'),
+            (8, Icons.local_shipping_outlined, 'Flotas'),
           ])
-            if ((item.$1 != 4 || c.actor.isOffice) &&
+            if ((item.$1 != 8 || c.actor.isOffice) &&
+                (item.$1 != 4 || c.actor.isOffice) &&
                 (item.$1 != 5 || c.actor.role == Role.admin || c.demo))
               Padding(
                 padding: const EdgeInsets.symmetric(

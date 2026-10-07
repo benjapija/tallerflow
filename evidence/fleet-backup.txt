@@ -1,0 +1,23 @@
+PASS Export contains documents, late originals, audit and all protocol tables, without Auth secrets
+PASS Technician and anonymous cannot export private workshop data
+PASS Malformed cross-workshop archive is rejected atomically
+PASS Missing Auth identity blocks restore without changing existing data
+PASS Malformed inventory ledger blocks restoration atomically
+PASS Malformed or cross-workshop planning blocks restoration atomically
+PASS Invalid maintenance archive rejects foreign vehicles, dates, versions and chronology atomically
+PASS Malformed fleet recovery rejects foreign vehicles, actors, duplicate links and missing evidence atomically
+PASS Malformed case library blocks restoration atomically
+PASS Independent database restores original documents, records and audit
+PASS Restored portal links are disabled while original customer decisions and receipts survive
+PASS Restored acknowledgements remain historical, active closure is invalidated and account request cannot gain authority
+PASS Lost restoration reply can be retried without duplicate documents or original operations
+PASS Same restore ID with changed content and restore over populated workshop are rejected
+PASS Historical device sessions stay retired and cannot mint another editing identity
+PASS Restored issued document remains immutable and further records remain late
+PASS Version seven archives remain recoverable without a purchase table
+PASS Version eight archive restores with an empty case library
+PASS Version nine archive restores without reactivating any customer link
+PASS Version ten restores without an agenda and preserves portal revocation
+PASS Version eleven restores agenda and starts empty maintenance while retaining original evidence
+PASS Version twelve restores original maintenance with fleets initially empty
+22 backup checks passed in two independent PostgreSQL/PGlite databases. Hosted Auth and native files remain separate validations.
