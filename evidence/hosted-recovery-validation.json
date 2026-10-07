@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-07T00:43:53.791Z",
+  "runId": "8fa2cda0-6a74-4d05-b863-4164cdf57d6c",
+  "source": "gpseuqmzbazifmkhjyby",
+  "destination": "qnbgbgumvxmmipjlkcgb",
+  "workshop": "90211568-6e30-42d1-90e9-d7dac9840583",
+  "fictionalAccounts": true,
+  "environment": "Two hosted Supabase projects; GoTrue, PostgREST, Edge and Storage HTTP",
+  "nativeValidated": false,
+  "checks": [
+    "Original Auth UUIDs sign in to both projects using distinct new passwords",
+    "A source token cannot authenticate against the recovery project",
+    "Source work includes two inspection versions, original photo, time and immutable note",
+    "Complete export excludes Auth and preserves documents, photos, inspection history and audit",
+    "Recovery restores original rows once under a new authenticated device",
+    "Historical devices and old acknowledgements never become active authority",
+    "Recording work is blocked while recovered photo originals are missing",
+    "Photo restoration preserves immutable path, bytes, hash and current permissions",
+    "Recovered export keeps the exact document, operation identities, technical versions and audit originals",
+    "Sign-out revokes fresh RPC and private photo reads in the recovered project"
+  ],
+  "passed": true,
+  "documentTotalCents": 3300,
+  "photoHash": "1110e84bbbe81b69783a362888219094d2946ab95d1e701722b4399c5a12e7bf",
+  "originalOperationCount": 12,
+  "totalChecks": 10,
+  "applicationCheckpoint": "f9aeed3a188963b3559c2c3e1addaf1367f1accd",
+  "scriptPublished": false
+}

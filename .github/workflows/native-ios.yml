@@ -1,0 +1,55 @@
+name: TallerFlow · probar iOS y reinicio
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-ios:
+    timeout-minutes: 20
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Preparar simulador iOS disponible
+        run: |
+          python3 - <<'PY'
+          import json, subprocess, os
+          read=lambda kind:json.loads(subprocess.check_output(['xcrun','simctl','list',kind,'--json']))
+          runtimes=[r for r in read('runtimes')['runtimes'] if r.get('isAvailable') and r['identifier'].startswith('com.apple.CoreSimulator.SimRuntime.iOS-')]
+          if not runtimes:raise SystemExit('No available iOS runtime')
+          runtime=max(runtimes,key=lambda r:tuple(map(int,r['version'].split('.'))))
+          phones=[d for d in read('devicetypes')['devicetypes'] if d['name'].startswith('iPhone')]
+          if not phones:raise SystemExit('No iPhone simulator type')
+          device=subprocess.check_output(['xcrun','simctl','create','TallerFlow-QA',phones[-1]['identifier'],runtime['identifier']],text=True).strip()
+          with open(os.environ['GITHUB_ENV'],'a') as f:f.write('TF_SIMULATOR='+device+'\n')
+          subprocess.check_call(['xcrun','simctl','boot',device])
+          subprocess.check_call(['xcrun','simctl','bootstatus',device,'-b'])
+          print('Available iOS runtime:',runtime['version'])
+          PY
+      - name: Trabajo sin conexión y guardado nativo
+        run: |
+          set -o pipefail
+          flutter test integration_test/native_workflow_test.dart -d "$TF_SIMULATOR" --dart-define=TF_STAGE=record --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }}-ios 2>&1 | tee native-ios-record.log
+      - name: Otro proceso recupera fotos y copia cifrada
+        run: |
+          set -o pipefail
+          flutter test integration_test/native_workflow_test.dart -d "$TF_SIMULATOR" --dart-define=TF_STAGE=restore --dart-define=TF_RUN_SCOPE=native-test-${{ github.run_id }}-ios 2>&1 | tee native-ios-restore.log
+      - name: Recoger comprobaciones del contenedor del simulador
+        if: always()
+        run: |
+          mkdir -p build/native-ios-evidence
+          container=$(xcrun simctl get_app_container "$TF_SIMULATOR" es.tallerflow.tallerflow data) || exit 0
+          cp "$container"/Documents/native-test-evidence/*.json build/native-ios-evidence/ || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: TallerFlow-iOS-prueba-nativa-${{ github.run_id }}
+          path: |
+            native-ios-*.log
+            build/native-ios-evidence/*.json
+          retention-days: 1

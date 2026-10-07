@@ -152,7 +152,7 @@ void main() {
       );
       await c.load();
       c.offline = true;
-        await c.execute('o-1048', 'inspection_save', payload());
+      await c.execute('o-1048', 'inspection_save', payload());
       final id = c.outbox.single.id;
       final archive = await c.exportBackup(splitFiles: true);
       c.dispose();

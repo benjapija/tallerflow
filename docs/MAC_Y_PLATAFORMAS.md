@@ -48,3 +48,7 @@ Las próximas compilaciones del workflow utilizan la configuración pública del
 Las pruebas de Auth/Storage HTTP están aprobadas en Supabase, con cuentas ficticias ya retiradas y servicio temporal desactivado. No acreditan funcionamiento del selector, cámara ni inicio de sesión en clientes nativos. Las copias nuevas usan `.tfpart`; consulta COPIAS_Y_RECUPERACION.md. La prueba local de 36 MiB supera el antiguo límite de 32 MiB.
 
 Run 37543505529, commit 6d8fbae: Windows con instalador, Android debug e iOS simulador compilados y descargados/verificados. Incluyen CSV. Son anteriores a la descarga privada por POST y a las copias divididas, y deben actualizarse antes del piloto conectado. Las nuevas compilaciones adjuntarán su commit exacto. No se entrega una app para macOS.
+
+## Evidencia actual · 7 de octubre
+
+Los paquetes Windows/Android/iOS del commit 73e5e66 están descargados y sus SHA-256 coinciden con GitHub. Incluyen copias por partes y descarga privada por POST. Las inspecciones se publicaron en f9aeed3; la prueba nativa Windows de esa versión aprobó archivos/credenciales, fotos pendientes y recuperación de la copia bajo otra clave. Su servidor es ficticio. La compilación general se repite después de corregir el formato de una prueba. Se prepara el mismo circuito en simulador iOS alojado, sin aplicación macOS.

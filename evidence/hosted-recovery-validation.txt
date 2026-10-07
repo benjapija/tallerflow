@@ -1,0 +1,11 @@
+PASS Original Auth UUIDs sign in to both projects using distinct new passwords
+PASS A source token cannot authenticate against the recovery project
+PASS Source work includes two inspection versions, original photo, time and immutable note
+PASS Complete export excludes Auth and preserves documents, photos, inspection history and audit
+PASS Recovery restores original rows once under a new authenticated device
+PASS Historical devices and old acknowledgements never become active authority
+PASS Recording work is blocked while recovered photo originals are missing
+PASS Photo restoration preserves immutable path, bytes, hash and current permissions
+PASS Recovered export keeps the exact document, operation identities, technical versions and audit originals
+PASS Sign-out revokes fresh RPC and private photo reads in the recovered project
+10 hosted recovery checks passed.

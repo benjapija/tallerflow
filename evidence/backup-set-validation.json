@@ -1,12 +1,15 @@
 {
   "date": "2026-10-07",
-  "flutterTests": 90,
+  "flutterTests": 96,
   "splitBackupCases": 7,
   "photoHistoricalCases": 2,
   "sdkRetryCases": 4,
   "largePhotoBytes": 37748736,
-  "nativeSplitBackupValidated": false,
-  "hostedAuthRestoreBetweenProjects": false,
+  "nativeSplitBackupValidated": true,
+  "hostedAuthRestoreBetweenProjects": true,
   "productionPBKDF2Iterations": 600000,
-  "fastDeriverOnlyInProtocolUnitTests": true
+  "fastDeriverOnlyInProtocolUnitTests": true,
+  "nativePlatform": "Windows",
+  "nativeCommit": "f9aeed3a188963b3559c2c3e1addaf1367f1accd",
+  "nativeBackend": "fictional"
 }

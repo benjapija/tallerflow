@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-07T00:46:14.960Z",
+  "runId": "8fa2cda0-6a74-4d05-b863-4164cdf57d6c",
+  "workshop": "90211568-6e30-42d1-90e9-d7dac9840583",
+  "fictionalAuthIdentities": 4,
+  "projects": [
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "serviceStatus": 410,
+      "loginStatuses": [
+        {
+          "role": "admin",
+          "status": 400
+        },
+        {
+          "role": "tech",
+          "status": 400
+        }
+      ],
+      "oldSessionsDenied": true,
+      "activeMemberships": 0,
+      "activeDevices": 0,
+      "authSessions": 0
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "serviceStatus": 410,
+      "loginStatuses": [
+        {
+          "role": "admin",
+          "status": 400
+        },
+        {
+          "role": "tech",
+          "status": 400
+        }
+      ],
+      "oldSessionsDenied": true,
+      "activeMemberships": 0,
+      "activeDevices": 0,
+      "authSessions": 0
+    }
+  ],
+  "ephemeralCredentialsRemoved": true
+}

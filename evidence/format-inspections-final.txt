@@ -1,0 +1,2 @@
+Formatted test/inspections_test.dart
+Formatted 62 files (1 changed) in 0.32 seconds.

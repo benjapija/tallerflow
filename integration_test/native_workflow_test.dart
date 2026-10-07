@@ -186,7 +186,11 @@ void main() {
     expect(stored, isNot(contains('Volkswagen')));
     expect(stored, isNot(contains('Elena García')));
     // The artifact contains results only, never vaults or operating system keys.
-    final evidence = Directory(evidencePath);
+    final evidence = Directory(
+      Platform.isIOS || Platform.isAndroid
+          ? '${(await getApplicationDocumentsDirectory()).path}/native-test-evidence'
+          : evidencePath,
+    );
     await evidence.create(recursive: true);
     await File('${evidence.path}/$stage.json').writeAsString(
       jsonEncode({

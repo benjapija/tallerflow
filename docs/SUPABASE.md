@@ -71,3 +71,7 @@ La primera cuenta administradora confirmada es **ramirezbroja013@gmail.com**. Se
 ## Inspecciones · 7 de octubre
 
 Migración 013 aplicada en el proyecto principal. Seis pruebas Flutter, ocho PostgreSQL locales y diez SQL alojadas aprobaron versiones, reintentos, conflictos, permisos, exportación e historial técnico sin datos del destinatario. Las pruebas SQL alojadas emplearon identidades sintéticas y se revirtieron; no acreditan Auth HTTP ni cámara. Batería completa: 96 Flutter, 130 PostgreSQL y 18 servicios simulados. Analizador limpio.
+
+## Recuperación alojada y retirada · 7 de octubre
+
+Diez comprobaciones HTTP reales entre gpseuqmzbazifmkhjyby y qnbgbgumvxmmipjlkcgb (Free, coste confirmado 0 USD/mes). Dos UUID Auth originales recreados con contraseñas ficticias distintas. Se conservan documentos, operaciones, auditoría, fotografías originales y versiones de inspección; reintentos no duplican la restauración y los equipos históricos quedan retirados. Cuatro identidades Auth de prueba retiradas, cero sesiones/pertenencias/equipos activos, servicios temporales sustituidos por respuesta 410 y credenciales efímeras eliminadas. El circuito nativo Windows f9aeed3 también pasó fotos/copia/restauración entre dos procesos, con servidor ficticio.
