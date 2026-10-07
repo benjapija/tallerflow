@@ -1,3 +1,13 @@
+# Referencia actual · 7 de octubre de 2026
+
+El Mac sigue siendo equipo de desarrollo y navegador; no se entrega aplicación macOS. La demo actual se sirve desde build/web en http://127.0.0.1:8777/; su lanzador es tool/run_demo.command. Usa datos ficticios y no inicia sesión en el taller alojado.
+
+Los paquetes Windows/Android/iOS simulador descargados y verificados actuales son 542769f. Windows contiene installer/TallerFlow-Setup.exe; Android es APK de pruebas y iOS solo simulador. IA reciente y corrección de carpetas privadas iOS aún pendientes de publicar y empaquetar. No se ha validado OCR nativo, equipos físicos ni Auth personal desde esos clientes. El ensayo 37595308884 compiló Android/iOS, pero fallaron sus pruebas OCR por espacio del emulador y carpeta iOS, respectivamente.
+
+Los apartados siguientes conservan las instrucciones y el historial de entregas. Para elegir paquetes prevalecen esta referencia, evidence/package-checkpoints.json y el informe de avance.
+
+---
+
 # Desarrollo y revisión desde el Mac
 
 El Mac es el equipo de desarrollo. Por petición del usuario del 6 de octubre de 2026 no se entrega una aplicación macOS. Los clientes previstos siguen siendo Windows, Android e iOS; la demostración se revisa en navegador.

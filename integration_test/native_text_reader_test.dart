@@ -5,6 +5,7 @@ import 'package:image/image.dart' as img;
 import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tallerflow/data/text_capture.dart';
+import 'package:tallerflow/data/photo_temp.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -49,11 +50,25 @@ void main() {
             color: img.ColorRgb8(0, 0, 0),
           );
           final upright = await save(image, 'upright');
+          expect(await privatePhotoSource(upright.path), isNotNull);
           final reader = LocalTextReader();
           final words = await reader.read(upright.path);
           expect(words, contains('P0300'));
           expect(words, contains('ABC123'));
           checks.add('upright fictional DTC and reference preserved');
+          if (Platform.isIOS) {
+            final cameraTemp = File(
+              '${Directory.systemTemp.path}/tallerflow-ocr-camera-fixture.jpg',
+            );
+            files.add(cameraTemp);
+            await cameraTemp.writeAsBytes(
+              await upright.readAsBytes(),
+              flush: true,
+            );
+            expect(await privatePhotoSource(cameraTemp.path), isNotNull);
+            expect(await reader.read(cameraTemp.path), contains('P0300'));
+            checks.add('iOS private camera temporary directory accepted');
+          }
 
           final rotated = img.copyRotate(image, angle: 90);
           rotated.exif.imageIfd.orientation = 8;
@@ -84,6 +99,7 @@ void main() {
           files.add(outside);
           await outside.writeAsBytes(await upright.readAsBytes(), flush: true);
           await expectLater(reader.read(outside.path), throwsFormatException);
+          expect(await privatePhotoSource(outside.path), isNull);
           expect(await outside.exists(), isTrue);
           checks.add(
             'file outside private cache refused and original retained',

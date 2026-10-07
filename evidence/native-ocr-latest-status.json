@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-07",
+  "run": 37595308884,
+  "commit": "c1fe3edb4cf61275d6484182c3947e173a594283",
+  "validate": "success",
+  "android": {
+    "compiled": true,
+    "ocrTestExecuted": false,
+    "failure": "Emulator userdata partition required 7372.80 MiB with 6144.52 MiB available; boot timed out"
+  },
+  "ios": {
+    "compiled": true,
+    "ocrTestPassed": false,
+    "failure": "FormatException reading fictional private JPEG",
+    "fix": "Local native boundary accepts app caches and temporary directory; simulation verification pending"
+  },
+  "physicalDeviceValidated": false,
+  "hostedNativeAuthValidated": false
+}

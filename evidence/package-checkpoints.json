@@ -3,34 +3,39 @@
   "packages": [
     {
       "platform": "windows",
-      "file": "TallerFlow-Windows-piloto-50c55fa.zip",
-      "sha256": "49a445ed2279b0e37e93dbed9ebde653095b4b48774abdb4878d6853b7727c27",
-      "commit": "50c55fa5168c37f4f91c7d010628fefce0447a4b",
-      "run": 37588376889,
+      "file": "TallerFlow-Windows-piloto-542769f.zip",
+      "sha256": "95199d3db333c316af500488c4b3880212bf6069a2aedd367253a5498877017f",
+      "commit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
+      "run": 37591485045,
       "sourceCommitVerified": true,
       "physicalDeviceValidated": false,
-      "installerIncluded": true
+      "installerIncluded": true,
+      "includesFleetsAndCapture": true,
+      "ocrValidated": false
     },
     {
       "platform": "android",
-      "file": "TallerFlow-Android-piloto-50c55fa.zip",
-      "sha256": "591c897070c04dc2ef35efec6832141c17ee0dc5306ff0b7cfbac740d949ec4f",
-      "commit": "50c55fa5168c37f4f91c7d010628fefce0447a4b",
-      "run": 37588376889,
-      "sourceCommitVerified": true,
-      "physicalDeviceValidated": false,
-      "installerIncluded": false
-    },
-    {
-      "platform": "ios-simulator",
-      "file": "TallerFlow-iOS-simulador-b83d789.zip",
-      "sha256": "3e2debbd4846f25718438f9ba28999df2635c653dd98d995eed968952ed99a61",
-      "commit": "b83d789bcf1c5080a99b1bf93af899aa39c22c25",
-      "run": 37582607709,
+      "file": "TallerFlow-Android-piloto-542769f.zip",
+      "sha256": "a94cc4e5a010bb27979977dd8331e6eeb58b8cf11d0895f3022e2a0fe6b26d93",
+      "commit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
+      "run": 37591485045,
       "sourceCommitVerified": true,
       "physicalDeviceValidated": false,
       "installerIncluded": false,
-      "includesFleetsAndCapture": false
+      "includesFleetsAndCapture": true,
+      "ocrValidated": false
+    },
+    {
+      "platform": "ios-simulator",
+      "file": "TallerFlow-iOS-simulador-542769f.zip",
+      "sha256": "67ae717ffaad854a88c812b2bae3260652f8cd51ba16d264dd6fafcd28b061c1",
+      "commit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
+      "run": 37591485045,
+      "sourceCommitVerified": true,
+      "physicalDeviceValidated": false,
+      "installerIncluded": false,
+      "includesFleetsAndCapture": true,
+      "ocrValidated": false
     }
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-07",
+  "projectId": "gpseuqmzbazifmkhjyby",
+  "invariantsPassed": 14,
+  "permissionChecksPassed": 5,
+  "rolledBack": true,
+  "environment": "PostgreSQL hosted with synthetic Auth; no user sign-in",
+  "providerRequests": 0,
+  "functionVersion": 1,
+  "generationEnabled": false,
+  "configuredBudgetMicroUsd": 0
+}

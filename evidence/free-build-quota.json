@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-07T09:25:00Z",
+  "source": "GitHub account billing UI",
+  "plan": "Free",
+  "minutesUsed": 1205,
+  "minutesIncluded": 2000,
+  "minutesRemaining": 795,
+  "billableUsd": 0,
+  "storageUsedDisplayGB": 0,
+  "storageIncludedGB": 0.5,
+  "storageProgressPercent": 4,
+  "plannedWorkflowMaximumWeightedMinutes": 410,
+  "paidConsumptionAuthorized": false
+}

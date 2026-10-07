@@ -29,6 +29,7 @@ import '../domain/purchases.dart';
 import 'purchase_panel.dart';
 import '../domain/linked_returns.dart';
 import 'diagnosis_panel.dart';
+import 'assistant_panel.dart';
 import 'case_library_panel.dart';
 import 'portal_panel.dart';
 import 'planning_panel.dart';
@@ -1573,6 +1574,8 @@ class _WorkshopHomeState extends State<WorkshopHome>
         ]),
         const SizedBox(height: 18),
         PhotoPanel(controller: c, order: o),
+        const SizedBox(height: 18),
+        AssistantPanel(controller: c, order: o, run: runAction),
         const SizedBox(height: 18),
         InspectionPanel(
           order: o,

@@ -1,0 +1,156 @@
+{
+  "projectId": "gpseuqmzbazifmkhjyby",
+  "date": "2026-10-07",
+  "migrations": [
+    {
+      "version": "20261006152936",
+      "name": "tallerflow_core",
+      "source": "supabase/migrations/202610060001_core.sql",
+      "sha256": "38d9a2fcde2064273e747f45bb141dd9d2c23a75a3469aa00c79f6cbb44f1173"
+    },
+    {
+      "version": "20261006152941",
+      "name": "tallerflow_reliability",
+      "source": "supabase/migrations/202610060002_reliability.sql",
+      "sha256": "21c987dbb8dbb884b4954113b5ff2b6685e93313bf1ddeb472e7a4dfa9dd8ee7"
+    },
+    {
+      "version": "20261006152947",
+      "name": "tallerflow_backup",
+      "source": "supabase/migrations/202610060003_backup.sql",
+      "sha256": "eab7dace787d91dc1804cf9ebb14641f621b647d1f8cf4f0d9b865c684116d4d"
+    },
+    {
+      "version": "20261006152952",
+      "name": "tallerflow_management",
+      "source": "supabase/migrations/202610060004_management.sql",
+      "sha256": "c3003639dcf73b96639fef555ee17503500fc5f4328538f6ee311653911cef1b"
+    },
+    {
+      "version": "20261006161439",
+      "name": "tallerflow_account_creation",
+      "source": "supabase/migrations/202610060005_account_creation.sql",
+      "sha256": "0d17174bfab75ae9d8260121b421869b3f9b86aaadd58e25759f3a29b6296328"
+    },
+    {
+      "version": "20261006164430",
+      "name": "tallerflow_reception_validation",
+      "source": "supabase/migrations/202610060006_reception_validation.sql",
+      "sha256": "8f5d8f3315e645c579e364c5f9496505871773b930e8d0f118c780797e58c499"
+    },
+    {
+      "version": "20261006191332",
+      "name": "vehicle_history",
+      "source": "supabase/migrations/202610060007_vehicle_history.sql",
+      "sha256": "b2c2cd707b61ecaa44701de0cab4c16ad0914c93a1feb3ebe3e0d9411636865a"
+    },
+    {
+      "version": "20261006204909",
+      "name": "pricing_review",
+      "source": "supabase/migrations/202610060008_pricing_review.sql",
+      "sha256": "71c9dca118beec5c928ef851cb6bad3d2480c3f1677af76a40e3aa7c3d2a61cb"
+    },
+    {
+      "version": "20261006215354",
+      "name": "private_photos",
+      "source": "supabase/migrations/20261006211719_private_photos.sql",
+      "sha256": "31e053916ad356e2569cbee00723f927486b7f597662872c63729d7d601b1397"
+    },
+    {
+      "version": "20261006224642",
+      "name": "customer_csv",
+      "source": "supabase/migrations/20261006222218_customer_csv.sql",
+      "sha256": "c0106823c36f8e05e4173f435102a936580ca19a9f27e2f891d566a7347778dc"
+    },
+    {
+      "version": "20261006233247",
+      "name": "private_photo_download",
+      "source": "supabase/migrations/20261006233014_private_photo_download.sql",
+      "sha256": "877bee409310a1a0eb43a9bbed2e4e148d76d60912b152c8152b5e7018508329"
+    },
+    {
+      "version": "20261006233435",
+      "name": "photo_edge_only_reads",
+      "source": "supabase/migrations/20261006233401_photo_edge_only_reads.sql",
+      "sha256": "1653522f62b61220ae7649eddacc4d1ef923cea30661d5d0b2a3d01359ffe126"
+    },
+    {
+      "version": "20261007002911",
+      "name": "inspections",
+      "source": "supabase/migrations/20261006234601_inspections.sql",
+      "sha256": "3d1b2e040f781a6aef7956b4288c487b46ddd5e311ce10b3737b4e718cf69d1c"
+    },
+    {
+      "version": "20261007012619",
+      "name": "quotes",
+      "source": "supabase/migrations/20261007011737_quotes.sql",
+      "sha256": "2e1424ba5e22114be4d027590202947afaddb4d08cbe889f48d182bc4dfa5843"
+    },
+    {
+      "version": "20261007025138",
+      "name": "payments",
+      "source": "supabase/migrations/20261007021432_payments.sql",
+      "sha256": "886d2911d5d9886ea527c50fb4eb30c1f063a904656c36ae36dba06b8520ff5a"
+    },
+    {
+      "version": "20261007033453",
+      "name": "manual_purchases",
+      "source": "supabase/migrations/20261007031910_manual_purchases.sql",
+      "sha256": "66064060eee098f169fd6833a473d6df9615ff4f974b50393201d1acc11dff25"
+    },
+    {
+      "version": "20261007035151",
+      "name": "linked_returns",
+      "source": "supabase/migrations/20261007034316_linked_returns.sql",
+      "sha256": "a05612f02ce72c3f5dde3623d51378fd52a32f07cea93b69a214d9a444ad018b"
+    },
+    {
+      "version": "20261007040611",
+      "name": "diagnosis_notebook",
+      "source": "supabase/migrations/20261007035757_diagnosis_notebook.sql",
+      "sha256": "89b525d1ee0d026cd2d05c1bc179116ee248cfb2c2b221a0695129a5664138dd"
+    },
+    {
+      "version": "20261007042553",
+      "name": "validated_cases",
+      "source": "supabase/migrations/20261007041037_validated_cases.sql",
+      "sha256": "f56c2f0d9542a1637a8ef39a4c1231caa1706de97d0ca8ee1d14c4d424e16468"
+    },
+    {
+      "version": "20261007045731",
+      "name": "customer_portal",
+      "source": "supabase/migrations/20261007043615_customer_portal.sql",
+      "sha256": "bfa02c1a4221278b5cb0f2738b9da2d61797369ab48f4156232ca7a7f458795a"
+    },
+    {
+      "version": "20261007055450",
+      "name": "planning",
+      "source": "supabase/migrations/20261007054800_planning.sql",
+      "sha256": "53b24ad50b83261920dd6873c338b11bc25697e0fce99c43abde2b5e28f78093"
+    },
+    {
+      "version": "20261007062728",
+      "name": "maintenance",
+      "source": "supabase/migrations/20261007061600_maintenance.sql",
+      "sha256": "f28b188c39dc1dc228b6e703242004bc994fc969eb4b002f45ed52dc4c4c8901"
+    },
+    {
+      "version": "20261007064823",
+      "name": "fleets",
+      "source": "supabase/migrations/20261007065000_fleets.sql",
+      "sha256": "24796139866d93a06ec66ce1c0ea2c690b27b3d633a382badb8e5328f6a80f92"
+    },
+    {
+      "version": "20261007072216",
+      "name": "portal_decision_projection",
+      "source": "supabase/migrations/20261007072800_portal_decision_projection.sql",
+      "sha256": "c05500104446f32f2228cf906bf14f9c47f12ab1897e5e8ce2f05a563954f4c6"
+    },
+    {
+      "version": "20261007085719",
+      "name": "ai_draft_boundary",
+      "source": "supabase/migrations/20261007083000_ai_draft_boundary.sql",
+      "sha256": "afab67114e4a2d0c8c82f901e9131f95fbcec084b77f67dd19c7347907a9ee8a"
+    }
+  ]
+}

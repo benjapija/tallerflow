@@ -22,6 +22,7 @@ import '../domain/csv_import.dart';
 import 'photo_blobs.dart';
 part 'controller_photos.dart';
 part 'controller_photo_backup.dart';
+part 'controller_assistant.dart';
 
 class WorkshopController extends ChangeNotifier {
   final Vault vault;
@@ -47,6 +48,7 @@ class WorkshopController extends ChangeNotifier {
   List<Map<String, dynamic>> photoQueue = [], photoHistory = [];
   Set<String> cachedPhotoHashes = {};
   Map<String, dynamic>? captureTicket;
+  List<Map<String, dynamic>> assistantRecords = [];
   bool accessRevoked = false;
   bool _disposed = false;
   @override
@@ -648,6 +650,8 @@ class WorkshopController extends ChangeNotifier {
       captureTicket = saved['captureTicket'] == null
           ? null
           : cloneMap(Map<String, dynamic>.from(saved['captureTicket']));
+      assistantRecords = _maps(saved['assistantRecords']);
+      _validateAssistantRecords(assistantRecords);
       validatedAt = DateTime.tryParse(saved['validatedAt'] ?? '');
       lastObservedAt = DateTime.tryParse(saved['lastObservedAt'] ?? '');
       accessRevoked = saved['accessRevoked'] == true;
@@ -704,6 +708,7 @@ class WorkshopController extends ChangeNotifier {
     'photoHistory': photoHistory,
     'cachedPhotoHashes': cachedPhotoHashes.toList(),
     'captureTicket': captureTicket,
+    'assistantRecords': assistantRecords,
   };
 
   Future<Map<String, dynamic>> exportBackup({
@@ -747,12 +752,14 @@ class WorkshopController extends ChangeNotifier {
     if (outbox.isNotEmpty ||
         pendingCommands.isNotEmpty ||
         pendingAccountCreation != null ||
+        assistantRecords.any((r) => r['status'] == 'pending') ||
         hasPendingPhotos) {
       throw const RuleException(
         'Conserva y reconcilia los pendientes de este equipo antes de restaurar otra copia',
       );
     }
     final local = cloneMap(Map<String, dynamic>.from(archive['local']));
+    _validateAssistantRecords(_maps(local['assistantRecords']));
     if (![1, 2].contains(local['schema']) ||
         local['actor']['id'] != actor.id ||
         local['state']['workshopId'] != state.workshopId) {

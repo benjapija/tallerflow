@@ -23,6 +23,8 @@ class SecureSessionStorage extends LocalStorage {
 }
 
 abstract class Remote {
+  Future<Map<String, dynamic>> assistant(Map<String, dynamic> body) =>
+      throw UnsupportedError('El asistente todavía no está conectado');
   Future<Map<String, dynamic>> preparePhoto(
     String commandId,
     Map<String, dynamic> metadata,
@@ -77,6 +79,17 @@ class SupabaseRemote extends Remote {
   bool get requiresLease => true;
   @override
   void bindDevice(String id) => deviceId = id;
+  @override
+  Future<Map<String, dynamic>> assistant(Map<String, dynamic> body) async {
+    final response = await client.functions
+        .invoke(
+          'workshop-ai',
+          body: {...body, 'workshopId': workshopId, 'deviceId': deviceId},
+        )
+        .timeout(const Duration(seconds: 60));
+    return Map<String, dynamic>.from(response.data);
+  }
+
   Future<Map<String, dynamic>> _photoService(Map<String, dynamic> body) async {
     final response = await client.functions
         .invoke(

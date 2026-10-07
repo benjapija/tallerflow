@@ -1,8 +1,8 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "50c55fa5168c37f4f91c7d010628fefce0447a4b",
-  "appBuildCommit": "b83d789bcf1c5080a99b1bf93af899aa39c22c25",
-  "buildRun": 37582607709,
+  "sourceCommit": "c1fe3edb4cf61275d6484182c3947e173a594283",
+  "appBuildCommit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
+  "buildRun": 37591485045,
   "appBuildStatus": {
     "validate": "success",
     "windows": "success",
@@ -14,12 +14,12 @@
   "iosNativeRun": 37555896692,
   "iosNativeStatus": "success",
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
-  "hostedMigrations": 24,
+  "hostedMigrations": 25,
   "payments": "implemented, tested, deployed and published",
-  "flutterTests": 208,
-  "postgresChecks": 245,
-  "mockServiceChecks": 26,
-  "nextWork": "Publish iOS dependency repair and verify native builds; continue independent pending scope",
+  "flutterTests": 218,
+  "postgresChecks": 259,
+  "mockServiceChecks": 43,
+  "nextWork": "Publish local assistant and iOS private-root fix; reduce Android emulator userdata disk requirement; verify native OCR and rebuild current packages within free quota",
   "paidServicesPurchased": false,
   "automationActive": true,
   "pdf": "published; five local tests, all sample pages reviewed",
@@ -28,12 +28,12 @@
   "diagnosisNotebook": "implemented, tested, deployed and published",
   "caseLibrary": "implemented, tested, deployed and published",
   "portalClientChecks": 5,
-  "portal": "Ten real HTTPS valid-access/decision/retry/revocation checks passed; selected photos and public UI hosting pending",
+  "portal": "10 valid HTTPS checks plus 11 selected-photo HTTPS checks passed; public portal hosting pending",
   "planning": "Implemented; 18 hosted SQL checks passed on principal; recovery migration requires explicit target approval",
   "recoveryProjectMigrations": 20,
   "maintenance": "Implemented; 18 hosted SQL checks passed on principal; offline, retry, restoration and form tested locally",
   "fleets": "Implemented; 18 hosted SQL checks passed; local offline, owner review and archive recovery verified",
-  "capture": "Published; nine simulated tests and manual browser review passed; iOS dependency repair awaiting new build",
+  "capture": "Native bridges compiled; corrected iOS private roots pending simulator check",
   "captureBuildRun": 37586489010,
   "captureBuildStatus": {
     "validate": "success",
@@ -42,5 +42,16 @@
     "ios-simulator": "failure"
   },
   "repairBuildRun": 37588376889,
-  "repairBuildStatus": "running"
+  "assistant": "Implemented; 7 Flutter, 14 PostgreSQL/PGlite, 17 mocked service and 14 hosted invariant checks; disabled, no API calls",
+  "reportCutoff": "2026-10-07T09:15:00Z",
+  "localChangesPublished": false,
+  "assistantIncludedInDownloadedPackages": false,
+  "latestNativeOCRRun": 37595308884,
+  "latestNativeOCRStatus": {
+    "validate": "success",
+    "androidCompilation": "success",
+    "iosCompilation": "success",
+    "androidOCR": "not_run_emulator_disk_space",
+    "iosOCR": "failed_private_root"
+  }
 }

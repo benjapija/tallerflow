@@ -149,6 +149,9 @@ jobs:
           api-level: 35
           arch: x86_64
           profile: pixel_6
+          # The default userdata needs over 7 GiB and exhausts the hosted runner.
+          disk-size: 2048M
+          emulator-boot-timeout: 300
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
           script: |

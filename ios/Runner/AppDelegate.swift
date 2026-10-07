@@ -28,8 +28,17 @@ import ImageIO
         return
       }
       let url = URL(fileURLWithPath: path).resolvingSymlinksInPath().standardizedFileURL
-      let root = URL(fileURLWithPath: NSTemporaryDirectory()).resolvingSymlinksInPath().standardizedFileURL.path + "/"
-      guard url.path.hasPrefix(root),
+      // Match path_provider's private temporary directory (Library/Caches).
+      // Documents and arbitrary user originals remain outside this boundary.
+      guard let cache = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
+        result(FlutterError(code: "IMAGE_INVALID", message: "Imagen privada no disponible", details: nil))
+        return
+      }
+      let roots = [cache, FileManager.default.temporaryDirectory].map { value -> String in
+        let root = value.resolvingSymlinksInPath().standardizedFileURL.path
+        return root.hasSuffix("/") ? root : root + "/"
+      }
+      guard roots.contains(where: { url.path.hasPrefix($0) }),
             let attrs = try? FileManager.default.attributesOfItem(atPath: url.path),
             let size = attrs[.size] as? NSNumber, size.intValue > 0, size.intValue <= 16777216 else {
         result(FlutterError(code: "IMAGE_INVALID", message: "Imagen privada no disponible", details: nil))

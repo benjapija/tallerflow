@@ -1,8 +1,8 @@
-# TallerFlow · desarrollo de fase 1
+# TallerFlow · gestión del taller
 
 Aplicación en español para conectar operarios y oficina y sustituir el papel en un taller de España. Conserva Flutter/Dart, Supabase y las aplicaciones previstas para iOS, Android y Windows. El Mac se utiliza para desarrollo y demostración en navegador; por petición del usuario del 6 de octubre no se entrega aplicación macOS.
 
-**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** Conserva la base 0.2, administración, tareas, historial, precios, CSV y fotos privadas. Añade copias cifradas divididas que incluyen fotos y pendientes. Doce migraciones y las funciones de altas/fotos están instaladas en Supabase Free. Se han aprobado 15 comprobaciones reales de Auth/PostgREST/Edge/Storage por HTTP con cinco cuentas ficticias, ya retiradas. La descarga usa un POST privado sin caché y vuelve a comprobar permisos; se deshabilitó la lectura directa de objetos para evitar respuestas antiguas de la CDN. Falta validar este código en clientes nativos, cámaras y recuperación alojada entre proyectos.
+**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** Conserva la base 0.2, administración, tareas, historial, precios, CSV y fotos privadas. Añade copias cifradas divididas que incluyen fotos y pendientes. Veinticinco migraciones y las funciones de altas/fotos/portal/IA están instaladas en Supabase Free. Se han aprobado 15 comprobaciones reales de Auth/PostgREST/Edge/Storage por HTTP con cinco cuentas ficticias, ya retiradas. La descarga usa un POST privado sin caché y vuelve a comprobar permisos; se deshabilitó la lectura directa de objetos para evitar respuestas antiguas de la CDN. Falta validar este código en clientes nativos, cámaras y recuperación alojada entre proyectos.
 
 Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md). Uso de copias: [COPIAS_Y_RECUPERACION.md](docs/COPIAS_Y_RECUPERACION.md).
 
@@ -33,13 +33,13 @@ La guía [FIABILIDAD_Y_PRUEBA_MAC.md](docs/FIABILIDAD_Y_PRUEBA_MAC.md) explica c
 - Documentos inmutables, incidencias tardías y excepciones de cierre exclusivamente administrativas, explícitas y conservadas en la nota.
 - Simulación de dos móviles y oficina utilizando las pantallas y el controlador reales de Flutter.
 
-La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. Presupuestos, cobros y exportación PDF están integrados. El portal está implementado y desplegado en Supabase; falta su dirección HTTPS pública y el recorrido HTTP con sesión válida. La agenda está implementada y desplegada en el principal. Mantenimiento, flotas, IA e integraciones continúan en desarrollo.
+La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. Presupuestos, cobros y exportación PDF están integrados. El portal está implementado y desplegado en Supabase; falta su dirección HTTPS pública; los recorridos HTTPS de acceso válido, decisiones y fotos seleccionadas están aprobados con datos ficticios. La agenda está implementada y desplegada en el principal. Mantenimiento y flotas están implementados y desplegados en el principal. La IA está preparada y desactivada; faltan créditos gratuitos confirmados y validación real. Las integraciones externas siguen pendientes.
 
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 208 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
-- 245 comprobaciones PostgreSQL/PGlite y 26 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
+- 220 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
+- 259 comprobaciones PostgreSQL/PGlite y 43 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
 - 58 comprobaciones SQL alojadas históricas con transacciones revertidas y 15 del recorrido HTTP real, con talleres y cuentas ficticios aislados. Las pruebas nativas siguen separadas.
 - GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
 - Windows remoto en GitHub Actions: dos procesos nativos verifican almacén cifrado, Credential Manager, conservación de dos registros sin conexión, recuperación y un único efecto al reintentar. El servidor es ficticio; instalación manual y Auth real siguen pendientes.
@@ -86,3 +86,5 @@ Mantenimiento manual disponible en Historial de vehículos: criterios verificado
 Flotas manuales: agrupación, vínculos con propietario original, seguimiento y archivo conservado. Consulta docs/FLOTAS.md.
 
 Dictado y lectura: borradores revisables en recepción, cuaderno y catálogo; lectura local en Android/iOS y códigos de piezas. Uso físico aún pendiente. Consulta docs/CAPTURA_REVISABLE.md.
+
+El asistente conserva fuentes, requiere revisión humana y recupera respuestas sin reenviar generación. Consulta [ASISTENTE_IA.md](docs/ASISTENTE_IA.md). Los resultados y paquetes vigentes están en PENDIENTES.md y evidence/package-checkpoints.json; los apartados históricos no sustituyen esas referencias.

@@ -1,3 +1,17 @@
+# Estado vigente de validación · 7 de octubre de 2026
+
+Último corte: 11:15, hora peninsular. Datos ficticios; no acredita piloto con datos reales ni uso físico.
+
+- Local: **218 Flutter**, analizador sin incidencias y web release aprobados; **259 PostgreSQL/PGlite**, **43 servicios simulados** y **cinco pruebas del cliente del portal** aprobadas.
+- Supabase: principal con 25 migraciones. IA preparada y desactivada; 14 invariantes SQL y cinco permisos aprobados con Auth sintético y rollback, sin llamadas a OpenAI. Portal: diez HTTPS de acceso/decisión y once de fotos seleccionadas aprobadas; servicio temporal retirado.
+- Paquetes verificados: Windows, Android e iOS simulador de 542769f, ejecución 37591485045; hashes y código en evidence/package-checkpoints.json. Los cambios locales de IA y carpetas privadas iOS aún no están publicados ni en esos paquetes.
+- Ensayo OCR 37595308884: validación aprobada y ambos clientes móviles compilados. Android no arrancó por espacio de partición; iOS falló al leer su imagen privada. Corrección iOS local pendiente de nueva comprobación. Cámara, micrófono, QR/enlaces y Auth nativo siguen sin validar físicamente.
+- Los circuitos previos entre procesos Windows/iOS verifican almacenamiento y recuperación con servidor ficticio. El proyecto de recuperación conserva 20 migraciones y necesita autorización específica antes de actualizarlo.
+
+**Los registros siguientes son históricos.** Sus cifras, fallos y estados pendientes corresponden al momento de cada ensayo. PENDIENTES.md y el informe de avance describen el estado actual.
+
+---
+
 ## Reparación de configuración iOS
 
 Los ensayos 37586489010 y 37588376889 fallaron con Framework Pods_Runner not found. La consulta directa del repositorio confirmó que faltaba ios/Podfile y Debug.xcconfig solo incluía Generated.xcconfig. Se publican el Podfile y los includes de CocoaPods de Debug/Release. La selección ios_only evita repetir compilaciones aprobadas de otras plataformas; mantiene validación completa. Confirmación de compilación pendiente.

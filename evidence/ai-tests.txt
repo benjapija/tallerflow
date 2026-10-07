@@ -1,0 +1,5 @@
+259 PostgreSQL/PGlite + 43 mocked services + 5 browser client checks passed.
+Full local log SHA256: 5372787fc8fcab622194dca958e95310e724e7776dd3737b78faf4f04b05a231
+Local log: work/ai-full-regression.log
+14 AI checks passed in PostgreSQL/PGlite with synthetic Auth; no provider request.
+17 AI service checks passed with simulated Auth, database and provider; zero external API calls.
