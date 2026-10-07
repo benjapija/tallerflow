@@ -34,10 +34,12 @@ try{
  let op={id:id(),orderId:order,actorId:admin,kind:'receive',baseRevision:0,at:new Date().toISOString(),payload:data};
  assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,op])).rows[0].r.status,'accepted');
  await source.exec('reset role');
- const document={totalCents:12345,clientSnapshot:'Synthetic owner',lines:[],type:'Original immutable note'};
+ const document={issuedAt:'2026-10-06T00:00:00Z',revision:0,totalCents:12345,clientSnapshot:'Synthetic owner',lines:[],type:'Original immutable note'};
  await source.query("update private.orders set data=jsonb_set(data,'{document}',$1) where id=$2",[document,order]);
  await source.query("insert into private.documents(workshop_id,order_id,type,version,recipient_id,snapshot) values($1,$2,'work_note',1,$3,$4)",[w,order,admin,document]);
  await login(source,admin,sourceDev);
+ const payment={id:id(),orderId:order,actorId:admin,kind:'payment_record',baseRevision:(await snap(source,sourceDev)).orders[0].revision,at:new Date().toISOString(),payload:{amountCents:2345,method:'cash',paidAt:new Date().toISOString(),reference:'Fictional receipt for recovery',reason:'Already received'}};
+ assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,payment])).rows[0].r.status,'accepted');
  op={id:id(),orderId:order,actorId:admin,kind:'note',baseRevision:0,at:new Date().toISOString(),payload:{text:'Original late evidence'}};
  assert.equal((await source.query('select public.apply_operation($1,$2,$3) r',[w,sourceDev,op])).rows[0].r.status,'late');
  await source.exec('reset role');
@@ -76,7 +78,7 @@ try{
  await test('Independent database restores original documents, records and audit',async()=>{
   result=(await target.query('select public.restore_workshop($1,$2,$3,$4) r',[w,targetDev,rid,archive])).rows[0].r;
   assert.equal(result.restored,true);const s=await snap(target,targetDev);
-  assert.deepEqual(s.orders.find(o=>o.id===order).document,document);assert.deepEqual(s.incidents.find(x=>x.operation.id===op.id).operation,op);
+  assert.deepEqual(s.orders.find(o=>o.id===order).document,document);assert.equal(s.orders.find(o=>o.id===order).payments[0].id,payment.id);assert.equal(s.orders.find(o=>o.id===order).payments[0].amountCents,2345);assert.deepEqual(s.incidents.find(x=>x.operation.id===op.id).operation,op);
   await target.exec('reset role');assert.equal((await target.query('select count(*)::int n from private.audit where source_id is not null')).rows[0].n,archive.tables.audit.length);
   await login(target,admin,targetDev);
  });

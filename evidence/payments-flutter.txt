@@ -1,0 +1,27 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  cross_file 0.3.5+5 (0.4.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  petitparser 7.0.2 (7.1.0 available)
+  qr 3.0.2 (4.0.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  xml 7.0.1 (7.1.0 available)
+Got dependencies!
+12 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/payments_test.dart
+00:00 +0: Partial receipts, linked partial refunds and settlement preserve issued document
+00:00 +1: Delivery records explicit credit without fabricating a payment; later settlement is allowed
+00:00 +2: Zero, overpayment, future and preissue dates, forged fields and missing evidence fail atomically
+00:00 +3: Refunds cannot exceed the remaining original receipt or use an unknown source
+00:00 +4: Only active office at the reviewed revision may record money
+00:00 +5: Offline receipts survive encrypted restart and a lost response is never double counted
+00:00 +6: Concurrent office payment is retained as a conflict instead of charging twice
+00:00 +7: Office records a decimal receipt and keeps the pending balance visible
+00:00 +8: All tests passed!

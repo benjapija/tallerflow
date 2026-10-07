@@ -648,7 +648,7 @@ class WorkshopController extends ChangeNotifier {
       if (expectedRevision != null &&
           state.orders[orderId]?.revision != expectedRevision) {
         throw const RuleException(
-          'La orden cambió mientras revisabas el presupuesto. Ábrelo de nuevo',
+          'La orden cambió mientras revisabas los datos. Ábrela de nuevo',
         );
       }
       if (frozen(orderId)) {
@@ -663,6 +663,9 @@ class WorkshopController extends ChangeNotifier {
             'pricing_review',
             'quote_draft',
             'quote_decision',
+            'payment_record',
+            'payment_reverse',
+            'deliver',
           ].contains(kind)) {
         throw const RuleException(
           'Resuelve los conflictos antes de revisar importes',

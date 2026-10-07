@@ -1,29 +1,25 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "1026352399a5dc3e45d1ae6ff3a5f06ad348a9ff",
-  "appBuildCommit": "23d62b82b17d864aff1779f67b8d1753e3bff551",
-  "buildRun": 37554417241,
-  "iosNativeRun": 37555896692,
-  "windowsNativeSuccessfulRun": 37553141586,
-  "hostedRecovery": true,
-  "allTemporaryAuthServicesRetired": true,
-  "nextIndependentWork": "Finish quote native packages; test quote Auth HTTP; customer portal with temporary recipient-verified access",
-  "personalDependencies": [
-    "Android SDK license acceptance/local SDK",
-    "Native personal admin login",
-    "Physical camera and links/manual Windows installation",
-    "Fiscal workshop details and authorized technical provider",
-    "AI API credentials with confirmed free access or a user-approved budget"
-  ],
-  "automation": "continuar-tallerflow",
-  "automationActive": true,
+  "sourceCommit": "c0f8a744aa67716a84e2f297d2c37bff081cf0c2",
+  "appBuildCommit": "c0f8a744aa67716a84e2f297d2c37bff081cf0c2",
+  "buildRun": 37558197890,
   "appBuildStatus": {
     "validate": "success",
     "windows": "success",
-    "ios-simulator": "success",
-    "android": "success"
+    "android": "success",
+    "ios-simulator": "success"
   },
+  "packagesDownloadedVerified": true,
+  "windowsNativeSuccessfulRun": 37553141586,
+  "iosNativeRun": 37555896692,
   "iosNativeStatus": "success",
-  "iosRunId": 37555896692,
-  "quoteIntegration": "implemented; 12 Flutter + 9 local PostgreSQL; 10 hosted SQL per project"
+  "nativeBackend": "fictional; physical clients and hosted native Auth pending",
+  "hostedMigrations": 15,
+  "payments": "implemented, 8 Flutter, 10 PostgreSQL, 10 SQL per hosted project; publication in progress",
+  "flutterTests": 117,
+  "postgresChecks": 149,
+  "mockServiceChecks": 18,
+  "nextWork": "PDF export, then manual purchases/warehouse, warranties, customer portal and remaining agreed phases",
+  "paidServicesPurchased": false,
+  "automationActive": true
 }

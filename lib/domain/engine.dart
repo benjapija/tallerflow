@@ -5,6 +5,7 @@ import 'vehicles.dart';
 import 'pricing.dart';
 import 'inspections.dart';
 import 'quotes.dart';
+import 'payments.dart';
 
 class RuleException implements Exception {
   final String message;
@@ -213,7 +214,8 @@ class WorkshopState {
     if (!actor.isOffice && !order.assigned(actor.id)) {
       throw const RuleException('Esta orden no está asignada a tu cuenta');
     }
-    if (order.issued && op.kind != 'deliver') {
+    if (order.issued &&
+        !['deliver', 'payment_record', 'payment_reverse'].contains(op.kind)) {
       if (!replay) {
         throw const RuleException(
           'La nota está emitida. Registra una incidencia en oficina',
@@ -245,6 +247,9 @@ class WorkshopState {
     }
 
     switch (op.kind) {
+      case 'payment_record':
+      case 'payment_reverse':
+        applyPayment(order, actor, op);
       case 'quote_draft':
       case 'quote_decision':
         applyQuote(order, actor, op);
@@ -527,21 +532,7 @@ class WorkshopState {
           'plateSnapshot': d['plate'],
         };
       case 'deliver':
-        office();
-        if (!order.issued) {
-          throw const RuleException('Revisa y emite la nota antes de entregar');
-        }
-        if ((p['reason'] as String? ?? '').trim().isEmpty) {
-          throw const RuleException(
-            'Indica el motivo de entrega con saldo pendiente',
-          );
-        }
-        d['status'] = 'delivered';
-        d['delivery'] = {
-          'reason': p['reason'],
-          'actorId': actor.id,
-          'at': op.at.toUtc().toIso8601String(),
-        };
+        applyDelivery(order, actor, op);
       default:
         throw RuleException('Operación no soportada: ${op.kind}');
     }

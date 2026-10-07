@@ -1,3 +1,9 @@
+## Cobros y entrega · 7 de octubre de 2026
+
+117 pruebas Flutter y 149 comprobaciones PostgreSQL/PGlite, más 18 de servicios simulados, aprobadas. Cobros: ocho pruebas Flutter y diez PostgreSQL; restauración de cobro/documento/auditoría entre dos bases independiente ampliada. Pagos parciales, devoluciones parciales vinculadas, concurrencia de dos oficinas, reinicio cifrado, copia local, pérdida de respuesta, sobrepago y permisos comprobados. Diez SQL alojadas por cada proyecto Free, revertidas; no son un inicio de sesión Auth HTTP ni uso manual nativo. Migración 015 desplegada en ambos proyectos.
+
+Paquetes c0f8a74 descargados y verificados: presupuestos con catálogo e IVA corregidos. Todavía no contienen cobros. Las pruebas nativas Windows e iOS simulador anteriores utilizan un servidor ficticio.
+
 # Validación actual · 7 de octubre de 2026
 
 Datos ficticios. No se acredita un piloto real ni una aplicación macOS.

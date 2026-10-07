@@ -55,7 +55,11 @@ class SimulatedWorkshop {
       ...cloneMap(state.toJson()),
       'orders': visible.map((o) {
         final copy = cloneMap(o.data);
-        if (!actor.isOffice) copy.remove('quoteLedger');
+        if (!actor.isOffice) {
+          copy.remove('quoteLedger');
+          copy.remove('payments');
+          copy.remove('delivery');
+        }
         return copy;
       }).toList(),
       'actor': actor.toJson(),
@@ -119,7 +123,13 @@ class SimulatedWorkshop {
       throw const RuleException('Cuenta o dispositivo incompatible');
     }
     String status = 'accepted', reason = '';
-    if (retired.contains(device) || state.orders[op.orderId]?.issued == true) {
+    if (retired.contains(device) ||
+        (state.orders[op.orderId]?.issued == true &&
+            ![
+              'deliver',
+              'payment_record',
+              'payment_reverse',
+            ].contains(op.kind))) {
       status = 'late';
       reason = 'Registro tardío o de dispositivo retirado';
     } else {

@@ -33,13 +33,13 @@ La guía [FIABILIDAD_Y_PRUEBA_MAC.md](docs/FIABILIDAD_Y_PRUEBA_MAC.md) explica c
 - Documentos inmutables, incidencias tardías y excepciones de cierre exclusivamente administrativas, explícitas y conservadas en la nota.
 - Simulación de dos móviles y oficina utilizando las pantallas y el controlador reales de Flutter.
 
-La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. IA, portal y pagos permanecen pendientes del alcance acordado.
+La recepción, tareas, tiempos estimados/trabajados/facturables separados, catálogo, cantidades decimales, reservas, consumos, devoluciones, autorizaciones manuales y notas deterministas de 0.1 se conservan. La nota **no es una factura fiscal**. Presupuestos y cobros están integrados. IA, portal, compras avanzadas y garantías continúan pendientes del alcance acordado.
 
 ## Pruebas y límites
 
 - Analizador Flutter sin errores ni avisos.
-- 96 pruebas Flutter aprobadas; las cuatro de reintento HTTP volvieron a pasar tras cambiar la descarga. Analizador sin incidencias.
-- 130 comprobaciones PostgreSQL/PGlite y 18 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
+- 117 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
+- 149 comprobaciones PostgreSQL/PGlite y 18 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
 - 58 comprobaciones SQL alojadas históricas con transacciones revertidas y 15 del recorrido HTTP real, con talleres y cuentas ficticios aislados. Las pruebas nativas siguen separadas.
 - GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
 - Windows remoto en GitHub Actions: dos procesos nativos verifican almacén cifrado, Credential Manager, conservación de dos registros sin conexión, recuperación y un único efecto al reintentar. El servidor es ficticio; instalación manual y Auth real siguen pendientes.

@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-07",
+  "flutterTotal": 117,
+  "paymentFlutterTests": 8,
+  "postgresTotal": 149,
+  "paymentPostgresChecks": 10,
+  "mockServiceChecks": 18,
+  "hostedSqlChecksPerProject": 10,
+  "hostedSqlProjects": 2,
+  "hostedSqlRolledBack": true,
+  "hostedPaymentAuthHttp": false,
+  "nativePaymentUiValidated": false,
+  "migration": "20261007021432_payments.sql",
+  "passed": true,
+  "backupRestore": "Original payment UUID, pending outbox and document preserved locally; issued ledger restored in a second PostgreSQL database",
+  "advisors": "Existing private table deny-by-default notices and leaked-password protection warning unchanged"
+}

@@ -21,6 +21,8 @@ import 'qr_scanner.dart';
 import 'photo_panel.dart';
 import 'inspection_panel.dart';
 import 'quote_panel.dart';
+import 'payment_panel.dart';
+import '../domain/payments.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -1487,6 +1489,15 @@ class _WorkshopHomeState extends State<WorkshopHome>
           ),
           const SizedBox(height: 18),
         ],
+        if (c.actor.isOffice && o.issued) ...[
+          PaymentPanel(
+            order: o,
+            canEdit: !c.frozen(o.id),
+            onSave: (kind, p) =>
+                perform(o.id, kind, p, expectedRevision: o.revision),
+          ),
+          const SizedBox(height: 18),
+        ],
         if (!c.demo && !o.issued)
           section('Confirmación de este dispositivo', [
             Text(
@@ -1843,11 +1854,15 @@ class _WorkshopHomeState extends State<WorkshopHome>
             onPressed: () async {
               final reason = await textDialog(
                 context,
-                'Entregar con saldo pendiente',
+                PaymentBalance.forOrder(o).outstandingCents > 0
+                    ? 'Entregar con saldo pendiente: ${money(PaymentBalance.forOrder(o).outstandingCents)}'
+                    : 'Registrar entrega con saldo pagado',
                 'Motivo y persona que autoriza la entrega',
               );
               if (reason != null) {
-                await perform(o.id, 'deliver', {'reason': reason});
+                await perform(o.id, 'deliver', {
+                  'reason': reason,
+                }, expectedRevision: o.revision);
               }
             },
             child: const Text('Registrar entrega'),
@@ -1989,7 +2004,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
               const SizedBox(height: 14),
               Text(
                 o.issued
-                    ? 'Nota emitida · cobro pendiente'
+                    ? 'Nota emitida · Pendiente: ${money(PaymentBalance.forOrder(o).outstandingCents)}'
                     : '${c.issues(o).length} comprobaciones pendientes',
                 style: const TextStyle(color: muted),
               ),
@@ -2302,6 +2317,8 @@ String auditLabel(String kind) =>
       'receive': 'Recepción creada',
       'review_parts': 'Consumos revisados',
       'deliver': 'Entrega registrada',
+      'payment_record': 'Cobro recibido registrado',
+      'payment_reverse': 'Devolución o corrección de cobro',
       'request_close': 'Cierre solicitado',
       'ack_close': 'Dispositivo reconciliado',
       'resolve': 'Incidencia revisada',
