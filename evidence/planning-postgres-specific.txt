@@ -1,0 +1,13 @@
+PASS Admin configures lifts; office and technicians cannot change resources
+PASS Office reserves several technicians and lift without billing or changing repair
+PASS Lost response retries once; different payload with same ID is rejected
+PASS Stale simultaneous reservation cannot replace newer agenda
+PASS Any shared technician or lift blocks an overlapping appointment
+PASS Foreign order, duplicate members and missing or invalid timezone are rejected atomically
+PASS Technician sees own slots without office history or unassigned repair identifiers
+PASS Reprogramming preserves original slot, finishing and cancelling never erase versions
+PASS Indisponibility blocks slots, adjacent windows work, future reservations prevent lift retirement
+PASS Another workshop cannot see agenda; anonymous cannot call RPC or tables
+PASS Complete archive includes versioned agenda and command evidence
+PASS Revoked session stops queued reservations and replay
+12 planning checks passed in PostgreSQL/PGlite with synthetic Auth.

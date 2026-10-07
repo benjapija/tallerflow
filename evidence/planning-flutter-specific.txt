@@ -1,0 +1,14 @@
+00:00 +0: loading /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart
+00:00 +0: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Office books multiple technicians and lift without changing repair or prices
+00:00 +1: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Overlaps by technician or lift fail atomically; touching intervals work
+00:00 +2: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Reprogramming and cancellation keep original versions and history
+00:00 +3: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Roles, foreign assignments, inactive resources and stale revisions fail
+00:00 +4: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Unavailability blocks slots and cannot link a repair
+00:00 +5: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Lost reply and persistence roundtrip cannot duplicate reservation
+00:00 +6: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Absolute dates reject missing zone, invalid days and excessive intervals
+00:00 +7: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_test.dart: Spanish zones handle missing and repeated daylight time independently of device
+00:00 +8: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_controller_test.dart: Offline reservations stay pending through restart and are confirmed only after syncing
+00:00 +9: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_controller_test.dart: Lost committed response reuses command identity and does not duplicate booking
+00:00 +10: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_controller_test.dart: Two offices cannot commit competing stale slots; technician snapshot strips private evidence
+00:00 +11: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/planning_controller_test.dart: Demo rollback preserves agenda and audit when encrypted persistence fails
+00:00 +12: All tests passed!

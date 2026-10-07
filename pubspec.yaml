@@ -20,6 +20,7 @@ dependencies:
   path: 1.9.1
   image: 4.10.1
   pdf: 3.13.1
+  timezone: 0.11.1
 dev_dependencies:
   http: 1.6.0
   flutter_test:

@@ -147,7 +147,7 @@ try{
  });
  await check('Complete HTTP export preserves photos, audit and document while excluding Auth secrets',async()=>{
   const backup=await rpc('admin','export_workshop',{workshop_id:cfg.workshop,device_id:cfg.users.admin.device});
-  assert.equal(backup.authExcluded,true);assert.equal(backup.databaseVersion,10);assert.ok(backup.tables.documents.find(d=>d.order_id===cfg.orderId));assert.ok(backup.photoFiles.find(p=>p.id===cfg.photoId&&p.filePresent===true));
+  assert.equal(backup.authExcluded,true);assert.equal(backup.databaseVersion,11);assert.ok(backup.tables.documents.find(d=>d.order_id===cfg.orderId));assert.ok(backup.photoFiles.find(p=>p.id===cfg.photoId&&p.filePresent===true));
   assert.equal(JSON.stringify(backup).includes(clients.admin.jwt),false);
  });
  await check('Sign-out invalidates real session access even when the old JWT has not expired',async()=>{

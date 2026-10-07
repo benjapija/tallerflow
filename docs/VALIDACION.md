@@ -1,3 +1,7 @@
+## Agenda · 7 de octubre de 2026
+
+Regresión: 174 Flutter de la batería completa y una prueba posterior del formulario, total 175. Analizador sin incidencias antes de la última corrección de presentación; revisión final en curso. 218 PostgreSQL locales, 26 servicios simulados y cinco pruebas del cliente web. Trece Flutter y doce PostgreSQL específicas de agenda, con intervalos simultáneos, indisponibilidades, roles, reinicios, reintentos, persistencia fallida y hora española en cambio de verano/invierno. La prueba del formulario conserva los datos rechazados por solapamiento. Dieciocho SQL alojadas aprobadas en el principal, con Auth sintético y reversión total. Recuperación real del formato 11 bloqueada por permiso específico del segundo proyecto.
+
 ## Portal del destinatario · 7 de octubre de 2026
 
 Regresión completa: 162 Flutter; analizador sin incidencias; 204 PostgreSQL locales, 26 servicios simulados y cinco pruebas del cliente web. Compilación web aprobada. Quince SQL alojadas por proyecto Free, con Auth sintético y reversión completa; ocho HTTP reales de método, preflight y denegación sin credenciales. No acreditan el recorrido de un cliente válido por HTTP.

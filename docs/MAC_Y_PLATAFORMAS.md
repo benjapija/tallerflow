@@ -77,3 +77,7 @@ Los tres ZIP 693ec5a están descargados; SHA-256 y source-commit.json coinciden 
 ## Paquetes verificados actuales
 
 Los ZIP bc86821 corresponden a la ejecución 37571952156, terminada correctamente en Windows, Android e iOS simulador. Sus hashes y source-commit.json coinciden; incluyen la biblioteca validada. Windows contiene installer/TallerFlow-Setup.exe, Android un APK debug e iOS una aplicación de simulador. El portal posterior está en desarrollo publicado por separado y aún requiere compilación nueva. La compilación no acredita uso físico ni inicio de sesión alojado nativo. Los hashes están en evidence/package-checkpoints.json.
+
+## Portal compilado
+
+Los paquetes bab8642, ejecución 37577274243, incluyen la biblioteca y los controles de oficina del portal. Los cuatro trabajos pasaron; sus ZIP se descargaron y verificaron contra SHA-256 y source-commit.json. La agenda posterior está en código y demo; requiere compilación nueva. La página pública del cliente es el directorio portal-client y sigue necesitando alojamiento HTTPS y validación con acceso válido.

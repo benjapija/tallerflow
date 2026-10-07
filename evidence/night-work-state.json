@@ -1,8 +1,8 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "bc86821ec5f3f33c56a3c57a865ac699acc98aa7",
-  "appBuildCommit": "bc86821ec5f3f33c56a3c57a865ac699acc98aa7",
-  "buildRun": 37571952156,
+  "sourceCommit": "bab8642f8e1fe253db747a8e8577ba2727f76e1a",
+  "appBuildCommit": "bab8642f8e1fe253db747a8e8577ba2727f76e1a",
+  "buildRun": 37577274243,
   "appBuildStatus": {
     "validate": "success",
     "windows": "success",
@@ -14,12 +14,12 @@
   "iosNativeRun": 37555896692,
   "iosNativeStatus": "success",
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
-  "hostedMigrations": 20,
+  "hostedMigrations": 21,
   "payments": "implemented, tested, deployed and published",
-  "flutterTests": 162,
-  "postgresChecks": 204,
+  "flutterTests": 174,
+  "postgresChecks": 218,
   "mockServiceChecks": 26,
-  "nextWork": "Publish portal and compile; agenda, maintenance and fleets",
+  "nextWork": "Publish agenda; maintenance and fleets",
   "paidServicesPurchased": false,
   "automationActive": true,
   "pdf": "published; five local tests, all sample pages reviewed",
@@ -28,5 +28,7 @@
   "diagnosisNotebook": "implemented, tested, deployed and published",
   "caseLibrary": "implemented, tested, deployed and published",
   "portalClientChecks": 5,
-  "portal": "Implemented and deployed; public HTTPS hosting and valid-session hosted HTTP flow pending"
+  "portal": "Implemented and deployed; public HTTPS hosting and valid-session hosted HTTP flow pending",
+  "planning": "Implemented; 18 hosted SQL checks passed on principal; recovery migration requires explicit target approval",
+  "recoveryProjectMigrations": 20
 }

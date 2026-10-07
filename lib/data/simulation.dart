@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../domain/engine.dart';
 import '../domain/purchases.dart';
 import '../domain/case_library.dart';
+import '../domain/planning.dart';
 import '../domain/models.dart';
 import 'cloud.dart';
 import 'demo.dart';
@@ -56,6 +57,7 @@ class SimulatedWorkshop {
     return {
       ...cloneMap(state.toJson()),
       'caseLibrary': visibleLibrary(state, actor),
+      'planning': visiblePlanning(state, actor),
       if (!actor.isOffice || (actor.role != Role.admin && !actor.seeCosts))
         'purchaseLedger': null,
       'orders': visible.map((o) {
@@ -249,6 +251,22 @@ class SimulatedWorkshop {
         }
       }
       final result = {'saved': true};
+      commands[id] = {
+        'device': device,
+        'action': action,
+        'payload': cloneMap(p),
+        'result': result,
+      };
+      return result;
+    }
+    if (action.startsWith('schedule_')) {
+      final next = state.copy();
+      applyPlanningCommand(next, id, action, p, actor, DateTime.now().toUtc());
+      state = next;
+      final result = {
+        'saved': true,
+        'revision': PlanningLedger(state.configuration['planning']).revision,
+      };
       commands[id] = {
         'device': device,
         'action': action,

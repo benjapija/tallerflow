@@ -31,6 +31,7 @@ import '../domain/linked_returns.dart';
 import 'diagnosis_panel.dart';
 import 'case_library_panel.dart';
 import 'portal_panel.dart';
+import 'planning_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -412,6 +413,8 @@ class _WorkshopHomeState extends State<WorkshopHome>
                             ? catalog()
                             : page == 4
                             ? reviewList()
+                            : page == 7
+                            ? PlanningPanel(controller: c, run: runAction)
                             : page == 6
                             ? CaseLibraryPanel(controller: c, run: runAction)
                             : page == 5
@@ -490,6 +493,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
             (4, Icons.fact_check_outlined, 'Revisión de oficina'),
             (5, Icons.tune_rounded, 'Configuración'),
             (6, Icons.menu_book_outlined, 'Biblioteca técnica'),
+            (7, Icons.calendar_month_outlined, 'Agenda'),
           ])
             if ((item.$1 != 4 || c.actor.isOffice) &&
                 (item.$1 != 5 || c.actor.role == Role.admin || c.demo))

@@ -25,7 +25,7 @@ begin
  rev:=(s->'orders'->0->>'revision')::bigint;r:=public.apply_operation(w,dev,jsonb_build_object('id',gen_random_uuid(),'orderId',oid,'actorId',a,'kind','quote_draft','baseRevision',rev,'at',now(),'payload',q||'{"expectedVersion":1}'));if r->>'status'<>'accepted' then raise exception 'Version fixture failed';end if;
  s:=public.customer_portal(gid,repeat('a',64),repeat('b',64),'read',null,'{}');if s->'quote'->>'version'<>'1' or s->>'canDecide'<>'false' then raise exception 'Old link accepted new version';end if;passed:=passed+1;
  perform public.portal_command(w,dev,gen_random_uuid(),'portal_revoke',jsonb_build_object('id',gid,'reason','Fictional revocation'));if public.customer_portal(gid,repeat('a',64),repeat('b',64),'read',null,'{}')<>'{"error":"access"}'::jsonb then raise exception 'Revoked link alive';end if;passed:=passed+1;
- r:=public.export_workshop(w,dev);if r->>'databaseVersion'<>'10' or jsonb_array_length(r->'tables'->'portal_receipts')<>1 then raise exception 'Complete archive missing';end if;passed:=passed+1;
+ r:=public.export_workshop(w,dev);if r->>'databaseVersion'<>'11' or jsonb_array_length(r->'tables'->'portal_receipts')<>1 then raise exception 'Complete archive missing';end if;passed:=passed+1;
  perform set_config('tallerflow.portal_checks',passed::text,true);
 end $$;
 select current_setting('tallerflow.portal_checks')::int as checks_passed,'PostgreSQL hosted, synthetic Auth, full rollback' as scope;

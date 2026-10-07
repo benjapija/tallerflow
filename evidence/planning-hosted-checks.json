@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-07",
+  "project": "gpseuqmzbazifmkhjyby",
+  "checks": 18,
+  "scope": "Hosted PostgreSQL; synthetic Auth; full rollback",
+  "recoveryProject": "qnbgbgumvxmmipjlkcgb",
+  "recoveryMigrationApplied": false,
+  "reason": "Auto-review requires explicit user authorization for mutation of this second project; metadata same organization and Free plan did not satisfy review",
+  "nativeAgendaValidated": false,
+  "hostedHTTPAgendaValidated": false
+}

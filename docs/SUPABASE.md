@@ -1,11 +1,11 @@
 # Supabase de pruebas · desarrollo actual
 
-Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. Doce migraciones y funciones workshop-members/workshop-photos v2 desplegadas. Taller piloto ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La pertenencia administradora corresponde al UUID de ramirezbroja013@gmail.com confirmado por el usuario; no se ha leído su contraseña. El recorrido HTTP real se validó en otros dos talleres ficticios, ahora sin cuentas ni dispositivos activos.
+Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. El principal tiene veintiuna migraciones y funciones workshop-members, workshop-photos y workshop-portal desplegadas. Taller piloto ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La pertenencia administradora corresponde al UUID de ramirezbroja013@gmail.com confirmado por el usuario; no se ha leído su contraseña. El recorrido HTTP real se validó en otros dos talleres ficticios, ahora sin cuentas ni dispositivos activos.
 
 ## Configuración desde el Mac
 
 1. Utiliza el proyecto conectado solo con datos ficticios. Para otro entorno, crea un proyecto independiente.
-2. En una base nueva aplica las migraciones de supabase/migrations en orden. En una base existente aplica solo las nuevas. Despliega las funciones workshop-members y workshop-photos (index.ts y handler.ts) con verify_jwt=true. El entorno de pruebas conectado ya tiene estas doce migraciones.
+2. En una base nueva aplica las migraciones de supabase/migrations en orden. En una base existente aplica solo las nuevas. Despliega las funciones workshop-members y workshop-photos (index.ts y handler.ts) con verify_jwt=true. El entorno de pruebas conectado ya tiene estas migraciones.
 3. Mantén expuesto solo `public` en la Data API; no expongas `private`. No concedas escritura directa a tablas.
 4. La primera cuenta administradora la crea el propietario del proyecto en Authentication → Users y se vincula por su UUID exacto mediante el bootstrap. Las posteriores se crean desde Configuración → Administración → Crear cuenta. El servicio exige administrador activo, dispositivo y sesión vigentes. Cada persona utiliza sus propias credenciales.
 5. config/pilot.public.json contiene solo URL, clave publicable y taller de pruebas. Es información pública de cliente y no otorga acceso sin Auth. Para otra instalación puedes usar client-config.json, excluido de Git:
@@ -75,3 +75,9 @@ Migración 013 aplicada en el proyecto principal. Seis pruebas Flutter, ocho Pos
 ## Recuperación alojada y retirada · 7 de octubre
 
 Diez comprobaciones HTTP reales entre gpseuqmzbazifmkhjyby y qnbgbgumvxmmipjlkcgb (Free, coste confirmado 0 USD/mes). Dos UUID Auth originales recreados con contraseñas ficticias distintas. Se conservan documentos, operaciones, auditoría, fotografías originales y versiones de inspección; reintentos no duplican la restauración y los equipos históricos quedan retirados. Cuatro identidades Auth de prueba retiradas, cero sesiones/pertenencias/equipos activos, servicios temporales sustituidos por respuesta 410 y credenciales efímeras eliminadas. El circuito nativo Windows f9aeed3 también pasó fotos/copia/restauración entre dos procesos, con servidor ficticio.
+
+## Portal y agenda actuales
+
+workshop-portal usa verify_jwt=false porque el destinatario no tiene una cuenta de personal. Cada POST exige enlace secreto y código independiente; sus hashes se verifican en el servidor antes de acceder a presupuestos, decisiones o fotos. El servicio utiliza la clave administrativa exclusivamente en su entorno. Personal y anónimos carecen de permisos para invocar customer_portal directamente. Las altas y revocaciones de oficina sí requieren sesión/dispositivo/rol vigentes.
+
+La agenda está aplicada en el principal gpseuqmzbazifmkhjyby, con dieciocho SQL alojadas aprobadas y formato de copia 11. qnbgbgumvxmmipjlkcgb conserva el esquema con portal (veinte migraciones equivalentes). La revisión automática rechazó aplicar allí la agenda porque requiere autorización concreta del destino, incluso tras comprobar la misma organización y plan Free. Se ha solicitado ese permiso y se continúa el trabajo independiente.
