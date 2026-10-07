@@ -1,6 +1,11 @@
 name: TallerFlow · validar y compilar
 on:
   workflow_dispatch:
+    inputs:
+      ios_only:
+        description: 'Compilar solo iOS después de la validación completa'
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -27,6 +32,7 @@ jobs:
         working-directory: tool
   windows:
     needs: validate
+    if: ${{ !inputs.ios_only }}
     timeout-minutes: 30
     runs-on: windows-2025
     steps:
@@ -91,6 +97,7 @@ jobs:
           retention-days: 1
   android:
     needs: validate
+    if: ${{ !inputs.ios_only }}
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:

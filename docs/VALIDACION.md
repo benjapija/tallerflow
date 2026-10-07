@@ -1,3 +1,7 @@
+## Reparación de configuración iOS
+
+Los ensayos 37586489010 y 37588376889 fallaron con Framework Pods_Runner not found. La consulta directa del repositorio confirmó que faltaba ios/Podfile y Debug.xcconfig solo incluía Generated.xcconfig. Se publican el Podfile y los includes de CocoaPods de Debug/Release. La selección ios_only evita repetir compilaciones aprobadas de otras plataformas; mantiene validación completa. Confirmación de compilación pendiente.
+
 ## Portal: acceso HTTPS válido y privacidad comprobados
 
 Diez comprobaciones HTTPS reales nuevas y tres invariantes SQL aprobados en el principal. Lectura, decisiones diferentes por partida, reintentos, privacidad, foto no seleccionada y revocación. Un ensayo previo verifica bloqueo al retirar la cuenta emisora. Preparación sintética de oficina, no sesión Auth nativa. La corrección de campos internos mantiene originales y auditoría. Dieciséis SQL alojadas con rollback y batería completa: 245 PostgreSQL/PGlite, 26 servicios simulados y cinco del cliente, todos aprobados.

@@ -1,6 +1,6 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "90b6478f7980d26454e25464a4791edc2a6824f1",
+  "sourceCommit": "50c55fa5168c37f4f91c7d010628fefce0447a4b",
   "appBuildCommit": "b83d789bcf1c5080a99b1bf93af899aa39c22c25",
   "buildRun": 37582607709,
   "appBuildStatus": {
@@ -40,5 +40,7 @@
     "windows": "success",
     "android": "success",
     "ios-simulator": "failure"
-  }
+  },
+  "repairBuildRun": 37588376889,
+  "repairBuildStatus": "running"
 }

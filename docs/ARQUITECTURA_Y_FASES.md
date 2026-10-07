@@ -1,6 +1,6 @@
 # Producto y arquitectura · desarrollo actual
 
-España está confirmada. TallerFlow sustituye papel y programas antiguos; no se ha identificado un programa concreto ni un proveedor de documentación técnica contratado. Se mantienen Flutter/Dart, Supabase y aplicaciones nativas para operario, oficina y administrador. El portal, la IA y la facturación fiscal definitiva quedan fuera de este bloque.
+España está confirmada. TallerFlow sustituye papel y programas antiguos; no se ha identificado un programa concreto ni un proveedor de documentación técnica contratado. Se mantienen Flutter/Dart, Supabase y aplicaciones nativas para operario, oficina y administrador. El portal está implementado y su servicio ha probado acceso válido por HTTPS; su interfaz pública y uso físico siguen pendientes. La IA requiere acceso gratuito confirmado a OpenAI desde servidor. La facturación fiscal definitiva requiere los datos y obligaciones aplicables.
 
 ## Datos y comunicación
 
@@ -50,10 +50,18 @@ El bloque de fiabilidad 0.2 está implementado y probado localmente. Falta valid
 
 Los precios aplicados se conservan por partida. Oficina registra motivo, autor, fecha y antes/después. Subir precio/impuesto, reducir descuento o volver a cobrar exige autorización nueva y conserva la anterior. Los descuentos se redondean antes del impuesto por línea. Un consumo sin cobro se refleja a cero en la nota, con motivo; sigue consumiendo existencias y coste. El margen estimado utiliza tiempo trabajado y piezas, y señala costes desconocidos.
 
-**Resto de fase 1:** fotos/Storage, cámara/QR, enlaces nativos, CSV, recuperación de Auth entre proyectos, copias grandes y comprobaciones nativas del circuito conectado. La aplicación macOS se retira del alcance; el Mac sigue como equipo de desarrollo. Exportación y restauración completas son condiciones anteriores a datos reales. Estado actualizado en PENDIENTES.md.
+**Resto de fase 1:** fotos/Storage, cámara/QR, enlaces nativos, CSV, recuperación de Auth entre proyectos, copias grandes y comprobaciones nativas del circuito conectado. La aplicación macOS se retira del alcance; el Mac sigue como equipo de desarrollo. Exportación y restauración completas son condiciones anteriores a datos reales. Estos párrafos describen el bloque 0.2 original; el estado vigente de cada función está en PENDIENTES.md.
 
 **Fase 2:** inspección completa, presupuestos versionados, portal HTTPS con destinatario verificado, autorización digital, almacén/compras, garantías, PDF y pagos.
 
 **Fase 3:** IA técnica y administrativa, cuaderno de diagnóstico, biblioteca validada, dictado y lectura con cámara. Requiere fuentes autorizadas, licencia y revisión humana; no calculará importes.
 
 **Fase 4:** agenda, mantenimiento, flotas e integraciones tras confirmar necesidad, APIs y contratos. La facturación fiscal española requiere concretar obligaciones del taller antes de implementarla.
+
+## Estado integrado posterior a 0.2
+
+La sincronización, cierre coordinado, retirada de dispositivos y documentos inmutables siguen siendo la base de todos los módulos. Inspecciones, versiones de presupuesto, decisiones por partida, cobros manuales, PDF, compras, devoluciones, garantías, cuaderno, biblioteca, agenda, mantenimiento y flotas están integrados con sus operaciones, auditoría y copias. Las copias formato 13 añaden flotas al formato 12 de mantenimiento y conservan compatibilidad con 2–12. La proyección de operarios oculta datos personales y de oficina.
+
+Los borradores de voz, texto de cámara y referencias no generan operaciones; únicamente pueden rellenar campos tras revisión, y el formulario exige su confirmación propia. El portal usa un enlace aleatorio y un código separado, conserva los destinatarios originales y responde sin identificadores internos de tareas, incluso después de autorizar. Sus decisiones conservan recibos idempotentes y auditoría originales.
+
+El principal tiene 24 migraciones. La recuperación mantiene el esquema anterior de 20; actualizar ese destino requiere el permiso específico pendiente. El proyecto no está terminado: faltan interfaces y servicios externos indicados en PENDIENTES.md, las licencias y cuentas personales y las comprobaciones nativas/físicas. No se entrega una aplicación macOS.

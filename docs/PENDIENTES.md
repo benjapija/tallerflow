@@ -31,6 +31,6 @@ Base: requisitos originales y entrega 0.2. La palabra «probado» identifica el 
 | Mantenimiento | Implementado, probado y desplegado en el principal | Trece Flutter, doce PostgreSQL específicas, dieciocho SQL alojadas; previsiones, recurrencia, evidencia, historial, pendientes y copia formato 12. Auth HTTP/nativo y recuperación alojada pendientes |
 | Flotas | Implementadas, probadas y desplegadas en el principal | Once Flutter, diez PostgreSQL específicas, dieciocho SQL alojadas; vínculos por propietario con revisión, traslados, historial y copia formato 13. Auth HTTP/nativo y recuperación alojada pendientes |
 | Integraciones externas | Proveedores por concretar | Documentación técnica, diagnosis, recambios y servicios necesarios |
-| Facturación fiscal | Requisitos por concretar | Datos y obligaciones aplicables del taller español; validación del módulo |
+| Facturación fiscal | Requisitos por concretar | Normativa revisada al 7/10/2026; titular, provincia, SII y destinatarios pendientes; validación del módulo |
 
 Las dependencias externas detienen únicamente sus tareas. No se generan nuevos prompts de continuación.
