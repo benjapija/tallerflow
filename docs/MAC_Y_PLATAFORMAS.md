@@ -36,7 +36,7 @@ flutter run -d ID_DISPOSITIVO --dart-define-from-file=config/pilot.public.json
 
 El simulador iOS necesita los componentes de Xcode y acceso a sus carpetas normales de caché. Las herramientas de esta conversación no han recibido ese permiso; no afecta a la compilación alojada. Android necesita su SDK. El usuario ha indicado que no dispone de más teléfonos: no se da por comprobado un equipo físico ni se compra ninguno.
 
-Las versiones se fijan en `pubspec.lock`. Android mínimo 24 y copias automáticas desactivadas para evitar restaurar un almacén sin su clave; iOS mínimo efectivo 15 por el selector de archivos. Las declaraciones de plataforma de los paquetes no sustituyen pruebas de funcionamiento.
+Las versiones se fijan en `pubspec.lock`. Android mínimo 24 y copias automáticas desactivadas para evitar restaurar un almacén sin su clave; iOS mínimo efectivo 15.5 por la lectura de texto. Las declaraciones de plataforma de los paquetes no sustituyen pruebas de funcionamiento.
 
 Referencias: [Flutter iOS](https://docs.flutter.dev/platform-integration/ios/setup), [Flutter Android](https://docs.flutter.dev/platform-integration/android/setup), [Flutter Windows](https://docs.flutter.dev/platform-integration/windows/building), [instalación Flutter](https://docs.flutter.dev/install/manual), [almacenamiento seguro](https://pub.dev/packages/flutter_secure_storage).
 
@@ -81,3 +81,7 @@ Los ZIP bc86821 corresponden a la ejecución 37571952156, terminada correctament
 ## Portal compilado
 
 Los paquetes bab8642, ejecución 37577274243, incluyen la biblioteca y los controles de oficina del portal. Los cuatro trabajos pasaron; sus ZIP se descargaron y verificaron contra SHA-256 y source-commit.json. La agenda posterior está en código y demo; requiere compilación nueva. La página pública del cliente es el directorio portal-client y sigue necesitando alojamiento HTTPS y validación con acceso válido.
+
+## Paquetes de mantenimiento y avance de captura
+
+Los tres ZIP b83d789 están descargados y verificados contra SHA-256 y source-commit.json, ejecución 37582607709. Incluyen agenda y mantenimiento. Flotas y captura se publicaron en 90b6478; ejecución 37586489010 aprobó validación, Windows y Android, pero falló iOS al enlazar Pods_Runner. No sustituir el paquete iOS verificado hasta aprobar su reparación. La interfaz del cliente sigue pendiente de publicar en HTTPS; su servicio alojado ya probó acceso válido, decisión y revocación con datos ficticios. Ninguna compilación acredita cámara física ni Auth desde aplicación nativa.

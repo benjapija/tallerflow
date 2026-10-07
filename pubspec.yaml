@@ -31,6 +31,10 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 flutter:
+  # ML Kit still requires CocoaPods. Keep one dependency manager until its
+  # Flutter plugins support SwiftPM; mixed integration failed in iOS CI.
+  config:
+    enable-swift-package-manager: false
   uses-material-design: true
   fonts:
     - family: Manrope

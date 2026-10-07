@@ -1,0 +1,49 @@
+{
+  "environment": "Supabase Free primary; real HTTPS customer boundary; fictional workshop",
+  "checks": [
+    {
+      "name": "Retired office creator denies customer access over HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Valid customer reads exact quote version over HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Customer response excludes office and technical private fields",
+      "status": "passed"
+    },
+    {
+      "name": "Customer response forbids cache and referrer",
+      "status": "passed"
+    },
+    {
+      "name": "Wrong separate code rejected over HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Independent accept and reject decisions saved over HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Lost-response retry preserves original result",
+      "status": "passed"
+    },
+    {
+      "name": "Reused decision identity with changed choices rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Revoked customer access rejected over HTTPS",
+      "status": "passed"
+    }
+  ],
+  "limitations": [
+    "Fixture prepared by SQL, not by native staff Auth",
+    "No customer photo selected; private photo success excluded",
+    "Public customer UI hosting and physical devices excluded"
+  ],
+  "checkedAt": "2026-10-07T07:20:55.864Z",
+  "failure": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    {\n      accepted: true,\n+     approvedCents: 2904,\n      lineId: 'ddbf2856-ce49-4364-9ee6-d5c78ee1bdbf',\n+     taskId: 'c7621f03-d0c2-45bf-b6d5-63bbe0c3953f'\n    },\n    {\n      accepted: false,\n+     approvedCents: 0,\n      lineId: 'e871e3a7-d4bd-448c-97ac-1f950cdb9d6d',\n+     taskId: '00d08f1b-6c4b-4fd1-be8c-ce0e3d605ec5'\n    }\n  ]\n",
+  "passed": 9
+}

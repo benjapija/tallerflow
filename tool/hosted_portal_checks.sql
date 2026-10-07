@@ -1,6 +1,6 @@
 begin;
 do $$
-declare w uuid:=gen_random_uuid();a uuid:=gen_random_uuid();t uuid:=gen_random_uuid();sid uuid:=gen_random_uuid();dev uuid:=gen_random_uuid();oid uuid:=gen_random_uuid();task uuid:=gen_random_uuid();qid uuid:=gen_random_uuid();line uuid:=gen_random_uuid();gid uuid:=gen_random_uuid();cid uuid:=gen_random_uuid();decision uuid:=gen_random_uuid();owner uuid;p jsonb;r jsonb;s jsonb;q jsonb;failed boolean;passed int:=0;rev bigint;
+declare w uuid:=gen_random_uuid();a uuid:=gen_random_uuid();t uuid:=gen_random_uuid();sid uuid:=gen_random_uuid();dev uuid:=gen_random_uuid();oid uuid:=gen_random_uuid();task uuid:=gen_random_uuid();qid uuid:=gen_random_uuid();line uuid:=gen_random_uuid();gid uuid:=gen_random_uuid();cid uuid:=gen_random_uuid();decision uuid:=gen_random_uuid();owner uuid;p jsonb;r jsonb;s jsonb;q jsonb;read_value jsonb;failed boolean;passed int:=0;rev bigint;
 begin
  insert into auth.users(id,email) values(a,'portal-admin-'||a||'@example.invalid'),(t,'portal-tech-'||t||'@example.invalid');insert into auth.sessions(id,user_id) values(sid,a);
  insert into private.workshops(id,name) values(w,'Fictional rolled-back portal validation');insert into private.members values(w,a,'Fictional admin','admin',true,true),(w,t,'Fictional tech','technician',false,true);
@@ -20,6 +20,7 @@ begin
  s:=public.customer_portal(gid,repeat('a',64),repeat('b',64),'read',null,'{}');if s->'quote'->>'version'<>'1' or s->>'canDecide'<>'true' or s::text like '%Private%' then raise exception 'Read scope incorrect';end if;passed:=passed+1;
  p:=jsonb_build_object('decisions',jsonb_build_array(jsonb_build_object('lineId',line,'accepted',true)));r:=public.customer_portal(gid,repeat('a',64),repeat('b',64),'decide',decision,p);if r->>'accepted'<>'true' then raise exception 'Customer decision failed';end if;passed:=passed+1;
  s:=public.device_snapshot(w,dev);if s->'orders'->0->'tasks'->0->>'approvedCents'<>'2904' or s->'orders'->0->'tasks'->0->'authorization'->>'actorType'<>'customer' then raise exception 'Customer amount or identity mismatch';end if;passed:=passed+1;
+ read_value:=public.customer_portal(gid,repeat('a',64),repeat('b',64),'read',null,'{}');if read_value::text like '%taskId%' or read_value->'decisions'->0->'decisions'->0->>'approvedCents'<>'2904' then raise exception 'Private decision field leaked';end if;passed:=passed+1;
  if public.customer_portal(gid,repeat('a',64),repeat('b',64),'decide',decision,p)<>r then raise exception 'Lost reply duplicated';end if;passed:=passed+1;
  failed:=false;begin perform public.customer_portal(gid,repeat('a',64),repeat('b',64),'decide',decision,jsonb_build_object('decisions',jsonb_build_array(jsonb_build_object('lineId',line,'accepted',false))));exception when others then failed:=true;end;if not failed then raise exception 'Changed retry accepted';end if;passed:=passed+1;
  rev:=(s->'orders'->0->>'revision')::bigint;r:=public.apply_operation(w,dev,jsonb_build_object('id',gen_random_uuid(),'orderId',oid,'actorId',a,'kind','quote_draft','baseRevision',rev,'at',now(),'payload',q||'{"expectedVersion":1}'));if r->>'status'<>'accepted' then raise exception 'Version fixture failed';end if;

@@ -1,3 +1,11 @@
+## Portal: acceso HTTPS válido y privacidad comprobados
+
+Diez comprobaciones HTTPS reales nuevas y tres invariantes SQL aprobados en el principal. Lectura, decisiones diferentes por partida, reintentos, privacidad, foto no seleccionada y revocación. Un ensayo previo verifica bloqueo al retirar la cuenta emisora. Preparación sintética de oficina, no sesión Auth nativa. La corrección de campos internos mantiene originales y auditoría. Dieciséis SQL alojadas con rollback y batería completa: 245 PostgreSQL/PGlite, 26 servicios simulados y cinco del cliente, todos aprobados.
+
+Captura: revisión manual comprobada en navegador sin usar micrófono ni cámara; rellena matrícula, cancelar mantiene el valor y recepción exige confirmar. Evidencias capture-browser-review.png y capture-browser-field.png. CI 37586489010 del código 90b6478: validación, Windows y Android aprobados; iOS falla con Pods_Runner no encontrado. Se prepara integración exclusiva CocoaPods, siguiendo la opción por proyecto de Flutter. La siguiente compilación debe confirmar esa corrección.
+
+Los apartados siguientes registran momentos anteriores; PENDIENTES.md y el informe de avance fijan los límites actuales.
+
 ## Captura revisable
 
 208 pruebas Flutter completas y analizador sin incidencias. Nueve específicas comprueban borradores, alternativas, edición, cancelación y confirmaciones; capturador simulado, sin micrófono/cámara reales. Web release aprobada. iOS pasa a mínimo 15.5 para el OCR local. Compilación nativa pendiente.

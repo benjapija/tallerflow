@@ -1,0 +1,6 @@
+[
+  {
+    "checks_passed": 16,
+    "scope": "PostgreSQL hosted, synthetic Auth, full rollback"
+  }
+]

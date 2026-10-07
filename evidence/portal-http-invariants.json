@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-07T07:23:54.804Z",
+  "scope": "Fictional customer portal: persisted decision invariants and complete access retirement",
+  "invariants": [
+    {
+      "one_receipt": true,
+      "independent_authorization": true,
+      "original_quote_unchanged": true
+    }
+  ],
+  "retirement": [
+    {
+      "active_links": 0,
+      "active_members": 0,
+      "active_devices": 0,
+      "sessions": 0
+    }
+  ]
+}

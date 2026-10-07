@@ -1,0 +1,6 @@
+{
+  "run": 37586489010,
+  "sourceCommit": "90b6478f7980d26454e25464a4791edc2a6824f1",
+  "failure": "Framework Pods_Runner not found",
+  "repair": "Project-scoped CocoaPods integration, pending compilation confirmation"
+}

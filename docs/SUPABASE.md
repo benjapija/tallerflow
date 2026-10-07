@@ -1,6 +1,6 @@
 # Supabase de pruebas · desarrollo actual
 
-Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. El principal tiene veintitrés migraciones y funciones workshop-members, workshop-photos y workshop-portal desplegadas. Taller piloto ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La pertenencia administradora corresponde al UUID de ramirezbroja013@gmail.com confirmado por el usuario; no se ha leído su contraseña. El recorrido HTTP real se validó en otros dos talleres ficticios, ahora sin cuentas ni dispositivos activos.
+Proyecto gpseuqmzbazifmkhjyby conectado, plan Free confirmado. El principal tiene veinticuatro migraciones y funciones workshop-members, workshop-photos y workshop-portal desplegadas. Taller piloto ficticio 1987c4ef-9612-4b27-b4f2-117364fe231e. La pertenencia administradora corresponde al UUID de ramirezbroja013@gmail.com confirmado por el usuario; no se ha leído su contraseña. El recorrido HTTP real se validó en otros dos talleres ficticios, ahora sin cuentas ni dispositivos activos.
 
 ## Configuración desde el Mac
 

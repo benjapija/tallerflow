@@ -1,6 +1,6 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "fe1d63e4bb008bbee43016775ccb1582c3e8bfa3",
+  "sourceCommit": "90b6478f7980d26454e25464a4791edc2a6824f1",
   "appBuildCommit": "b83d789bcf1c5080a99b1bf93af899aa39c22c25",
   "buildRun": 37582607709,
   "appBuildStatus": {
@@ -14,12 +14,12 @@
   "iosNativeRun": 37555896692,
   "iosNativeStatus": "success",
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
-  "hostedMigrations": 23,
+  "hostedMigrations": 24,
   "payments": "implemented, tested, deployed and published",
   "flutterTests": 208,
-  "postgresChecks": 244,
+  "postgresChecks": 245,
   "mockServiceChecks": 26,
-  "nextWork": "Valid-client hosted HTTP portal and reviewed text capture",
+  "nextWork": "Publish iOS dependency repair and verify native builds; continue independent pending scope",
   "paidServicesPurchased": false,
   "automationActive": true,
   "pdf": "published; five local tests, all sample pages reviewed",
@@ -28,10 +28,17 @@
   "diagnosisNotebook": "implemented, tested, deployed and published",
   "caseLibrary": "implemented, tested, deployed and published",
   "portalClientChecks": 5,
-  "portal": "Implemented and deployed; public HTTPS hosting and valid-session hosted HTTP flow pending",
+  "portal": "Ten real HTTPS valid-access/decision/retry/revocation checks passed; selected photos and public UI hosting pending",
   "planning": "Implemented; 18 hosted SQL checks passed on principal; recovery migration requires explicit target approval",
   "recoveryProjectMigrations": 20,
   "maintenance": "Implemented; 18 hosted SQL checks passed on principal; offline, retry, restoration and form tested locally",
   "fleets": "Implemented; 18 hosted SQL checks passed; local offline, owner review and archive recovery verified",
-  "capture": "Implemented; nine simulated-capture tests and web build passed; native build and physical permissions pending"
+  "capture": "Published; nine simulated tests and manual browser review passed; iOS dependency repair awaiting new build",
+  "captureBuildRun": 37586489010,
+  "captureBuildStatus": {
+    "validate": "success",
+    "windows": "success",
+    "android": "success",
+    "ios-simulator": "failure"
+  }
 }

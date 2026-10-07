@@ -46,6 +46,10 @@ try{
   const r=await access('decide',{decisions:[{lineId:line,accepted:true}]},decisionId);assert.equal(r.accepted,true);
   await login(admin,ad);const o=(await snap()).orders[0];assert.equal(o.tasks[0].authorized,true);assert.equal(o.tasks[0].approvedCents,2904);assert.equal(o.tasks[0].authorization.actorType,'customer');assert.equal(o.tasks[0].authorization.channel,'portal');assert.equal(o.quoteLedger.decisions[0].portalGrantId,gid);
  });
+ await test('Decision response hides internal tasks while workshop keeps original audit links',async()=>{
+  const r=await access();assert.deepEqual(r.decisions[0].decisions,[{lineId:line,accepted:true,approvedCents:2904}]);assert.equal(JSON.stringify(r).includes('taskId'),false);
+  await login(admin,ad);assert.equal((await snap()).orders[0].quoteLedger.decisions[0].decisions[0].taskId,task);
+ });
  await test('Lost acceptance reply cannot duplicate authorization and changed decisions fail',async()=>{
   assert.equal((await access('decide',{decisions:[{lineId:line,accepted:true}]},decisionId)).accepted,true);
   await assert.rejects(()=>access('decide',{decisions:[{lineId:line,accepted:false}]},decisionId),/ID reused/);

@@ -1,0 +1,52 @@
+{
+  "environment": "Supabase Free primary; real HTTPS customer boundary; fictional workshop",
+  "checks": [
+    {
+      "name": "Valid customer reads exact quote version over HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Customer response excludes office and technical private fields",
+      "status": "passed"
+    },
+    {
+      "name": "Customer response forbids cache and referrer",
+      "status": "passed"
+    },
+    {
+      "name": "Wrong separate code rejected over HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Independent accept and reject decisions saved over HTTPS",
+      "status": "passed"
+    },
+    {
+      "name": "Lost-response retry preserves original result",
+      "status": "passed"
+    },
+    {
+      "name": "Reused decision identity with changed choices rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Read returns one decision and the original quote",
+      "status": "passed"
+    },
+    {
+      "name": "Unselected photo denied",
+      "status": "passed"
+    },
+    {
+      "name": "Revoked customer access rejected over HTTPS",
+      "status": "passed"
+    }
+  ],
+  "limitations": [
+    "Fixture prepared by SQL, not by native staff Auth",
+    "No customer photo selected; private photo success excluded",
+    "Public customer UI hosting and physical devices excluded"
+  ],
+  "checkedAt": "2026-10-07T07:23:13.151Z",
+  "passed": 10
+}
