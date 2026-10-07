@@ -47,3 +47,8 @@ kotlin {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    // Bundled Latin model works without downloading a model at first capture.
+    implementation("com.google.mlkit:text-recognition:16.0.1")
+}

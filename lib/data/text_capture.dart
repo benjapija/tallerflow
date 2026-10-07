@@ -1,8 +1,38 @@
 import 'package:flutter/foundation.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'photo_temp.dart';
+
+/// Readers return observations only; a person reviews them in the dialog.
+class LocalTextReader {
+  static const channel = MethodChannel('es.tallerflow/local_text');
+
+  Future<String> read(String privatePath) async {
+    if (privatePath.isEmpty) {
+      throw const FormatException('No se ha podido abrir la imagen capturada.');
+    }
+    try {
+      final text = await channel.invokeMethod<String>('read', {
+        'path': privatePath,
+      });
+      if (text == null || text.length > 4000) {
+        throw const FormatException(
+          'La captura no contiene un texto válido de hasta 4.000 caracteres. Acércate a la zona necesaria y repite la captura.',
+        );
+      }
+      return text;
+    } on PlatformException {
+      throw const FormatException(
+        'No se ha podido leer la imagen. Repite la captura o escribe el texto.',
+      );
+    } on MissingPluginException {
+      throw const FormatException(
+        'La lectura de texto requiere la aplicación móvil actualizada.',
+      );
+    }
+  }
+}
 
 abstract class TextCaptureBackend {
   bool get cameraAvailable;
@@ -102,17 +132,16 @@ class DeviceTextCapture implements TextCaptureBackend {
       requestFullMetadata: false,
     );
     if (photo == null) return null;
-    final recognizer = TextRecognizer(script: TextRecognitionScript.latin);
     try {
-      return (await recognizer.processImage(
-        InputImage.fromFilePath(photo.path),
-      )).text;
-    } finally {
-      try {
-        await recognizer.close();
-      } finally {
-        await removeTemporaryPhoto(photo.path);
+      final path = await privatePhotoSource(photo.path);
+      if (path == null) {
+        throw const FormatException(
+          'La imagen debe estar en la caché privada.',
+        );
       }
+      return await LocalTextReader().read(path);
+    } finally {
+      await removeTemporaryPhoto(photo.path);
     }
   }
 }
