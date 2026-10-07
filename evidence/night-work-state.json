@@ -1,13 +1,13 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "2ae0b87df8421a8e188d32a70bec852949e3cb34",
+  "sourceCommit": "1026352399a5dc3e45d1ae6ff3a5f06ad348a9ff",
   "appBuildCommit": "23d62b82b17d864aff1779f67b8d1753e3bff551",
   "buildRun": 37554417241,
   "iosNativeRun": 37555896692,
   "windowsNativeSuccessfulRun": 37553141586,
   "hostedRecovery": true,
   "allTemporaryAuthServicesRetired": true,
-  "nextIndependentWork": "Integrate QuoteLedger with order operations, server migration, screens and version-specific decisions, then portal and subsequent agreed scope",
+  "nextIndependentWork": "Finish quote native packages; test quote Auth HTTP; customer portal with temporary recipient-verified access",
   "personalDependencies": [
     "Android SDK license acceptance/local SDK",
     "Native personal admin login",
@@ -23,5 +23,7 @@
     "ios-simulator": "success",
     "android": "success"
   },
-  "iosNativeStatus": "no-uninstall corrected restart test in progress"
+  "iosNativeStatus": "success",
+  "iosRunId": 37555896692,
+  "quoteIntegration": "implemented; 12 Flutter + 9 local PostgreSQL; 10 hosted SQL per project"
 }

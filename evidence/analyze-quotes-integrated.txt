@@ -16,4 +16,4 @@ Got dependencies!
 12 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.
 Analyzing TallerFlow...                                         
-No issues found! (ran in 6.4s)
+No issues found! (ran in 6.7s)

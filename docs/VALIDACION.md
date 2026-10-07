@@ -4,7 +4,7 @@ Datos ficticios. No se acredita un piloto real ni una aplicación macOS.
 
 | Entorno | Resultado actual | Límite |
 |---|---|---|
-| Flutter local | 108 pruebas y analizador limpio | Plugins físicos y piloto manual separados |
+| Flutter local | 109 pruebas y analizador limpio | Plugins físicos y piloto manual separados |
 | PostgreSQL/PGlite | 139 comprobaciones | Auth sintético |
 | Servicios locales | 18 comprobaciones de alta y fotos | Dependencias HTTP simuladas |
 | Supabase HTTP real | 15 Auth/fotos/cierre + 10 recuperación entre proyectos | Clientes HTTP de prueba; no sesión personal ni cámara |

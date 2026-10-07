@@ -52,3 +52,12 @@ Run 37543505529, commit 6d8fbae: Windows con instalador, Android debug e iOS sim
 ## Evidencia actual · 7 de octubre
 
 Los paquetes Windows/Android/iOS del commit 73e5e66 están descargados y sus SHA-256 coinciden con GitHub. Incluyen copias por partes y descarga privada por POST. Las inspecciones se publicaron en f9aeed3; la prueba nativa Windows de esa versión aprobó archivos/credenciales, fotos pendientes y recuperación de la copia bajo otra clave. Su servidor es ficticio. La compilación general se repite después de corregir el formato de una prueba. Se prepara el mismo circuito en simulador iOS alojado, sin aplicación macOS.
+
+
+## Paquetes de inspecciones y pruebas iOS · 7 de octubre
+
+Los ZIP `TallerFlow-Windows-piloto-23d62b8.zip`, `TallerFlow-Android-piloto-23d62b8.zip` y `TallerFlow-iOS-simulador-23d62b8.zip` están en outputs, descargados de la ejecución 37554417241 y verificados contra sus hashes. Windows contiene `installer/TallerFlow-Setup.exe`. Copia el ZIP a un Windows y extrae su contenido antes de ejecutar el instalador. Android es un APK debug de pruebas; iOS contiene una aplicación para simulador. No se entrega una aplicación Mac ni una distribución pública firmada.
+
+El simulador iOS aprobó el guardado y la recuperación entre procesos en 37555896692, con llavero y archivos cifrados reales. Se usa `--no-uninstall` para conservar la instalación y su contenedor. El servidor del ensayo es ficticio. Windows aprobó el circuito equivalente en 37553141586.
+
+El código 1026352 añade presupuestos y decisiones por partida. La demo web local ya está compilada con ellos; los paquetes 23d62b8 todavía no los contienen. La nueva compilación se registra en el informe de avance y sus evidencias cuando termine.

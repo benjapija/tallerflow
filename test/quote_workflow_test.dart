@@ -11,6 +11,65 @@ import 'package:tallerflow/ui/quote_panel.dart';
 import 'quotes_test.dart' as fixtures;
 
 void main() {
+  testWidgets(
+    'Catalog quote preview uses the workshop tax when a legacy item has no override',
+    (tester) async {
+      tester.view.physicalSize = const Size(1200, 1200);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final s = demoState(), o = s.orders.values.first;
+      Map<String, dynamic>? saved;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: QuotePanel(
+                order: o,
+                actor: demoActors[2],
+                catalog: s.catalog,
+                defaultTaxBps: 700,
+                canEdit: true,
+                onSave: (k, p) async {
+                  saved = p;
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('Nuevo presupuesto'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byWidgetPredicate(
+          (w) =>
+              w is TextField &&
+              w.decoration?.labelText == 'Motivo de esta versión',
+        ),
+        'Fictional review',
+      );
+      await tester.tap(find.text('Añadir partida'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'Alcance que verá el cliente'),
+        'Fictional brakes',
+      );
+      await tester.tap(find.text('Confirmar y guardar'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Elegir del catálogo'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Confirmar y guardar'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Revisar importes'));
+      await tester.pumpAndSettle();
+      expect(find.text('Revisar presupuesto'), findsOneWidget);
+      expect(find.text('Total con impuestos: 101,80 €'), findsOneWidget);
+      await tester.tap(find.text('Guardar versión'));
+      await tester.pumpAndSettle();
+      expect(saved!['lines'][0]['parts'][0]['taxBps'], 700);
+      expect(o.parts, isEmpty);
+    },
+  );
   test(
     'Partial approval leaves the rejected extension and other tasks unchanged',
     () {
@@ -238,6 +297,7 @@ void main() {
                 order: o,
                 actor: demoActors[2],
                 catalog: s.catalog,
+                defaultTaxBps: s.settings['taxBps'] as int,
                 canEdit: true,
                 onSave: (k, p) async {},
               ),

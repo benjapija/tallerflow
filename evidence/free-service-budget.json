@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-07",
+  "source": "Authenticated GitHub billing usage and budgets UI, read only",
+  "githubActions": {
+    "billedAmountUsd": 0,
+    "budgetUsd": 0,
+    "stopUsageAtBudget": true,
+    "configurationChanged": false
+  },
+  "supabaseProjects": [
+    "gpseuqmzbazifmkhjyby",
+    "qnbgbgumvxmmipjlkcgb"
+  ],
+  "supabasePlan": "Free",
+  "supabaseProjectCostConfirmedUsdPerMonth": 0,
+  "paidServicesPurchased": false
+}

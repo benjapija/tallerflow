@@ -1469,6 +1469,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
               order: o,
               actor: c.actor,
               catalog: c.state.catalog,
+              defaultTaxBps: c.state.settings['taxBps'] as int,
               canEdit: !c.frozen(o.id),
               onSave: (kind, p) =>
                   perform(o.id, kind, p, expectedRevision: o.revision),

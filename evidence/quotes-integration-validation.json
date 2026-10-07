@@ -1,7 +1,7 @@
 {
   "date": "2026-10-07",
-  "flutterTotal": 108,
-  "quoteFlutterTests": 12,
+  "flutterTotal": 109,
+  "quoteFlutterTests": 13,
   "postgresTotal": 139,
   "quotePostgresChecks": 9,
   "mockServiceChecks": 18,
@@ -12,5 +12,6 @@
   "nativeQuoteUiValidated": false,
   "portalImplemented": false,
   "migration": "20261007011737_quotes.sql",
-  "passed": true
+  "passed": true,
+  "catalogTaxFallbackTest": "Full widget journey: null catalog tax uses configured workshop 7%; final preview 10180 cents"
 }

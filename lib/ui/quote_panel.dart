@@ -9,6 +9,7 @@ class QuotePanel extends StatelessWidget {
   final WorkOrder order;
   final Actor actor;
   final List<CatalogItem> catalog;
+  final int defaultTaxBps;
   final bool canEdit;
   final Future<void> Function(String, Map<String, dynamic>) onSave;
   const QuotePanel({
@@ -16,6 +17,7 @@ class QuotePanel extends StatelessWidget {
     required this.order,
     required this.actor,
     required this.catalog,
+    required this.defaultTaxBps,
     required this.canEdit,
     required this.onSave,
   });
@@ -34,6 +36,7 @@ class QuotePanel extends StatelessWidget {
         order: order,
         actor: actor,
         catalog: catalog,
+        defaultTaxBps: defaultTaxBps,
         original: old,
       ),
     );
@@ -279,11 +282,13 @@ class _QuoteEditor extends StatefulWidget {
   final WorkOrder order;
   final Actor actor;
   final List<CatalogItem> catalog;
+  final int defaultTaxBps;
   final Map<String, dynamic>? original;
   const _QuoteEditor({
     required this.order,
     required this.actor,
     required this.catalog,
+    required this.defaultTaxBps,
     this.original,
   });
   @override
@@ -463,7 +468,7 @@ class _QuoteEditorState extends State<_QuoteEditor> {
           'unit': item.unit,
           'quantityMilli': parseQuantity(v['quantity']!),
           'unitPriceCents': item.priceCents,
-          'taxBps': item.taxBps,
+          'taxBps': item.taxBps ?? widget.defaultTaxBps,
           'discountBps': parseMoney(v['discount']!),
         };
       },
