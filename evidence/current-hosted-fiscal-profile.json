@@ -1,0 +1,181 @@
+{
+  "checkedAt": "2026-10-07T11:34:00Z",
+  "logicalMigrations": 26,
+  "profilesRemainPreparatory": true,
+  "realAuth": false,
+  "scope": "12 rolled-back SQL invariants per hosted project, synthetic Auth claims, not native login or fiscal validation",
+  "projects": [
+    {
+      "project": "gpseuqmzbazifmkhjyby",
+      "checksPassed": 12,
+      "migrations": [
+        {
+          "version": "20261006152936",
+          "name": "tallerflow_core"
+        },
+        {
+          "version": "20261006152941",
+          "name": "tallerflow_reliability"
+        },
+        {
+          "version": "20261006152947",
+          "name": "tallerflow_backup"
+        },
+        {
+          "version": "20261006152952",
+          "name": "tallerflow_management"
+        },
+        {
+          "version": "20261006161439",
+          "name": "tallerflow_account_creation"
+        },
+        {
+          "version": "20261006164430",
+          "name": "tallerflow_reception_validation"
+        },
+        {
+          "version": "20261006191332",
+          "name": "vehicle_history"
+        },
+        {
+          "version": "20261006204909",
+          "name": "pricing_review"
+        },
+        {
+          "version": "20261006215354",
+          "name": "private_photos"
+        },
+        {
+          "version": "20261006224642",
+          "name": "customer_csv"
+        },
+        {
+          "version": "20261006233247",
+          "name": "private_photo_download"
+        },
+        {
+          "version": "20261006233435",
+          "name": "photo_edge_only_reads"
+        },
+        {
+          "version": "20261007002911",
+          "name": "inspections"
+        },
+        {
+          "version": "20261007012619",
+          "name": "quotes"
+        },
+        {
+          "version": "20261007025138",
+          "name": "payments"
+        },
+        {
+          "version": "20261007033453",
+          "name": "manual_purchases"
+        },
+        {
+          "version": "20261007035151",
+          "name": "linked_returns"
+        },
+        {
+          "version": "20261007040611",
+          "name": "diagnosis_notebook"
+        },
+        {
+          "version": "20261007042553",
+          "name": "validated_cases"
+        },
+        {
+          "version": "20261007045731",
+          "name": "customer_portal"
+        },
+        {
+          "version": "20261007055450",
+          "name": "planning"
+        },
+        {
+          "version": "20261007062728",
+          "name": "maintenance"
+        },
+        {
+          "version": "20261007064823",
+          "name": "fleets"
+        },
+        {
+          "version": "20261007072216",
+          "name": "portal_decision_projection"
+        },
+        {
+          "version": "20261007085719",
+          "name": "ai_draft_boundary"
+        },
+        {
+          "version": "20261007112840",
+          "name": "fiscal_preparation_profiles"
+        }
+      ]
+    },
+    {
+      "project": "qnbgbgumvxmmipjlkcgb",
+      "checksPassed": 12,
+      "migrations": [
+        {
+          "version": "20261007003433",
+          "name": "tallerflow_recovery_baseline"
+        },
+        {
+          "version": "20261007012622",
+          "name": "quotes"
+        },
+        {
+          "version": "20261007025158",
+          "name": "payments"
+        },
+        {
+          "version": "20261007033509",
+          "name": "manual_purchases"
+        },
+        {
+          "version": "20261007035225",
+          "name": "linked_returns"
+        },
+        {
+          "version": "20261007040654",
+          "name": "diagnosis_notebook"
+        },
+        {
+          "version": "20261007042609",
+          "name": "validated_cases"
+        },
+        {
+          "version": "20261007045804",
+          "name": "customer_portal"
+        },
+        {
+          "version": "20261007093230",
+          "name": "planning"
+        },
+        {
+          "version": "20261007093238",
+          "name": "maintenance"
+        },
+        {
+          "version": "20261007093247",
+          "name": "fleets"
+        },
+        {
+          "version": "20261007093254",
+          "name": "portal_decision_projection"
+        },
+        {
+          "version": "20261007093305",
+          "name": "ai_draft_boundary"
+        },
+        {
+          "version": "20261007112852",
+          "name": "fiscal_preparation_profiles"
+        }
+      ]
+    }
+  ]
+}

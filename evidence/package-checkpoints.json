@@ -1,41 +1,90 @@
 {
   "date": "2026-10-07",
+  "commonRevision": "01576d21d464bfa40049b6a6289fefb310952330",
+  "run": 37610877432,
   "packages": [
     {
-      "platform": "windows",
-      "file": "TallerFlow-Windows-piloto-542769f.zip",
-      "sha256": "95199d3db333c316af500488c4b3880212bf6069a2aedd367253a5498877017f",
-      "commit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
-      "run": 37591485045,
-      "sourceCommitVerified": true,
+      "file": "TallerFlow-Android-piloto-01576d2.zip",
+      "sha256": "2bc87b72900e362c72d315f94e7c72595e5f9c6a948846723d0031c3f82bf266",
+      "bytes": 115434497,
+      "source": {
+        "commit": "01576d21d464bfa40049b6a6289fefb310952330",
+        "run": "37610877432",
+        "runner": "Linux",
+        "platform": "android",
+        "realAuthValidated": false
+      },
+      "zipIntegrityVerified": true,
+      "nativeEvidence": {
+        "checkedAt": "2026-10-07T11:15:58.150164Z",
+        "platform": "android",
+        "engine": "Bundled ML Kit Latin",
+        "checks": [
+          "upright fictional DTC and reference preserved",
+          "EXIF orientation restored before native OCR",
+          "blank image does not fabricate observations",
+          "file outside private cache refused and original retained",
+          "missing image is recoverable without technical details"
+        ],
+        "passed": 5,
+        "physicalCameraValidated": false,
+        "microphoneUsed": false,
+        "hostedAuthValidated": false
+      },
       "physicalDeviceValidated": false,
+      "hostedNativeAuthValidated": false
+    },
+    {
+      "file": "TallerFlow-iOS-simulador-01576d2.zip",
+      "sha256": "24680512c45b644ee8084393db62f0dac97b4e6a3159fbf161740bfa446b695d",
+      "bytes": 61923561,
+      "source": {
+        "commit": "01576d21d464bfa40049b6a6289fefb310952330",
+        "run": "37610877432",
+        "runner": "macOS",
+        "platform": "ios-simulator",
+        "realAuthValidated": false
+      },
+      "zipIntegrityVerified": true,
+      "installerIncluded": false,
+      "nativeEvidence": {
+        "checkedAt": "2026-10-07T11:07:16.258430Z",
+        "platform": "ios",
+        "engine": "Apple Vision",
+        "checks": [
+          "upright fictional DTC and reference preserved",
+          "iOS private camera temporary directory accepted",
+          "EXIF orientation restored before native OCR",
+          "blank image does not fabricate observations",
+          "file outside private cache refused and original retained",
+          "missing image is recoverable without technical details"
+        ],
+        "passed": 6,
+        "physicalCameraValidated": false,
+        "microphoneUsed": false,
+        "hostedAuthValidated": false
+      },
+      "physicalDeviceValidated": false,
+      "hostedNativeAuthValidated": false
+    },
+    {
+      "file": "TallerFlow-Windows-piloto-01576d2.zip",
+      "sha256": "01c33a81cda3765de145f278bb4d14117bee3f5ef5de3f6d15cbae778b7c605f",
+      "bytes": 26269951,
+      "source": {
+        "commit": "01576d21d464bfa40049b6a6289fefb310952330",
+        "run": "37610877432",
+        "runner": "Windows",
+        "platform": "windows",
+        "realAuthValidated": false
+      },
+      "zipIntegrityVerified": true,
       "installerIncluded": true,
-      "includesFleetsAndCapture": true,
-      "ocrValidated": false
-    },
-    {
-      "platform": "android",
-      "file": "TallerFlow-Android-piloto-542769f.zip",
-      "sha256": "a94cc4e5a010bb27979977dd8331e6eeb58b8cf11d0895f3022e2a0fe6b26d93",
-      "commit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
-      "run": 37591485045,
-      "sourceCommitVerified": true,
+      "nativeEvidence": null,
       "physicalDeviceValidated": false,
-      "installerIncluded": false,
-      "includesFleetsAndCapture": true,
-      "ocrValidated": false
-    },
-    {
-      "platform": "ios-simulator",
-      "file": "TallerFlow-iOS-simulador-542769f.zip",
-      "sha256": "67ae717ffaad854a88c812b2bae3260652f8cd51ba16d264dd6fafcd28b061c1",
-      "commit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
-      "run": 37591485045,
-      "sourceCommitVerified": true,
-      "physicalDeviceValidated": false,
-      "installerIncluded": false,
-      "includesFleetsAndCapture": true,
-      "ocrValidated": false
+      "hostedNativeAuthValidated": false
     }
-  ]
+  ],
+  "olderPackages": "Historical, identified by their commit suffix",
+  "physicalUseValidated": false
 }

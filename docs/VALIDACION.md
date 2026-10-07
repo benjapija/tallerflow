@@ -1,15 +1,15 @@
 # Estado vigente de validación · 7 de octubre de 2026
 
-Último corte: 12:55, hora peninsular. Datos ficticios; no acredita piloto físico ni emisión fiscal.
+Corte de trabajo: 13:40, hora peninsular. Datos ficticios; no acredita piloto físico ni emisión fiscal.
 
-- Local: **221 Flutter**, analizador sin incidencias; web release aprobada. **259 PostgreSQL/PGlite**, **43 servicios simulados** y **cinco pruebas del cliente del portal** aprobadas. IA: nueve Flutter, incluida recuperación sin reenviar y reversión de estado ante fallo de persistencia.
-- Supabase real: repetidas **15 comprobaciones de fase 1**, **12 de módulos** y **nueve de recuperación formato 13** con Auth real. Se prueban CSV, presupuestos, cobros, compras/almacén, garantías, diagnóstico, biblioteca, agenda, mantenimiento y flotas; detalles en current-hosted-*.json/txt.
-- Recuperación autorizada qnbgbgumvxmmipjlkcgb: cinco migraciones instaladas, 25 lógicas totales; **83 invariantes SQL** con rollback. Exportación, restauración idempotente, documentos originales, auditoría y bytes de foto privada conservados. Las filas SQL sin orden se comparan por identidad; un cliente legado se reconstruye desde su propietario conservado. Pendientes locales se validan por separado.
-- Limpieza comprobada: diez cuentas ficticias bloqueadas, cero sesiones/miembros/dispositivos activos en pruebas, ambos servicios temporales HTTP 410 y capacidad temporal eliminada; usuarios reales intactos.
-- CI 37605485742, código 641509f: validación, Windows e iOS aprobados. **OCR iOS aprobado en simulador**: lectura, temporal privado, EXIF, blanco, original externo denegado y ausente recuperable. Android compilado y emulador arrancado; OCR no ejecutado por shell incompatible. Corregido para bash; nueva compilación común pendiente. La evidencia iOS no pudo copiarse tras desinstalar Flutter su app de prueba: se añade extracción obligatoria del registro ficticio emitido durante el ensayo.
-- Cuota revisada antes de repetir: 1.387/2.000 minutos gratuitos usados, 613 restantes, 0 USD facturables, almacenamiento 6%. Sin planes ni consumo de pago autorizado.
-- Circuitos nativos anteriores Windows/iOS entre procesos: cifrado/llavero/pendientes/recuperación aprobados con servidor ficticio. Cámara, micrófono, QR/enlaces, selector y cuenta personal desde app nativa siguen pendientes.
-- IA real desactivada por decisión del usuario, cero llamadas al proveedor. Portal público pendiente de confirmación de permisos de GitHub para Cloudflare; sesión abierta. Licencias Android aceptadas según el usuario; iPhone disponible sin conectar todavía.
+- Local: **226 Flutter**, analizador sin incidencias; **271 PostgreSQL/PGlite**, **43 servicios simulados** y **cinco pruebas del cliente del portal** aprobadas. Cinco Flutter y doce SQL de preparación fiscal: permisos, conflicto y respuesta perdida con reinicio; sin activar emisión. Ensayo de copias: 22 comprobaciones aprobadas en dos bases independientes, ahora con perfil fiscal y documentos originales.
+- Supabase real: **15 fase 1**, **12 módulos** y **nueve recuperación formato 13** con Auth real. CSV, presupuestos, cobros, compras/almacén, garantías, diagnóstico, biblioteca, agenda, mantenimiento y flotas conservan originales.
+- Principal y recuperación: **26 migraciones lógicas**. Recuperación: cinco migraciones ya instaladas y **83 invariantes SQL** con rollback. Perfil fiscal posterior: **12 en cada proyecto**, identidades sintéticas y rollback; no altera tarifas ni documentos.
+- Limpieza: diez cuentas ficticias bloqueadas, cero sesiones/miembros/dispositivos activos en pruebas, servicios temporales HTTP 410 y capacidad temporal eliminada; usuarios reales intactos.
+- CI **37610877432**, código **01576d2**: validación y las tres plataformas aprobadas. OCR Android cinco / iOS seis: lectura, orientación EXIF, blanco, restricciones privadas y archivos ausentes; JSON y registro adjuntos. Tres paquetes descargados y verificados contra SHA-256 y revisión. La pantalla fiscal requiere compilación posterior común.
+- Cuota anterior al siguiente juego: **1.467,7/2.000 minutos** usados, **532,3 disponibles**, **0 USD facturables**, almacenamiento 6%. Máximo configurado completo: 410 minutos ponderados. Sin contratación ni consumo de pago autorizado.
+- Circuitos nativos anteriores Windows/iOS entre procesos: cifrado/llavero/pendientes/recuperación aprobados con servidor ficticio. Cámara, micrófono, QR/enlaces, selector y cuenta personal desde aplicación nativa pendientes.
+- IA desactivada por decisión del usuario; cero llamadas al proveedor. Portal público pendiente de confirmar permiso nuevo de GitHub para Cloudflare. Licencias Android aceptadas según el usuario; iPhone disponible sin conectar todavía.
 
 **Los registros siguientes son históricos.** Sus cifras, fallos y pendientes corresponden al momento de cada ensayo. PENDIENTES.md y el informe fijan el estado actual.
 

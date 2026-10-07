@@ -1,0 +1,12 @@
+{
+  "scope": "PGlite rehearsal of hosted SQL; fictional identities and rollback",
+  "result": [
+    [
+      {
+        "checks_passed": 12,
+        "scope": "Hosted PostgreSQL; synthetic Auth; full rollback; fiscal emission disabled"
+      }
+    ]
+  ],
+  "realAuth": false
+}

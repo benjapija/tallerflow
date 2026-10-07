@@ -1,0 +1,31 @@
+{
+  "file": "TallerFlow-Android-piloto-01576d2.zip",
+  "sha256": "2bc87b72900e362c72d315f94e7c72595e5f9c6a948846723d0031c3f82bf266",
+  "bytes": 115434497,
+  "source": {
+    "commit": "01576d21d464bfa40049b6a6289fefb310952330",
+    "run": "37610877432",
+    "runner": "Linux",
+    "platform": "android",
+    "realAuthValidated": false
+  },
+  "zipIntegrityVerified": true,
+  "nativeEvidence": {
+    "checkedAt": "2026-10-07T11:15:58.150164Z",
+    "platform": "android",
+    "engine": "Bundled ML Kit Latin",
+    "checks": [
+      "upright fictional DTC and reference preserved",
+      "EXIF orientation restored before native OCR",
+      "blank image does not fabricate observations",
+      "file outside private cache refused and original retained",
+      "missing image is recoverable without technical details"
+    ],
+    "passed": 5,
+    "physicalCameraValidated": false,
+    "microphoneUsed": false,
+    "hostedAuthValidated": false
+  },
+  "physicalDeviceValidated": false,
+  "hostedNativeAuthValidated": false
+}

@@ -1,4 +1,4 @@
-# Facturación española: requisitos por confirmar
+# Facturación española: producto para distintos talleres
 
 Revisión del 7 de octubre de 2026. TallerFlow produce presupuestos, notas y registros de cobro; el módulo fiscal definitivo continúa pendiente. España y la sustitución del papel están confirmadas.
 
@@ -12,12 +12,30 @@ La [Orden HAC/1028/2026](https://www.boe.es/buscar/doc.php?id=BOE-A-2026-20587),
 
 El Ministerio de Hacienda comunicó el 5 de octubre una **previsión** de alineación de las obligaciones pendientes de SIF con octubre de 2028. La nota indica que la modificación aún debe aprobarse; no sustituye por sí misma los plazos aprobados que la AEAT sigue publicando. Se conserva esta distinción hasta verificar la norma que efectúe el cambio. Fuentes: [comunicación de Hacienda](https://www.hacienda.gob.es/sgt/gabsehacienda/nota-informativa-verifactu.pdf), [nota publicada](https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu.html), [plazos aprobados según AEAT](https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/nota-informativa-ampliacion-plazo-adaptacion-facturacion.html).
 
-## Información imprescindible del taller
+## Alcance comercial y preparación implementada
 
-Se solicitó autónomo/sociedad, provincia, SII y tipos de destinatario. Después hacen falta denominación/NIF y domicilio fiscal aplicables, régimen tributario, series y última numeración utilizada, tipos de factura y rectificación, y acreditación para los servicios que correspondan. El volumen de operaciones condiciona el calendario B2B. El ámbito foral debe comprobarse si la provincia lo requiere.
+El usuario venderá TallerFlow a distintos talleres. Cada taller conserva sus propios usuarios, permisos, tarifas, registros y documentos; la configuración fiscal no se limita a un negocio identificado.
 
-## Trabajo pendiente y coste
+El administrador guarda **Preparación fiscal** con motivo y control de revisión. Incluye autónomo/persona física, sociedad, atribución de rentas u otra forma; territorio común, Canarias, Ceuta, Melilla, Navarra, Álava, Bizkaia y Gipuzkoa; SII sí/no/pendiente; clientes particulares, empresas/profesionales, Administraciones o mixtos; volumen hasta ocho millones inclusive o superior; IVA, IGIC, IPSI u otro/mixto por revisar. Permite dejar datos pendientes. No deduce automáticamente régimen, obligación o plazo.
 
-Con esa información se podrá elegir el circuito fiscal, implementar sus registros y formatos, y validar numeración, correcciones, conservación, permisos y reintentos contra el entorno oficial que corresponda. No se ha contratado un proveedor ni comprado un certificado. La consulta normativa es gratuita; cualquier servicio externo debe tener gratuidad confirmada antes de utilizarlo. Las credenciales y certificados se conectarían por el servicio adecuado, sin enviarlos al chat ni incluirlos en las aplicaciones.
+El perfil conserva `emissionEnabled:false`: no emite ni remite facturas, no altera tarifas, trabajos ni documentos originales. Está auditado, aislado y reservado al administrador; copia formato 13 y restauración independiente probadas. Cinco Flutter/doce PostgreSQL locales; doce SQL con rollback por proyecto alojado, identidades sintéticas. No es validación fiscal.
 
-No se transforma una nota existente en factura ni se recalculan documentos emitidos. Los cobros actuales conservan sus referencias y auditoría hasta disponer de la emisión fiscal validada.
+## Matriz del producto pendiente
+
+| Circuito que debe contemplarse | Información por taller | Trabajo restante |
+|---|---|---|
+| SIF estatal, modalidad aplicable | Sujeto/ámbito, SII, series, identificación | Emisión, registros, correcciones, cadena, formatos y pruebas oficiales; declaración del fabricante cuando proceda |
+| SII | Ámbito, titular, representación | Adaptador, libros, respuestas y reintentos; comprobar exclusiones oficiales |
+| Territorios forales | Administración competente y obligaciones | Adaptadores y formatos propios según el caso; no afirmar cobertura estatal universal |
+| IVA / IGIC / IPSI | Operación, territorio, tipos/exenciones | Reglas y justificantes; elegir impuesto no aplica un porcentaje |
+| B2B electrónico | Destinatario, volumen, interoperabilidad | Formatos, estados y solución aplicable según norma vigente |
+| Administraciones públicas | Destinatario y códigos | Entrega al sistema aplicable y comprobación oficial |
+| Particulares y rectificaciones | Datos obligatorios, tipo y motivo | Numeración, factura completa/simplificada cuando proceda y rectificaciones con originales conservados |
+
+La matriz identifica desarrollo pendiente. No promete cumplimiento ni conectores disponibles. El motor genérico aún debe implementarse/probarse; no se considera bloqueado únicamente por desconocer datos de un taller particular.
+
+## Alta de cada taller y coste
+
+Cada cliente aportará denominación/NIF, domicilio, administración/régimen, series/última numeración, tipos de factura y representación/certificado aplicables. La obligación y sus plazos se verifican antes de activar emisión. Credenciales mediante servicio autorizado, sin chat ni inclusión en aplicaciones.
+
+No se ha contratado proveedor ni comprado certificado. Investigación, desarrollo y proyectos actuales gratuitos; cualquier coste se consultará. Notas/PDF actuales: **documentos de trabajo**. No se convierten retrospectivamente en factura ni recalculan emitidos; los cobros conservan referencias y auditoría.

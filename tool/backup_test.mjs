@@ -30,6 +30,8 @@ try{
  await source.query("insert into private.members values($1,$2,'Tech','technician',false,true)",[w,tech]);
  await source.query("insert into private.catalog(workshop_id,id,reference,description,unit,price_cents,cost_cents,stock_milli) values($1,$2,'OIL','Oil','L',1200,500,2000)",[w,item]);
  await login(source,admin,sourceDev);await snap(source,sourceDev);
+ const fiscalProfile={country:'ES',legalForm:'sole_trader',territory:'canary',sii:'unknown',clients:'mixed',turnover:'under_8m',taxSystem:'igic',profileVersion:1,emissionEnabled:false};
+ await source.query("select public.management_command($1,$2,$3,'fiscal_profile_save',$4)",[w,sourceDev,id(),{revision:0,reason:'Fictional fiscal preparation for independent recovery',profile:fiscalProfile}]);
  await source.query('select public.apply_operation($1,$2,$3)',[w,sourceDev,{id:id(),orderId:portalOrder,actorId:admin,kind:'receive',baseRevision:0,at:new Date().toISOString(),payload:{plate:'9999FIC',country:'ES',vin:'FICTIONAL-RECOVERY-PORTAL',vehicle:'Fictional',engine:'2020',client:'Fictional recipient',phone:'',km:100,symptom:'Fictional',tasks:[{id:portalTask,title:'Scope',assignees:[tech],estimateMinutes:30}]}}]);
  await source.query('select public.apply_operation($1,$2,$3)',[w,sourceDev,{id:id(),orderId:portalOrder,actorId:admin,kind:'quote_draft',baseRevision:1,at:new Date().toISOString(),payload:{id:portalQuote,expectedVersion:0,title:'Fictional quote',reason:'Recovery test',validUntil:new Date(Date.now()+86400000).toISOString(),lines:[{id:portalLine,taskId:portalTask,description:'Scope',laborMinutes:30,parts:[]}]}}]);
  const portalRevision=(await snap(source,sourceDev)).orders.find(o=>o.id===portalOrder).revision;
@@ -141,6 +143,7 @@ try{
  await test('Independent database restores original documents, records and audit',async()=>{
   result=(await target.query('select public.restore_workshop($1,$2,$3,$4) r',[w,targetDev,rid,archive])).rows[0].r;
   assert.equal(result.restored,true);const s=await snap(target,targetDev);
+  assert.deepEqual(s.settings.fiscalProfile,fiscalProfile);assert.equal(s.settings.fiscalProfile.emissionEnabled,false);
   assert.deepEqual(s.orders.find(o=>o.id===order).document,document);assert.equal(s.orders.find(o=>o.id===order).payments[0].id,payment.id);assert.equal(s.orders.find(o=>o.id===order).payments[0].amountCents,2345);assert.deepEqual(s.incidents.find(x=>x.operation.id===op.id).operation,op);
   assert.deepEqual(s.planning,archive.tables.planning_state[0].data);
   assert.deepEqual(s.fleets,archive.tables.fleet_state[0].data);

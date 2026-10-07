@@ -1,0 +1,17 @@
+{
+  "file": "TallerFlow-Windows-piloto-01576d2.zip",
+  "sha256": "01c33a81cda3765de145f278bb4d14117bee3f5ef5de3f6d15cbae778b7c605f",
+  "bytes": 26269951,
+  "source": {
+    "commit": "01576d21d464bfa40049b6a6289fefb310952330",
+    "run": "37610877432",
+    "runner": "Windows",
+    "platform": "windows",
+    "realAuthValidated": false
+  },
+  "zipIntegrityVerified": true,
+  "installerIncluded": true,
+  "nativeEvidence": null,
+  "physicalDeviceValidated": false,
+  "hostedNativeAuthValidated": false
+}

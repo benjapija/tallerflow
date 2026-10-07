@@ -364,6 +364,7 @@ class SimulatedWorkshop {
     }
     if ([
       'settings_save',
+      'fiscal_profile_save',
       'member_save',
       'catalog_save',
       'template_save',

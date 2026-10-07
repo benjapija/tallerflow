@@ -8,7 +8,7 @@ Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md). Uso de copias: [COPIAS_Y_RECUP
 
 ## Probar desde tu Mac
 
-La demostración está compilada para navegador. Abre el paquete `TallerFlow-0.2-demo-web.zip`, descomprímelo y ejecuta **Abrir TallerFlow.command**. Utiliza Python 3 y abre `http://127.0.0.1:8777/`. Si ya tienes esa demo abierta, recarga la página para cargar la versión nueva.
+La demostración está compilada para navegador. Abre el paquete `TallerFlow-demo-web-01576d2.zip`, descomprímelo y ejecuta **Abrir TallerFlow.command**. Utiliza Python 3 y abre `http://127.0.0.1:8777/`. Si ya tienes esa demo abierta, recarga la página para cargar la versión nueva.
 
 En **Configuración → Probar dos móviles y oficina** puedes alternar entre Álex, Lucía y oficina/administrador y desconectar cada dispositivo por separado. Es un servidor simulado en memoria, con datos ficticios; al salir o recargar se reinicia. No conecta a Supabase ni acredita una instalación real.
 

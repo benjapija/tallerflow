@@ -2,7 +2,7 @@
 
 El Mac es exclusivamente desarrollo y demo web; no se entrega app macOS. La demo usa datos ficticios y no inicia sesión en el taller alojado.
 
-IA y corrección de carpetas privadas iOS ya publicados. CI 37605485742 (641509f) aprobó Windows/iOS y OCR iOS; Android compiló y arrancó, pero falta repetir OCR tras corregir su comando bash. Se prepara un nuevo juego de tres paquetes de la misma revisión. Los ZIP 542769f son históricos y Windows/iOS 641509f son una entrega intermedia. Prevalecen evidence/package-checkpoints.json y el informe de avance para elegir la entrega vigente.
+IA y corrección de carpetas privadas iOS publicadas. CI 37610877432 (01576d2) aprobó Windows/Android/iOS y OCR Android cinco/iOS seis, con evidencia adjunta. Los tres ZIP 01576d2 están descargados y verificados. Se prepara otro juego común con preparación fiscal por taller. Los anteriores son históricos; prevalecen evidence/package-checkpoints.json y el informe para elegir la entrega vigente.
 
 Android: usuario confirma licencias aceptadas; SDK disponible. iPhone indicado: «iPhone 17 e»; falta conectarlo, confiar en el Mac y modo desarrollador. Windows con licencia para uso manual y entrada personal en la app siguen pendientes. Simulación, compilación e integración HTTP se distinguen de uso físico.
 
@@ -17,7 +17,7 @@ El Mac es el equipo de desarrollo. Por petición del usuario del 6 de octubre de
 
 ## Herramientas comprobadas
 
-Mac Apple Silicon, macOS 27.0.1; Flutter 3.47.6 y Dart 3.13.5 preparados en `../../work/flutter` respecto al proyecto. El SDK temporal no se incluye en el ZIP del código. Xcode 27 está instalado desde Apple y reconoce la cuenta del usuario con un Personal Team. No se ha contratado una membresía Apple. Android Studio está instalado y las herramientas oficiales descargadas/verificadas. El gestor encuentra siete licencias del SDK pendientes; su aceptación personal y la instalación del SDK/emulador siguen abiertas.
+Mac Apple Silicon, macOS 27.0.1; Flutter 3.47.6 y Dart 3.13.5 preparados en `../../work/flutter` respecto al proyecto. El SDK temporal no se incluye en el ZIP del código. Xcode 27 está instalado desde Apple y reconoce la cuenta del usuario con un Personal Team. No se ha contratado una membresía Apple. Android Studio está instalado y las herramientas oficiales descargadas/verificadas. El usuario confirmó la aceptación personal de las licencias y el SDK está disponible. El emulador alojado aprobó OCR; el uso físico sigue separado.
 
 La compilación web, el analizador y las pruebas locales funcionan desde este Mac. La demo utiliza datos ficticios y servidor simulado. No proporciona acceso al taller alojado.
 

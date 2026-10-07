@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-07T11:36:17Z",
+  "projects": [
+    "gpseuqmzbazifmkhjyby",
+    "qnbgbgumvxmmipjlkcgb"
+  ],
+  "schemaErrors": 0,
+  "findings": [
+    {
+      "name": "rls_enabled_no_policy",
+      "level": "INFO",
+      "countPerProject": 35,
+      "disposition": "Private deny-by-default tables; access through session/membership-checked RPC; no policies opened",
+      "source": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
+    },
+    {
+      "name": "auth_leaked_password_protection",
+      "level": "WARN",
+      "disposition": "Provider feature restricted to Pro; Free retained per user authorization; no upgrade",
+      "source": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+    }
+  ]
+}

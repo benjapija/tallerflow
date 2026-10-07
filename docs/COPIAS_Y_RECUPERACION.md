@@ -10,7 +10,7 @@ Para recuperar un equipo, selecciona todas las partes, introduce la contraseña 
 
 ## Recuperar en otro proyecto Supabase
 
-Es una tarea administrativa separada; la recuperación alojada entre dos proyectos ha aprobado diez comprobaciones HTTP con cuentas ficticias. El procedimiento conserva los UUID originales del taller y de cada cuenta, y nunca recupera contraseñas, claves privadas ni tokens desde una copia de la aplicación.
+Es una tarea administrativa separada; la recuperación alojada entre dos proyectos aprobó diez comprobaciones HTTP iniciales y nueve adicionales del formato actual 13 con cuentas ficticias. El procedimiento conserva los UUID originales del taller y de cada cuenta, y nunca recupera contraseñas, claves privadas ni tokens desde una copia de la aplicación.
 
 1. Prepara un proyecto de recuperación vacío y aplica todas las migraciones, además de las funciones `workshop-members` y `workshop-photos` con JWT obligatorio. Mantén `private` fuera de la Data API.
 2. Un administrador del servicio debe recrear o verificar las identidades Auth con sus **UUID originales**, mediante la API administrativa del servidor. El correo debe verificarse con su titular; no se deduce de nombres ni se concede acceso por parecido. Utiliza contraseñas nuevas o recuperación de acceso. No reutilices contraseñas antiguas ni exportes `auth.users` hacia la aplicación.
@@ -23,20 +23,20 @@ Supabase admite crear cuentas con UUID explícito mediante `auth.admin.createUse
 
 ## Biblioteca validada y formato 9
 
-El formato de base de datos 9 añade case_library con versiones originales y revisiones; cuadernos en órdenes, auditoría y recibos de comando también se conservan. Las copias 2–8 restauran con biblioteca vacía cuando no la contienen. Se comprobó la recuperación en bases independientes, reintento del mismo identificador y rechazo de filas incompletas. No se ha repetido aún el recorrido HTTP real entre proyectos para esta tabla nueva.
+El formato de base de datos 9 añade case_library con versiones originales y revisiones; cuadernos en órdenes, auditoría y recibos de comando también se conservan. Las copias 2–8 restauran con biblioteca vacía cuando no la contienen. Se comprobó la recuperación en bases independientes, reintento del mismo identificador y rechazo de filas incompletas. Su conservación ya se comprobó también en la restauración HTTP actual del formato 13.
 
 ## Portal y formato 10
 
-El formato 10 conserva concesiones de acceso, sus evidencias, decisiones, auditoría y recibos de reintento. Al restaurar, todos los enlaces del portal quedan inactivos aunque no hubieran caducado. Las autorizaciones originales permanecen en su presupuesto; oficina debe verificar de nuevo al destinatario y crear un acceso nuevo. La copia no contiene enlaces ni códigos en claro. Las copias 2–9 siguen admitidas y crean las tablas del portal vacías cuando no existen. Se comprobaron restauración completa, compatibilidad y reintentos localmente y las reglas de copia mediante SQL alojado. La recuperación HTTP entre proyectos del portal sigue pendiente.
+El formato 10 conserva concesiones de acceso, sus evidencias, decisiones, auditoría y recibos de reintento. Al restaurar, todos los enlaces del portal quedan inactivos aunque no hubieran caducado. Las autorizaciones originales permanecen en su presupuesto; oficina debe verificar de nuevo al destinatario y crear un acceso nuevo. La copia no contiene enlaces ni códigos en claro. Las copias 2–9 siguen admitidas y crean las tablas del portal vacías cuando no existen. Se comprobaron restauración completa, compatibilidad y reintentos localmente y las reglas de copia mediante SQL alojado. La recuperación HTTP actual ya conserva decisiones y verifica la desactivación de enlaces antiguos.
 
 ## Agenda y formato 11
 
-Se añaden reservas, elevadores, historial de versiones y evidencias; la copia de este equipo conserva las propuestas de agenda que aún no llegaron al servidor. Se comprobó la restauración en una base independiente, con validación de referencias del taller e intervalos. El formato 10 puede restaurarse con agenda vacía. El proyecto de recuperación alojado sigue en el esquema anterior mientras la revisión automática exige autorización específica: no admite las exportaciones nuevas hasta aplicar la migración de agenda. La prueba HTTP anterior entre proyectos permanece como evidencia histórica del formato correspondiente.
+Se añaden reservas, elevadores, historial de versiones y evidencias; la copia de este equipo conserva las propuestas de agenda que aún no llegaron al servidor. Se comprobó la restauración en una base independiente, con validación de referencias del taller e intervalos. El formato 10 puede restaurarse con agenda vacía. El usuario autorizó específicamente el destino; agenda y el esquema actual están aplicados y la recuperación HTTP del formato 13 está aprobada. La prueba HTTP inicial se conserva como histórica.
 
 ## Mantenimiento y formato 12
 
-Incluye previsiones por fecha/kilometraje, versiones, intervenciones y motivos. La restauración valida identidad del vehículo, órdenes, autores, fechas locales, cronología e intervalos; un fallo revierte toda la restauración. El formato 11 se recupera con mantenimiento vacío. El proyecto principal tiene esta migración; el de recuperación necesita el permiso específico solicitado antes de admitir formato 12.
+Incluye previsiones por fecha/kilometraje, versiones, intervenciones y motivos. La restauración valida identidad del vehículo, órdenes, autores, fechas locales, cronología e intervalos; un fallo revierte toda la restauración. El formato 11 se recupera con mantenimiento vacío. Ambos proyectos tienen esta migración y la restauración HTTP actual conserva sus versiones e intervenciones.
 
 ## Flotas y formato 13
 
-Incluye agrupaciones y vínculos originales, propietarios al incorporar, evidencia, versiones, auditoría y recibos. La restauración rechaza vehículos/autores ajenos, duplicados y datos incompletos de forma atómica. El formato 12 admite mantenimiento original con flotas vacías. El proyecto de recuperación necesita las migraciones nuevas antes de admitir formato 13.
+Incluye agrupaciones y vínculos originales, propietarios al incorporar, evidencia, versiones, auditoría y recibos. La restauración rechaza vehículos/autores ajenos, duplicados y datos incompletos de forma atómica. El formato 12 admite mantenimiento original con flotas vacías. El destino autorizado ya admite el formato 13; el recorrido HTTP real conservó flotas, propietarios y evidencias.

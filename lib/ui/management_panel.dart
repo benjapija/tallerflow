@@ -4,6 +4,7 @@ import '../data/controller.dart';
 import '../domain/models.dart';
 import 'dialogs.dart';
 import '../domain/capture_draft.dart';
+import '../domain/fiscal_profile.dart';
 
 class ManagementPanel extends StatefulWidget {
   final WorkshopController controller;
@@ -202,6 +203,34 @@ class _ManagementPanelState extends State<ManagementPanel> {
           'Se aplicarán a los registros nuevos. Los trabajos y documentos anteriores conservan sus importes. La configuración fiscal requiere una validación específica antes del piloto.',
     );
     await save('settings_save', p);
+  }
+
+  Future<void> fiscalProfile() async {
+    final current = c.state.settings['fiscalProfile'] ?? initialFiscalProfile();
+    final p = await formDialog(
+      context,
+      'Preparación fiscal del taller',
+      [
+        for (final field in fiscalChoices.keys)
+          FieldSpec(
+            field,
+            fiscalFieldLabels[field]!,
+            initial: current[field] ?? 'unknown',
+            choices: fiscalChoices[field],
+          ),
+        const FieldSpec('reason', 'Motivo del cambio', multiline: true),
+      ],
+      (values) => {
+        'profile': validateFiscalProfile({
+          'country': 'ES',
+          for (final field in fiscalChoices.keys) field: values[field],
+        }),
+        'reason': values['reason'],
+      },
+      help:
+          'Cada taller configura sus propias opciones. Puedes dejar los datos pendientes. Esta preparación no activa facturación ni envíos fiscales, no calcula obligaciones y no cambia tarifas ni documentos anteriores. Las notas siguen siendo documentos de trabajo hasta validar el circuito aplicable.',
+    );
+    await save('fiscal_profile_save', p);
   }
 
   Future<void> member(Actor m) async {
@@ -410,6 +439,10 @@ class _ManagementPanelState extends State<ManagementPanel> {
                 OutlinedButton(
                   onPressed: busy ? null : settings,
                   child: const Text('Tarifas e impuestos'),
+                ),
+                OutlinedButton(
+                  onPressed: busy ? null : fiscalProfile,
+                  child: const Text('Preparación fiscal'),
                 ),
                 OutlinedButton(
                   onPressed: busy ? null : () => catalog(null),

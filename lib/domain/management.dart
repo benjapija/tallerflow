@@ -1,5 +1,6 @@
 import 'engine.dart';
 import 'models.dart';
+import 'fiscal_profile.dart';
 
 const defaultSettings = <String, dynamic>{
   'hourlyRateCents': 4800,
@@ -41,6 +42,12 @@ void applyManagement(
   requiredText(p['reason'], 'Motivo');
   final before = cloneMap(state.toJson());
   switch (action) {
+    case 'fiscal_profile_save':
+      final profile = validateFiscalProfile(p['profile']);
+      state.configuration['settings'] = {
+        ...state.settings,
+        'fiscalProfile': profile,
+      };
     case 'settings_save':
       final v = Map<String, dynamic>.from(p['settings']);
       final settings = state.settings;

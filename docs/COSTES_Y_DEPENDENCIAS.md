@@ -1,22 +1,20 @@
 # Costes y dependencias · 7 de octubre de 2026
 
-Autorización vigente: trabajar con recursos gratuitos; dejar pendientes las acciones personales sin bloquear el desarrollo independiente.
+Autorización vigente: recursos gratuitos; continuar las tareas independientes cuando se necesite intervención personal. No se han contratado servicios de pago.
 
-Supabase: dos proyectos Free, coste confirmado de 0 USD/mes al crear la recuperación. No se ha cambiado el plan. GitHub Actions: la pantalla autenticada de consumo muestra 0 USD facturados; el presupuesto del producto Actions es 0 USD y «Stop usage» está activado. Se consultó sin modificar la configuración. Si la cuota incluida se agota, continuar el desarrollo local y diferir las compilaciones alojadas.
+Supabase: principal y recuperación conservan el plan Free. La autorización específica para qnbgbgumvxmmipjlkcgb ya se recibió y sus cinco migraciones/restauración actual están comprobadas. GitHub Actions: antes de la ejecución 25: **1.467,7/2.000 minutos usados, 532,3 disponibles, importe facturable 0 USD y almacenamiento 6%**, pantalla autenticada. Máximo configurado: 410 minutos ponderados. No se modifica el presupuesto ni se continúa fuera de cuota sin decisión del usuario.
 
-Sin contrataciones de pago. Permanecen pendientes la aceptación personal de licencias Android, la sesión personal desde un cliente nativo y el uso manual de cámara, enlaces, selectores e instalador. La IA y las integraciones con proveedores necesitan acceso gratuito confirmado o una autorización posterior de coste. Facturación fiscal requiere los datos y obligaciones del taller; documentación técnica requiere proveedor y derechos de uso.
+Android: el usuario confirmó haber aceptado las licencias; SDK encontrado. iPhone disponible: «iPhone 17 e», aún por conectar. La IA permanece desactivada por decisión explícita: cero llamadas al proveedor y no se solicitan claves/créditos mientras se mantenga esa decisión.
 
-La revisión automática rechazó cancelar la ejecución 37557658085 al exigir autorización específica para detenerla. Se conserva como una ejecución anterior a la corrección del impuesto de referencias antiguas. Este rechazo no bloquea el código corregido ni las demás tareas.
+| Dependencia | Función pendiente | Coste y qué aportar |
+|---|---|---|
+| Confirmación de acceso Cloudflare a GitHub | Publicar y validar la página cliente HTTPS | Sesión abierta; repositorio seleccionado únicamente benjapija/tallerflow. Confirmar Install & Authorize en la pregunta/pantalla preparada. Pages Free; sin plan contratado |
+| iPhone conectado y autorizado personalmente | Firma/instalación, cámara, micrófono, QR y enlaces físicos | Uso del equipo existente; desbloquear, confiar y modo desarrollador si lo pide. Sin membresía comprada |
+| Entrada personal en la aplicación nativa | Validar cuenta administradora alojada | ramirezbroja013@gmail.com ya confirmada; contraseña solo en la aplicación, nunca chat |
+| Windows con licencia y acceso manual | Instalador, selector y circuito nativo con Supabase real | No se ha contratado Windows remoto ni licencia; indicar equipo/acceso existente |
+| Alta fiscal por taller cliente | Pruebas oficiales de emisión y conectores cuando estén implementados | Preparación contempla distintos titulares/territorios. Cada cliente aporta datos fiscales, series y acreditación; desconocer un taller concreto no bloquea el diseño genérico. Motor fiscal todavía pendiente. Cualquier coste se consulta antes |
+| Proveedor técnico, licencia y equipo de diagnosis | Documentación original e integraciones específicas | Nombre, contrato/derechos, marca/modelo y acceso/API. No inferir licencias privadas ni contratar proveedores |
 
-## Dependencias concretas pendientes
+Las notas/PDF actuales son documentos de trabajo hasta completar la validación fiscal. La investigación distingue normativa aprobada y anuncios pendientes; véase FACTURACION_ESPANA_PENDIENTE.md.
 
-| Necesidad | Función bloqueada | Coste confirmado | Intervención necesaria |
-|---|---|---|---|
-| Acceso gratuito verificable a la API OpenAI y secreto en servidor | IA técnica/administrativa y prueba real | La API tiene precios de consumo; no se ha confirmado crédito gratuito ni se ha comprado saldo | Confirmar créditos gratuitos y conectar el secreto mediante el servicio, sin pegarlo al chat |
-| Tipo de titular, provincia, SII y destinatarios de factura | Facturación fiscal definitiva | No se ha contratado proveedor | Aportar el contexto del taller y después sus datos fiscales aplicables |
-| Proveedor técnico y modelo de diagnosis con permiso de integración | Documentación/esquemas y equipo | Sin licencia ni coste confirmado | Nombre/modelo, contrato y derechos de API/documentación |
-| Sesión personal y condiciones de Cloudflare | Interfaz pública HTTPS del cliente | Plan Pages Free investigado; sin alta ni compra | Completar personalmente el acceso y conectar el repositorio privado |
-| Permiso específico para qnbgbgumvxmmipjlkcgb | Migraciones recientes y recuperación alojada formato 13 | Proyecto Free existente | Responder a la autorización pendiente de ese destino |
-| Licencias Android y equipos físicos/Windows manual | SDK local, cámara, enlaces y piloto nativo | Herramientas gratuitas; no se compran equipos ni entorno remoto | Aceptar licencias y facilitar dispositivos/entorno existentes |
-
-Los requisitos originales indican OpenAI desde servidor. No se sustituye por otro proveedor sin una decisión expresa. [Precios de API](https://developers.openai.com/api/docs/pricing). Los créditos de ChatGPT/Codex no equivalen a crédito de API: [explicación oficial](https://help.openai.com/en/articles/12642688-using-credits-for-flexible-usage-in-chatgpt-personal-plans).
+Si en el futuro el usuario decide activar IA real, harán falta saldo gratuito confirmado, secreto solo en servidor y modelo/tarifa/límites autorizados. Esa activación no forma parte de la ejecución actual.

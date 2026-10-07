@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "01576d21d464bfa40049b6a6289fefb310952330",
+  "runtimeAndNativeSourceMatched": true,
+  "checkedFiles": 242,
+  "mismatches": [],
+  "generatedByFlutterExcluded": [
+    "android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java",
+    "ios/Runner/GeneratedPluginRegistrant.h",
+    "ios/Runner/GeneratedPluginRegistrant.m",
+    "windows/flutter/generated_plugin_registrant.cc",
+    "windows/flutter/generated_plugin_registrant.h",
+    "windows/flutter/generated_plugins.cmake"
+  ],
+  "note": "Flutter regenerates plugin registration from the locked dependencies during pub get/build. Documentation may advance after the build."
+}

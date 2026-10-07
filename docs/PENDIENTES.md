@@ -1,6 +1,6 @@
 # Seguimiento del alcance acordado
 
-Actualizado el 7 de octubre de 2026, 12:55 (España peninsular). Datos ficticios. «Probado» siempre identifica el entorno y no acredita uso físico ni validación fiscal.
+Actualizado el 7 de octubre de 2026, 13:40 (España peninsular). Datos ficticios. «Probado» siempre identifica el entorno y no acredita uso físico ni validación fiscal.
 
 | Bloque | Estado comprobado | Pendiente exacto |
 |---|---|---|
@@ -12,11 +12,11 @@ Actualizado el 7 de octubre de 2026, 12:55 (España peninsular). Datos ficticios
 | Precios y margen | Revisiones con motivo, reautorización, descuentos antes del IVA, excepciones justificadas y costes implementados y probados | Revisión manual de oficina en la aplicación |
 | CSV | Importación de clientes, vehículos y catálogo; vista previa, duplicados, permisos e idempotencia aprobados con Auth real | Selector y apertura del CSV en cliente nativo |
 | Fotos, QR y enlaces | Fotos privadas con descarga por POST y permiso revalidado; aislamiento, inmutabilidad y bloqueo de lectura directa aprobados | Cámara y QR físicos, permisos del sistema y apertura por enlace nativo |
-| Supabase principal | Plan Free; 25 migraciones lógicas; cuentas/permisos/fotos/portal/IA desplegados | Inicio de sesión personal nativo: ramirezbroja013@gmail.com |
-| Supabase recuperación | Autorización específica recibida; cinco migraciones aplicadas, 25 lógicas totales; 83 invariantes SQL revertidas y recuperación formato 13 real aprobadas | Recuperación manual desde aplicaciones; autorización anterior ya resuelta |
+| Supabase principal | Plan Free; 26 migraciones lógicas; cuentas/permisos/fotos/portal/IA desplegados | Inicio de sesión personal nativo: ramirezbroja013@gmail.com |
+| Supabase recuperación | Autorización específica recibida; cinco migraciones aplicadas, 26 lógicas totales; 83 invariantes SQL revertidas y recuperación formato 13 real aprobadas | Recuperación manual desde aplicaciones; autorización anterior ya resuelta |
 | Windows | Aplicación e instalador compilados; circuito anterior entre procesos con credenciales/cifrado/pendientes aprobado en Windows de Actions, servidor ficticio | Equipo Windows con licencia para instalación, selector y uso manual con Supabase |
-| iOS | Vision aprobó en simulador lectura, carpeta temporal privada, EXIF, blanco, original externo denegado y archivo ausente | Nueva compilación común y evidencia adjunta; conectar el iPhone indicado por el usuario, desbloquear/confiar y modo desarrollador; firma personal y cámara/micrófono/QR |
-| Android | Licencias aceptadas según el usuario; SDK encontrado. APK compilado; emulador API 35 arranca con partición 2 GiB y espacio liberado | Repetir OCR: el último comando falló por shell incompatible antes de iniciar la prueba; corregido localmente para bash. No hay Android físico disponible |
+| iOS | Vision aprobó en simulador lectura, carpeta temporal privada, EXIF, blanco, original externo denegado y archivo ausente | Seis comprobaciones y evidencia adjunta en revisión 01576d2; conectar el iPhone indicado por el usuario, desbloquear/confiar y modo desarrollador; firma personal y cámara/micrófono/QR |
+| Android | Licencias aceptadas según el usuario; SDK encontrado. APK compilado; emulador API 35 arranca con partición 2 GiB y espacio liberado | Cinco comprobaciones OCR aprobadas con evidencia en revisión 01576d2. No hay Android físico disponible |
 | macOS | Fuera del alcance | Mac exclusivamente desarrollo y revisión de demo web |
 | Inspecciones | Versiones, evidencias y resultado humano implementados; pruebas locales, SQL y recuperación HTTP | Uso manual nativo |
 | Presupuestos y autorizaciones | Versiones/partidas inmutables; cálculo 4.661 céntimos y decisiones vigentes/reintentos aprobados con Auth real | Pantallas nativas y acceso final del destinatario desde portal publicado |
@@ -26,18 +26,20 @@ Actualizado el 7 de octubre de 2026, 12:55 (España peninsular). Datos ficticios
 | Diagnóstico | Cuaderno, correcciones y retiradas mantienen originales; Auth real aprobado | Uso manual nativo y equipo de diagnosis concreto |
 | Biblioteca | Publicación humana, versiones y privacidad técnica aprobadas con Auth real | Uso manual y documentación/licencia concreta |
 | IA | Preparada y desplegada; nueve Flutter, 14 PostgreSQL, 17 servicios simulados y 14 invariantes alojadas. Persistencia fallida conserva estado; recuperación no reenvía | Desactivada por decisión explícita del usuario; cero solicitudes al proveedor. No solicitar activación ni créditos mientras mantenga esa decisión |
-| Dictado y OCR | Captura requiere revisión y confirmación; OCR local restringido a caché/temporal, conserva originales; iOS simulador aprobado | OCR Android en emulador, cámara y micrófono físicos |
+| Dictado y OCR | Captura requiere revisión y confirmación; OCR local restringido a caché/temporal, conserva originales; iOS simulador aprobado | OCR Android en emulador aprobado; cámara y micrófono físicos |
 | Agenda | Reservas de varios operarios/elevadores, indisponibilidad y colisiones, idempotencia; Auth real y recuperación actual aprobados | Uso manual nativo |
 | Mantenimiento | Fecha/kilometraje, recurrencia y evidencias; Auth real y recuperación actual aprobados | Uso manual nativo |
 | Flotas | Vínculos y traslado por propietario con revisión, originales conservados; Auth real y recuperación actual aprobados | Uso manual e integración concreta de flotas |
 | Portal HTTPS | Servicio alojado y página implementados; acceso/decisiones/fotos con HTTPS reales previamente aprobados | Sesión Cloudflare abierta y solo TallerFlow seleccionado; confirmar Install & Authorize de GitHub en la pantalla preparada, publicar Pages Free y probar la dirección final |
-| Facturación española | Investigación oficial actualizada; presupuestos y notas siguen identificados como documentos de trabajo | Datos privados del taller: autónomo/sociedad, provincia, SII, volumen, clientes; después datos fiscales, series y acreditación aplicable. No declarar terminado el módulo |
+| Facturación española | Investigación oficial actualizada; presupuestos y notas siguen identificados como documentos de trabajo | Preparación por taller implementada sin activar emisión: titular, territorio, SII, clientes, volumen e impuesto. Pendiente motor fiscal y adaptadores oficiales; cada cliente aporta datos fiscales, series y acreditación durante su alta. No declarar terminado el módulo |
 | Integraciones | Sin contratos de pago ni proveedores inventados | Proveedor/licencia técnica, marca/modelo de diagnosis, recambios y equipos/API concretos |
 
 ## Evidencia actual
 
-221 Flutter; analizador sin incidencias; 259 PostgreSQL/PGlite, 43 servicios simulados y cinco del portal aprobados. En Supabase real se repitieron **15 comprobaciones de fase 1, 12 de módulos y nueve de recuperación actual**, con cinco usuarios ficticios por proyecto, JWT reales y datos aislados. Después: cero sesiones, miembros o dispositivos activos en las pruebas, usuarios ficticios bloqueados y ambos servicios temporales retirados (HTTP 410). Ningún usuario personal modificado. Evidencias: current-hosted-phase1, current-hosted-modules, current-hosted-recovery, current-hosted-cleanup y current-recovery-schema.
+226 Flutter; analizador sin incidencias; 271 PostgreSQL/PGlite, 43 servicios simulados y cinco del portal aprobados. En Supabase real se repitieron **15 comprobaciones de fase 1, 12 de módulos y nueve de recuperación actual**, con cinco usuarios ficticios por proyecto, JWT reales y datos aislados. Después: cero sesiones, miembros o dispositivos activos en las pruebas, usuarios ficticios bloqueados y ambos servicios temporales retirados (HTTP 410). Ningún usuario personal modificado. Evidencias: current-hosted-phase1, current-hosted-modules, current-hosted-recovery, current-hosted-cleanup y current-recovery-schema.
 
-Código de IA y corrección privada iOS ya publicados en bf1acaa; pruebas EXIF y emulador en 641509f. Ejecución 37605485742: validación/Windows/iOS aprobados; Android compiló y arrancó, pero el ensayo no se inició por shell incompatible. Nueva corrección bash y extracción de evidencia pendientes de publicar y recompilar desde una sola revisión. Los ZIP 542769f son históricos; Windows/iOS 641509f verificados son entrega intermedia, no todavía el juego común nuevo.
+La ejecución **37610877432**, revisión **01576d21d464bfa40049b6a6289fefb310952330**, aprobó validación, Windows, Android e iOS. Los tres ZIP están descargados y verificados contra hashes y revisión; OCR Android cinco, iOS seis, JSON y registro adjuntos. Los ZIP anteriores son históricos/intermedios.
+
+Preparación fiscal por taller: cinco Flutter y doce PostgreSQL incluidas en la batería; doce SQL con rollback en cada Supabase, usando identidades sintéticas. Copia formato 13 y restauración independiente aprobadas. No acredita Auth nativo ni validación fiscal. Nueva compilación común pendiente para incorporar la pantalla fiscal.
 
 Las dependencias externas detienen únicamente sus tareas. No se generan prompts de continuación.

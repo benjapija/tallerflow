@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-07T11:39:00Z",
+  "plan": "GitHub Free",
+  "includedMinutes": 2000,
+  "usedMinutes": 1467.7,
+  "remainingMinutes": 532.3,
+  "billableUsd": 0,
+  "storagePercent": 6,
+  "configuredMaximumWeightedMinutes": 410,
+  "screenshot": "github-quota-before-build25.png"
+}

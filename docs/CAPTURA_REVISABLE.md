@@ -1,6 +1,6 @@
 # Estado actual de captura · 7 de octubre de 2026
 
-La revisión humana y los límites privados se conservan. iOS simulador aprobó el lector Vision en CI 37605485742 (641509f): imagen ficticia, temporal de cámara privado, EXIF orientación 8, blanco, archivo original externo denegado y ausencia recuperable. Android arranca con partición 2 GiB; el comando de ensayo se corrige para bash antes de repetir OCR. Se añade evidencia JSON obligatoria extraída del registro, porque Flutter desinstala la aplicación del ensayo al terminar. Pruebas de cámara, QR y micrófono físicos pendientes. Batería local completa: 221 Flutter.
+Revisión humana y límites privados conservados. CI 37610877432 (01576d2) aprobó **cinco comprobaciones Android y seis iOS**: lectura ficticia, EXIF, blanco, original externo denegado y archivo ausente; iOS incluye temporal privado. Android usa partición 2 GiB y bash. JSON y registro obligatorios adjuntos. Los tres ZIP descargados/verificados. Cámara, QR y micrófono físicos pendientes; batería local completa: 226 Flutter.
 
 La descripción funcional siguiente sigue vigente. Los párrafos sobre antiguos fallos de compilación son históricos y quedan superados por las compilaciones y ensayos indicados arriba.
 
