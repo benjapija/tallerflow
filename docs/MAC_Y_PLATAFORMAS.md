@@ -66,6 +66,10 @@ El código 1026352 añade presupuestos y decisiones por partida. La demo web loc
 
 Los tres ZIP c0f8a74 están descargados y verificados contra los SHA-256 de GitHub (ejecución 37558197890). Incluyen presupuestos versionados y la corrección de IVA del catálogo. Sustituyeron a los históricos 23d62b8. Los cobros posteriores todavía no están en esos ZIP. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es solo simulador.
 
-## Paquetes actuales de cobros y PDF · 7 de octubre
+## Paquetes históricos de cobros y PDF · 7 de octubre
 
-Los tres ZIP bc694d8 están descargados y verificados contra los SHA-256 de GitHub (ejecución 37565648080). Incluyen presupuestos, IVA corregido, cobros y PDF. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es solo simulador. Las compras posteriores están en el código y la demo, pendientes de su nueva compilación nativa.
+Los tres ZIP bc694d8 están descargados y verificados contra los SHA-256 de GitHub (ejecución 37565648080). Incluyen presupuestos, IVA corregido, cobros y PDF. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es solo simulador. Son anteriores a las compras y regresos, incluidos en los paquetes siguientes.
+
+## Paquetes de compras y regresos · 7 de octubre
+
+Los tres ZIP 693ec5a están descargados; SHA-256 y source-commit.json coinciden con GitHub, ejecución 37569128092. Incluyen compras, recepción parcial, devoluciones y regresos por garantía, además de presupuestos, cobros y PDF. Windows incluye installer/TallerFlow-Setup.exe; Android es APK debug; iOS es simulador. El cuaderno del código 620384f está compilándose en 37570655120. La biblioteca posterior está en la demo y en ambos proyectos Free; su compilación se registra al finalizar. No se acredita uso físico ni Auth nativo con estas compilaciones.

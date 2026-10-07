@@ -60,7 +60,7 @@ try{
  });
  await test('Workshop archive includes account recovery records without passwords',async()=>{
   const a=(await db.query('select public.export_workshop($1,$2) r',[w,device])).rows[0].r;
-  assert.equal(a.databaseVersion,8);assert.equal(a.tables.account_requests.length,1);assert(!JSON.stringify(a).includes(p.password));
+  assert.equal(a.databaseVersion,9);assert.equal(a.tables.account_requests.length,1);assert(!JSON.stringify(a).includes(p.password));
   assert(a.tables.devices.length>0);
  });
  console.log(`${passed} account provisioning checks passed. Auth API and native operation require separate validation.`);

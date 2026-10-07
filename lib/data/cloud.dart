@@ -257,6 +257,8 @@ class SupabaseRemote extends Remote {
                 'supplier_return',
               ].contains(action)
               ? 'inventory_command'
+              : action.startsWith('case_')
+              ? 'case_command'
               : action.startsWith('import_')
               ? 'import_command'
               : action.startsWith('photo_')

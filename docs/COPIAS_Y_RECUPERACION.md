@@ -20,3 +20,7 @@ Es una tarea administrativa separada; la recuperación alojada entre dos proyect
 6. Recupera las copias de cada equipo con la misma identidad personal, renueva su sesión y revisa las incidencias. Comprueba documentos inmutables, auditoría, precios, fotografías, pendientes, revocaciones y aislamiento antes de usar datos reales.
 
 Supabase admite crear cuentas con UUID explícito mediante `auth.admin.createUser`, exclusivamente desde servidor. Se ha comprobado esta creación con cinco cuentas ficticias en el proyecto actual; la recuperación de datos en dos bases PostgreSQL independientes está probada localmente. La prueba entre proyectos alojados también verificó contraseñas de prueba distintas, documentos inmutables de 33 €, fotos originales, auditoría, versiones de inspección, reintentos y revocación. Esto aún necesita revisión administrativa con las identidades y correos personales del taller antes del piloto. Referencia: [migración de identidades Auth](https://supabase.com/docs/guides/platform/migrating-to-supabase/auth0).
+
+## Biblioteca validada y formato 9
+
+El formato de base de datos 9 añade case_library con versiones originales y revisiones; cuadernos en órdenes, auditoría y recibos de comando también se conservan. Las copias 2–8 restauran con biblioteca vacía cuando no la contienen. Se comprobó la recuperación en bases independientes, reintento del mismo identificador y rechazo de filas incompletas. No se ha repetido aún el recorrido HTTP real entre proyectos para esta tabla nueva.

@@ -110,6 +110,7 @@ class WorkshopState {
         'restoreFilesPending',
         'clients',
         'purchaseLedger',
+        'caseLibrary',
       ])
         if (j.containsKey(k)) k: j[k],
     },

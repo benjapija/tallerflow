@@ -1,3 +1,7 @@
+## Biblioteca validada · 7 de octubre
+
+157 Flutter, analizador limpio y compilación web aprobados. 189 comprobaciones PostgreSQL y 18 de servicios simulados. Nueve Flutter y once PostgreSQL específicos, más recuperación completa y legado 7/8; doce SQL alojadas por cada proyecto Free revertidas al terminar. Publicación requiere revisión técnica y de privacidad. Otros operarios reciben solo versión validada; fuente retirada genera aviso. Reintentos, reinicio, conflictos, retirada y originales conservados comprobados. Diecinueve migraciones principales. Auth HTTP específico y uso físico pendientes.
+
 # Cuaderno de diagnóstico · 7 de octubre de 2026
 
 148 pruebas Flutter, análisis limpio y compilación web aprobados. 176 comprobaciones PostgreSQL y 18 de servicios simulados. Siete Flutter específicos, nueve PostgreSQL y ocho SQL por proyecto alojado, revertidos al terminar. Reinicio sin conexión y pérdida de respuesta conservan identificadores y una sola entrada. Conclusiones requieren confirmación explícita. Evidencia técnica posterior conserva la nota emitida. Esquema con dieciocho migraciones. Auth HTTP específico y clientes físicos pendientes.

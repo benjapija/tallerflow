@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node database_test.mjs && node reliability_test.mjs && node backup_test.mjs && node management_test.mjs && node vehicle_test.mjs && node pricing_test.mjs && node account_test.mjs && node account_function_test.mjs && node photo_test.mjs && node photo_function_test.mjs && node csv_test.mjs && node inspection_test.mjs && node quote_test.mjs && node payment_test.mjs && node purchase_test.mjs && node linked_returns_test.mjs && node diagnosis_test.mjs"
+    "test": "node database_test.mjs && node reliability_test.mjs && node backup_test.mjs && node management_test.mjs && node vehicle_test.mjs && node pricing_test.mjs && node account_test.mjs && node account_function_test.mjs && node photo_test.mjs && node photo_function_test.mjs && node csv_test.mjs && node inspection_test.mjs && node quote_test.mjs && node payment_test.mjs && node purchase_test.mjs && node linked_returns_test.mjs && node diagnosis_test.mjs && node case_library_test.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "0.5.8"

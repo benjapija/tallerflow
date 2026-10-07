@@ -1,28 +1,28 @@
 {
   "date": "2026-10-07",
-  "run": 37565648080,
-  "commit": "bc694d86d449d8a716b459d497c74e15e0ce8cec",
+  "run": 37569128092,
+  "commit": "693ec5a5346ed1855a8263b94ae3dabe5b98d7c0",
   "packages": [
     {
       "platform": "Windows",
-      "file": "TallerFlow-Windows-piloto-bc694d8.zip",
-      "sha256": "0fa005006e3064bccc08db7936fb3ec32eb59f5e4c37b8c02ef60f802d6a409b",
+      "file": "TallerFlow-Windows-piloto-693ec5a.zip",
+      "sha256": "9e8bfb8ce972823642ad7f05870c9d49bd3870830a57edfc24831997ca75cb48",
       "sourceCommitVerified": true,
       "physicalDeviceValidated": false,
       "installerIncluded": true
     },
     {
       "platform": "Android debug",
-      "file": "TallerFlow-Android-piloto-bc694d8.zip",
-      "sha256": "4ab5b19891848d0302c0dd2e791ef1a347387dd26e81fe9ffaf32703529a47b1",
+      "file": "TallerFlow-Android-piloto-693ec5a.zip",
+      "sha256": "213e2811ada13c3a0bcf34cf4e36e9e93018e600f2a5301e3477866a3a1b475c",
       "sourceCommitVerified": true,
       "physicalDeviceValidated": false,
       "installerIncluded": false
     },
     {
       "platform": "iOS simulator",
-      "file": "TallerFlow-iOS-simulador-bc694d8.zip",
-      "sha256": "7f40d94a9d9e7ac60088a324775becd18df0ba2d83850521343070e6aff63dba",
+      "file": "TallerFlow-iOS-simulador-693ec5a.zip",
+      "sha256": "e7b8ca0805bd551742c9740faa6372f9ec7740aa6f06f5cfeed4049e6a77232f",
       "sourceCommitVerified": true,
       "physicalDeviceValidated": false,
       "installerIncluded": false

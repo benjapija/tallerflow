@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../domain/models.dart';
 import '../domain/engine.dart';
 import '../domain/purchases.dart';
+import '../domain/case_library.dart';
 import 'cloud.dart';
 import 'demo.dart';
 import 'vault.dart';
@@ -250,6 +251,44 @@ class WorkshopController extends ChangeNotifier {
             );
           }
           await _command(action, p);
+        }
+      });
+  Future<void> library(String action, Map<String, dynamic> payload) =>
+      _locked(() async {
+        _checkAccess();
+        if (outbox.isNotEmpty || pendingCommands.isNotEmpty) {
+          throw const RuleException(
+            'Sincroniza los pendientes antes de revisar la biblioteca',
+          );
+        }
+        final c = libraryCases(
+          state,
+        ).where((c) => c['id'] == payload['id']).firstOrNull;
+        final p = {
+          ...payload,
+          'revision': payload['revision'] ?? c?['revision'] ?? 0,
+        };
+        final next = state.copy();
+        applyCaseCommand(
+          next,
+          const Uuid().v4(),
+          action,
+          p,
+          actor,
+          clock().toUtc(),
+        );
+        if (demo) {
+          final before = state;
+          state = next;
+          try {
+            await _persist();
+          } catch (_) {
+            state = before;
+            rethrow;
+          }
+          notifyListeners();
+        } else {
+          await _command(action, p, allowOffline: true);
         }
       });
   Future<void> inventory(

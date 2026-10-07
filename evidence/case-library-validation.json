@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-07",
+  "flutter": 157,
+  "postgres": 189,
+  "mockServiceChecks": 18,
+  "specificFlutter": 9,
+  "specificPostgres": 11,
+  "hostedChecksPerProject": 12,
+  "hostedProjects": [
+    "gpseuqmzbazifmkhjyby",
+    "qnbgbgumvxmmipjlkcgb"
+  ],
+  "hostedSQLRolledBack": true,
+  "hostedAuthHTTP": false,
+  "physicalDeviceValidated": false,
+  "archiveVersion": 9,
+  "oldArchiveVersions": [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8"
+  ],
+  "paidServicesPurchased": false
+}

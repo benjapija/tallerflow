@@ -29,6 +29,7 @@ import '../domain/purchases.dart';
 import 'purchase_panel.dart';
 import '../domain/linked_returns.dart';
 import 'diagnosis_panel.dart';
+import 'case_library_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -410,6 +411,8 @@ class _WorkshopHomeState extends State<WorkshopHome>
                             ? catalog()
                             : page == 4
                             ? reviewList()
+                            : page == 6
+                            ? CaseLibraryPanel(controller: c, run: runAction)
                             : page == 5
                             ? settings()
                             : dashboard(wide),
@@ -485,6 +488,7 @@ class _WorkshopHomeState extends State<WorkshopHome>
             (3, Icons.inventory_2_outlined, 'Catálogo'),
             (4, Icons.fact_check_outlined, 'Revisión de oficina'),
             (5, Icons.tune_rounded, 'Configuración'),
+            (6, Icons.menu_book_outlined, 'Biblioteca técnica'),
           ])
             if ((item.$1 != 4 || c.actor.isOffice) &&
                 (item.$1 != 5 || c.actor.role == Role.admin || c.demo))
@@ -1196,6 +1200,11 @@ class _WorkshopHomeState extends State<WorkshopHome>
           actor: c.actor,
           onSave: (kind, p, revision) =>
               perform(o.id, kind, p, expectedRevision: revision),
+        ),
+        TextButton.icon(
+          onPressed: () => draftCase(context, c, o, runAction),
+          icon: const Icon(Icons.menu_book_outlined),
+          label: const Text('Preparar caso para la biblioteca'),
         ),
         if (c.actor.isOffice &&
             (o.issued ||
