@@ -45,7 +45,7 @@
   "remainingIncludedBuildMinutes": 342.7,
   "billableBuildUsd": 0,
   "newSupabaseMigration": true,
-  "runtimeFilesVerified": 197,
+  "runtimeFilesVerified": 320,
   "fiscalCore": "Exact arithmetic, preserved note tax summary and offline AEAT draft adapter. Persistent sandbox ledger deployed with v14 backup, own integrity hash and admin session/device controls; app interface, XML coupling and real multiconnection concurrency remain pending. Fiscal emission/transmission disabled.",
   "fiscal": "Partially implemented generic engine and offline AEAT drafts; official fiscal emission remains disabled",
   "fiscalOfficialServiceAcceptanceValidated": false,
@@ -61,5 +61,10 @@
   "fiscalSandboxInterfaceImplemented": false,
   "hostedFiscalDraftSqlChecksPerProject": 16,
   "fiscalDraftMulticonnectionConcurrencyValidated": false,
-  "hostedAuthHttpFormat14Validated": false
+  "hostedAuthHttpFormat14Validated": false,
+  "sourceCommit": "1e65b8dec72f360fc24a6cda1c21c726427ae74f",
+  "clientTrackedGitFilesVerifiedUnchanged": 171,
+  "clientFilesVerifiedLocallyUnchanged": 165,
+  "clientSourceUnchangedFromBuild26": true,
+  "currentSourceCiValidated": false
 }
