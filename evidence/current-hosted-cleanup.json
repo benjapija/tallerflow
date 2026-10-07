@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-10-07T10:27:19.391Z",
+  "runId": "9d252ad6-f6b6-42bc-bdd9-dceb9b194283",
+  "projects": [
+    {
+      "project": "source",
+      "projectRef": "gpseuqmzbazifmkhjyby",
+      "helperStatus": 410,
+      "administrativeClientPresent": false,
+      "newFictionalLoginDenied": true,
+      "activeMembers": 0,
+      "activeDevices": 0,
+      "sessions": 0,
+      "bannedFictionalUsers": 5
+    },
+    {
+      "project": "destination",
+      "projectRef": "qnbgbgumvxmmipjlkcgb",
+      "helperStatus": 410,
+      "administrativeClientPresent": false,
+      "newFictionalLoginDenied": true,
+      "activeMembers": 0,
+      "activeDevices": 0,
+      "sessions": 0,
+      "bannedFictionalUsers": 5
+    }
+  ],
+  "originalRowsRetained": true,
+  "realUsersChanged": false,
+  "ephemeralCapabilityRemoved": true
+}

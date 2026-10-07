@@ -1,0 +1,9 @@
+PASS Five fictitious identities authenticate in both projects without copying their passwords or sessions
+PASS Source JWT cannot authenticate to the destination
+RETAINED Current format 13 exports documents, private photos, all module state and command receipts
+RETAINED Restoration is idempotent and rejects altered content under the same identity
+RETAINED Historical source devices are retired and never regain authority
+RETAINED Incomplete recovery blocks new work until every original photo is verified
+RETAINED Original private photo bytes and hashes are recovered through ordinary authenticated upload
+PASS Restored documents, operations, CSV, quotes, payments, inventory, diagnosis and module histories retain their exact originals
+PASS An unrelated identity and signed-out operator cannot access the restored workshop

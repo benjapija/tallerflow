@@ -1,0 +1,16 @@
+PASS Five fictional accounts sign in through GoTrue and user IDs remain original
+PASS Real JWT snapshots bind admin, office and both operators to individual devices
+PASS Anonymous and another workshop cannot read the fixture
+PASS Admin rates are audited and operator administration is denied over HTTP
+PASS Office receives a fictional vehicle with two assigned operators and authorizes its task
+PASS Operators see technical work but tariff and internal cost remain hidden
+PASS An authenticated operator prepares a private photo and stable retry preserves its identity
+PASS Storage upload uses the reserved immutable path and verification retries once
+PASS Office and the assigned second operator download the exact private bytes
+PASS Another workshop, anonymous read, signed URLs, replacement and deletion are denied
+PASS Concurrent operators and a lost operation response preserve one original timer each
+PASS Office archives the rejected fictional VIN with a reason before coordinated closure
+PASS Office quality and billable review calculate an immutable document after every device acknowledges
+PASS Complete HTTP export preserves photos, audit and document while excluding Auth secrets
+PASS Sign-out invalidates real session access even when the old JWT has not expired
+{"passed":true,"totalChecks":15,"environment":"hosted Auth, PostgREST, Edge Functions and Storage HTTP"}

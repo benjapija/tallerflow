@@ -1,16 +1,20 @@
 # Estado vigente de validación · 7 de octubre de 2026
 
-Último corte: 11:15, hora peninsular. Datos ficticios; no acredita piloto con datos reales ni uso físico.
+Último corte: 12:55, hora peninsular. Datos ficticios; no acredita piloto físico ni emisión fiscal.
 
-- Local: **218 Flutter**, analizador sin incidencias y web release aprobados; **259 PostgreSQL/PGlite**, **43 servicios simulados** y **cinco pruebas del cliente del portal** aprobadas.
-- Supabase: principal con 25 migraciones. IA preparada y desactivada; 14 invariantes SQL y cinco permisos aprobados con Auth sintético y rollback, sin llamadas a OpenAI. Portal: diez HTTPS de acceso/decisión y once de fotos seleccionadas aprobadas; servicio temporal retirado.
-- Paquetes verificados: Windows, Android e iOS simulador de 542769f, ejecución 37591485045; hashes y código en evidence/package-checkpoints.json. Los cambios locales de IA y carpetas privadas iOS aún no están publicados ni en esos paquetes.
-- Ensayo OCR 37595308884: validación aprobada y ambos clientes móviles compilados. Android no arrancó por espacio de partición; iOS falló al leer su imagen privada. Corrección iOS local pendiente de nueva comprobación. Cámara, micrófono, QR/enlaces y Auth nativo siguen sin validar físicamente.
-- Los circuitos previos entre procesos Windows/iOS verifican almacenamiento y recuperación con servidor ficticio. El proyecto de recuperación conserva 20 migraciones y necesita autorización específica antes de actualizarlo.
+- Local: **221 Flutter**, analizador sin incidencias; web release aprobada. **259 PostgreSQL/PGlite**, **43 servicios simulados** y **cinco pruebas del cliente del portal** aprobadas. IA: nueve Flutter, incluida recuperación sin reenviar y reversión de estado ante fallo de persistencia.
+- Supabase real: repetidas **15 comprobaciones de fase 1**, **12 de módulos** y **nueve de recuperación formato 13** con Auth real. Se prueban CSV, presupuestos, cobros, compras/almacén, garantías, diagnóstico, biblioteca, agenda, mantenimiento y flotas; detalles en current-hosted-*.json/txt.
+- Recuperación autorizada qnbgbgumvxmmipjlkcgb: cinco migraciones instaladas, 25 lógicas totales; **83 invariantes SQL** con rollback. Exportación, restauración idempotente, documentos originales, auditoría y bytes de foto privada conservados. Las filas SQL sin orden se comparan por identidad; un cliente legado se reconstruye desde su propietario conservado. Pendientes locales se validan por separado.
+- Limpieza comprobada: diez cuentas ficticias bloqueadas, cero sesiones/miembros/dispositivos activos en pruebas, ambos servicios temporales HTTP 410 y capacidad temporal eliminada; usuarios reales intactos.
+- CI 37605485742, código 641509f: validación, Windows e iOS aprobados. **OCR iOS aprobado en simulador**: lectura, temporal privado, EXIF, blanco, original externo denegado y ausente recuperable. Android compilado y emulador arrancado; OCR no ejecutado por shell incompatible. Corregido para bash; nueva compilación común pendiente. La evidencia iOS no pudo copiarse tras desinstalar Flutter su app de prueba: se añade extracción obligatoria del registro ficticio emitido durante el ensayo.
+- Cuota revisada antes de repetir: 1.387/2.000 minutos gratuitos usados, 613 restantes, 0 USD facturables, almacenamiento 6%. Sin planes ni consumo de pago autorizado.
+- Circuitos nativos anteriores Windows/iOS entre procesos: cifrado/llavero/pendientes/recuperación aprobados con servidor ficticio. Cámara, micrófono, QR/enlaces, selector y cuenta personal desde app nativa siguen pendientes.
+- IA real desactivada por decisión del usuario, cero llamadas al proveedor. Portal público pendiente de confirmación de permisos de GitHub para Cloudflare; sesión abierta. Licencias Android aceptadas según el usuario; iPhone disponible sin conectar todavía.
 
-**Los registros siguientes son históricos.** Sus cifras, fallos y estados pendientes corresponden al momento de cada ensayo. PENDIENTES.md y el informe de avance describen el estado actual.
+**Los registros siguientes son históricos.** Sus cifras, fallos y pendientes corresponden al momento de cada ensayo. PENDIENTES.md y el informe fijan el estado actual.
 
 ---
+
 
 ## Reparación de configuración iOS
 

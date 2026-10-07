@@ -99,10 +99,8 @@ jobs:
           set -o pipefail
           flutter test integration_test/native_text_reader_test.dart -d "$TF_SIMULATOR" 2>&1 | tee native-ocr-ios.log
       - name: Recoger evidencia del lector iOS
-        if: always()
         run: |
-          container=$(xcrun simctl get_app_container "$TF_SIMULATOR" es.tallerflow.tallerflow data) || exit 0
-          cp "$container"/Documents/native-test-evidence/ocr.json build/deliverables/ocr-ios.json || true
+          python3 tool/collect_native_ocr_evidence.py ios native-ocr-ios.log build/deliverables/ocr-ios.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -155,9 +153,8 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none -partition-size 2048
           script: |
-            set -o pipefail
-            flutter test integration_test/native_text_reader_test.dart -d emulator-5554 2>&1 | tee native-ocr-android.log
-            adb shell run-as es.tallerflow.tallerflow cat app_flutter/native-test-evidence/ocr.json > build/deliverables/ocr-android.json
+            bash -o pipefail -c 'flutter test integration_test/native_text_reader_test.dart -d emulator-5554 2>&1 | tee native-ocr-android.log'
+            python3 tool/collect_native_ocr_evidence.py android native-ocr-android.log build/deliverables/ocr-android.json
       - name: Identificar el código de la compilación
         if: always()
         shell: bash

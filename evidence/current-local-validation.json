@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-07T10:07:00Z",
+  "source": "641509f1d4de69a55e9600ddd6616073e9b63258",
+  "flutterTests": 221,
+  "analyzerIssues": 0,
+  "rawExifFixturePass": true,
+  "aiFlutterTests": 9,
+  "postgresChecks": 259,
+  "mockServiceChecks": 43,
+  "portalClientChecks": 5,
+  "physicalDeviceValidated": false
+}

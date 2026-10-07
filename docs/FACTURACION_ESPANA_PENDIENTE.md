@@ -10,6 +10,8 @@ La factura electrónica entre empresas y profesionales tiene su propio desarroll
 
 La [Orden HAC/1028/2026](https://www.boe.es/buscar/doc.php?id=BOE-A-2026-20587), publicada el 5 de octubre, entró en vigor el día 6. Por tanto, el cómputo anterior conduce al 6 de octubre de 2027 o 2028, respectivamente; es una derivación del calendario legal, sin asignar todavía un plazo al taller. La solución pública está prevista con acceso gratuito y utiliza UBL/EN 16931. Esa previsión no demuestra que TallerFlow esté integrado o validado.
 
+El Ministerio de Hacienda comunicó el 5 de octubre una **previsión** de alineación de las obligaciones pendientes de SIF con octubre de 2028. La nota indica que la modificación aún debe aprobarse; no sustituye por sí misma los plazos aprobados que la AEAT sigue publicando. Se conserva esta distinción hasta verificar la norma que efectúe el cambio. Fuentes: [comunicación de Hacienda](https://www.hacienda.gob.es/sgt/gabsehacienda/nota-informativa-verifactu.pdf), [nota publicada](https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu.html), [plazos aprobados según AEAT](https://sede.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/nota-informativa-ampliacion-plazo-adaptacion-facturacion.html).
+
 ## Información imprescindible del taller
 
 Se solicitó autónomo/sociedad, provincia, SII y tipos de destinatario. Después hacen falta denominación/NIF y domicilio fiscal aplicables, régimen tributario, series y última numeración utilizada, tipos de factura y rectificación, y acreditación para los servicios que correspondan. El volumen de operaciones condiciona el calendario B2B. El ámbito foral debe comprobarse si la provincia lo requiere.

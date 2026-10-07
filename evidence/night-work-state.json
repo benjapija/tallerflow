@@ -1,6 +1,6 @@
 {
   "date": "2026-10-07",
-  "sourceCommit": "c1fe3edb4cf61275d6484182c3947e173a594283",
+  "sourceCommit": "641509f1d4de69a55e9600ddd6616073e9b63258",
   "appBuildCommit": "542769f9a5326f61a931e0e63b2cb10b5b90e25c",
   "buildRun": 37591485045,
   "appBuildStatus": {
@@ -16,10 +16,10 @@
   "nativeBackend": "fictional; physical clients and hosted native Auth pending",
   "hostedMigrations": 25,
   "payments": "implemented, tested, deployed and published",
-  "flutterTests": 218,
+  "flutterTests": 221,
   "postgresChecks": 259,
   "mockServiceChecks": 43,
-  "nextWork": "Publish local assistant and iOS private-root fix; reduce Android emulator userdata disk requirement; verify native OCR and rebuild current packages within free quota",
+  "nextWork": "Publish bash/evidence fixes, compile all three from one revision within free quota, download/verify and refresh code/demo",
   "paidServicesPurchased": false,
   "automationActive": true,
   "pdf": "published; five local tests, all sample pages reviewed",
@@ -29,11 +29,11 @@
   "caseLibrary": "implemented, tested, deployed and published",
   "portalClientChecks": 5,
   "portal": "10 valid HTTPS checks plus 11 selected-photo HTTPS checks passed; public portal hosting pending",
-  "planning": "Implemented; 18 hosted SQL checks passed on principal; recovery migration requires explicit target approval",
-  "recoveryProjectMigrations": 20,
-  "maintenance": "Implemented; 18 hosted SQL checks passed on principal; offline, retry, restoration and form tested locally",
-  "fleets": "Implemented; 18 hosted SQL checks passed; local offline, owner review and archive recovery verified",
-  "capture": "Native bridges compiled; corrected iOS private roots pending simulator check",
+  "planning": "Real Auth HTTP, 18 recovery SQL and format13 recovery passed",
+  "recoveryProjectMigrations": 25,
+  "maintenance": "Real Auth HTTP, 18 recovery SQL and format13 recovery passed",
+  "fleets": "Real Auth HTTP, 18 recovery SQL and format13 recovery passed",
+  "capture": "iOS Vision passed in simulator; Android boots, shell fix pending repeat",
   "captureBuildRun": 37586489010,
   "captureBuildStatus": {
     "validate": "success",
@@ -42,16 +42,21 @@
     "ios-simulator": "failure"
   },
   "repairBuildRun": 37588376889,
-  "assistant": "Implemented; 7 Flutter, 14 PostgreSQL/PGlite, 17 mocked service and 14 hosted invariant checks; disabled, no API calls",
-  "reportCutoff": "2026-10-07T09:15:00Z",
+  "assistant": "Prepared and disabled by explicit user decision; 9 Flutter, 14 SQL, 17 mock service checks; zero provider calls",
+  "reportCutoff": "2026-10-07T10:55:00Z",
   "localChangesPublished": false,
   "assistantIncludedInDownloadedPackages": false,
-  "latestNativeOCRRun": 37595308884,
+  "latestNativeOCRRun": 37605485742,
   "latestNativeOCRStatus": {
     "validate": "success",
-    "androidCompilation": "success",
+    "windowsCompilation": "success",
     "iosCompilation": "success",
-    "androidOCR": "not_run_emulator_disk_space",
-    "iosOCR": "failed_private_root"
-  }
+    "iosOCR": "success_simulator",
+    "androidCompilation": "success",
+    "androidOCR": "not_run_shell_incompatibility"
+  },
+  "assistantCodePublished": true,
+  "recoveryTargetApproval": true,
+  "hostedHTTPChecksCurrent": 36,
+  "currentHostedFixtureRetired": true
 }

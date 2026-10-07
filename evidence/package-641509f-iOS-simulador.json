@@ -1,0 +1,14 @@
+{
+  "path": "/Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow-iOS-simulador-641509f.zip",
+  "sha256": "ab3d91cff0bce1975a06902d3594bfd70f38635eb1bba40258259c4221fb4827",
+  "size": 61922903,
+  "source": {
+    "commit": "641509f1d4de69a55e9600ddd6616073e9b63258",
+    "run": "37605485742",
+    "runner": "macOS",
+    "platform": "ios-simulator",
+    "realAuthValidated": false
+  },
+  "zipIntegrity": true,
+  "nativeEvidence": null
+}

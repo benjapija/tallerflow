@@ -1,0 +1,14 @@
+{
+  "path": "/Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow-Windows-piloto-641509f.zip",
+  "sha256": "3bfcf533e7ab688283918c14c0656cf352938ead02921dd4cb6b7e4c8f421453",
+  "size": 26269865,
+  "source": {
+    "commit": "641509f1d4de69a55e9600ddd6616073e9b63258",
+    "run": "37605485742",
+    "runner": "Windows",
+    "platform": "windows",
+    "realAuthValidated": false
+  },
+  "zipIntegrity": true,
+  "nativeEvidence": null
+}

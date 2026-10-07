@@ -1,3 +1,11 @@
+# Estado actual de captura · 7 de octubre de 2026
+
+La revisión humana y los límites privados se conservan. iOS simulador aprobó el lector Vision en CI 37605485742 (641509f): imagen ficticia, temporal de cámara privado, EXIF orientación 8, blanco, archivo original externo denegado y ausencia recuperable. Android arranca con partición 2 GiB; el comando de ensayo se corrige para bash antes de repetir OCR. Se añade evidencia JSON obligatoria extraída del registro, porque Flutter desinstala la aplicación del ensayo al terminar. Pruebas de cámara, QR y micrófono físicos pendientes. Batería local completa: 221 Flutter.
+
+La descripción funcional siguiente sigue vigente. Los párrafos sobre antiguos fallos de compilación son históricos y quedan superados por las compilaciones y ensayos indicados arriba.
+
+---
+
 # Dictado y lectura revisable
 
 En recepción, matrícula y VIN ofrecen «Capturar y revisar texto». El cuaderno ofrece el mismo control en la observación técnica, y el catálogo en la referencia. El borrador permite dictado breve en español y, en Android/iPhone, lectura de texto mediante cámara. Las referencias admiten además códigos EAN, Code 128/39, Data Matrix y QR.

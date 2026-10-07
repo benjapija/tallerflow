@@ -1,0 +1,12 @@
+RETAINED CSV preview and commit preserve fictional clients, vehicles and catalog with role enforcement
+RETAINED Versioned quotes calculate 4661 cents, retry once and bind authorization to the reviewed version
+RETAINED Partial receipt, linked refund and settlement retain the exact issued document
+RETAINED Administrator grants office cost management explicitly and the original denial stays enforced
+RETAINED Purchase partial reception and supplier return preserve package quantities and original work
+PASS Warranty reception links the original repair without inheriting authorizations or changing its note
+PASS Diagnostic correction and withdrawal retain original human observations
+PASS Case library requires technical/privacy review and hides drafts and source identities
+PASS Agenda enforces two operators, lift collisions, retries and private office evidence
+PASS Maintenance records local calendar recurrence without mutating issued documents
+PASS Fleet owner-bound memberships retain work and reject operator access
+PASS Format 13 export includes every new module and their command receipts

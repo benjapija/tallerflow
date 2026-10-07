@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-10-07T10:30:00Z",
+  "project": "qnbgbgumvxmmipjlkcgb",
+  "plan": "Free",
+  "specificUserAuthorization": true,
+  "logicalMigrations": 25,
+  "migrationHistoryEntries": 13,
+  "baselineIncludesFirst13": true,
+  "hostedRolledBackChecks": {
+    "planning": 18,
+    "maintenance": 18,
+    "fleets": 18,
+    "portal": 15,
+    "assistant": 14
+  },
+  "checksTotal": 83,
+  "liveHttpRestore": 9,
+  "newMigrations": [
+    {
+      "version": "20261007093230",
+      "name": "planning"
+    },
+    {
+      "version": "20261007093238",
+      "name": "maintenance"
+    },
+    {
+      "version": "20261007093247",
+      "name": "fleets"
+    },
+    {
+      "version": "20261007093254",
+      "name": "portal_decision_projection"
+    },
+    {
+      "version": "20261007093305",
+      "name": "ai_draft_boundary"
+    }
+  ]
+}

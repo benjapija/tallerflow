@@ -112,21 +112,23 @@ void main() {
           final evidence = await Directory(
             '${documents.path}/native-test-evidence',
           ).create(recursive: true);
-          await File('${evidence.path}/ocr.json').writeAsString(
-            jsonEncode({
-              'checkedAt': DateTime.now().toUtc().toIso8601String(),
-              'platform': Platform.operatingSystem,
-              'engine': Platform.isIOS
-                  ? 'Apple Vision'
-                  : 'Bundled ML Kit Latin',
-              'checks': checks,
-              'passed': checks.length,
-              'physicalCameraValidated': false,
-              'microphoneUsed': false,
-              'hostedAuthValidated': false,
-            }),
-            flush: true,
-          );
+          final evidenceData = {
+            'checkedAt': DateTime.now().toUtc().toIso8601String(),
+            'platform': Platform.operatingSystem,
+            'engine': Platform.isIOS ? 'Apple Vision' : 'Bundled ML Kit Latin',
+            'checks': checks,
+            'passed': checks.length,
+            'physicalCameraValidated': false,
+            'microphoneUsed': false,
+            'hostedAuthValidated': false,
+          };
+          await File(
+            '${evidence.path}/ocr.json',
+          ).writeAsString(jsonEncode(evidenceData), flush: true);
+          // Flutter removes the test application after completion on iOS.
+          // Emit only the fictional test results, before its container is gone.
+          // ignore: avoid_print
+          print('TALLERFLOW_NATIVE_EVIDENCE:${jsonEncode(evidenceData)}');
         } finally {
           for (final file in files) {
             if (await file.exists()) await file.delete();
