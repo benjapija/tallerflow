@@ -44,3 +44,7 @@ Incluye agrupaciones y vínculos originales, propietarios al incorporar, evidenc
 ## Preparación fiscal y copias
 
 El perfil preparatorio se conserva en workshop.settings sin elevar el formato 13. La batería de copias ha restaurado perfil y documentos originales en una base independiente; permanece emissionEnabled:false. La copia no crea un circuito fiscal validado ni recupera certificados o claves privadas.
+
+## Formato 14 · registro de ensayo
+
+Incluye fiscal_draft_heads, fiscal_draft_series y fiscal_draft_records, con recibos y auditoría. Dos bases locales independientes comprobaron conservación, cadena/cálculos/contadores, omisiones y rollback, legado 13 y reintentos. Las instalaciones antiguas quedan congeladas; repetir una restauración no congela instalaciones nuevas posteriores. Las pruebas HTTP previas corresponden a formato 13; Auth HTTP y recuperación alojada 14 aún pendientes. No contiene facturas fiscales ni activa emisión.

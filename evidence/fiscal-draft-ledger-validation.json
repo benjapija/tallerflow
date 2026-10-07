@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-07T13:56:03.855048+00:00",
+  "databaseChecksPassed": 295,
+  "newLedgerChecks": 24,
+  "mockServiceChecks": 43,
+  "portalChecks": 5,
+  "flutterBackupChecksRepeated": 11,
+  "priorFullFlutterTests": 243,
+  "hostedSyntheticSqlChecksPerProject": 16,
+  "hostedMigrationLogicalCount": 27,
+  "databaseArchiveVersion": 14,
+  "twoIndependentLocalDatabaseRestore": true,
+  "simultaneousCallsScope": "Queued PGlite single-backend commands, not independent PostgreSQL connections",
+  "fiscalSeriesScope": "ENSAYO sandbox only",
+  "fingerprintScope": "TALLERFLOW-DRAFT-1 SHA256 ledger integrity, distinct from AEAT hash",
+  "fiscalEmissionEnabled": false,
+  "fiscalTransmissionEnabled": false,
+  "realAiEnabled": false,
+  "newNativeBuild": false,
+  "nativeApplicationCommit": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "physicalUseValidated": false,
+  "hostedAuthHttpV14Validated": false,
+  "officialFiscalAcceptanceValidated": false,
+  "newFlutterInterface": false,
+  "evidence": [
+    "fiscal-ledger-regression.log.txt",
+    "fiscal-ledger-flutter-backup.log.txt",
+    "fiscal-draft-ledger-hosted.json"
+  ]
+}

@@ -1,10 +1,10 @@
 # Estado vigente de validación · 7 de octubre de 2026
 
-Corte de trabajo: 15:22, hora peninsular. Datos ficticios; no acredita piloto físico ni emisión fiscal.
+Corte de trabajo: 16:02, hora peninsular. Datos ficticios; no acredita piloto físico ni emisión fiscal.
 
-- Local y GitHub CI: **243 Flutter**, analizador limpio, **271 PostgreSQL/PGlite**, **43 servicios simulados**, **cinco portal** y **ocho comprobaciones XSD** aprobados. Las ocho pruebas de borradores repetidas en CI están incluidas en las 243, no son casos adicionales. Copias: 22 comprobaciones en dos bases independientes, perfil fiscal y originales conservados.
+- Local y GitHub CI: **243 Flutter**, analizador limpio, **295 PostgreSQL/PGlite**, **43 servicios simulados**, **cinco portal** y **ocho comprobaciones XSD** aprobados. Las ocho pruebas de borradores repetidas en CI están incluidas en las 243, no son casos adicionales. Copias: 22 comprobaciones en dos bases independientes, perfil fiscal y originales conservados.
 - Núcleo fiscal: 17 Flutter nuevas, cálculo exacto, desglose original, tres vectores oficiales de huella y XML F1/anulación contra XSD oficiales. Sin transporte/emisión ni aceptación de un servicio fiscal. Esquemas originales y hashes en tool/fixtures/aeat/; evidencia fiscal-offline-schema.json.
-- Supabase real, evidencia conservada: **15 fase 1**, **12 módulos**, **nueve recuperación formato 13** con Auth real. Principal/recuperación: **26 migraciones lógicas**. 83 invariantes de recuperación y 12 de preparación fiscal por proyecto con rollback y Auth sintético. Esta ejecución no modifica Supabase.
+- Supabase real, evidencia conservada: **15 fase 1**, **12 módulos**, **nueve recuperación formato 13** con Auth real. Principal/recuperación: **27 migraciones lógicas**. 83 invariantes de recuperación y 12 de preparación fiscal por proyecto con rollback y Auth sintético. La migración 027 añade borradores de ensayo en ambos proyectos; 16 SQL adicionales por proyecto con rollback, sin Auth HTTP.
 - Limpieza previa: diez cuentas ficticias bloqueadas, cero sesiones/miembros/dispositivos activos, servicios temporales HTTP 410 y capacidad temporal eliminada; usuarios reales intactos.
 - CI **37624370177**, aplicación **6be045dfdc4c5f058f61878aba16a492bf8b782d**: validación, Windows, Android e iOS simulador aprobados. OCR Android cinco / iOS seis: lectura, EXIF, privado temporal iOS, blanco, original externo denegado y archivo ausente. JSON y registros adjuntos en ZIP y evidence/.
 - Tres paquetes descargados y verificados contra SHA-256 de GitHub, source-commit.json e integridad ZIP. Android APK comprobado; Windows incluye instalador; TAR de iOS verificado para simulador arm64/x86_64, mínimo 15.5 y permisos ejecutables. Código de aplicación/servidor/portal coincide en 197 archivos. Demo web 6be045d renovada y verificada.
@@ -13,6 +13,8 @@ Corte de trabajo: 15:22, hora peninsular. Datos ficticios; no acredita piloto f�
 - IA desactivada por decisión del usuario; cero llamadas. Portal final pendiente de confirmar el acceso nuevo GitHub de Cloudflare. Licencias Android aceptadas y autorización de recuperación resueltas.
 
 Evidencia actual: build26-completed.json, build26-validation.json y registros; package-checkpoints.json; build26-source-correspondence.json; fiscal-core-local.json y fiscal-offline-schema.json. Paquetes 8877298 y todos los sufijos anteriores son históricos.
+
+Nuevo servidor de ensayo: 24 pruebas PostgreSQL adicionales; copia/restauración 14 entre bases locales, permisos, huellas, auditoría, reintentos, legado y congelación de instalaciones. Once Flutter de copias repetidas, incluidas en las 243 previas. Las llamadas en cola PGlite no prueban conexiones concurrentes reales. Ningún nuevo build nativo ni interfaz. Evidencia fiscal-draft-ledger-validation.json y fiscal-draft-ledger-hosted.json.
 
 **Los registros siguientes son históricos.** Sus cifras, fallos y pendientes corresponden al momento de cada ensayo. PENDIENTES.md y el informe fijan el estado actual.
 

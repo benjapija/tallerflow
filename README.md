@@ -2,7 +2,7 @@
 
 Aplicación en español para conectar operarios y oficina y sustituir el papel en talleres de España, con datos aislados por taller. Conserva Flutter/Dart, Supabase y las aplicaciones previstas para iOS, Android y Windows. El Mac se utiliza para desarrollo y demostración en navegador; por petición del usuario del 6 de octubre no se entrega aplicación macOS.
 
-**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** Conserva la base 0.2, administración, tareas, historial, precios, CSV y fotos privadas. Añade copias cifradas divididas que incluyen fotos y pendientes. Veintiséis migraciones y las funciones de altas/fotos/portal/IA están instaladas en Supabase Free. Se han aprobado 15 comprobaciones reales de Auth/PostgREST/Edge/Storage por HTTP con cinco cuentas ficticias, ya retiradas. La descarga usa un POST privado sin caché y vuelve a comprobar permisos; se deshabilitó la lectura directa de objetos para evitar respuestas antiguas de la CDN. La recuperación alojada actual formato 13 y los recorridos adicionales de módulos ya aprobaron con Auth real; falta completar clientes nativos y cámaras físicas.
+**El proyecto está en desarrollo y todavía no completa la fase 1 ni está preparado para datos reales.** Conserva la base 0.2, administración, tareas, historial, precios, CSV y fotos privadas. Añade copias cifradas divididas que incluyen fotos y pendientes. Veintisiete migraciones y las funciones de altas/fotos/portal/IA están instaladas en Supabase Free. Se han aprobado 15 comprobaciones reales de Auth/PostgREST/Edge/Storage por HTTP con cinco cuentas ficticias, ya retiradas. La descarga usa un POST privado sin caché y vuelve a comprobar permisos; se deshabilitó la lectura directa de objetos para evitar respuestas antiguas de la CDN. La recuperación alojada previa formato 13 y los recorridos adicionales de módulos ya aprobaron con Auth real; falta completar clientes nativos y cámaras físicas.
 
 Estado vivo: [PENDIENTES.md](docs/PENDIENTES.md). Uso de copias: [COPIAS_Y_RECUPERACION.md](docs/COPIAS_Y_RECUPERACION.md).
 
@@ -39,7 +39,7 @@ La recepción, tareas, tiempos estimados/trabajados/facturables separados, catá
 
 - Analizador Flutter sin errores ni avisos.
 - 243 pruebas Flutter aprobadas, con presupuestos, cobros, devoluciones y recuperación sin duplicados. Analizador sin incidencias.
-- 271 comprobaciones PostgreSQL/PGlite y 43 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
+- 295 comprobaciones PostgreSQL/PGlite y 43 de servicios con dependencias simuladas aprobadas; la denegación final de Storage se volvió a comprobar en las 13 de fotos.
 - 58 comprobaciones SQL alojadas históricas con transacciones revertidas y 15 del recorrido HTTP real, con talleres y cuentas ficticios aislados. Las pruebas nativas siguen separadas.
 - GitHub Actions #1 compiló Windows e instalador, Android e iOS simulador. También generó un binario macOS antes de retirarse esa plataforma del alcance; no se seguirá distribuyendo.
 - Windows remoto en GitHub Actions: dos procesos nativos verifican almacén cifrado, Credential Manager, conservación de dos registros sin conexión, recuperación y un único efecto al reintentar. El servidor es ficticio; instalación manual y Auth real siguen pendientes.
@@ -92,3 +92,5 @@ El asistente conserva fuentes, requiere revisión humana y recupera respuestas s
 Desarrollo fiscal genérico: cálculo exacto y desglose conservado de notas; adaptador estatal solo local, con huella, QR de pruebas y borradores XML. Emisión desactivada. Estado y pendientes en [MOTOR_FISCAL_EN_DESARROLLO.md](docs/MOTOR_FISCAL_EN_DESARROLLO.md).
 
 Entrega vigente: **6be045d**, GitHub Actions **37624370177**, Windows/Android/iOS simulador aprobados y ZIP verificados. OCR Android cinco e iOS seis; ocho comprobaciones XSD locales. Ninguna emisión fiscal ni uso físico acreditados. Todos los paquetes con otros sufijos son históricos.
+
+Registro persistente de borradores de ensayo en servidor, sin nueva pantalla: series separadas, reintentos, originales y copia formato 14. 24 PostgreSQL nuevas y 16 SQL revertidas por Supabase. Cliente y demo conservan 6be045d; el ZIP de código identifica el nuevo servidor por separado. [Alcance y pendientes](docs/REGISTRO_BORRADORES_FISCALES.md).
