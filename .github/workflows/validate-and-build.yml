@@ -138,7 +138,7 @@ jobs:
       - name: Liberar herramientas ajenas al ensayo Android
         run: |
           # This disposable GitHub runner does not need other desktop toolchains.
-          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost /opt/hostedtoolcache/CodeQL /usr/local/share/powershell /usr/share/swift /opt/az
           df -h / /usr/local/lib/android/sdk
       - name: Preparar aceleración del emulador aislado
         run: |
@@ -153,7 +153,7 @@ jobs:
           disk-size: 2048M
           emulator-boot-timeout: 300
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none -partition-size 2048
           script: |
             set -o pipefail
             flutter test integration_test/native_text_reader_test.dart -d emulator-5554 2>&1 | tee native-ocr-android.log

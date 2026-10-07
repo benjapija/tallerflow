@@ -75,8 +75,7 @@ void main() {
           final oriented = await save(rotated, 'exif-left');
           expect(
             img
-                .decodeJpg(await oriented.readAsBytes())!
-                .exif
+                .decodeJpgExif(await oriented.readAsBytes())!
                 .imageIfd
                 .orientation,
             8,

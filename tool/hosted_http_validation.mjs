@@ -7,12 +7,13 @@ import assert from 'node:assert/strict';
 const configPath=process.env.TF_QA_CONFIG;
 if(!configPath)throw new Error('An approved fictional fixture configuration is required');
 const cfg=JSON.parse(await readFile(configPath,'utf8'));
+if(!cfg.badVinReceptionId){cfg.badVinReceptionId=randomUUID();cfg.badVinOrderId=randomUUID();await writeFile(configPath,JSON.stringify(cfg));}
 if(cfg.approved!==true||!Object.values(cfg.users).every(u=>u.email.endsWith('@example.invalid')))throw new Error('Fictional fixture approval required');
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const clients={},checks=[];
 const evidencePath=process.env.TF_QA_EVIDENCE??'outputs/TallerFlow/evidence/hosted-http-validation.json';
 const resumed=process.env.TF_QA_RESUME==='after-timers'?JSON.parse(await readFile(evidencePath,'utf8')):null;
-if(resumed && (resumed.runId!==cfg.runId || resumed.workshop!==cfg.workshop || resumed.totalChecks!==11))throw new Error('Unexpected fixture checkpoint');
+if(resumed && (resumed.runId!==cfg.runId || resumed.workshop!==cfg.workshop || ![11,12].includes(resumed.totalChecks)))throw new Error('Unexpected fixture checkpoint');
 async function request(path,{who,body,method='POST',bytes}={}){
  const headers={apikey:cfg.publishableKey};
  if(who)headers.Authorization='Bearer '+clients[who].jwt;
@@ -30,9 +31,9 @@ async function rpc(who,name,body,{deny=false}={}){
 const snap=(who,workshop=cfg.workshop)=>rpc(who,'device_snapshot',{workshop_id:workshop,device_id:cfg.users[who].device});
 const command=(who,action,payload,id=randomUUID())=>rpc(who,'reliability_command',{workshop_id:cfg.workshop,device_id:cfg.users[who].device,command_id:id,action,payload});
 async function check(name,action){await action();checks.push(name);console.log('PASS '+name);}
-async function operation(who,kind,payload,{id=randomUUID(),revision,at}={}){
- const current=revision??(await snap(who)).orders.find(o=>o.id===cfg.orderId)?.revision??0;
- const op={id,orderId:cfg.orderId,actorId:cfg.users[who].id,kind,at:at??new Date().toISOString(),baseRevision:current,payload};
+async function operation(who,kind,payload,{id=randomUUID(),revision,at,orderId=cfg.orderId}={}){
+ const current=revision??(await snap(who)).orders.find(o=>o.id===orderId)?.revision??0;
+ const op={id,orderId,actorId:cfg.users[who].id,kind,at:at??new Date().toISOString(),baseRevision:current,payload};
  return {op,result:await rpc(who,'apply_operation',{workshop_id:cfg.workshop,device_id:cfg.users[who].device,operation:op})};
 }
 async function photoRead(who,id){
@@ -44,7 +45,7 @@ const proof={date:new Date().toISOString(),runId:cfg.runId,workshop:cfg.workshop
 try{
  await check('Five fictional accounts sign in through GoTrue and user IDs remain original',async()=>{
   for(const [role,u]of Object.entries(cfg.users)){
-   const password='Qa!2026'+sha(cfg.capability+u.id);
+   const password='Qa!2026'+sha(cfg.capability+u.id+cfg.url);
    const r=await request('/auth/v1/token?grant_type=password',{body:{email:u.email,password}});
    assert.equal(r.ok,true,'Fictional login '+role+' failed');assert.equal(r.data.user.id,u.id);
    clients[role]={jwt:r.data.access_token,refresh:r.data.refresh_token};
@@ -123,12 +124,18 @@ try{
   assert.equal((await operation('tech1','finish_task',{taskId:cfg.taskId})).result.status,'accepted');
  });
  await check('Office archives the rejected fictional VIN with a reason before coordinated closure',async()=>{
-  const s=await snap('office'),revision=s.orders.find(o=>o.id===cfg.orderId).revision;
-  const rejected=s.incidents?.find(r=>r.operation?.id==='3fcec655-0b68-400d-bc78-c8e6111c81bb');
+  const existingAttempt=(await snap('office')).incidents?.find(r=>r.operation?.id===cfg.badVinReceptionId);
+  const rejectedAttempt=existingAttempt?{result:{status:'conflict',reason:existingAttempt.reason}}:await operation('office','receive',{plate:cfg.plate??'9998FIC',country:'ES',vin:'X'.repeat(80)},{id:cfg.badVinReceptionId,orderId:cfg.badVinOrderId});
+  assert.equal(rejectedAttempt.result.status,'conflict');assert.match(rejectedAttempt.result.reason,/VIN/i);
+  const s=await snap('office');
+  const rejected=s.incidents?.find(r=>r.operation?.id===cfg.badVinReceptionId);
   assert.ok(rejected,'Expected recorded fictional reception conflict');
-  if(rejected.resolution){assert.equal(rejected.resolution.outcome,'archive');return;}
-  const resolution=await command('office','resolve',{operationId:'3fcec655-0b68-400d-bc78-c8e6111c81bb',revision,outcome:'archive',reason:'Recepción ficticia con VIN excesivo, sustituida por la recepción válida; conservar evidencia.'});
-  assert.equal(resolution.resolved,true);
+  for(const incident of s.incidents.filter(i=>[cfg.badVinReceptionId,cfg.badReceptionId].includes(i.operation?.id))){
+   if(incident.resolution){assert.equal(incident.resolution.outcome,'archive');continue;}
+   const currentRevision=s.orders.find(o=>o.id===incident.operation.orderId)?.revision??null;
+   const resolution=await command('office','resolve',{operationId:incident.operation.id,revision:currentRevision,outcome:'archive',reason:'Rejected fictional reception retained with its original validation reason'});
+   assert.equal(resolution.resolved,true);
+  }
  });
  await check('Office quality and billable review calculate an immutable document after every device acknowledges',async()=>{
   assert.equal((await operation('office','billable',{taskId:cfg.taskId,minutes:30,reason:'Revisión ficticia'})).result.status,'accepted');
