@@ -1,0 +1,24 @@
+{
+  "retrievedAt": "2026-10-07T12:42:00.157797+00:00",
+  "scope": "Official public XSD snapshots for offline technical validation; no official service called",
+  "files": [
+    {
+      "name": "SuministroLR.xsd",
+      "source": "https://prewww2.aeat.es/static_files/common/internet/dep/aplicaciones/es/aeat/tikeV1.0/cont/ws/SuministroLR.xsd",
+      "sha256": "cbdac8d427cc5ab5d77ca48974cab0f35d6bb819c4c66db361681e3710aeba36",
+      "bytes": 1573
+    },
+    {
+      "name": "SuministroInformacion.xsd",
+      "source": "https://prewww2.aeat.es/static_files/common/internet/dep/aplicaciones/es/aeat/tikeV1.0/cont/ws/SuministroInformacion.xsd",
+      "sha256": "ee4c1655175644de44c4c25055ffeb8e5f4bb4bc3834ce8254d4222ef18c8aa1",
+      "bytes": 49540
+    },
+    {
+      "name": "xmldsig-core-schema.xsd",
+      "source": "https://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd",
+      "sha256": "d102ad3df7664c307e0c2c776ba4a90513b1969974d8a940bae1a77f9f21e15d",
+      "bytes": 10292
+    }
+  ]
+}

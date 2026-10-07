@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-07T12:45:45.319612+00:00",
+  "plan": "GitHub Free",
+  "includedMinutes": 2000,
+  "usedMinutes": 1562.7,
+  "remainingMinutes": 437.3,
+  "billableUsd": 0,
+  "storagePercent": 8,
+  "worstConfiguredFullWorkflowMinutesWeighted": 410,
+  "fullWorkflowFitsIncludedQuota": true,
+  "pendingBillingUpdatePossible": true,
+  "screenshot": "github-quota-before-build26.png"
+}

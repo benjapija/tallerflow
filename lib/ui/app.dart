@@ -25,6 +25,7 @@ import 'payment_panel.dart';
 import '../domain/payments.dart';
 import '../domain/document_export.dart';
 import 'document_export_button.dart';
+import 'tax_breakdown.dart';
 import '../domain/purchases.dart';
 import 'purchase_panel.dart';
 import '../domain/linked_returns.dart';
@@ -1994,6 +1995,13 @@ class _WorkshopHomeState extends State<WorkshopHome>
         ? o.data['document'] as Map<String, dynamic>
         : calculateNote(o).toJson();
     return section(o.issued ? 'Nota emitida' : 'Borrador de nota', [
+      if (c.actor.isOffice)
+        TaxBreakdownButton(
+          source: () => o.issued
+              ? Map<String, dynamic>.from(o.data['document'])
+              : calculateNote(o).toJson(),
+          actor: () => c.actor,
+        ),
       if (o.issued && c.actor.isOffice)
         DocumentExportButton(
           source: () => DocumentExport.note(o, c.actor),
@@ -2421,9 +2429,9 @@ class _WorkshopHomeState extends State<WorkshopHome>
         ),
       ]),
       const SizedBox(height: 18),
-      section('Próximas fases', [
+      section('Estado de los módulos', [
         const Text(
-          'Portal del cliente con verificación y autorización por versión.\nCompras, almacén y garantías.\nAsistente técnico con fuentes y revisión humana.\nFacturación fiscal española e integraciones.',
+          'Compras, almacén, garantías, agenda, mantenimiento y flotas disponibles.\nPortal del cliente con autorización por versión; publicación final pendiente.\nAsistente con revisión humana; IA real desactivada.\nPreparación fiscal disponible; emisión fiscal e integraciones pendientes de validación.',
           style: TextStyle(height: 1.8, color: muted),
         ),
       ]),

@@ -27,6 +27,16 @@ jobs:
       - run: dart format --output=none --set-exit-if-changed lib test integration_test tool/render_preview_test.dart
       - run: flutter analyze
       - run: flutter test
+      - name: Generar registros fiscales ficticios sin emisión
+        run: flutter test test/verifactu_draft_test.dart --dart-define=WRITE_FISCAL_EVIDENCE=true
+      - name: Preparar validación XML local
+        run: |
+          if ! command -v xmllint >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends libxml2-utils
+          fi
+      - name: Comprobar XML fiscal contra esquemas oficiales sin red
+        run: python3 tool/validate_fiscal_xml.py
       - uses: actions/setup-node@v4
         with:
           node-version: '24'

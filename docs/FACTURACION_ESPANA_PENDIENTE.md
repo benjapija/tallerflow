@@ -32,7 +32,7 @@ El perfil conserva `emissionEnabled:false`: no emite ni remite facturas, no alte
 | Administraciones públicas | Destinatario y códigos | Entrega al sistema aplicable y comprobación oficial |
 | Particulares y rectificaciones | Datos obligatorios, tipo y motivo | Numeración, factura completa/simplificada cuando proceda y rectificaciones con originales conservados |
 
-La matriz identifica desarrollo pendiente. No promete cumplimiento ni conectores disponibles. El motor genérico aún debe implementarse/probarse; no se considera bloqueado únicamente por desconocer datos de un taller particular.
+La matriz identifica desarrollo pendiente. No promete cumplimiento ni conectores disponibles. El núcleo de cálculo y el adaptador estatal sin transmisión ya tienen pruebas locales; quedan persistencia, numeración, rectificativas completas y aceptación oficial. El diseño no queda bloqueado por desconocer datos de un taller particular.
 
 ## Alta de cada taller y coste
 
@@ -47,3 +47,7 @@ La [AEAT describe el ámbito SIF y exclusiones, incluido SII y residencia foral]
 La [documentación técnica AEAT](https://www3.agenciatributaria.gob.es/Sede/iva/sistemas-informaticos-facturacion-verifactu/informacion-tecnica/especificaciones-tecnicas-firma-electronica-registros-evento.html) enlaza esquemas, WSDL, validaciones, hash, QR, declaraciones y portal externo de pruebas. Hay material público para avanzar en el motor sin conocer un cliente particular. Quedan implementación y pruebas de cadena/numeración, correcciones, formatos, fallos/reintentos y aislamiento antes de conectar acreditación de un taller. Leer documentación no acredita emisión oficial ni aceptación del servicio.
 
 Como ensayo técnico independiente se han reproducido los tres ejemplos de hash del [PDF enlazado por la AEAT](https://www.agenciatributaria.es/static_files/AEAT_Desarrolladores/EEDD/IVA/VERI-FACTU/Veri-Factu_especificaciones_huella_hash_registros.pdf): primer alta, alta encadenada y anulación. Los SHA-256 coinciden; evidencia fiscal-hash-official-rehearsal.json. Es una comprobación preparatoria de ejemplos publicados, sin emisión ni llamada al servicio; todavía no existe el motor fiscal integrado.
+
+## Avance técnico de esta ejecución
+
+Núcleo de cálculo exacto por partida y grupos de IVA/IGIC/IPSI/otros, ajustes negativos justificados y lectura del desglose de notas sin cambiar sus originales. Adaptador estatal **local y sin emisión**: huellas de alta/anulación, URL QR solo de pruebas y borradores XML F1/anulación. 17 Flutter nuevas y ocho comprobaciones contra XSD públicos guardados, todas locales; no hay transmisión, numeración oficial ni validación de negocio completa. Véase [MOTOR_FISCAL_EN_DESARROLLO.md](MOTOR_FISCAL_EN_DESARROLLO.md).

@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-10-07T12:45:45.318995+00:00",
+  "scope": "Local Flutter fiscal arithmetic, saved tax summary and offline AEAT draft; no fiscal emission",
+  "flutterTestsPassed": 243,
+  "newFiscalTests": 17,
+  "analysis": "No issues found",
+  "offlineSchemaChecks": 8,
+  "officialHashVectors": 3,
+  "xmlDrafts": [
+    "F1 domestic trial",
+    "cancellation trial"
+  ],
+  "emissionEnabled": false,
+  "transmissionEnabled": false,
+  "physicalUseValidated": false,
+  "officialServiceAcceptanceValidated": false,
+  "newSupabaseMigration": false
+}

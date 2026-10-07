@@ -44,4 +44,6 @@ Preparación fiscal por taller: cinco Flutter y doce PostgreSQL incluidas en la 
 
 Las dependencias externas detienen únicamente sus tareas. No se generan prompts de continuación.
 
-Trabajo independiente siguiente: motor fiscal genérico y adaptadores oficiales según FACTURACION_ESPANA_PENDIENTE.md, preservando documentos de trabajo. Revisar además el texto antiguo de «Próximas fases» en Configuración, que aún anuncia módulos implementados. No confundir estos pendientes de desarrollo con dependencias personales.
+Avance local posterior a 8877298: núcleo aritmético, desglose de impuestos conservado y adaptador AEAT sin transmisión, con 17 Flutter nuevas y ocho comprobaciones XSD. Batería local 243 Flutter y analizador limpio. «Próximas fases» en Configuración corregido. Compilaciones nuevas por generar/verificar; los paquetes anteriores siguen identificados por revisión.
+
+Trabajo independiente siguiente: persistencia/series/cadena concurrente, rectificaciones y adaptadores oficiales según MOTOR_FISCAL_EN_DESARROLLO.md. Preservar documentos de trabajo y no habilitar emisión. No confundir estos pendientes de desarrollo con dependencias personales.

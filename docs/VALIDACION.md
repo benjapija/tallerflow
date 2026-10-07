@@ -11,6 +11,8 @@ Corte de trabajo: 14:20, hora peninsular. Datos ficticios; no acredita piloto f�
 - Circuitos nativos anteriores Windows/iOS entre procesos: cifrado/llavero/pendientes/recuperación aprobados con servidor ficticio. Cámara, micrófono, QR/enlaces, selector y cuenta personal desde aplicación nativa pendientes.
 - IA desactivada por decisión del usuario; cero llamadas al proveedor. Portal público pendiente de confirmar permiso nuevo de GitHub para Cloudflare. Licencias Android aceptadas según el usuario; iPhone disponible sin conectar todavía.
 
+Avance local posterior a 8877298: **243 Flutter** completas, analizador sin incidencias y web release aprobada. 17 pruebas nuevas de núcleo fiscal/desglose/adaptador local y **ocho XSD** aprobadas. Los borradores no se transmiten y no acreditan aceptación oficial. Las nuevas compilaciones se identificarán después de verificarlas.
+
 **Los registros siguientes son históricos.** Sus cifras, fallos y pendientes corresponden al momento de cada ensayo. PENDIENTES.md y el informe fijan el estado actual.
 
 ---

@@ -88,3 +88,5 @@ Flotas manuales: agrupación, vínculos con propietario original, seguimiento y 
 Dictado y lectura: borradores revisables en recepción, cuaderno y catálogo; lectura local en Android/iOS y códigos de piezas. Uso físico aún pendiente. Consulta docs/CAPTURA_REVISABLE.md.
 
 El asistente conserva fuentes, requiere revisión humana y recupera respuestas sin reenviar generación. Consulta [ASISTENTE_IA.md](docs/ASISTENTE_IA.md). Los resultados y paquetes vigentes están en PENDIENTES.md y evidence/package-checkpoints.json; los apartados históricos no sustituyen esas referencias.
+
+Desarrollo fiscal genérico: cálculo exacto y desglose conservado de notas; adaptador estatal solo local, con huella, QR de pruebas y borradores XML. Emisión desactivada. Estado y pendientes en [MOTOR_FISCAL_EN_DESARROLLO.md](docs/MOTOR_FISCAL_EN_DESARROLLO.md).
