@@ -2,8 +2,7 @@
   "date": "2026-10-07T14:32:55.149Z",
   "runId": "ebc8c85d-6668-4963-82ad-4e40536554a7",
   "workshop": "cdae65c8-0108-4124-994b-5ba28a08fe3e",
-  "applicationCheckpoint": "1e65b8dec72f360fc24a6cda1c21c726427ae74f",
-  "validationScriptPublished": false,
+  "validationScriptPublished": true,
   "environment": "hosted Auth, PostgREST, Edge Functions and Storage HTTP",
   "fictionalAccounts": true,
   "nativeDeviceValidated": false,
@@ -29,5 +28,9 @@
   "closureRequestId": "67fb4836-babc-41eb-8353-ad6db4368422",
   "photoHash": "1110e84bbbe81b69783a362888219094d2946ab95d1e701722b4399c5a12e7bf",
   "photoPath": "cdae65c8-0108-4124-994b-5ba28a08fe3e/b42dbc63-f9f2-4ace-ba2b-92a3c05ea5c5/1b47e6d5-7674-4fb0-8782-891633412df1.jpg",
-  "totalChecks": 15
+  "totalChecks": 15,
+  "serverMigrationSourceCheckpoint": "1e65b8dec72f360fc24a6cda1c21c726427ae74f",
+  "applicationCheckpoint": "6be045dfdc4c5f058f61878aba16a492bf8b782d",
+  "validationScriptsCommit": "6537a7150102611ff113e9aa1824231b9012fa85",
+  "publicationRecordedAt": "2026-10-07T14:50:43.362263+00:00"
 }
