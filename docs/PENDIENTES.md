@@ -12,11 +12,12 @@ Base: requisitos originales y entrega 0.2. La palabra «probado» identifica el 
 | Precios, descuentos, excepciones y margen | Implementados; pruebas locales y 10 alojadas aprobadas | Revisión con motivo, reautorización ante aumentos, descuentos antes del IVA y costes de consumos sin cobro; falta piloto nativo |
 | CSV de clientes, vehículos y catálogo | Implementado; 8 pruebas Flutter, 12 locales SQL y 10 alojadas aprobadas | Vista previa por fila, códigos de cliente, duplicados conservados, auditoría y reintentos; selector nativo y Auth HTTP pendientes |
 | Fotos privadas, QR y enlaces nativos | Implementados; pruebas locales y 10 SQL alojadas aprobadas | Descarga privada sin caché, revocación y Storage HTTP comprobados; cámara física y apertura por enlace del sistema pendientes |
-| Supabase alojado | Conectado, doce migraciones y funciones de altas/fotos aplicadas | Proyecto gpseuqmzbazifmkhjyby, plan Free; cuenta ramirezbroja013@gmail.com vinculada como administradora; cinco cuentas ficticias probaron Auth real y quedaron retiradas; falta iniciar sesión personalmente desde cliente nativo |
+| Supabase alojado | Conectado, trece migraciones y funciones de altas/fotos aplicadas | Proyecto gpseuqmzbazifmkhjyby, plan Free; cuenta ramirezbroja013@gmail.com vinculada como administradora; cinco cuentas ficticias probaron Auth real y quedaron retiradas; falta iniciar sesión personalmente desde cliente nativo |
 | iOS/Android | Compilación en GitHub aprobada | Xcode 27 instalado y cuenta Apple conectada; Android Studio instalado y herramientas verificadas; licencias del SDK pendientes, uso en simuladores y equipos físicos pendientes |
 | Aplicación macOS | Fuera del alcance | Retirada por petición del usuario el 6 de octubre; el Mac sigue como equipo de desarrollo |
 | Windows | Compilación, instalador y circuito nativo remoto aprobados parcialmente | Dos procesos reales con cifrado/credenciales y servidor ficticio en Actions; falta instalación manual y cuentas Supabase reales |
-| Inspección, presupuestos y autorizaciones | Pendiente tras fase 1 | Versiones y partidas independientes, permisos y pruebas |
+| Inspecciones configurables | Implementadas: 6 Flutter, 8 PostgreSQL local y 10 SQL alojadas | Versiones y evidencias conservadas; selección humana del resultado; falta uso nativo y recorrido HTTP específico |
+| Presupuestos y autorizaciones versionados | Pendiente | Partidas independientes, ampliaciones y decisiones por versión |
 | Portal cliente | Pendiente tras fase 1 | HTTPS y verificación/revocación del destinatario |
 | Compras, almacén, garantías, PDF y cobros | Pendiente tras fase 1 | Desarrollo local; pasarela de pagos solo si se necesita integración |
 | IA técnica y administrativa | Pendiente | OpenAI desde servidor, presupuesto de consumo, fuentes autorizadas y revisión humana |

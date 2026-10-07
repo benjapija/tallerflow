@@ -3,6 +3,7 @@ import 'management.dart';
 import 'tasks.dart';
 import 'vehicles.dart';
 import 'pricing.dart';
+import 'inspections.dart';
 
 class RuleException implements Exception {
   final String message;
@@ -243,6 +244,8 @@ class WorkshopState {
     }
 
     switch (op.kind) {
+      case 'inspection_save':
+        applyInspection(order, op, actor);
       case 'start':
         final t = task();
         if (t['block'] != null || d['block'] != null) {

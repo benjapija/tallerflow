@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-07",
+  "localFlutter": 6,
+  "localPostgres": 8,
+  "hostedPostgres": 10,
+  "hostedFixtureRolledBack": true,
+  "hostedAuth": "synthetic SQL fixture; actual HTTP not yet exercised for inspections",
+  "regressionFlutter": 96,
+  "regressionPostgres": 130,
+  "mockServices": 18,
+  "nativeInspectionValidated": false
+}

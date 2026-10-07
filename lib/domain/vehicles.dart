@@ -285,6 +285,8 @@ Map<String, dynamic> technicalHistoryEntry(WorkOrder o) => {
     'receivedAt',
     'notes',
     'dtcs',
+    'inspections',
+    'inspectionHistory',
     'diagnoses',
     'photos',
   ])

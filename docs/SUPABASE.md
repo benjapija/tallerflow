@@ -67,3 +67,7 @@ El servicio temporal de las cinco identidades fue autorizado expresamente, las c
 Referencia de las funciones y permisos: [funciones de base de datos de Supabase](https://supabase.com/docs/guides/database/functions).
 
 La primera cuenta administradora confirmada es **ramirezbroja013@gmail.com**. Se vinculó con auditoría y sin leer su contraseña; esto no acredita haber iniciado sesión en la aplicación.
+
+## Inspecciones · 7 de octubre
+
+Migración 013 aplicada en el proyecto principal. Seis pruebas Flutter, ocho PostgreSQL locales y diez SQL alojadas aprobaron versiones, reintentos, conflictos, permisos, exportación e historial técnico sin datos del destinatario. Las pruebas SQL alojadas emplearon identidades sintéticas y se revirtieron; no acreditan Auth HTTP ni cámara. Batería completa: 96 Flutter, 130 PostgreSQL y 18 servicios simulados. Analizador limpio.

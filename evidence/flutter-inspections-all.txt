@@ -1,0 +1,115 @@
+Resolving dependencies...
+Downloading packages...
+  code_assets 1.2.1 (2.1.0 available)
+  cross_file 0.3.5+5 (0.4.0 available)
+  hooks 2.0.2 (2.2.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  objective_c 9.5.0 (9.6.2 available)
+  petitparser 7.0.2 (7.1.0 available)
+  qr 3.0.2 (4.0.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  test_api 0.7.12 (0.7.14 available)
+  vector_math 2.4.0 (2.4.3 available)
+  xml 7.0.1 (7.1.0 available)
+Got dependencies!
+12 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+00:00 +0: loading /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/inspections_test.dart
+00:00 +0: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/order_links_test.dart: QR and native link have one canonical stable order identity
+00:00 +1: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Reception clears forged authorization, documents and prior charges before work can start
+00:00 +2: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Reception clears forged authorization, documents and prior charges before work can start
+00:00 +3: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Reception clears forged authorization, documents and prior charges before work can start
+00:00 +4: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Reception clears forged authorization, documents and prior charges before work can start
+00:00 +5: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Reception rejects duplicate task IDs and foreign assignments without creating an order
+00:00 +6: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Administration requires admin and preserves latest revision with valid tax
+00:00 +7: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Catalog updates retain prior consumption prices and adjust available stock
+00:00 +8: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Last admin and active technicians cannot be disabled
+00:00 +9: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Multi-technician assignment, task block and scope consent retain history
+00:00 +10: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Tasks refuse stale edits and cancellation of recorded work
+00:00 +11: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Applying a template requires compatibility and leaves tasks unauthorized
+00:00 +12: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Lost administration response and restart retain the same command and one effect
+00:00 +13: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Lost administration response and restart retain the same command and one effect
+00:00 +14: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Lost administration response and restart retain the same command and one effect
+00:00 +15: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Lost administration response and restart retain the same command and one effect
+00:00 +16: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/management_test.dart: Lost administration response and restart retain the same command and one effect
+00:00 +17: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/inspections_test.dart: Offline original survives restart and backup without duplicating its finding
+00:00 +18: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:00 +19: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:00 +20: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:00 +21: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:00 +22: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:01 +23: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:01 +24: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:02 +25: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:02 +26: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:02 +27: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:02 +28: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:03 +29: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:03 +30: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +31: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +32: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +33: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +34: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +35: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +36: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +37: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:04 +38: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:05 +39: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +40: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +41: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +42: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +43: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +44: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +45: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +46: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +47: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +48: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:06 +49: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +50: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +51: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +52: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +53: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +54: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +55: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +56: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +57: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +58: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +59: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +60: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +61: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +62: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:07 +63: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +64: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +65: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +66: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +67: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +68: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +69: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +70: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +71: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:08 +72: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +73: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +74: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +75: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +76: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +77: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +78: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +79: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:09 +80: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +81: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +82: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +83: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +84: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +85: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:10 +86: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_test.dart: Portable encrypted copy restores pending timer and originals under a different device key
+00:15 +87: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:15 +88: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:15 +89: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:15 +90: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A copy over 32 MiB reads one original at a time and stages photos under a different device key
+00:27 +91: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Missing, repeated, mixed and changed parts never yield a restorable archive
+00:38 +92: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Absent or changed photo bytes stop export and a failed staging write aborts recovery
+00:38 +93: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Malformed envelopes and unsafe limits are rejected before deriving a key
+00:38 +94: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: Split recovery preserves original offline IDs and queued photos without restoring authorization
+00:38 +95: /Users/benja/Documents/Codex/2026-10-06/files-pasted-by-the-user-act/outputs/TallerFlow/test/backup_set_test.dart: A failed final metadata write leaves the current account state intact after staging split files
+00:38 +96: All tests passed!

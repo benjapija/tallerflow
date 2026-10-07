@@ -6,6 +6,7 @@ import '../domain/vehicles.dart';
 import 'dialogs.dart';
 import 'csv_panel.dart';
 import 'photo_panel.dart';
+import 'inspection_panel.dart';
 
 class VehicleHistory extends StatelessWidget {
   final WorkshopController controller;
@@ -205,6 +206,14 @@ class VehicleHistory extends StatelessWidget {
                             controller: c,
                             orderId: entry['id'],
                           ),
+                          if ((entry['inspections'] as List? ?? []).isNotEmpty)
+                            InspectionPanel(
+                              order: WorkOrder(
+                                Map<String, dynamic>.from(entry),
+                              ),
+                              canEdit: false,
+                              onSave: (_) async {},
+                            ),
                           if (c.actor.isOffice && entry['document'] != null)
                             const Padding(
                               padding: EdgeInsets.only(top: 12),

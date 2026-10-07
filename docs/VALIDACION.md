@@ -76,3 +76,7 @@ El ensayo detectó que la CDN podía servir una fotografía ya descargada tras r
 Limpieza confirmada: cinco cuentas bloqueadas, cero sesiones, cero pertenencias y equipos de prueba activos, servicio temporal limitado a 410 sin cliente administrativo, credenciales efímeras eliminadas. La administradora del taller piloto sigue activa. Los documentos de prueba y sus tres JPEG (1857 bytes) quedan protegidos en talleres aislados inactivos. No cambió el plan Free.
 
 El commit 6d8fbae ya compiló Windows/Android/iOS simulador en run 37543505529, con ZIP/hashes y source-commit.json verificados. Incluye CSV pero precede a las copias divididas y a la nueva descarga; se conserva como evidencia histórica. La prueba Windows previa ejercitó tiempos y almacenamiento, sin fotografías. Se ha ampliado el ensayo nativo para fotos pendientes y recuperación de partes bajo otra clave; su ejecución del código actual queda pendiente.
+
+## Inspecciones · 7 de octubre
+
+Migración 013 aplicada en el proyecto principal. Seis pruebas Flutter, ocho PostgreSQL locales y diez SQL alojadas aprobaron versiones, reintentos, conflictos, permisos, exportación e historial técnico sin datos del destinatario. Las pruebas SQL alojadas emplearon identidades sintéticas y se revirtieron; no acreditan Auth HTTP ni cámara. Batería completa: 96 Flutter, 130 PostgreSQL y 18 servicios simulados. Analizador limpio.

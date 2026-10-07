@@ -19,6 +19,7 @@ import '../domain/order_links.dart';
 import '../data/order_link_inbox.dart';
 import 'qr_scanner.dart';
 import 'photo_panel.dart';
+import 'inspection_panel.dart';
 
 const ink = Color(0xff192d2a),
     muted = Color(0xff72827e),
@@ -1453,6 +1454,12 @@ class _WorkshopHomeState extends State<WorkshopHome>
         ]),
         const SizedBox(height: 18),
         PhotoPanel(controller: c, order: o),
+        const SizedBox(height: 18),
+        InspectionPanel(
+          order: o,
+          canEdit: !c.frozen(o.id),
+          onSave: (p) => perform(o.id, 'inspection_save', p),
+        ),
         const SizedBox(height: 18),
         if (c.prices || c.costs) ...[
           PricingPanel(

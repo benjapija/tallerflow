@@ -141,7 +141,13 @@ void main() {
         );
         await restored.load();
         await restored.restoreLocalBackup(archive, readPhoto: copy.photos.read);
-        expect(restored.deviceId, isNot(c.deviceId));
+        expect(restored.deviceId, c.deviceId);
+        expect(restored.restoredArchive!['sourceDeviceId'], c.deviceId);
+        expect(
+          restored.restoredArchive!['previousLocal']['deviceId'],
+          isNot(c.deviceId),
+        );
+        expect(restored.accessRevoked, true);
         expect(restored.outbox.map((o) => o.id), c.outbox.map((o) => o.id));
         expect(restored.photoQueue.single['id'], c.photoQueue.single['id']);
         expect(
